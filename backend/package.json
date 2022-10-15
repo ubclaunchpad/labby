@@ -1,0 +1,16 @@
+{
+  "name": "labby-backend",
+  "version": "1.0.0",
+  "description": "NodeJS Backend for Labby",
+  "main": "index.js",
+  "repository": "git@github.com:ubclaunchpad/labby.git",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
