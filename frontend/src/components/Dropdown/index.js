@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
 import "./index.css";
 
 //Default prop values
@@ -16,8 +18,7 @@ export const DropdownDefault = ({
   options = defaultOptions,
 }) => {
   //Maybe declare state in App.js instead and just pass the value as a prop
-  const [selectedValue, setSelectedValue] = useState("option0");
-
+  const [selectedValue, setSelectedValue] = useState(null);
   //Maybe pass handler function as a prop
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -25,15 +26,13 @@ export const DropdownDefault = ({
 
   return (
     <div className="dropdownContainer">
-      <label>
-        {label}
-        <select value={selectedValue} onChange={handleChange}>
-          <option value="option0">Option 0</option>
-          {options.map((option) => (
-            <option value={option.value}>{option.label}</option>
-          ))}
-        </select>
-      </label>
+      <label className="label">{label} </label><br/>
+      <select value={selectedValue} onChange={handleChange}>
+        <option value="option0">Option 0</option>
+        {options.map((option) => (
+          <option value={option.value}>{option.label}</option>
+        ))}
+      </select>
 
       {/* For debugging */}
       <p>User selected {selectedValue}</p>
@@ -41,4 +40,34 @@ export const DropdownDefault = ({
   );
 };
 
-//TODO: build another dropdown component using react select library (https://react-select.com/home)
+//Another dropdown component using react select library (https://react-select.com/home)
+export const DropdownAdvanced = ({
+  label = defaultLabel,
+  options = defaultOptions,
+}) => {
+  //declare state in App.js instead
+  const [selectedOption, setSelectedOption] = useState("Option1");
+  //Maybe pass handler function as a prop
+  //TODO: debug the state changes
+  const handleChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+  const animatedComponents = makeAnimated();
+  return (
+    <div className="dropdownContainer">
+      <form>
+        <label className="label">{label}</label>
+        <Select
+          defaultValue={[options[0],options[2]]}
+          options={options}
+          onChange={handleChange}
+          closeMenuOnSelect={true}
+          isMulti
+          components={animatedComponents}
+        />
+        <p>User selected {selectedOption}</p>
+      </form>
+    </div>
+  );
+};
+
