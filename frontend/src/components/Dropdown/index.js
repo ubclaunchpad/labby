@@ -18,7 +18,7 @@ export const DropdownDefault = ({
   options = defaultOptions,
 }) => {
   //Maybe declare state in App.js instead and just pass the value as a prop
-  const [selectedValue, setSelectedValue] = useState(null);
+  const [selectedValue, setSelectedValue] = useState("Option0");
   //Maybe pass handler function as a prop
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
