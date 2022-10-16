@@ -17,6 +17,14 @@ function Header() {
           Tasks
         </NavLink>
         <NavLink
+          to="/all-components"
+          className={({ isActive }) =>
+            isActive ? "HeaderTitleActive" : "HeaderTitle"
+          }
+        >
+          Components
+        </NavLink>
+        <NavLink
           to="/billing"
           className={({ isActive }) =>
             isActive ? "HeaderTitleActive" : "HeaderTitle"
