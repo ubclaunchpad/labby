@@ -1,6 +1,6 @@
 import React from "react";
 
-import Header from "../../components/header/header";
+import Header from "../../components/Header";
 import { DropdownDefault, DropdownAdvanced } from "../../components/Dropdown";
 import "./component-showcase.css";
 
