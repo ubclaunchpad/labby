@@ -8,7 +8,7 @@ const ComponentShowcase = () => {
   return (
     <>
       <Header />
-      <div className="container">
+      <div data-testid ="dropdown" className="container">
         <h3>DropdownDefault</h3>
         <DropdownDefault />
 

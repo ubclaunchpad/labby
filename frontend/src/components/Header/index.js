@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 function Header() {
   return (
-    <div>
+    <div data-testid="header">
       <div className="Header">
         <div className="HeaderImage">
           {/* <img src={Labby} alt="Labby Logo" style={{ height: 50 }} /> */}
@@ -17,6 +17,7 @@ function Header() {
           Tasks
         </NavLink>
         <NavLink
+          data-testid="all-components"
           to="/all-components"
           className={({ isActive }) =>
             isActive ? "HeaderTitleActive" : "HeaderTitle"
