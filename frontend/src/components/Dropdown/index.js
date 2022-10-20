@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import { getQuestions } from "../../redux/api/questionApi";
 import "./index.css";
 
 //Default prop values

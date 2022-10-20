@@ -1,15 +1,16 @@
 import defaultAxios from 'axios'
 
 const axios = defaultAxios.create({
-  baseURL: 'https://google.com/',
+  baseURL: 'https://www.boredapi.com/api/',
   headers: {'Content-Type': 'application/json'}
 });
 
-export const getQuestions = async () => {
+export const getQuestions = async (payload) => {
     try {
-      const questions = await axios.get('question')
+      console.log(payload)
+      const questions = await axios.get('activity/')
   
-      return questions.data
+      return questions
     } catch(err) {
       return console.error(err)
     }

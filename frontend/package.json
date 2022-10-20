@@ -22,12 +22,18 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "coverage": "react-scripts test --coverage"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
+    ]
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!axios)"
     ]
   },
   "browserslist": {
@@ -41,5 +47,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "redux-saga-test-plan": "^4.0.6"
   }
 }
