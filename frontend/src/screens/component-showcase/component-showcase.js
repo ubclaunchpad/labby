@@ -2,6 +2,7 @@ import React from "react";
 
 import Header from "../../components/Header";
 import { DropdownDefault, DropdownAdvanced } from "../../components/Dropdown";
+import { TextInput, TextInputMultiline } from "../../components/TextInput";
 import "./component-showcase.css";
 
 const ComponentShowcase = () => {
@@ -14,6 +15,12 @@ const ComponentShowcase = () => {
 
         <h3>DropdownAdvanced</h3>
         <DropdownAdvanced />
+
+        <h3>TextInput</h3>
+        <TextInput />
+
+        <h3>TextInputMultiline</h3>
+        <TextInputMultiline />
       </div>
     </>
   );
