@@ -3,13 +3,14 @@ import React from "react";
 import Header from "../../components/Header";
 import { DropdownDefault, DropdownAdvanced } from "../../components/Dropdown";
 import { TextInput, TextInputMultiline } from "../../components/TextInput";
+import { AntdCard, DefaultCard } from "../../components/Card";
 import "./component-showcase.css";
 
 const ComponentShowcase = () => {
   return (
     <>
       <Header />
-      <div data-testid ="dropdown" className="container">
+      <div data-testid="dropdown" className="container">
         <h3>DropdownDefault</h3>
         <DropdownDefault />
 
@@ -21,6 +22,12 @@ const ComponentShowcase = () => {
 
         <h3>TextInputMultiline</h3>
         <TextInputMultiline />
+
+        <h3>DefaultCard (A container component)</h3>
+        <DefaultCard>Something</DefaultCard>
+
+        <h3>AntdCard (A container component)</h3>
+        <AntdCard>Something</AntdCard>
       </div>
     </>
   );
