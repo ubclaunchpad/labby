@@ -1,0 +1,54 @@
+.FormBuilder {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.FormBuilderHeader {
+    height: 150px;
+}
+
+.ScrollBox {
+    overflow: auto;
+    max-height: calc(100vh - 150px);
+}
+
+.FormBuilderTitle {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: left;
+    padding-top: 25px;
+    padding-bottom: 5px;
+}
+
+.FormTitle {
+    display: flex;
+    flex-direction: row;
+    height: 45px;
+}
+
+.FormPreview {
+    flex: 1;
+    text-align: end;
+}
+
+.FormPreviewButton {
+    height: 45px;
+    width: 150px;
+    border: 0;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    transition-duration: 0.4s;
+}
+
+.FormBuilderOutline {
+    border: 2px dashed #EEEEEE;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    width: 100%;
+    font-size: 16px;
+}
