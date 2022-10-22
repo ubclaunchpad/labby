@@ -44,7 +44,7 @@ jobs:
               cd labby/backend &&
               yarn
             else
-              cd labby
+              cd labby/backend
               yarn
             fi
             
