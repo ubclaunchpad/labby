@@ -13,9 +13,10 @@ export default class QuestionController {
       QuestionModel.insertQuestion(question, (err, result) => {
         if (err) {
           reject({ error: err });
-        }
-        resolve(result);
-      });
+        } else {
+        resolve({ response: res });
+      }
     });
+  });
   }
 }
