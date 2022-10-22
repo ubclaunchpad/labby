@@ -73,5 +73,3 @@ VALUES
 END $$
  
 DELIMITER ;
- 
-15:50:40	CALL save_cost('0',100,'0')	Error Code: 1054. Unknown column 'fk_answer_id' in 'field list'	0.071 sec
