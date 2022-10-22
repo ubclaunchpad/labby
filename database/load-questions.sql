@@ -1,6 +1,6 @@
 USE `labby.db`;
  
-DROP procedure IF EXISTS `save_questions`;
+DROP procedure IF EXISTS `load_questions`;
  
  
 DELIMITER $$
