@@ -9,7 +9,6 @@ afterEach(() => {
 });
 
 describe("Header Component", () => {
-  const setToggle = jest.fn();
   
   test("Header Rendering", () => {
     render(
