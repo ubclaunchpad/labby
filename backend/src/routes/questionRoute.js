@@ -1,8 +1,10 @@
 import { Router } from "express";
 import QuestionController from "../controllers/questionController.js";
 
+
 const router = Router();
 const questionController = new QuestionController();
+
 
 router.post("/", (req, res) => {
   if (!req.body) {
@@ -17,7 +19,7 @@ router.post("/", (req, res) => {
       res.status(200).json(response);
     })
     .catch((err) => {
-      res.status(404).json(err);
+      (res.status(404).json('Error: ' + err));
     });
 });
 

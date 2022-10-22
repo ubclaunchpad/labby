@@ -5,10 +5,13 @@ dotenv.config()
 import mysql from 'mysql'
 import questionRouter from './src/routes/questionRoute.js'
 
+
 const app = express()
 const port = 8080
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/', questionRouter);
+
 
 const connection = mysql.createConnection({
   host: process.env.RDS_HOSTNAME,
@@ -28,10 +31,9 @@ app.get('/', (_, res) => {
     console.log('Connected to database.');
   });
   connection.end();
-})
+});
 
-app.use('/question', questionRouter)
 
 app.listen(port, () => {
   console.log(`Labby backend listening on port ${port}`)
-})
+});
