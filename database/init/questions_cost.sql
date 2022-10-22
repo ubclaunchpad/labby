@@ -10,11 +10,13 @@ CREATE PROCEDURE `createQuestions_Cost` ()
 BEGIN
 
 CREATE TABLE `questions_cost` (
-	cost_id VARCHAR(50),
-	fk_question_id VARCHAR(50),
+	cost_id VARCHAR(50) NOT NULL,
+	fk_answer_id VARCHAR(50),
+	fk_organization_id VARCHAR(50),
 	cost DOUBLE,
 	PRIMARY KEY (`cost_id`),
-	FOREIGN KEY (fk_question_id) REFERENCES questions(question_id)
+	FOREIGN KEY (fk_answer_id) REFERENCES questions_answer(answer_id),
+	FOREIGN KEY (fk_organization_id) REFERENCES organizations(organization_id)
 );
 
 END$$

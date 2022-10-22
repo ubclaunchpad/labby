@@ -10,7 +10,7 @@ CREATE PROCEDURE `createQuestions_Answer` ()
 BEGIN
 
 CREATE TABLE `questions_answer` (
-	answer_id VARCHAR(50),
+	answer_id VARCHAR(50) NOT NULL,
 	fk_question_id VARCHAR(50),
 	question_type VARCHAR(50),
 	answer VARCHAR(50),
