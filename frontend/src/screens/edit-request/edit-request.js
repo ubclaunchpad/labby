@@ -1,6 +1,7 @@
+import BuilderLibrary from "../../components/BuilderLibrary";
 import FormBuilder from "../../components/FormBuilder";
 import Header from "../../components/Header";
-import './index.css'
+import './edit-request.css'
 
 
 function EditRequest() {
@@ -12,8 +13,8 @@ function EditRequest() {
       <div style={{flex: 6}}>
         {FormBuilder()}
       </div>
-      <div style={{flex: 2, backgroundColor: 'red'}}>
-        Side
+      <div style={{flex: 2}}>
+        {BuilderLibrary()}
       </div>
     </div>
   );
