@@ -6,6 +6,10 @@
     min-height: 100px;
     padding-left: 5%;
     padding-right: 5%;
+
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
 }
 .HeaderImage {
     flex: 1;

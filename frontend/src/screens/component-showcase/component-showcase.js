@@ -8,9 +8,9 @@ import "./component-showcase.css";
 
 const ComponentShowcase = () => {
   return (
-    <>
-      <Header />
-      <div data-testid="dropdown" className="container">
+    <div data-testid="dropdown" className="wrapper">
+      <Header/>
+      <div className="componentsContainer">
         <h3>DropdownDefault</h3>
         <DropdownDefault />
 
@@ -28,8 +28,9 @@ const ComponentShowcase = () => {
 
         <h3>AntdCard (A container component)</h3>
         <AntdCard>Something</AntdCard>
+
       </div>
-    </>
+    </div>
   );
 };
 
