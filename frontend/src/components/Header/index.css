@@ -7,7 +7,7 @@
     padding-left: 5%;
     padding-right: 5%;
 
-    position: -webkit-sticky;
+    position: -webkit-sticky; /*For safari*/
     position: sticky;
     top: 0;
 }
