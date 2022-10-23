@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import { getQuestions } from "../../redux/api/questionApi";
+// import { getQuestions } from "../../redux/api/questionApi";
 import "./index.css";
+import { DefaultCard } from "../Card";
 
 //Default prop values
 const defaultLabel = "Dropdown title: ";
@@ -26,8 +27,9 @@ export const DropdownDefault = ({
   };
 
   return (
-    <div className="dropdownContainer">
-      <label className="label">{label} </label><br/>
+    <DefaultCard>
+      <label className="label">{label} </label>
+      <br />
       <select value={selectedValue} onChange={handleChange}>
         <option value="option0">Option 0</option>
         {options.map((option) => (
@@ -37,7 +39,7 @@ export const DropdownDefault = ({
 
       {/* For debugging */}
       <p>User selected {selectedValue}</p>
-    </div>
+    </DefaultCard>
   );
 };
 
@@ -55,11 +57,11 @@ export const DropdownAdvanced = ({
   };
   const animatedComponents = makeAnimated();
   return (
-    <div className="dropdownContainer">
+    <DefaultCard>
       <form>
         <label className="label">{label}</label>
         <Select
-          defaultValue={[options[0],options[2]]}
+          defaultValue={[options[0], options[2]]}
           options={options}
           onChange={handleChange}
           closeMenuOnSelect={true}
@@ -68,7 +70,6 @@ export const DropdownAdvanced = ({
         />
         <p>User selected {selectedOption}</p>
       </form>
-    </div>
+    </DefaultCard>
   );
 };
-

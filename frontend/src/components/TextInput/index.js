@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Input } from "antd";
-// import "antd/dist/antd.css";
 import "antd/dist/antd.min.css";
 import "./index.css";
+import { DefaultCard } from "../Card";
 
 const defaultLabel = "Text Input Title: ";
 const defaultPlaceholder = "Placeholder Text";
@@ -22,7 +22,7 @@ export const TextInput = ({
   };
 
   return (
-    <div className="textInputContainer">
+    <DefaultCard>
       <label className="label">{label}</label>
       <br />
       <Input
@@ -36,7 +36,7 @@ export const TextInput = ({
 
       {/* for debugging */}
       <p>Text Input Value: {textValue}</p>
-    </div>
+    </DefaultCard>
   );
 };
 
@@ -53,7 +53,7 @@ export const TextInputMultiline = ({
   };
 
   return (
-    <div className="textInputContainer">
+    <DefaultCard>
       <label className="label">{label}</label>
       <br />
       <Input.TextArea
@@ -65,6 +65,6 @@ export const TextInputMultiline = ({
 
       {/* for debugging */}
       <p>Text Input Value: {textValue}</p>
-    </div>
+    </DefaultCard>
   );
 };
