@@ -7,7 +7,7 @@ export const DefaultCard = (props) => {
   return <div className="cardContainer">{props.children}</div>;
 };
 
-//comment title and extra  lines to get a card without a header
+//comment title and extra  lines to get a card with a header
 export const AntdCard = ({
   children,
   //   title = "Default Title",
