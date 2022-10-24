@@ -22,8 +22,19 @@ router.post("/", (req, res) => {
 });
 
 router.get("/", (_, res) => {
-    questionController
+  questionController
     .loadQuestion()
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
+
+router.delete("/", (req, res) => {
+  questionController
+    .deleteQuestion(req)
     .then((response) => {
       res.status(200).json(response);
     })

@@ -20,11 +20,25 @@ export default class QuestionController {
       });
     });
   }
+
   loadQuestion() {
     return new Promise((resolve, reject) => {
       const QuestionModel = new Question();
-      
+
       QuestionModel.loadQuestion((err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+
+  deleteQuestion(req) {
+    return new Promise((resolve, reject) => {
+      const QuestionModel = new Question();
+
+      QuestionModel.deleteQuestion(req.body.question_id, (err, result) => {
         if (err) {
           reject({ error: err });
         }
