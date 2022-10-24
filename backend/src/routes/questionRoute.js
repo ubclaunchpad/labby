@@ -22,7 +22,14 @@ router.post("/", (req, res) => {
 });
 
 router.get("/", (_, res) => {
-  res.status(200).json({ response: "Question Loaded Successfully" });
+    questionController
+    .loadQuestion()
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
 });
 
 export default router;
