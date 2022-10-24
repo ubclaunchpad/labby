@@ -11,18 +11,21 @@ DELIMITER $$
 CREATE PROCEDURE `save_question` (
    IN `_question_id` VARCHAR(50),
    IN `_question` VARCHAR(50),
-   IN `_question_type` VARCHAR(50)
+   IN `_question_type` VARCHAR(50),
+   IN `_question_order` INT
  
 ) BEGIN REPLACE INTO `questions` (
    `question_id`,
    `question`,
-   `question_type`
+   `question_type`,
+   `position_index`
 )
 VALUES
    (
-`_question_id`,
+   `_question_id`,
    `_question`,
-   `_question_type`
+   `_question_type`,
+   `_question_order`
    );
   
 END $$

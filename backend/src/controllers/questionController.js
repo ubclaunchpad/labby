@@ -8,6 +8,8 @@ export default class QuestionController {
       const question = {
         question_id: req.body.question_id,
         question_title: req.body.question_title,
+        question_type: req.body.question_type,
+        question_index: req.body.question_index,
       };
 
       QuestionModel.insertQuestion(question, (err, result) => {

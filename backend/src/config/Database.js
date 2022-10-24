@@ -1,27 +1,15 @@
 import mysql from "mysql";
+import { config } from "dotenv";
+config();
 
-export class Database {
+const configuration = {
+  host: process.env.RDS_HOSTNAME,
+  user: process.env.RDS_USERNAME,
+  password: process.env.RDS_PASSWORD,
+  database: process.env.RDS_DB,
+  port: process.env.RDS_PORT,
+};
 
+const connectionPool = mysql.createPool(configuration);
 
-    connection;
-    constructor(config) {
-        this.connection = mysql.createConnection(config);
-    }
-
-    connect() {
-            this.connection.connect(function (err) {
-                if (err) {
-                    console.error('Database.js connection failed: ' + err.stack);
-                    return;
-                }
-
-                console.log('Connected to database.');
-            });
-    }
-
-
-
-    close() {
-        this.connection.end();
-    }
-}
+export default connectionPool;
