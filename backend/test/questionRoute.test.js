@@ -11,9 +11,9 @@ describe('Test Question Route', function () {
     app.use('/', questionRouter);
 
     test('getQuestion', async () => {
-        const res = await request(app).get('/').set('Content-Type', 'application/json').set('Accept', 'application/json');
-        expect(res.header['content-type']).toBe('text/html; charset=utf-8');
-        // expect(res.statusCode).toBe(200);
+        const res = await request(app).get('/');
+        expect(res.header['content-type']).toBe('application/json; charset=utf-8');
+        expect(res.statusCode).toBe(200);
         expect(res.body);
         expect(JSON.parse(res.text)["result"]).toEqual('Question Loaded Successfully');
     });

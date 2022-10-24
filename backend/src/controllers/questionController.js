@@ -18,7 +18,7 @@ export default class QuestionController {
       });
     });
   }
-  loadQuestion(req) {
+  loadQuestion() {
     return new Promise((resolve, reject) => {
       const QuestionModel = new Question();
       
