@@ -1,2 +1,4 @@
 export const SET_LOADING = "SET_LOADING"
 export const SET_QUESTION = "SET_QUESTION"
+export const LOAD_QUESTION = "LOAD_QUESTION"
+export const SAVE_QUESTION = "SAVE_QUESTION"

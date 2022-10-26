@@ -1,16 +1,26 @@
-import { call, put, takeLatest } from 'redux-saga/effects'
-import { SET_LOADING, SET_QUESTION } from '../actions/questionActions';
-import { getQuestions } from '../api/questionApi';
+import { call, put, takeLatest } from "redux-saga/effects";
+import {
+  LOAD_QUESTION,
+  SAVE_QUESTION,
+  SET_LOADING,
+  SET_QUESTION,
+} from "../actions/questionActions";
+import { getQuestions, saveQuestions } from "../api/questionApi";
 
-export function* fetchQuestion({ payload }) {
-  yield put({ type: SET_LOADING })
+export function* fetchQuestion() {
+  yield put({ type: SET_LOADING, payload: true });
 
-  const questions = yield call(getQuestions, payload)
+  const questions = yield call(getQuestions);
 
-  yield put({ type: SET_QUESTION, payload: questions })
+  yield put({ type: SET_QUESTION, payload: questions.data });
+  yield put({ type: SET_LOADING, payload: false });
+}
+
+export function* saveQuestion({ payload }) {
+  yield call(saveQuestions, payload);
 }
 
 export default function* questionSaga() {
-  yield takeLatest("USER_FETCH_REQUESTED", fetchQuestion);
-  // yield takeLatest("ANOTHER_ACTION", anotherFunction);
+  yield takeLatest(LOAD_QUESTION, fetchQuestion);
+  yield takeLatest(SAVE_QUESTION, saveQuestion);
 }
