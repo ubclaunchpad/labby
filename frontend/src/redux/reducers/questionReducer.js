@@ -1,19 +1,19 @@
-import { combineReducers } from 'redux';
-import { SET_QUESTION } from '../actions/questionActions';
+import { combineReducers } from "redux";
+import { SET_QUESTION } from "../actions/questionActions";
 
 const defaultQuestionList = [];
 
-const questionListReducer = (state = defaultQuestionList, action) => {
+const questionList = (state = defaultQuestionList, action) => {
   switch (action.type) {
-    case SET_QUESTION:
-      return {
-        questionList: action.payload,
-      };
-    default:
+    case SET_QUESTION: {
+      return action.payload;
+    }
+    default: {
       return state;
+    }
   }
 };
 
 export default combineReducers({
-    questionListReducer,
+  questionList,
 });
