@@ -3,5 +3,5 @@ export const appColor = {
     lightGray: '#EEEEEE'
 }
 
-export const backend = "http://labbybe.harinwu.com/"
+export const backend = "https://labbybe.harinwu.com/"
 // export const backend = "http://localhost:8080/"
