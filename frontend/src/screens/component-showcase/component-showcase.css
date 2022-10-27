@@ -1,6 +1,8 @@
 .wrapper {
   padding: 48px;
   display: flex;
+  overflow: auto;
+  max-height: calc(100vh - 150px);
 }
 .componentsContainer{
   flex: 1;
