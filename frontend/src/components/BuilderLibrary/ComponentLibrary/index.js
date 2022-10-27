@@ -1,22 +1,20 @@
 import "./index.css";
-import { DefaultCard } from "../../Card";
-import {
-  UnorderedListOutlined,
-  DownloadOutlined,
-  FontSizeOutlined,
-  BoldOutlined,
-  AuditOutlined,
-  CloudUploadOutlined,
-  DownSquareOutlined,
-  CheckCircleOutlined,
-  LineHeightOutlined,
-} from "@ant-design/icons";
+import { LibraryCard } from "../../Card";
+import MCIcon from "../../../assets/MultiChoice.png";
+import SCIcon from "../../../assets/SingleChoice.png";
+import TextAnswerIcon from "../../../assets/TextAnswer.png";
+import DropIcon from "../../../assets/Dropdown.png";
+import HeadingIcon from "../../../assets/Heading.png";
+import TextIcon from "../../../assets/TextLine.png";
+import UploadIcon from "../../../assets/FileUpload.png";
+import DownloadIcon from "../../../assets/FileDownload.png";
+import ContactIcon from "../../../assets/ContactInfo.png";
 
 const DraggableCard = ({ children }) => {
   return (
-    <DefaultCard>
+    <LibraryCard>
       <div className="draggableCardContent">{children}</div>
-    </DefaultCard>
+    </LibraryCard>
   );
 };
 
@@ -26,43 +24,74 @@ function ComponentLibrary() {
       <div className="elementContainer">
         <div className="elementsTitle">Question Elements</div>
         <DraggableCard>
-          <UnorderedListOutlined /> Multiple choice
+          <img className="iconImage" src={MCIcon} alt="Multiple Choice" />{" "}
+          Multiple Choice
         </DraggableCard>
         <DraggableCard>
-          <CheckCircleOutlined /> Single selection
+          <img className="iconImage" src={SCIcon} alt="Single Selection" />{" "}
+          Single Selection
         </DraggableCard>
         <DraggableCard>
-          <FontSizeOutlined /> Text answer
+          <img
+            className="iconImage"
+            src={TextAnswerIcon}
+            alt="Text
+          Answer"
+          />{" "}
+          Text Answer
         </DraggableCard>
         <DraggableCard>
-          <DownSquareOutlined /> Dropdown
+          <img className="iconImage" src={DropIcon} alt="Dropdown" /> Dropdown
         </DraggableCard>
       </div>
 
       <div className="elementContainer">
         <div className="elementsTitle">Layout Elements</div>
         <DraggableCard>
-          <BoldOutlined /> Heading
+          <img className="iconImage" src={HeadingIcon} alt="Heading" /> Heading
         </DraggableCard>
         <DraggableCard>
-          <LineHeightOutlined /> Text line
+          <img
+            className="iconImage"
+            src={TextIcon}
+            alt="Text
+          Line"
+          />{" "}
+          Text Line
         </DraggableCard>
       </div>
 
       <div className="elementContainer">
         <div className="elementsTitle">Media Elements</div>
         <DraggableCard>
-          <CloudUploadOutlined /> File upload
+          <img
+            className="iconImage"
+            src={UploadIcon}
+            alt="File
+          Upload"
+          />{" "}
+          File Upload
         </DraggableCard>
         <DraggableCard>
-          <DownloadOutlined /> File download
+          <img
+            className="iconImage"
+            src={DownloadIcon}
+            alt="File
+          Download"
+          />{" "}
+          File Download
         </DraggableCard>
       </div>
 
       <div className="elementContainer">
         <div className="elementsTitle">Billing Elements</div>
         <DraggableCard>
-          <AuditOutlined /> Contact information
+          <img
+            className="iconImage"
+            src={ContactIcon}
+            alt="Contact Information"
+          />{" "}
+          Contact Information
         </DraggableCard>
       </div>
     </>

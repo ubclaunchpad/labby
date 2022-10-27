@@ -11,7 +11,7 @@ function EditRequest() {
 
   useEffect(() => {
     dispatch({ type: LOAD_QUESTION });
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="EditRequestPage">
