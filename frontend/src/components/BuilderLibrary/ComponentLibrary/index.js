@@ -12,50 +12,58 @@ import {
   LineHeightOutlined,
 } from "@ant-design/icons";
 
+const DraggableCard = ({ children }) => {
+  return (
+    <DefaultCard>
+      <div className="draggableCardContent">{children}</div>
+    </DefaultCard>
+  );
+};
+
 function ComponentLibrary() {
   return (
     <>
       <div className="elementContainer">
         <div className="elementsTitle">Question Elements</div>
-        <DefaultCard>
+        <DraggableCard>
           <UnorderedListOutlined /> Multiple choice
-        </DefaultCard>
-        <DefaultCard>
+        </DraggableCard>
+        <DraggableCard>
           <CheckCircleOutlined /> Single selection
-        </DefaultCard>
-        <DefaultCard>
+        </DraggableCard>
+        <DraggableCard>
           <FontSizeOutlined /> Text answer
-        </DefaultCard>
-        <DefaultCard>
+        </DraggableCard>
+        <DraggableCard>
           <DownSquareOutlined /> Dropdown
-        </DefaultCard>
+        </DraggableCard>
       </div>
 
       <div className="elementContainer">
         <div className="elementsTitle">Layout Elements</div>
-        <DefaultCard>
+        <DraggableCard>
           <BoldOutlined /> Heading
-        </DefaultCard>
-        <DefaultCard>
+        </DraggableCard>
+        <DraggableCard>
           <LineHeightOutlined /> Text line
-        </DefaultCard>
+        </DraggableCard>
       </div>
 
       <div className="elementContainer">
         <div className="elementsTitle">Media Elements</div>
-        <DefaultCard>
+        <DraggableCard>
           <CloudUploadOutlined /> File upload
-        </DefaultCard>
-        <DefaultCard>
+        </DraggableCard>
+        <DraggableCard>
           <DownloadOutlined /> File download
-        </DefaultCard>
+        </DraggableCard>
       </div>
 
       <div className="elementContainer">
         <div className="elementsTitle">Billing Elements</div>
-        <DefaultCard>
+        <DraggableCard>
           <AuditOutlined /> Contact information
-        </DefaultCard>
+        </DraggableCard>
       </div>
     </>
   );

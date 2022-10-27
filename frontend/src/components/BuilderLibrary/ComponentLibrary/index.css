@@ -8,3 +8,8 @@
   font-weight: 600;
   color: #666;
 }
+.draggableCardContent{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
