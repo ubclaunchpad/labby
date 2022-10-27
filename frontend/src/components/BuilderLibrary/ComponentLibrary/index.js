@@ -1,29 +1,61 @@
 import "./index.css";
 import { DefaultCard } from "../../Card";
+import {
+  UnorderedListOutlined,
+  DownloadOutlined,
+  FontSizeOutlined,
+  BoldOutlined,
+  AuditOutlined,
+  CloudUploadOutlined,
+  DownSquareOutlined,
+  CheckCircleOutlined,
+  LineHeightOutlined,
+} from "@ant-design/icons";
 
 function ComponentLibrary() {
   return (
     <>
       <div className="elementContainer">
         <div className="elementsTitle">Question Elements</div>
-        <DefaultCard>Multiple choice</DefaultCard>
-        <DefaultCard> Single selection </DefaultCard>
-        <DefaultCard> Text answer</DefaultCard>
-        <DefaultCard> Dropdown </DefaultCard>
+        <DefaultCard>
+          <UnorderedListOutlined /> Multiple choice
+        </DefaultCard>
+        <DefaultCard>
+          <CheckCircleOutlined /> Single selection
+        </DefaultCard>
+        <DefaultCard>
+          <FontSizeOutlined /> Text answer
+        </DefaultCard>
+        <DefaultCard>
+          <DownSquareOutlined /> Dropdown
+        </DefaultCard>
       </div>
+
       <div className="elementContainer">
         <div className="elementsTitle">Layout Elements</div>
-        <DefaultCard> Heading </DefaultCard>
-        <DefaultCard> Text line </DefaultCard>
+        <DefaultCard>
+          <BoldOutlined /> Heading
+        </DefaultCard>
+        <DefaultCard>
+          <LineHeightOutlined /> Text line
+        </DefaultCard>
       </div>
+
       <div className="elementContainer">
         <div className="elementsTitle">Media Elements</div>
-        <DefaultCard> File upload </DefaultCard>
-        <DefaultCard> File download </DefaultCard>
+        <DefaultCard>
+          <CloudUploadOutlined /> File upload
+        </DefaultCard>
+        <DefaultCard>
+          <DownloadOutlined /> File download
+        </DefaultCard>
       </div>
+
       <div className="elementContainer">
         <div className="elementsTitle">Billing Elements</div>
-        <DefaultCard> Contact information </DefaultCard>
+        <DefaultCard>
+          <AuditOutlined /> Contact information
+        </DefaultCard>
       </div>
     </>
   );
