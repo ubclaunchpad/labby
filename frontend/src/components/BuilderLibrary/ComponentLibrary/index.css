@@ -1,0 +1,8 @@
+.elementContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.elementsTitle {
+  align-self: flex-start;
+}
