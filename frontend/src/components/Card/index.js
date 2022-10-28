@@ -2,9 +2,21 @@ import React from "react";
 import { Card } from "antd";
 import "./index.css";
 import "antd/dist/antd.min.css";
+import { appColor } from "../../constants";
 
 export const DefaultCard = (props) => {
   return <div className="cardContainer">{props.children}</div>;
+};
+
+export const LibraryCard = (props) => {
+  return (
+    <div
+      className="libraryCardContainer"
+      style={{ backgroundColor: appColor.darkGray }}
+    >
+      {props.children}
+    </div>
+  );
 };
 
 //comment title and extra  lines to get a card with a header
@@ -13,9 +25,9 @@ export const AntdCard = ({
   //   title = "Default Title",
   title = null,
   urlLink = "#",
-  width = "70%",
+  width = "90%",
   bordered = true,
-  loading =  false
+  loading = false,
 }) => {
   const style = { width: width };
   return (
@@ -26,7 +38,7 @@ export const AntdCard = ({
       style={style}
       bordered={bordered}
       hoverable
-      loading = {loading}
+      loading={loading}
     >
       {children}
     </Card>

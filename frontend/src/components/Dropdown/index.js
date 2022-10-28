@@ -30,7 +30,7 @@ export const DropdownDefault = ({
     <DefaultCard>
       <label className="label">{label} </label>
       <br />
-      <select value={selectedValue} onChange={handleChange}>
+      <select className="select" value={selectedValue} onChange={handleChange}>
         <option value="option0">Option 0</option>
         {options.map((option) => (
           <option value={option.value}>{option.label}</option>
