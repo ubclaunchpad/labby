@@ -8,15 +8,9 @@ DELIMITER $$
 CREATE PROCEDURE `load_questions` ()
 
 BEGIN
-    SELECT question, answer, cost
+    SELECT question, question_type
     FROM
         questions
-
-    INNER JOIN questions_answer
-        ON questions.question_id = questions_answer.fk_question_id
-    
-    INNER JOIN questions_cost
-        ON questions.question_id = questions_cost.fk_question_id
 
     ORDER BY 
         question;
@@ -24,7 +18,6 @@ BEGIN
 END $$
  
 DELIMITER ;
-
 
 
     -- A sample data set used to visualize joining tables
