@@ -1,9 +1,9 @@
 USE `labby.db`;
-DROP procedure IF EXISTS `join_questions_answers`;
+DROP procedure IF EXISTS `load_questions_answers`;
 
 DELIMITER $$
  
-CREATE PROCEDURE `join_questions_answers` ()
+CREATE PROCEDURE `load_questions_answers` ()
 
 BEGIN
     SELECT question, questions.question_type, answer
