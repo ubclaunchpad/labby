@@ -16,40 +16,50 @@ import { useDispatch, useSelector } from "react-redux";
 import { SAVE_QUESTION } from "../../redux/actions/questionActions";
 
 export const SingleSelect = ({ questionNumber }) => {
-  /* TODO: add redux state to this component 
+  /* TODO: add redux state endpoints to this component 
   But is that to the save button when we save to the state or does it always just save to the state whenever we are 
   adding anything to the inputs because that would be a big waste of rerendering and then storing to the redux state. 
   */
-  const [options, setOptions] = useState([
-    "Cutting",
-    "Sauteeing",
-    "Filletting",
-    "Chopping",
-  ]);
-
+  const [options, setOptions] = useState([]);
+  const questionList = useSelector(
+    (state) => state?.questionReducer?.questionList
+  );
+  //   const {
+  //     questionTitle: reducerQuestionName = "",
+  //     options: reducerQuestionOptions = [],
+  //   } = questionList?.[questionNumber];
   const dispatch = useDispatch();
   const questionType = "SingleSelect";
-  const [newOption, setNewOption] = useState("");
+  const [newOption, setNewOption] = useState([]);
   const [questionName, setQuestionName] = useState("");
+  console.log(options);
+
   const optionsMap = options.map((option, index) => {
     return <FormControlLabel control={<Radio />} label={option} />;
   });
   const onNewOptionChange = (e) => {
-    console.log(e.target.value);
     let newOptionsArray = options;
     if (!newOptionsArray.includes(newOption.trim()) && newOption.trim() != "") {
       newOptionsArray.push(newOption);
       setOptions(newOptionsArray);
     }
-    console.log(options);
   };
 
-  useEffect(() => {
-    // Update the redux state here if we want to go that route
-    let question = { questionNumber, questionName, options };
-    console.log(question);
-  }, [questionName, questionNumber, options, questionType]);
+  // If we just want to overwrite the new question everytime then we can do it this way:
+  //   useEffect(() => {
+  //     dispatch({
+  //       type: SAVE_QUESTION,
+  //       payload: {
+  //         questionId: 10,
+  //         question_type: "singleSelect",
+  //         question_title: questionName,
+  //         queston_index: questionNumber,
+  //         options
+  //       },
+  //     });
+  //   }, [options, questionName]);
 
+  // When we figure out how to on delete:
   //   const onDelete = (index) => {
   //     console.log(index);
   //     let newOptionsArray = options;
@@ -71,6 +81,15 @@ export const SingleSelect = ({ questionNumber }) => {
           value={questionName}
           onChange={(e) => {
             setQuestionName(e.target.value);
+            dispatch({
+              type: SAVE_QUESTION,
+              payload: {
+                question_id: 0,
+                question_title: e.target.value,
+                question_type: "single-select",
+                question_index: 0,
+              },
+            });
           }}
         />
         <div className="question-close-button-container">
@@ -118,23 +137,34 @@ export const SingleSelect = ({ questionNumber }) => {
                   onBlur={(e) => {
                     onNewOptionChange(e);
                     setNewOption("");
-                    dispatch({
-                      type: SAVE_QUESTION,
-                      payload: {
-                        questionId: 10,
-                        question_type: "singleSelect",
-                        question_title: questionName,
-                        queston_index: questionNumber,
-                        options,
-                      },
-                    });
+                    //     dispatch({
+                    //       type: SAVE_QUESTION,
+                    //       payload: {
+                    //         option: e.target.value,
+                    //       },
+                    //     });
+                    //   }}
+                    console.log(
+                      "This is the new option that you are adding --> ",
+                      e.target.value
+                    );
                   }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      onNewOptionChange(e);
-                      setNewOption("");
-                    }
-                  }}
+                  // If we want to have key down functionality as well:
+                  //   onKeyDown={(e) => {
+                  //     if (e.key === "Enter") {
+                  //       onNewOptionChange(e);
+                  //       setNewOption("");
+                  //       dispatch({
+                  //         type: SAVE_QUESTION,
+                  //         payload: {
+                  //           questionId: 10,
+                  //           questionTitle: questionName,
+                  //           option: e.target.value,
+                  //         },
+                  //       });
+                  //     }
+                  //   }
+                  // }
                 ></input>
               </div>
             </div>
@@ -150,10 +180,7 @@ export const SingleSelect = ({ questionNumber }) => {
                 sx={{
                   color: "#AEAEAE",
                 }}
-                // checked={isSelected}
                 // onChange={handleChange}
-                // color={color}
-                // checkedIcon={icon ? icon : undefined}
               />
             }
             label={"Required"}
