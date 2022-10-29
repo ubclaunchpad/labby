@@ -1,6 +1,6 @@
 import con from "../config/Database.js";
 
-export class Question {
+export class Answer {
   insertQuestion(newQuestion, result) {
     con.query(
       "CALL save_question(?, ?, ?, ?)",
