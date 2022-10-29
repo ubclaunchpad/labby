@@ -4,6 +4,7 @@ DROP procedure IF EXISTS `delete_question`;
 DROP procedure IF EXISTS `delete_answer`;
 DROP procedure IF EXISTS `delete_cost`;
 DROP procedure IF EXISTS `delete_organization`; 
+DROP procedure IF EXISTS `delete_condition`;
  
  
 DELIMITER $$
@@ -36,6 +37,14 @@ CREATE PROCEDURE `delete_organization`  (
 )
 BEGIN
     DELETE FROM organizations WHERE organization_id = id;
+
+END $$
+
+CREATE PROCEDURE `delete_condition`  (
+    IN id VARCHAR(50)
+)
+BEGIN
+    DELETE FROM conditions WHERE condition_id = id;
 
 END $$
 

@@ -7,6 +7,8 @@ DROP procedure IF EXISTS `save_answer`;
 DROP procedure IF EXISTS `save_cost`;
 
 DROP procedure IF EXISTS `save_organization`;
+
+DROP procedure IF EXISTS `save_condition`;
  
 DELIMITER $$
  
@@ -92,6 +94,28 @@ VALUES
    (
    `_organization_id`,
    `_organization_name`
+   );
+  
+END $$
+
+CREATE PROCEDURE `save_condition` (
+   IN `_condition_id` VARCHAR(50),
+   IN `_fk_question_id` VARCHAR(50),
+   IN `_fk_answer_id` VARCHAR(50),
+   IN `_is_true` BOOLEAN
+ 
+) BEGIN REPLACE INTO `conditions` (
+   `organization_id`,
+   `organization_name`,
+   `fk_answer_id`,
+   `is_true`
+)
+VALUES
+   (
+   `_condition_id`,
+   `_fk_question_id`,
+   `_fk_answer_id`,
+   `_is_true`
    );
   
 END $$
