@@ -13,7 +13,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { Button, Checkbox } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { SAVE_QUESTION } from "../../redux/actions/questionActions";
+import {
+  REPLACE_QUESTION,
+  SAVE_QUESTION,
+} from "../../redux/actions/questionActions";
 
 export const SingleSelect = ({ questionNumber }) => {
   /* TODO: add redux state endpoints to this component 
@@ -22,15 +25,18 @@ export const SingleSelect = ({ questionNumber }) => {
   */
   const [options, setOptions] = useState([]);
   const questionList = useSelector(
-    (state) => state?.questionReducer?.questionList
+    (state) => state.questionReducer.questionList
   );
+  useEffect(() => {
+    console.log(questionList);
+  }, [questionList]);
   //   const {
   //     questionTitle: reducerQuestionName = "",
   //     options: reducerQuestionOptions = [],
   //   } = questionList?.[questionNumber];
   const dispatch = useDispatch();
   const questionType = "SingleSelect";
-  const [newOption, setNewOption] = useState([]);
+  const [newOption, setNewOption] = useState("");
   const [questionName, setQuestionName] = useState("");
 
   const optionsMap = options.map((option, index) => {
@@ -81,12 +87,16 @@ export const SingleSelect = ({ questionNumber }) => {
           onChange={(e) => {
             setQuestionName(e.target.value);
             dispatch({
-              type: SAVE_QUESTION,
+              type: REPLACE_QUESTION,
               payload: {
-                question_id: 0,
-                question_title: e.target.value,
-                question_type: "single-select",
-                question_index: 0,
+                questionIndex: questionNumber,
+                questionObject: {
+                  question_type: "singleSelect",
+                  question_title: questionName,
+                  queston_index: questionNumber,
+                  question_options: options,
+                  question_id: questionList[questionNumber].question_id,
+                },
               },
             });
           }}
@@ -139,6 +149,7 @@ export const SingleSelect = ({ questionNumber }) => {
                     //     dispatch({
                     //       type: SAVE_QUESTION,
                     //       payload: {
+                    //         question_id: 0,
                     //         option: e.target.value,
                     //       },
                     //     });
@@ -157,7 +168,6 @@ export const SingleSelect = ({ questionNumber }) => {
                   //         type: SAVE_QUESTION,
                   //         payload: {
                   //           questionId: 10,
-                  //           questionTitle: questionName,
                   //           option: e.target.value,
                   //         },
                   //       });
