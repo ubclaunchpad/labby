@@ -24,7 +24,7 @@ export class Question {
   }
 
   loadQuestion(result) {
-    con.query("SELECT * FROM questions", (err, res) => {
+    con.query("CALL load_questions", (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
@@ -35,7 +35,7 @@ export class Question {
   }
 
   deleteQuestion(id, result) {
-    con.query(`DELETE FROM questions WHERE question_id="${id}"`, (err, res) => {
+    con.query(`CALL delete_question("${id}")`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
