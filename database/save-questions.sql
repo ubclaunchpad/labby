@@ -1,10 +1,12 @@
-USE `labby.db`;
+USE `labby`;
  
 DROP procedure IF EXISTS `save_question`;
  
 DROP procedure IF EXISTS `save_answer`;
  
 DROP procedure IF EXISTS `save_cost`;
+
+DROP procedure IF EXISTS `save_organization`;
  
 DELIMITER $$
  
@@ -57,20 +59,39 @@ END $$
 CREATE PROCEDURE `save_cost` (
    IN `_cost_id` VARCHAR(50),
    IN `_cost` DOUBLE,
-   IN `_fk_answer_id` VARCHAR(50)
+   IN `_fk_answer_id` VARCHAR(50),
+   IN `_fk_organization_id` VARCHAR(50)
  
 ) BEGIN REPLACE INTO `questions_cost` (
    `cost_id`,
    `cost`,
-   `fk_answer_id` --check with Martin, discrepancies in vscode and database
+   `fk_answer_id`,
+   `fk_organization_id`
   
 )
 VALUES
    (
-   `_cost_id`,
+   `_cost_id`, 
    `_cost`,
-  `_fk_answer_id`
+  `_fk_answer_id`,
+  `_fk_organization_id`
  
+   );
+
+END $$
+
+CREATE PROCEDURE `save_organization` (
+   IN `_organization_id` VARCHAR(50),
+   IN `_organization_name` VARCHAR(50)
+ 
+) BEGIN REPLACE INTO `organizations` (
+   `organization_id`,
+   `organization_name`
+)
+VALUES
+   (
+   `_organization_id`,
+   `_organization_name`
    );
   
 END $$
