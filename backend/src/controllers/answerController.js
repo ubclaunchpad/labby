@@ -1,18 +1,18 @@
 import { Answer } from "../models/answer.js";
 
 export default class AnswerController {
-  saveQuestion(req) {
+  saveAnswer(req) {
     return new Promise((resolve, reject) => {
-      const QuestionModel = new Question();
+      const AnswerModel = new Answer();
 
       const question = {
-        question_id: req.body.question_id,
-        question_title: req.body.question_title,
+        answer_id: req.body.answer_id,
+        fk_question_id: req.body.fk_question_id,
         question_type: req.body.question_type,
-        question_index: req.body.question_index,
+        answer: req.body.answer,
       };
 
-      QuestionModel.insertQuestion(question, (err, result) => {
+      AnswerModel.insertAnswer(question, (err, result) => {
         if (err) {
           reject({ error: err });
         }
@@ -21,24 +21,11 @@ export default class AnswerController {
     });
   }
 
-  loadQuestion() {
+  deleteAnswer(req) {
     return new Promise((resolve, reject) => {
-      const QuestionModel = new Question();
+      const AnswerModel = new Answer();
 
-      QuestionModel.loadQuestion((err, result) => {
-        if (err) {
-          reject({ error: err });
-        }
-        resolve(result);
-      });
-    });
-  }
-
-  deleteQuestion(req) {
-    return new Promise((resolve, reject) => {
-      const QuestionModel = new Question();
-
-      QuestionModel.deleteQuestion(req.body.question_id, (err, result) => {
+      AnswerModel.deleteAnswer(req.body.answer_id, (err, result) => {
         if (err) {
           reject({ error: err });
         }

@@ -11,8 +11,8 @@ router.post("/", (req, res) => {
     });
     return;
   }
-  questionController
-    .saveQuestion(req)
+  answerController
+    .saveAnswer(req)
     .then((response) => {
       res.status(200).json(response);
     })
@@ -21,20 +21,10 @@ router.post("/", (req, res) => {
     });
 });
 
-router.get("/", (_, res) => {
-  questionController
-    .loadQuestion()
-    .then((response) => {
-      res.status(200).json(response);
-    })
-    .catch((err) => {
-      res.status(404).json(err);
-    });
-});
 
 router.delete("/", (req, res) => {
-  questionController
-    .deleteQuestion(req)
+  answerController
+    .deleteAnswer(req)
     .then((response) => {
       res.status(200).json(response);
     })
