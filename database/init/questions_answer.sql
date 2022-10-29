@@ -15,9 +15,10 @@ CREATE TABLE `questions_answer` (
 	question_type VARCHAR(50),
 	answer VARCHAR(50),
 	PRIMARY KEY (`answer_id`),
-	FOREIGN KEY (fk_question_id) REFERENCES questions(question_id)
+	FOREIGN KEY (fk_question_id) REFERENCES questions(question_id) ON DELETE CASCADE  
 );
 
 END$$
 
 DELIMITER ;
+

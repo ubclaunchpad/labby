@@ -18,3 +18,4 @@ CREATE TABLE `organizations` (
 END$$
 
 DELIMITER ;
+
