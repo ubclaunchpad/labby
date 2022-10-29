@@ -19,10 +19,6 @@ import {
 } from "../../redux/actions/questionActions";
 
 export const SingleSelect = ({ questionNumber }) => {
-  /* TODO: add redux state endpoints to this component 
-  But is that to the save button when we save to the state or does it always just save to the state whenever we are 
-  adding anything to the inputs because that would be a big waste of rerendering and then storing to the redux state. 
-  */
   const [options, setOptions] = useState([]);
   const questionList = useSelector(
     (state) => state.questionReducer.questionList
@@ -30,10 +26,7 @@ export const SingleSelect = ({ questionNumber }) => {
   useEffect(() => {
     console.log(questionList);
   }, [questionList]);
-  //   const {
-  //     questionTitle: reducerQuestionName = "",
-  //     options: reducerQuestionOptions = [],
-  //   } = questionList?.[questionNumber];
+
   const dispatch = useDispatch();
   const questionType = "SingleSelect";
   const [newOption, setNewOption] = useState("");
@@ -48,20 +41,6 @@ export const SingleSelect = ({ questionNumber }) => {
       setOptions(newOptionsArray);
     }
   };
-
-  // If we just want to overwrite the new question everytime then we can do it this way:
-  //   useEffect(() => {
-  //     dispatch({
-  //       type: SAVE_QUESTION,
-  //       payload: {
-  //         questionId: 10,
-  //         question_type: "singleSelect",
-  //         question_title: questionName,
-  //         queston_index: questionNumber,
-  //         options
-  //       },
-  //     });
-  //   }, [options, questionName]);
 
   // When we figure out how to on delete:
   //   const onDelete = (index) => {
@@ -145,34 +124,41 @@ export const SingleSelect = ({ questionNumber }) => {
                   onBlur={(e) => {
                     onNewOptionChange(e);
                     setNewOption("");
-                    //     dispatch({
-                    //       type: SAVE_QUESTION,
-                    //       payload: {
-                    //         question_id: 0,
-                    //         option: e.target.value,
-                    //       },
-                    //     });
-                    //   }}
-                    console.log(
-                      "This is the new option that you are adding --> ",
-                      e.target.value
-                    );
+                    dispatch({
+                      type: REPLACE_QUESTION,
+                      payload: {
+                        questionIndex: questionNumber,
+                        questionObject: {
+                          question_type: "singleSelect",
+                          question_title: questionName,
+                          queston_index: questionNumber,
+                          question_options: options,
+                          question_id: questionList[questionNumber].question_id,
+                        },
+                      },
+                    });
                   }}
-                  // If we want to have key down functionality as well:
-                  //   onKeyDown={(e) => {
-                  //     if (e.key === "Enter") {
-                  //       onNewOptionChange(e);
-                  //       setNewOption("");
-                  //       dispatch({
-                  //         type: SAVE_QUESTION,
-                  //         payload: {
-                  //           questionId: 10,
-                  //           option: e.target.value,
-                  //         },
-                  //       });
-                  //     }
-                  //   }
-                  // }
+                  //   If we want to have key down functionality as well:
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      onNewOptionChange(e);
+                      setNewOption("");
+                      dispatch({
+                        type: REPLACE_QUESTION,
+                        payload: {
+                          questionIndex: questionNumber,
+                          questionObject: {
+                            question_type: "singleSelect",
+                            question_title: questionName,
+                            queston_index: questionNumber,
+                            question_options: options,
+                            question_id:
+                              questionList[questionNumber].question_id,
+                          },
+                        },
+                      });
+                    }
+                  }}
                 ></input>
               </div>
             </div>
