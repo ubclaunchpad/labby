@@ -38,7 +38,6 @@ export const SingleSelect = ({ questionNumber }) => {
   const questionType = "SingleSelect";
   const [newOption, setNewOption] = useState("");
   const [questionName, setQuestionName] = useState("");
-
   const optionsMap = options.map((option, index) => {
     return <FormControlLabel control={<Radio />} label={option} />;
   });
