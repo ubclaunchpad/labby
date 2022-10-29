@@ -8,18 +8,18 @@ DELIMITER $$
 CREATE PROCEDURE `load_questions` ()
 
 BEGIN
-    SELECT questions.*, questions_answer.*, questions_cost.*
+    SELECT questions.*, questions_answer.answer_id, questions_answer.fk_question_id, questions_answer.answer, questions_cost.*
     FROM
         questions
     
-    INNER JOIN questions_answer
+    LEFT JOIN questions_answer
         ON questions.question_id = questions_answer.fk_question_id
 
     LEFT JOIN questions_cost
         ON questions_answer.answer_id = questions_cost.fk_answer_id
 
     ORDER BY 
-        question;
+        position_index;
   
 END $$
  

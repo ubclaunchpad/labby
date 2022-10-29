@@ -14,7 +14,7 @@ function FormBuilder() {
         return (
           <div
             className="FormBuilderQuestion"
-            key={question.question_id}
+            key={question.question_id + question.answer_id}
             style={{ color: appColor.gray }}
           >
             {question.question + " @ Q" + question.position_index}
@@ -24,7 +24,7 @@ function FormBuilder() {
         return (
           <div
             className="FormBuilderQuestion"
-            key={question.question_id}
+            key={question.question_id + question.answer_id}
             style={{ color: appColor.gray }}
           >
             {question.question + " @ Q" + question.position_index}
@@ -34,7 +34,7 @@ function FormBuilder() {
         return (
           <div
             className="FormBuilderQuestion"
-            key={question.question_id}
+            key={question.question_id + question.answer_id}
             style={{ color: appColor.gray }}
           >
             {question.question + " @ Q" + question.position_index}
@@ -44,7 +44,7 @@ function FormBuilder() {
         return (
           <div
             className="FormBuilderQuestion"
-            key={question.question_id}
+            key={question.question_id + question.answer_id}
             style={{ color: appColor.gray }}
           >
             {question.question + " @ Q" + question.position_index}
@@ -54,7 +54,7 @@ function FormBuilder() {
         return (
           <div
             className="FormBuilderQuestion"
-            key={question.question_id}
+            key={question.question_id + question.answer_id}
             style={{ color: appColor.gray }}
           >
             {question.question + " @ Q" + question.position_index}
@@ -64,7 +64,7 @@ function FormBuilder() {
         return (
           <div
             className="FormBuilderQuestion"
-            key={question.question_id}
+            key={question.question_id + question.answer_id}
             style={{ color: appColor.gray }}
           >
             {question.question + " @ Q" + question.position_index}
@@ -74,7 +74,7 @@ function FormBuilder() {
         return (
           <div
             className="FormBuilderQuestion"
-            key={question.question_id}
+            key={question.question_id + question.answer_id}
             style={{ color: appColor.gray }}
           >
             {question.question + " @ Q" + question.position_index}
@@ -84,7 +84,7 @@ function FormBuilder() {
         return (
           <div
             className="FormBuilderQuestion"
-            key={question.question_id}
+            key={question.question_id + question.answer_id}
             style={{ color: appColor.gray }}
           >
             {question.question + " @ Q" + question.position_index}
@@ -94,7 +94,7 @@ function FormBuilder() {
         return (
           <div
             className="FormBuilderQuestion"
-            key={question.question_id}
+            key={question.question_id + question.answer_id}
             style={{ color: appColor.gray }}
           >
             {question.question + " @ Q" + question.position_index}
