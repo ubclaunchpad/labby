@@ -3,3 +3,65 @@
     flex-direction: row;
     text-align: left;
 }
+
+.titleText {
+    align-self: flex-start;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+.subtitleText {
+    align-self: flex-start;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 5px;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+.selectionBoxView {
+    flex-direction: row;
+    margin-bottom: 15px;
+}
+
+.selectBox {
+    width: 100%;
+    background-color: #909090;
+    color: #666666;
+}
+
+.answerSelectionBox {
+    width: 100%;
+    background-color: #909090;
+    color: #666666;
+    border-radius: 10px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 10px;
+}
+
+.downArrowImage {
+    width: 100%;
+    height: 30px;
+    object-fit: contain;
+    align-self: center;
+}
+
+.buttonView {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.SaveLogicButton {
+    height: 45px;
+    width: 150px;
+    border: 0;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    transition-duration: 0.4s;
+}
