@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react"; // (or /dom, /vue, ...)
-import { SingleSelect } from "./index";
+import { MultiSelect } from "./index";
 import * as redux from "react-redux";
 import { Provider } from "react-redux";
 import Store from "../../redux/store";
@@ -9,7 +9,7 @@ describe("A test suite for the single select component", () => {
   it("renders a Single select with a textbox for the header and a textbox for the options", () => {
     render(
       <Provider store={Store}>
-        <SingleSelect questionNumber={4} />
+        <MultiSelect questionNumber={4} />
       </Provider>
     );
     screen.getByText("Q4");
