@@ -1,16 +1,12 @@
 import React, { useState } from "react";
 import { message, Upload } from "antd";
-// import "antd/dist/antd.min.css";
 import "./index.css";
 import UploadIcon from "../../assets/FileUpload.png";
 import CloseIcon from "../../assets/Close.png";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { autocompleteClasses, Button, Checkbox } from "@mui/material";
+import { Checkbox } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  SET_QUESTION,
-  SAVE_QUESTION,
-} from "../../redux/actions/questionActions";
+import { SAVE_QUESTION } from "../../redux/actions/questionActions";
 const { Dragger } = Upload;
 
 const defaultLabel = "File Input Title: ";
@@ -59,7 +55,7 @@ export const FileInput = ({ questionNumber }) => {
           onChange={(e) => {
             setQuestionName(e.target.value);
             dispatch({
-              type: SET_QUESTION,
+              type: SAVE_QUESTION,
               payload: {
                 questionIndex: questionNumber,
                 questionObject: {
@@ -86,7 +82,7 @@ export const FileInput = ({ questionNumber }) => {
         </div>
       </div>
       <div className="upload-file-container">
-        <Dragger {...props} style={{ flex: 1 }}>
+        <Dragger {...props}>
           <img className="upload-icon" src={UploadIcon} alt="Upload File" />
           <p>Drag and Drop Files</p>
         </Dragger>

@@ -129,17 +129,19 @@
 
 .upload-file-container {
   display: flex;
+  flex-direction: column;
   margin-top: 2%;
   width: 100%;
   justify-content: center;
 }
-.dragger {
-  flex: 1;
-}
 
-.upload-file-component {
+/* .dragger {
+  flex: 1;
+} */
+
+/* .upload-file-component {
   width: 1000px;
-}
+} */
 
 .upload-icon {
   height: 5%;
