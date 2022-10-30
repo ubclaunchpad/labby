@@ -58,6 +58,7 @@ export const SingleSelect = ({ questionNumber }) => {
         </div>
         <input
           className="question-name-input"
+          title="Add a question name "
           placeholder="Click to type your question here "
           type="text"
           name="name"
@@ -116,6 +117,7 @@ export const SingleSelect = ({ questionNumber }) => {
                 <input
                   type="text"
                   className="new-question-input"
+                  title="Add an option"
                   value={newOption}
                   placeholder="Click to add new option "
                   onChange={(e) => {
@@ -166,7 +168,12 @@ export const SingleSelect = ({ questionNumber }) => {
         </div>
       </div>
       <div className="question-footer-row">
-        <div className="question-logic-added-sign">Logic Added</div>
+        <div
+          className="question-logic-added-sign"
+          title="Make this question required"
+        >
+          Logic Added
+        </div>
         <div className="question-required-checkbox">
           <FormControlLabel
             control={
