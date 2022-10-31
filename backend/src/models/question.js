@@ -24,18 +24,18 @@ export class Question {
   }
 
   loadQuestion(result) {
-    con.query("SELECT * FROM questions", (err, res) => {
+    con.query("CALL load_questions", (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
       } else {
-        result(null, res);
+        result(null, res[0]);
       }
     });
   }
 
   deleteQuestion(id, result) {
-    con.query(`DELETE FROM questions WHERE question_id="${id}"`, (err, res) => {
+    con.query(`CALL delete_question("${id}")`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);

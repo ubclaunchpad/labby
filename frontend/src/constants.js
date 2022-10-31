@@ -1,6 +1,7 @@
 export const appColor = {
     gray: '#666666',
-    lightGray: '#EEEEEE'
+    lightGray: '#EEEEEE',
+    darkGray: '#909090'
 }
 
 export const backend = "https://labbybe.harinwu.com/"
