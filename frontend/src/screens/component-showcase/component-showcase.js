@@ -6,6 +6,7 @@ import { TextInput, TextInputMultiline } from "../../components/TextInput";
 import { AntdCard, DefaultCard } from "../../components/Card";
 import "./component-showcase.css";
 import { SingleSelect } from "../../components/SingleSelect/SingleSelect";
+import { ContactInfo } from "../../components/ContactInfo/ContactInfo";
 
 const ComponentShowcase = () => {
   return (
@@ -31,6 +32,8 @@ const ComponentShowcase = () => {
         <AntdCard>Something</AntdCard>
         <h3>Single Select</h3>
         <SingleSelect questionNumber = {3}/>
+        <h3>Contact Info </h3>
+        <ContactInfo questionNumber = {5}/>
 
       </div>
     </div>
