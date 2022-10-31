@@ -70,6 +70,7 @@
   width: 70%;
   border-radius: 5px;
   align-items: left;
+  border-radius: 10px;
 }
 
 .new-question-input-container {
