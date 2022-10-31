@@ -4,32 +4,64 @@ import "./index.css";
 import UploadIcon from "../../assets/FileUpload.png";
 import CloseIcon from "../../assets/Close.png";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { Checkbox } from "@mui/material";
+import { Checkbox, ClickAwayListener } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { SAVE_QUESTION } from "../../redux/actions/questionActions";
+import AWS from "aws-sdk";
 const { Dragger } = Upload;
 
 const defaultLabel = "File Input Title: ";
 
+const getDatetime = () => {
+  return new Date().toLocaleString().replaceAll("/", "");
+};
+
+const config = new AWS.Config({
+  // Deprecated method of passing accessKeyId and secretAccessKey -- could not get new method to work
+  accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
+  secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
+  region: "ca-central-1",
+});
+
 const props = {
   multiple: true,
-  action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-  onChange(info) {
-    const { status } = info.file;
-    if (status !== "uploading") {
-      console.log(info.file, info.fileList);
-    }
-    if (status === "done") {
-      message.success(`${info.file.name} file uploaded successfully!`);
-    } else if (status === "error") {
-      message.error(`${info.file.name} file upload failed.`);
-    }
+  customRequest({ file, onError, onProgress, onSuccess }) {
+    AWS.config.update(config);
+
+    const S3 = new AWS.S3({});
+    console.log("DEBUG filename: ", file.name);
+    console.log("DEBUG file type ", file.type);
+
+    const objParams = {
+      Bucket: "labby-app",
+      // TODO: Check how we should name object keys
+      Key: `fileInput/${getDatetime()}/${file.name}`,
+      Body: file,
+      ContentType: file.type,
+    };
+
+    // TODO: Need to change where it only uploads to bucket upon form submission
+    S3.putObject(objParams)
+      .on("httpUploadProgress", function ({ loaded, total }) {
+        onProgress(
+          {
+            percent: Math.round((loaded / total) * 100),
+          },
+          file
+        );
+      })
+      .send(function (err, data) {
+        if (err) {
+          onError();
+          console.log("Issue in S3.putObject.send()");
+          console.log(`Error Code: ${err.code}`);
+          console.log(`Error Message: ${err.message}`);
+        } else {
+          onSuccess(data.response, file);
+          console.log("Send completed in S3.putObject.send()");
+        }
+      });
   },
-  onDrop(e) {
-    console.log("Dropped files", e.dataTransfer.files);
-  },
-  progress: { strokeWidth: 2, showInfo: true },
-  className: "upload-file-component",
 };
 
 export const FileInput = ({ questionNumber }) => {
@@ -53,6 +85,7 @@ export const FileInput = ({ questionNumber }) => {
           name="name"
           value={questionName}
           onChange={(e) => {
+            // DOUBLE CHECK HOW THIS SHOULD GO ==========================
             setQuestionName(e.target.value);
             dispatch({
               type: SAVE_QUESTION,
