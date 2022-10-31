@@ -116,7 +116,7 @@ export const FileInput = ({ questionNumber }) => {
         </div>
       </div>
       <div className="upload-file-container">
-        <Dragger {...props}>
+        <Dragger {...props} className="upload-file">
           <img className="upload-icon" src={UploadIcon} alt="Upload File" />
           <p>Drag and Drop Files</p>
         </Dragger>

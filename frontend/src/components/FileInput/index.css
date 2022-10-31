@@ -130,7 +130,13 @@
   flex-direction: column;
   margin-top: 2%;
   width: 100%;
+  padding: 0px 14px 0px 14px;
   justify-content: center;
+}
+
+.upload-file {
+  /* Need to investigate further why the corners are not rounding... */
+  border-radius: 20px;
 }
 
 .upload-icon {
