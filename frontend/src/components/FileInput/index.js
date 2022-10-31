@@ -1,19 +1,22 @@
 import React, { useState } from "react";
-import { message, Upload } from "antd";
+import { Upload } from "antd";
 import "./index.css";
 import UploadIcon from "../../assets/FileUpload.png";
 import CloseIcon from "../../assets/Close.png";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { Checkbox, ClickAwayListener } from "@mui/material";
+import { Checkbox } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { SAVE_QUESTION } from "../../redux/actions/questionActions";
+import { REPLACE_QUESTION } from "../../redux/actions/questionActions";
 import AWS from "aws-sdk";
 const { Dragger } = Upload;
 
-const defaultLabel = "File Input Title: ";
-
 const getDatetime = () => {
-  return new Date().toLocaleString().replaceAll("/", "");
+  return new Date()
+    .toLocaleString("en-CA", {
+      hour12: false,
+    })
+    .replaceAll("/", "")
+    .replace(",", "");
 };
 
 const config = new AWS.Config({
@@ -67,7 +70,6 @@ const props = {
 export const FileInput = ({ questionNumber }) => {
   const dispatch = useDispatch();
   const [questionName, setQuestionName] = useState("");
-  const [options, setOptions] = useState([]);
   const questionList = useSelector(
     (state) => state.questionReducer.questionList
   );
@@ -88,14 +90,13 @@ export const FileInput = ({ questionNumber }) => {
             // DOUBLE CHECK HOW THIS SHOULD GO ==========================
             setQuestionName(e.target.value);
             dispatch({
-              type: SAVE_QUESTION,
+              type: REPLACE_QUESTION,
               payload: {
                 questionIndex: questionNumber,
                 questionObject: {
                   question_type: "fileInput",
                   question_title: questionName,
                   queston_index: questionNumber,
-                  question_options: options,
                   question_id: questionList[questionNumber].question_id,
                 },
               },
