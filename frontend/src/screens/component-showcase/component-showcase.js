@@ -3,7 +3,7 @@ import React from "react";
 import Header from "../../components/Header";
 import { DropdownDefault, DropdownAdvanced } from "../../components/Dropdown";
 import { TextInput, TextInputMultiline } from "../../components/TextInput";
-import { FileInput } from "../../components/FileInput";
+import FileInput from "../../components/FileInput";
 import { AntdCard, DefaultCard } from "../../components/Card";
 import "./component-showcase.css";
 import { SingleSelect } from "../../components/SingleSelect";
@@ -32,11 +32,6 @@ const ComponentShowcase = () => {
         <h3>AntdCard (A container component)</h3>
         <AntdCard>Something</AntdCard>
 
-        <h3>FileInput</h3>
-        <FileInput questionNumber="1" />
-
-        <h3>FileInput</h3>
-        <FileInput questionNumber="2" />
         <h3>Single Select</h3>
         <SingleSelect questionNumber={3} />
         <h3>MultiSelect:</h3>
