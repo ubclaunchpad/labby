@@ -1,14 +1,9 @@
-import PropTypes from "prop-types";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-
 import "./index.css";
 import { useEffect, useState } from "react";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
-import { Checkbox, FormGroup } from "@mui/material";
+import { Checkbox } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { REPLACE_QUESTION } from "../../redux/actions/questionActions";
 

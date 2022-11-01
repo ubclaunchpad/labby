@@ -10,6 +10,8 @@ CALL save_question('RANDOM-ID-C','Contact Details','contact', 2);
 CALL save_question('RANDOM-ID-D','Study Title','textline', 3);
 CALL save_question('RANDOM-ID-E','Sample Dropdown','dropdown', 4);
 CALL save_question('RANDOM-ID-F','Sample Upload','upload', 5);
+CALL save_question('RANDOM-ID-G','Edit Your Text!','text', 6);
+CALL save_question('RANDOM-ID-H','Edit Your Single Choice!','single', 7);
 
 -- Populate Answers
 CALL save_answer('ANSWERID-B','Option1','multi', 'RANDOM-ID-B');

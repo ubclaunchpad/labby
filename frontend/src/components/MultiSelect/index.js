@@ -1,7 +1,3 @@
-import PropTypes from "prop-types";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-
 import "./index.css";
 import { useEffect, useState } from "react";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -12,7 +8,7 @@ import { Checkbox, FormGroup } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { REPLACE_QUESTION } from "../../redux/actions/questionActions";
 
-export const MultiSelect = ({ questionNumber }) => {
+function MultiSelect({ questionNumber }) {
   const [options, setOptions] = useState([]);
   const questionList = useSelector(
     (state) => state.questionReducer.questionList
@@ -29,7 +25,7 @@ export const MultiSelect = ({ questionNumber }) => {
   });
   const onNewOptionChange = (e) => {
     let newOptionsArray = options;
-    if (!newOptionsArray.includes(newOption.trim()) && newOption.trim() != "") {
+    if (!newOptionsArray.includes(newOption.trim()) && newOption.trim() !== "") {
       newOptionsArray.push(newOption);
       setOptions(newOptionsArray);
     }
@@ -178,4 +174,6 @@ export const MultiSelect = ({ questionNumber }) => {
       </div>
     </div>
   );
-};
+}
+
+export default MultiSelect;

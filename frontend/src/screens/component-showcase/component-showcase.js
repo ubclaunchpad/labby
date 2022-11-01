@@ -7,7 +7,7 @@ import { AntdCard, DefaultCard } from "../../components/Card";
 import "./component-showcase.css";
 import { ContactInfo } from "../../components/ContactInfo";
 import { SingleSelect } from "../../components/SingleSelect";
-import { MultiSelect } from "../../components/MultiSelect";
+import MultiSelect from "../../components/MultiSelect";
 
 const ComponentShowcase = () => {
   return (

@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
 import { appColor } from "../../constants";
 import DropdownEditor from "../Dropdown/DropdownEditor";
+import MultiSelect from "../MultiSelect";
+import { SingleSelect } from "../SingleSelect";
 import FormTitle from "./FormTitle";
 import "./index.css";
 
@@ -12,9 +14,9 @@ function FormBuilder() {
   function renderQuestion(question) {
     switch (question.question_type) {
       case "multi":
-        return question.question + " @ Q" + question.position_index;
+        return <MultiSelect questionNumber={question.position_index} />;
       case "single":
-        return question.question + " @ Q" + question.position_index;
+        return <SingleSelect questionNumber={question.position_index} />;
       case "text":
         return question.question + " @ Q" + question.position_index;
       case "dropdown":
