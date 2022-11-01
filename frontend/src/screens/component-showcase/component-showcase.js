@@ -5,7 +5,7 @@ import { DropdownDefault, DropdownAdvanced } from "../../components/Dropdown";
 import { TextInput, TextInputMultiline } from "../../components/TextInput";
 import { AntdCard, DefaultCard } from "../../components/Card";
 import "./component-showcase.css";
-import { ContactInfo } from "../../components/ContactInfo/ContactInfo";
+import { ContactInfo } from "../../components/ContactInfo";
 import { SingleSelect } from "../../components/SingleSelect";
 import { MultiSelect } from "../../components/MultiSelect";
 

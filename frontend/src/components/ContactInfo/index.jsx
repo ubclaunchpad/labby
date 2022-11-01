@@ -31,19 +31,19 @@ export const ContactInfo = ({ questionNumber }) => {
   useEffect(() => {
     const fields = { fullName, institution, email, telephone };
     console.log(fields);
-    // dispatch({
-    //   type: REPLACE_QUESTION,
-    //   payload: {
-    //     questionIndex: questionNumber,
-    //     questionObject: {
-    //       question_type: "contactInfo",
-    //       question_title: questionName,
-    //       queston_index: questionNumber,
-    //       question_options: fields,
-    //       question_id: questionList[questionNumber].question_id,
-    //     },
-    //   },
-    // });
+    dispatch({
+      type: REPLACE_QUESTION,
+      payload: {
+        questionIndex: questionNumber,
+        questionObject: {
+          question_type: "contactInfo",
+          question_title: questionName,
+          queston_index: questionNumber,
+          question_options: fields,
+          question_id: questionList[questionNumber].question_id,
+        },
+      },
+    });
   }, [fullName, institution, email, questionName, telephone]);
 
   return (
@@ -61,19 +61,19 @@ export const ContactInfo = ({ questionNumber }) => {
           value={questionName}
           onChange={(e) => {
             setQuestionName(e.target.value);
-            // dispatch({
-            //   type: REPLACE_QUESTION,
-            //   payload: {
-            //     questionIndex: questionNumber,
-            //     questionObject: {
-            //       question_type: "questionName",
-            //       question_title: questionName,
-            //       queston_index: questionNumber,
-            //       question_options: options,
-            //       question_id: questionList[questionNumber].question_id,
-            //     },
-            //   },
-            // });
+            dispatch({
+              type: REPLACE_QUESTION,
+              payload: {
+                questionIndex: questionNumber,
+                questionObject: {
+                  question_type: "questionName",
+                  question_title: questionName,
+                  queston_index: questionNumber,
+                  question_options: options,
+                  question_id: questionList[questionNumber].question_id,
+                },
+              },
+            });
           }}
         />
         <div className="question-close-button-container">
