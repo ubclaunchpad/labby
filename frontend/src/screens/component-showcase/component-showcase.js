@@ -1,7 +1,6 @@
 import React from "react";
 import Header from "../../components/Header";
 import { DropdownDefault, DropdownAdvanced } from "../../components/Dropdown";
-import { TextInput, TextInputMultiline } from "../../components/TextInput";
 import { AntdCard, DefaultCard } from "../../components/Card";
 import "./component-showcase.css";
 import { SingleSelect } from "../../components/SingleSelect";
@@ -17,12 +16,6 @@ const ComponentShowcase = () => {
 
         <h3>DropdownAdvanced</h3>
         <DropdownAdvanced />
-
-        <h3>TextInput</h3>
-        <TextInput questionNumber={1} />
-
-        {/* <h3>TextInputMultiline</h3>
-        <TextInputMultiline /> */}
 
         <h3>DefaultCard (A container component)</h3>
         <DefaultCard>Something</DefaultCard>
