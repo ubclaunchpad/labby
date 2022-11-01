@@ -1,13 +1,16 @@
-import React, { useState } from "react";
 import { Upload } from "antd";
 import "./index.css";
 import UploadIcon from "../../assets/FileUpload.png";
-import CloseIcon from "../../assets/Close.png";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import { Checkbox } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { REPLACE_QUESTION } from "../../redux/actions/questionActions";
 import AWS from "aws-sdk";
+
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Checkbox from "@mui/material/Checkbox";
+import X from "../../assets/X.png";
+import "./index.css";
+import "../../index.css";
+import { SAVE_QUESTION } from "../../redux/actions/questionActions";
+
 const { Dragger } = Upload;
 
 const getDatetime = () => {
@@ -37,7 +40,8 @@ const props = {
 
     const objParams = {
       Bucket: "labby-app",
-      // TODO: Check how we should name object keys
+      // TODO: Eventually change object key to question number + random generated ID/number
+      // need to save the randomly generated ID/number so it can also be retrieved
       Key: `fileInput/${getDatetime()}/${file.name}`,
       Body: file,
       ContentType: file.type,
@@ -67,76 +71,60 @@ const props = {
   },
 };
 
-export const FileInput = ({ questionNumber }) => {
+function FileInput({ question }) {
   const dispatch = useDispatch();
-  const [questionName, setQuestionName] = useState("");
-  const questionList = useSelector(
-    (state) => state.questionReducer.questionList
-  );
+  const [questionNum, setQuestionNum] = useState("");
+  const [title, setTitle] = useState("");
+
+  useEffect(() => {
+    console.log(question);
+    setQuestionNum(`Q${question.position_index}`);
+    setTitle(question.question);
+  }, [question]);
 
   return (
-    <div className="file-input-question-builder-container">
-      <div className="question-header-row">
-        <div className="question-number-container">
-          <div className="question-number-text">Q{questionNumber}</div>
-        </div>
+    <div className="GlobalEditorComponent">
+      <div className="GlobalEditorComponentHeader">
+        <div className="GlobalEditorQuestionNumber">{questionNum}</div>
         <input
-          className="question-name-input"
-          placeholder="Click to type your question here "
-          type="text"
-          name="name"
-          value={questionName}
-          onChange={(e) => {
-            // DOUBLE CHECK HOW THIS SHOULD GO ==========================
-            setQuestionName(e.target.value);
+          className="GlobalEditorQuestionTitleInput"
+          defaultValue={title}
+          placeholder="Type your form name here..."
+          onBlur={(text) => {
             dispatch({
-              type: REPLACE_QUESTION,
+              type: SAVE_QUESTION,
               payload: {
-                questionIndex: questionNumber,
-                questionObject: {
-                  question_type: "fileInput",
-                  question_title: questionName,
-                  queston_index: questionNumber,
-                  question_id: questionList[questionNumber].question_id,
-                },
+                ...question,
+                question_title: text.target.value,
+                question_index: question.position_index,
               },
             });
           }}
         />
-        <div className="question-close-button-container">
-          <button
-            className="question-cancel-button"
-            onClick={() => {
-              console.log("Clicked the Remove Button");
-              // TODO: Add remove function
-            }}
-          >
-            <img className="close-icon" src={CloseIcon} alt="Close Question" />
-          </button>
-        </div>
+        <img
+          className="GlobalEditorDelete"
+          src={X}
+          alt="Delete"
+          onClick={() => {
+            console.log("Delete");
+          }}
+        />
       </div>
       <div className="upload-file-container">
-        <Dragger {...props} className="upload-file">
+        <Dragger {...props} style={{ borderRadius: 10 }}>
           <img className="upload-icon" src={UploadIcon} alt="Upload File" />
           <p>Drag and Drop Files</p>
         </Dragger>
       </div>
-      <div className="question-footer-row">
-        <div className="question-logic-added-sign">Logic Added</div>
-        <div className="question-required-checkbox">
-          <FormControlLabel
-            control={
-              <Checkbox
-                sx={{
-                  color: "#AEAEAE",
-                }}
-                // onChange={handleChange}
-              />
-            }
-            label={"Required"}
-          />
+      <div className="GlobalEditorComponentFooter">
+        <div className="GlobalEditorLogicAdded">Logic Added</div>
+        <div className="GlobalEditorRequiredQuestion">
+          <Checkbox style={{ color: "#AEAEAE", padding: 3 }} />
+          Required
         </div>
       </div>
     </div>
   );
-};
+}
+
+export default FileInput;
