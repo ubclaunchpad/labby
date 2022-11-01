@@ -1,21 +1,15 @@
-import PropTypes from "prop-types";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-
 import "./index.css";
 import { useEffect, useState } from "react";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
-import { Button, Checkbox } from "@mui/material";
+import { Checkbox } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   REPLACE_QUESTION,
-  SAVE_QUESTION,
 } from "../../redux/actions/questionActions";
 
 export const SingleSelect = ({ questionNumber }) => {
@@ -36,7 +30,7 @@ export const SingleSelect = ({ questionNumber }) => {
   });
   const onNewOptionChange = (e) => {
     let newOptionsArray = options;
-    if (!newOptionsArray.includes(newOption.trim()) && newOption.trim() != "") {
+    if (!newOptionsArray.includes(newOption.trim()) && newOption.trim() !== "") {
       newOptionsArray.push(newOption);
       setOptions(newOptionsArray);
     }

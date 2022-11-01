@@ -6,7 +6,15 @@ const defaultQuestionList = [];
 const questionList = (state = defaultQuestionList, action) => {
   switch (action.type) {
     case SET_QUESTION: {
-      return action.payload;
+      var questionIds = [];
+      var finalQuestions = [];
+      action.payload.forEach((question) => {
+        if (!questionIds.includes(question.question_id)) {
+          questionIds.push(question.question_id);
+          finalQuestions.push(question);
+        }
+      });
+      return finalQuestions;
     }
     case REPLACE_QUESTION: {
       const {questionIndex, questionObject} = action.payload; 
