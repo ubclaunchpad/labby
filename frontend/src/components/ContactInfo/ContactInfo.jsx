@@ -29,7 +29,7 @@ export const ContactInfo = ({ questionNumber }) => {
   const [questionName, setQuestionName] = useState("");
 
   useEffect(() => {
-    const fields = [fullName, institution, email, telephone];
+    const fields = { fullName, institution, email, telephone };
     console.log(fields);
     // dispatch({
     //   type: REPLACE_QUESTION,
