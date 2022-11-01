@@ -1,37 +1,55 @@
-import "./index.css";
+import PropTypes from "prop-types";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+
+import "./SingleSelect.css";
 import { useEffect, useState } from "react";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
-import { Checkbox, FormGroup } from "@mui/material";
+import { Button, Checkbox } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { REPLACE_QUESTION } from "../../redux/actions/questionActions";
+import { SAVE_QUESTION } from "../../redux/actions/questionActions";
 
-function MultiSelect({ questionNumber }) {
-  const [options, setOptions] = useState([]);
-  const questionList = useSelector(
-    (state) => state.questionReducer.questionList
-  );
-  useEffect(() => {
-    console.log(questionList);
-  }, [questionList]);
+export const SingleSelect = ({ questionNumber }) => {
+  /* TODO: add redux state to this component 
+  But is that to the save button when we save to the state or does it always just save to the state whenever we are 
+  adding anything to the inputs because that would be a big waste of rerendering and then storing to the redux state. 
+  */
+  const [options, setOptions] = useState([
+    "Cutting",
+    "Sauteeing",
+    "Filletting",
+    "Chopping",
+  ]);
 
   const dispatch = useDispatch();
+  const questionType = "SingleSelect";
   const [newOption, setNewOption] = useState("");
   const [questionName, setQuestionName] = useState("");
   const optionsMap = options.map((option, index) => {
-    return <FormControlLabel control={<Checkbox />} label={option} />;
+    return <FormControlLabel control={<Radio />} label={option} />;
   });
   const onNewOptionChange = (e) => {
+    console.log(e.target.value);
     let newOptionsArray = options;
-    if (!newOptionsArray.includes(newOption.trim()) && newOption.trim() !== "") {
+    if (!newOptionsArray.includes(newOption.trim()) && newOption.trim() != "") {
       newOptionsArray.push(newOption);
       setOptions(newOptionsArray);
     }
+    console.log(options);
   };
 
-  // When we figure out how to on delete:
+  useEffect(() => {
+    // Update the redux state here if we want to go that route
+    let question = { questionNumber, questionName, options };
+    console.log(question);
+  }, [questionName, questionNumber, options, questionType]);
+
   //   const onDelete = (index) => {
   //     console.log(index);
   //     let newOptionsArray = options;
@@ -47,26 +65,12 @@ function MultiSelect({ questionNumber }) {
         </div>
         <input
           className="question-name-input"
-          title="Add a question name "
           placeholder="Click to type your question here "
           type="text"
           name="name"
           value={questionName}
           onChange={(e) => {
             setQuestionName(e.target.value);
-            dispatch({
-              type: REPLACE_QUESTION,
-              payload: {
-                questionIndex: questionNumber,
-                questionObject: {
-                  question_type: "multiSelect",
-                  question_title: questionName,
-                  queston_index: questionNumber,
-                  question_options: options,
-                  question_id: questionList[questionNumber].question_id,
-                },
-              },
-            });
           }}
         />
         <div className="question-close-button-container">
@@ -74,6 +78,7 @@ function MultiSelect({ questionNumber }) {
             className="question-cancel-button"
             onClick={() => {
               console.log("Clicked the Remove Button");
+              // TODO: Add remove function
             }}
           >
             <FontAwesomeIcon icon={faX} className="question-cancel-icon" />
@@ -83,25 +88,28 @@ function MultiSelect({ questionNumber }) {
       <div className="single-select-options-container">
         <div className="single-select-options">
           <FormControl>
-            <FormGroup>
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              defaultValue="female"
+              name="radio-buttons-group"
+            >
               {options.map((option, index) => {
                 return (
                   <div className="single-select-option">
-                    <FormControlLabel control={<Checkbox />} label={option} />
+                    <FormControlLabel control={<Radio />} label={option} />
                   </div>
                 );
               })}
-            </FormGroup>
+            </RadioGroup>
             <div className="new-question-input-container">
-              <div className="new-question-checkbox">
-                <FormControlLabel control={<Checkbox />} />
+              <div className="new-question-radio">
+                <FormControlLabel control={<Radio />} />
               </div>
 
               <div>
                 <input
                   type="text"
                   className="new-question-input"
-                  title="Add an option"
                   value={newOption}
                   placeholder="Click to add new option "
                   onChange={(e) => {
@@ -111,38 +119,20 @@ function MultiSelect({ questionNumber }) {
                     onNewOptionChange(e);
                     setNewOption("");
                     dispatch({
-                      type: REPLACE_QUESTION,
+                      type: SAVE_QUESTION,
                       payload: {
-                        questionIndex: questionNumber,
-                        questionObject: {
-                          question_type: "multiSelect",
-                          question_title: questionName,
-                          queston_index: questionNumber,
-                          question_options: options,
-                          question_id: questionList[questionNumber].question_id,
-                        },
+                        questionId: 10,
+                        question_type: "singleSelect",
+                        question_title: questionName,
+                        queston_index: questionNumber,
+                        options,
                       },
                     });
                   }}
-                  //   If we want to have key down functionality as well:
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       onNewOptionChange(e);
                       setNewOption("");
-                      dispatch({
-                        type: REPLACE_QUESTION,
-                        payload: {
-                          questionIndex: questionNumber,
-                          questionObject: {
-                            question_type: "singleSelect",
-                            question_title: questionName,
-                            queston_index: questionNumber,
-                            question_options: options,
-                            question_id:
-                              questionList[questionNumber].question_id,
-                          },
-                        },
-                      });
                     }
                   }}
                 ></input>
@@ -152,12 +142,7 @@ function MultiSelect({ questionNumber }) {
         </div>
       </div>
       <div className="question-footer-row">
-        <div
-          className="question-logic-added-sign"
-          title="Make this question required"
-        >
-          Logic Added
-        </div>
+        <div className="question-logic-added-sign">Logic Added</div>
         <div className="question-required-checkbox">
           <FormControlLabel
             control={
@@ -165,7 +150,10 @@ function MultiSelect({ questionNumber }) {
                 sx={{
                   color: "#AEAEAE",
                 }}
+                // checked={isSelected}
                 // onChange={handleChange}
+                // color={color}
+                // checkedIcon={icon ? icon : undefined}
               />
             }
             label={"Required"}
@@ -174,6 +162,4 @@ function MultiSelect({ questionNumber }) {
       </div>
     </div>
   );
-}
-
-export default MultiSelect;
+};
