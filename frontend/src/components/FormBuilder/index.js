@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { appColor } from "../../constants";
 import DropdownEditor from "../Dropdown/DropdownEditor";
+import FileInput from "../FileInput";
 import FormTitle from "./FormTitle";
 import "./index.css";
 
@@ -24,7 +25,7 @@ function FormBuilder() {
       case "textline":
         return question.question + " @ Q" + question.position_index;
       case "upload":
-        return question.question + " @ Q" + question.position_index;
+        return <FileInput question={question} />;
       case "download":
         return question.question + " @ Q" + question.position_index;
       case "contact":
