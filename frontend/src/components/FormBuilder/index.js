@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { appColor } from "../../constants";
 import DropdownEditor from "../Dropdown/DropdownEditor";
+import TextAnswer from "../TextAnswer";
 import FormTitle from "./FormTitle";
 import "./index.css";
 
@@ -16,7 +17,7 @@ function FormBuilder() {
       case "single":
         return question.question + " @ Q" + question.position_index;
       case "text":
-        return question.question + " @ Q" + question.position_index;
+        return <TextAnswer question={question} />;
       case "dropdown":
         return <DropdownEditor question={question} />;
       case "heading":
