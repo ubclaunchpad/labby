@@ -1,0 +1,10 @@
+.text-box-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.text-box {
+  border-radius: 20px;
+}
