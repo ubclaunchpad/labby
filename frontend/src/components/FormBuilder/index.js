@@ -36,7 +36,7 @@ function FormBuilder() {
       case "download":
         return <FileDownload question={question} />;
       case "contact":
-        return <ContactInfo questionNumber={question.position_index} />;
+        return <ContactInfo question={question} />;
       default:
         return null;
     }

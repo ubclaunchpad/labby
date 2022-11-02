@@ -4,7 +4,7 @@ import UploadIcon from "../../assets/FileUpload.png";
 import AWS from "aws-sdk";
 
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Checkbox from "@mui/material/Checkbox";
 import X from "../../assets/X.png";
 import "./index.css";

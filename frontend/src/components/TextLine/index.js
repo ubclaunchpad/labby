@@ -1,5 +1,5 @@
 import { Input } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import X from "../../assets/X.png";
