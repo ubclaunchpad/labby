@@ -1,12 +1,11 @@
-import { render, screen } from "@testing-library/react"; // (or /dom, /vue, ...)
+import { render, screen } from "@testing-library/react";
 import { MultiSelect } from "./index";
-import * as redux from "react-redux";
 import { Provider } from "react-redux";
 import Store from "../../redux/store";
 import userEvent from "@testing-library/user-event";
 
 describe("A test suite for the single select component", () => {
-  it("renders a Single select with a textbox for the header and a textbox for the options", () => {
+  it("renders a Single select with a textbox for the header and a textbox for the options", async () => {
     render(
       <Provider store={Store}>
         <MultiSelect questionNumber={4} />
@@ -20,9 +19,9 @@ describe("A test suite for the single select component", () => {
     screen.getByTitle("Make this question required");
     userEvent.type(optionInput, "TestOption");
     userEvent.click(logicRequired);
-    screen.findByText("TestOption");
+    await screen.findByText("TestOption");
     userEvent.type(questionTitle, "TestQuestionName");
     userEvent.click(logicRequired);
-    screen.findByText("TestQuestionName");
+    await screen.findByText("TestQuestionName");
   });
 });

@@ -1,0 +1,11 @@
+.upload-file-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+}
+
+.upload-icon {
+  height: 5%;
+  width: 5%;
+}

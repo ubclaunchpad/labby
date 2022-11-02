@@ -1,175 +1,132 @@
 import "./index.css";
+import "../index.css";
 import { useEffect, useState } from "react";
+import X from "../../assets/X.png";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faX } from "@fortawesome/free-solid-svg-icons";
 import { Checkbox, FormGroup } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { REPLACE_QUESTION } from "../../redux/actions/questionActions";
+import uuid from "react-uuid";
+import {
+  SAVE_ANSWER,
+  SAVE_QUESTION,
+} from "../../redux/actions/questionActions";
 
-function MultiSelect({ questionNumber }) {
-  const [options, setOptions] = useState([]);
-  const questionList = useSelector(
-    (state) => state.questionReducer.questionList
-  );
-  useEffect(() => {
-    console.log(questionList);
-  }, [questionList]);
-
+function MultiSelect({ question }) {
   const dispatch = useDispatch();
-  const [newOption, setNewOption] = useState("");
-  const [questionName, setQuestionName] = useState("");
-  const optionsMap = options.map((option, index) => {
-    return <FormControlLabel control={<Checkbox />} label={option} />;
-  });
-  const onNewOptionChange = (e) => {
-    let newOptionsArray = options;
-    if (!newOptionsArray.includes(newOption.trim()) && newOption.trim() !== "") {
-      newOptionsArray.push(newOption);
-      setOptions(newOptionsArray);
-    }
-  };
 
-  // When we figure out how to on delete:
-  //   const onDelete = (index) => {
-  //     console.log(index);
-  //     let newOptionsArray = options;
-  //     newOptionsArray.splice(index, 1);
-  //     setOptions(newOptionsArray);
-  //   };
+  const [options, setOptions] = useState([]);
+  const answerList = useSelector((state) => state.questionReducer.answerList);
+
+  const [questionNum, setQuestionNum] = useState("");
+  const [title, setTitle] = useState("");
+
+  useEffect(() => {
+    console.log(question);
+    setQuestionNum(`Q${question.position_index}`);
+    setTitle(question.question);
+  }, [question]);
+
+  useEffect(() => {
+    console.log(answerList);
+    setOptions(answerList[question.question_id] ?? []);
+  }, [answerList, question]);
 
   return (
-    <div className="single-select-question-builder-container">
-      <div className="question-header-row">
-        <div className="question-number-container">
-          <div className="question-number-text">Q{questionNumber}</div>
-        </div>
+    <div className="GlobalEditorComponent">
+      <div className="GlobalEditorComponentHeader">
+        <div className="GlobalEditorQuestionNumber">{questionNum}</div>
         <input
-          className="question-name-input"
-          title="Add a question name "
-          placeholder="Click to type your question here "
-          type="text"
-          name="name"
-          value={questionName}
-          onChange={(e) => {
-            setQuestionName(e.target.value);
+          className="GlobalEditorQuestionTitleInput"
+          defaultValue={title}
+          placeholder="Type your form name here..."
+          onBlur={(text) => {
             dispatch({
-              type: REPLACE_QUESTION,
+              type: SAVE_QUESTION,
               payload: {
-                questionIndex: questionNumber,
-                questionObject: {
-                  question_type: "multiSelect",
-                  question_title: questionName,
-                  queston_index: questionNumber,
-                  question_options: options,
-                  question_id: questionList[questionNumber].question_id,
-                },
+                ...question,
+                question_title: text.target.value,
+                question_index: question.position_index,
               },
             });
           }}
         />
-        <div className="question-close-button-container">
-          <button
-            className="question-cancel-button"
-            onClick={() => {
-              console.log("Clicked the Remove Button");
-            }}
-          >
-            <FontAwesomeIcon icon={faX} className="question-cancel-icon" />
-          </button>
-        </div>
+        <img
+          className="GlobalEditorDelete"
+          src={X}
+          alt="Delete"
+          onClick={() => {
+            console.log("Delete");
+          }}
+        />
       </div>
+      {/* Copy Everything Except Content Below For Reusability */}
       <div className="single-select-options-container">
-        <div className="single-select-options">
-          <FormControl>
-            <FormGroup>
-              {options.map((option, index) => {
-                return (
-                  <div className="single-select-option">
-                    <FormControlLabel control={<Checkbox />} label={option} />
-                  </div>
-                );
-              })}
-            </FormGroup>
-            <div className="new-question-input-container">
-              <div className="new-question-checkbox">
-                <FormControlLabel control={<Checkbox />} />
-              </div>
+        <FormControl>
+          <FormGroup>
+            {options.map((option, index) => {
+              return (
+                <div className="single-select-option" key={index}>
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    label={option.answer}
+                  />
+                </div>
+              );
+            })}
+          </FormGroup>
+          <div className="new-question-input-container">
+            <div className="new-question-checkbox">
+              <FormControlLabel control={<Checkbox />} />
+            </div>
 
-              <div>
-                <input
-                  type="text"
-                  className="new-question-input"
-                  title="Add an option"
-                  value={newOption}
-                  placeholder="Click to add new option "
-                  onChange={(e) => {
-                    setNewOption(e.target.value);
-                  }}
-                  onBlur={(e) => {
-                    onNewOptionChange(e);
-                    setNewOption("");
+            <input
+              type="text"
+              className="new-question-input"
+              defaultValue={""}
+              placeholder="Click to add new option "
+              onBlur={(e) => {
+                const answerVal = e.target.value;
+                if (answerVal.trim() !== "") {
+                  dispatch({
+                    type: SAVE_ANSWER,
+                    payload: {
+                      answer_id: uuid(),
+                      fk_question_id: question.question_id,
+                      question_type: question.question_type,
+                      answer: answerVal,
+                    },
+                  });
+                }
+                e.target.value = "";
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  const answerVal = e.target.value;
+                  if (answerVal.trim() !== "") {
                     dispatch({
-                      type: REPLACE_QUESTION,
+                      type: SAVE_ANSWER,
                       payload: {
-                        questionIndex: questionNumber,
-                        questionObject: {
-                          question_type: "multiSelect",
-                          question_title: questionName,
-                          queston_index: questionNumber,
-                          question_options: options,
-                          question_id: questionList[questionNumber].question_id,
-                        },
+                        answer_id: uuid(),
+                        fk_question_id: question.question_id,
+                        question_type: question.question_type,
+                        answer: answerVal,
                       },
                     });
-                  }}
-                  //   If we want to have key down functionality as well:
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      onNewOptionChange(e);
-                      setNewOption("");
-                      dispatch({
-                        type: REPLACE_QUESTION,
-                        payload: {
-                          questionIndex: questionNumber,
-                          questionObject: {
-                            question_type: "singleSelect",
-                            question_title: questionName,
-                            queston_index: questionNumber,
-                            question_options: options,
-                            question_id:
-                              questionList[questionNumber].question_id,
-                          },
-                        },
-                      });
-                    }
-                  }}
-                ></input>
-              </div>
-            </div>
-          </FormControl>
-        </div>
+                  }
+                  e.target.value = "";
+                }
+              }}
+            />
+          </div>
+        </FormControl>
       </div>
-      <div className="question-footer-row">
-        <div
-          className="question-logic-added-sign"
-          title="Make this question required"
-        >
-          Logic Added
-        </div>
-        <div className="question-required-checkbox">
-          <FormControlLabel
-            control={
-              <Checkbox
-                sx={{
-                  color: "#AEAEAE",
-                }}
-                // onChange={handleChange}
-              />
-            }
-            label={"Required"}
-          />
+      {/* Copy Everything Except Content Above For Reusability */}
+      <div className="GlobalEditorComponentFooter">
+        <div className="GlobalEditorLogicAdded">Logic Added</div>
+        <div className="GlobalEditorRequiredQuestion">
+          <Checkbox style={{ color: "#AEAEAE", padding: 3 }} />
+          Required
         </div>
       </div>
     </div>

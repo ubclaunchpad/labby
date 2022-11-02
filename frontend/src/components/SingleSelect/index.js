@@ -1,93 +1,69 @@
 import "./index.css";
+import "../index.css";
 import { useEffect, useState } from "react";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faX } from "@fortawesome/free-solid-svg-icons";
+import X from "../../assets/X.png";
 import { Checkbox } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import uuid from "react-uuid";
 import {
-  REPLACE_QUESTION,
+  SAVE_ANSWER,
+  SAVE_QUESTION,
 } from "../../redux/actions/questionActions";
 
-export const SingleSelect = ({ questionNumber }) => {
-  const [options, setOptions] = useState([]);
-  const questionList = useSelector(
-    (state) => state.questionReducer.questionList
-  );
-  useEffect(() => {
-    console.log(questionList);
-  }, [questionList]);
-
+function SingleSelect({ question }) {
   const dispatch = useDispatch();
-  const questionType = "SingleSelect";
-  const [newOption, setNewOption] = useState("");
-  const [questionName, setQuestionName] = useState("");
-  const optionsMap = options.map((option, index) => {
-    return <FormControlLabel control={<Radio />} label={option} />;
-  });
-  const onNewOptionChange = (e) => {
-    let newOptionsArray = options;
-    if (!newOptionsArray.includes(newOption.trim()) && newOption.trim() !== "") {
-      newOptionsArray.push(newOption);
-      setOptions(newOptionsArray);
-    }
-  };
 
-  // When we figure out how to on delete:
-  //   const onDelete = (index) => {
-  //     console.log(index);
-  //     let newOptionsArray = options;
-  //     newOptionsArray.splice(index, 1);
-  //     setOptions(newOptionsArray);
-  //   };
+  const [options, setOptions] = useState([]);
+  const answerList = useSelector((state) => state.questionReducer.answerList);
+
+  const [questionNum, setQuestionNum] = useState("");
+  const [title, setTitle] = useState("");
+
+  useEffect(() => {
+    console.log(question);
+    setQuestionNum(`Q${question.position_index}`);
+    setTitle(question.question);
+  }, [question]);
+
+  useEffect(() => {
+    console.log(answerList);
+    setOptions(answerList[question.question_id] ?? []);
+  }, [answerList, question]);
 
   return (
-    <div className="single-select-question-builder-container">
-      <div className="question-header-row">
-        <div className="question-number-container">
-          <div className="question-number-text">Q{questionNumber}</div>
-        </div>
+    <div className="GlobalEditorComponent">
+      <div className="GlobalEditorComponentHeader">
+        <div className="GlobalEditorQuestionNumber">{questionNum}</div>
         <input
-          className="question-name-input"
-          title="Add a question name "
-          placeholder="Click to type your question here "
-          type="text"
-          name="name"
-          value={questionName}
-          onChange={(e) => {
-            setQuestionName(e.target.value);
+          className="GlobalEditorQuestionTitleInput"
+          defaultValue={title}
+          placeholder="Type your form name here..."
+          onBlur={(text) => {
             dispatch({
-              type: REPLACE_QUESTION,
+              type: SAVE_QUESTION,
               payload: {
-                questionIndex: questionNumber,
-                questionObject: {
-                  question_type: "singleSelect",
-                  question_title: questionName,
-                  queston_index: questionNumber,
-                  question_options: options,
-                  question_id: questionList[questionNumber].question_id,
-                },
+                ...question,
+                question_title: text.target.value,
+                question_index: question.position_index,
               },
             });
           }}
         />
-        <div className="question-close-button-container">
-          <button
-            className="question-cancel-button"
-            onClick={() => {
-              console.log("Clicked the Remove Button");
-              // TODO: Add remove function
-            }}
-          >
-            <FontAwesomeIcon icon={faX} className="question-cancel-icon" />
-          </button>
-        </div>
+        <img
+          className="GlobalEditorDelete"
+          src={X}
+          alt="Delete"
+          onClick={() => {
+            console.log("Delete");
+          }}
+        />
       </div>
+      {/* Copy Everything Except Content Below For Reusability */}
       <div className="single-select-options-container">
-        <div className="single-select-options">
           <FormControl>
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
@@ -96,8 +72,8 @@ export const SingleSelect = ({ questionNumber }) => {
             >
               {options.map((option, index) => {
                 return (
-                  <div className="single-select-option">
-                    <FormControlLabel control={<Radio />} label={option} />
+                  <div className="single-select-option" key={index}>
+                    <FormControlLabel control={<Radio />} label={option.answer} />
                   </div>
                 );
               })}
@@ -106,82 +82,59 @@ export const SingleSelect = ({ questionNumber }) => {
               <div className="new-question-radio">
                 <FormControlLabel control={<Radio />} />
               </div>
-
-              <div>
                 <input
                   type="text"
                   className="new-question-input"
                   title="Add an option"
-                  value={newOption}
-                  placeholder="Click to add new option "
-                  onChange={(e) => {
-                    setNewOption(e.target.value);
-                  }}
+                  defaultValue={""}
+                  placeholder="Click to add new option"
                   onBlur={(e) => {
-                    onNewOptionChange(e);
-                    setNewOption("");
-                    dispatch({
-                      type: REPLACE_QUESTION,
-                      payload: {
-                        questionIndex: questionNumber,
-                        questionObject: {
-                          question_type: "singleSelect",
-                          question_title: questionName,
-                          queston_index: questionNumber,
-                          question_options: options,
-                          question_id: questionList[questionNumber].question_id,
+                    const answerVal = e.target.value;
+                    if (answerVal.trim() !== "") {
+                      dispatch({
+                        type: SAVE_ANSWER,
+                        payload: {
+                          answer_id: uuid(),
+                          fk_question_id: question.question_id,
+                          question_type: question.question_type,
+                          answer: answerVal,
                         },
-                      },
-                    });
+                      });
+                    }
+                    e.target.value = "";
                   }}
                   //   If we want to have key down functionality as well:
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
-                      onNewOptionChange(e);
-                      setNewOption("");
-                      dispatch({
-                        type: REPLACE_QUESTION,
-                        payload: {
-                          questionIndex: questionNumber,
-                          questionObject: {
-                            question_type: "singleSelect",
-                            question_title: questionName,
-                            queston_index: questionNumber,
-                            question_options: options,
-                            question_id:
-                              questionList[questionNumber].question_id,
+                      const answerVal = e.target.value;
+                      if (answerVal.trim() !== "") {
+                        dispatch({
+                          type: SAVE_ANSWER,
+                          payload: {
+                            answer_id: uuid(),
+                            fk_question_id: question.question_id,
+                            question_type: question.question_type,
+                            answer: answerVal,
                           },
-                        },
-                      });
+                        });
+                      }
+                      e.target.value = "";
                     }
                   }}
-                ></input>
-              </div>
+                />
             </div>
           </FormControl>
-        </div>
       </div>
-      <div className="question-footer-row">
-        <div
-          className="question-logic-added-sign"
-          title="Make this question required"
-        >
-          Logic Added
-        </div>
-        <div className="question-required-checkbox">
-          <FormControlLabel
-            control={
-              <Checkbox
-                sx={{
-                  color: "#AEAEAE",
-                }}
-                // onChange={handleChange}
-              />
-            }
-            label={"Required"}
-          />
+      {/* Copy Everything Except Content Above For Reusability */}
+      <div className="GlobalEditorComponentFooter">
+        <div className="GlobalEditorLogicAdded">Logic Added</div>
+        <div className="GlobalEditorRequiredQuestion">
+          <Checkbox style={{ color: "#AEAEAE", padding: 3 }} />
+          Required
         </div>
       </div>
     </div>
   );
-};
+}
+
+export default SingleSelect;

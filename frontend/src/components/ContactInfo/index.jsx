@@ -7,7 +7,7 @@ import { Checkbox } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { REPLACE_QUESTION } from "../../redux/actions/questionActions";
 
-export const ContactInfo = ({ questionNumber }) => {
+function ContactInfo({ questionNumber }) {
   const [options, setOptions] = useState([]);
   const questionList = useSelector(
     (state) => state.questionReducer.questionList
@@ -88,7 +88,7 @@ export const ContactInfo = ({ questionNumber }) => {
           <input
             className="contact-info-user-input"
             type="text"
-            placeHolder="User Types Here... "
+            placeholder="User Types Here... "
             onBlur={(e) => {
               setFullName(e.target.value);
             }}
@@ -99,7 +99,7 @@ export const ContactInfo = ({ questionNumber }) => {
           <input
             className="contact-info-user-input"
             type="text"
-            placeHolder="User Types Here... "
+            placeholder="User Types Here... "
             onBlur={(e) => {
               setInstitution(e.target.value);
             }}
@@ -110,7 +110,7 @@ export const ContactInfo = ({ questionNumber }) => {
           <input
             className="contact-info-user-input"
             type="email"
-            placeHolder="User Types Here... "
+            placeholder="User Types Here... "
             onBlur={(e) => {
               setEmail(e.target.value);
             }}
@@ -121,7 +121,7 @@ export const ContactInfo = ({ questionNumber }) => {
           <input
             className="contact-info-user-input"
             type="number"
-            placeHolder="User Types Here... "
+            placeholder="User Types Here... "
             onBlur={(e) => {
               setTelephone(e.target.value);
             }}
@@ -153,3 +153,5 @@ export const ContactInfo = ({ questionNumber }) => {
     </div>
   );
 };
+
+export default ContactInfo;

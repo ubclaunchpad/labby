@@ -5,7 +5,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
+    min-height: 300px;
     padding: 20px;
 }
 
@@ -55,7 +55,6 @@
 .GlobalEditorComponentContent {
     display: flex;
     flex: 3;
-    background-color: yellow;
 }
 
 .GlobalEditorComponentFooter {

@@ -1,12 +1,16 @@
+import "./index.css";
 import { useSelector } from "react-redux";
 import { appColor } from "../../constants";
 import DropdownEditor from "../Dropdown/DropdownEditor";
 import FileInput from "../FileInput";
 import TextAnswer from "../TextAnswer";
 import MultiSelect from "../MultiSelect";
-import { SingleSelect } from "../SingleSelect";
+import SingleSelect from "../SingleSelect";
 import FormTitle from "./FormTitle";
-import "./index.css";
+import ContactInfo from "../ContactInfo";
+import FileDownload from "../FileDownload";
+import Heading from "../Heading";
+import TextLine from "../TextLine";
 
 function FormBuilder() {
   const questionList = useSelector(
@@ -16,23 +20,23 @@ function FormBuilder() {
   function renderQuestion(question) {
     switch (question.question_type) {
       case "multi":
-        return <MultiSelect questionNumber={question.position_index} />;
+        return <MultiSelect question={question} />;
       case "single":
-        return <SingleSelect questionNumber={question.position_index} />;
+        return <SingleSelect question={question} />;
       case "text":
         return <TextAnswer question={question} />;
       case "dropdown":
         return <DropdownEditor question={question} />;
       case "heading":
-        return question.question + " @ Q" + question.position_index;
+        return <Heading question={question} />;
       case "textline":
-        return question.question + " @ Q" + question.position_index;
+        return <TextLine question={question} />;
       case "upload":
         return <FileInput question={question} />;
       case "download":
-        return question.question + " @ Q" + question.position_index;
+        return <FileDownload question={question} />;
       case "contact":
-        return question.question + " @ Q" + question.position_index;
+        return <ContactInfo questionNumber={question.position_index} />;
       default:
         return null;
     }

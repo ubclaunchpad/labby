@@ -32,3 +32,20 @@ export const saveQuestions = async (payload) => {
     return console.error(err);
   }
 };
+
+export const saveAnswer = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      answer_id: payload.answer_id,
+      fk_question_id: payload.fk_question_id,
+      question_type: payload.question_type,
+      answer: payload.answer,
+    });
+
+    const questions = await axios.post("answer/", data);
+
+    return questions;
+  } catch (err) {
+    return console.error(err);
+  }
+};
