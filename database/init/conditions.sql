@@ -13,7 +13,8 @@ CREATE TABLE `conditions` (
 	condition_id VARCHAR(50) NOT NULL, 
 	fk_question_id VARCHAR(50),
 	fk_answer_id VARCHAR(50),
-	is_true BOOLEAN,
+	condition_type VARCHAR(50),
+	condition_parameter VARCHAR(50),
 	PRIMARY KEY (`condition_id`),
 	FOREIGN KEY (fk_question_id) REFERENCES questions(question_id),
 	FOREIGN KEY (fk_answer_id) REFERENCES questions_answer(answer_id)
