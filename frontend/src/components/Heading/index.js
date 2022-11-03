@@ -5,7 +5,7 @@ import Checkbox from "@mui/material/Checkbox";
 import X from "../../assets/X.png";
 import "./index.css";
 import "../index.css";
-import { SAVE_QUESTION } from "../../redux/actions/questionActions";
+import { DELETE_QUESTION, SAVE_QUESTION } from "../../redux/actions/questionActions";
 
 function Heading({ question }) {
   const dispatch = useDispatch();
@@ -42,7 +42,12 @@ function Heading({ question }) {
           src={X}
           alt="Delete"
           onClick={() => {
-            console.log("Delete");
+            dispatch({
+              type: DELETE_QUESTION,
+              payload: {
+                question_id: question.question_id,
+              },
+            });
           }}
         />
       </div>

@@ -35,20 +35,22 @@ const questionList = (state = defaultQuestionList, action) => {
 const answerList = (state = defaultAnswerList, action) => {
   switch (action.type) {
     case SET_ANSWER: {
+      var finalAnswers = {};
       action.payload.forEach((answer) => {
         if (answer.answer_id !== null) {
-          var answerForQuestion = state[answer.question_id] ?? [];
+          var answerForQuestion = finalAnswers[answer.question_id] ?? [];
           if (
             !answerForQuestion.find(
               ({ answer_id }) => answer_id === answer.answer_id
             )
           ) {
             answerForQuestion.push(answer);
-            state[answer.question_id] = answerForQuestion;
+            finalAnswers[answer.question_id] = answerForQuestion;
           }
         }
       });
-      return { ...state };
+      console.log(finalAnswers)
+      return finalAnswers;
     }
     default: {
       return state;

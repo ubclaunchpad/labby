@@ -32,9 +32,9 @@ router.get("/", (_, res) => {
     });
 });
 
-router.delete("/", (req, res) => {
+router.delete("/:questionId", (req, res) => {
   questionController
-    .deleteQuestion(req)
+    .deleteQuestion(req.params.questionId)
     .then((response) => {
       res.status(200).json(response);
     })

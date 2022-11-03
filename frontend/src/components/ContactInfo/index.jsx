@@ -1,12 +1,13 @@
 import "./index.css";
 import "../index.css";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Checkbox from "@mui/material/Checkbox";
 import X from "../../assets/X.png";
 import "./index.css";
 import "../index.css";
 import {
+  DELETE_QUESTION,
   SAVE_QUESTION,
 } from "../../redux/actions/questionActions";
 
@@ -14,13 +15,6 @@ function ContactInfo({ question }) {
   const dispatch = useDispatch();
   const [questionNum, setQuestionNum] = useState("");
   const [title, setTitle] = useState("");
-
-  const questionList = useSelector(
-    (state) => state.questionReducer.questionList
-  );
-  useEffect(() => {
-    console.log(questionList);
-  }, [questionList]);
 
   const [fullName, setFullName] = useState("");
   const [institution, setInstitution] = useState("");
@@ -62,14 +56,19 @@ function ContactInfo({ question }) {
           src={X}
           alt="Delete"
           onClick={() => {
-            console.log("Delete");
+            dispatch({
+              type: DELETE_QUESTION,
+              payload: {
+                question_id: question.question_id,
+              },
+            });
           }}
         />
       </div>
       {/* Copy Everything Except Content Below For Reusability */}
       <div className="contact-info-container">
         <div className="contact-info-row">
-          <span className="contact-info-field-label">First Name</span>
+          <span className="contact-info-field-label">Full Name</span>
           <input
             className="contact-info-user-input"
             type="text"

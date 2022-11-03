@@ -33,6 +33,16 @@ export const saveQuestions = async (payload) => {
   }
 };
 
+export const removeQuestion = async (payload) => {
+  try {
+    const questions = await axios.delete(`question/${payload.question_id}`);
+
+    return questions;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const saveAnswer = async (payload) => {
   try {
     var data = JSON.stringify({
@@ -42,9 +52,19 @@ export const saveAnswer = async (payload) => {
       answer: payload.answer,
     });
 
-    const questions = await axios.post("answer/", data);
+    const answers = await axios.post("answer/", data);
 
-    return questions;
+    return answers;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const removeAnswer = async (payload) => {
+  try {
+    const answers = await axios.delete(`answer/${payload.answer_id}`);
+
+    return answers;
   } catch (err) {
     return console.error(err);
   }

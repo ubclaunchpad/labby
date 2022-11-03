@@ -34,11 +34,11 @@ export default class QuestionController {
     });
   }
 
-  deleteQuestion(req) {
+  deleteQuestion(id) {
     return new Promise((resolve, reject) => {
       const QuestionModel = new Question();
 
-      QuestionModel.deleteQuestion(req.body.question_id, (err, result) => {
+      QuestionModel.deleteQuestion(id, (err, result) => {
         if (err) {
           reject({ error: err });
         }

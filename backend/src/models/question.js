@@ -35,7 +35,7 @@ export class Question {
   }
 
   deleteQuestion(id, result) {
-    con.query(`CALL delete_question("${id}")`, (err, res) => {
+    con.query(`CALL delete_question(?)`, [id], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);

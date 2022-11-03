@@ -22,9 +22,9 @@ router.post("/", (req, res) => {
 });
 
 
-router.delete("/", (req, res) => {
+router.delete("/:answerId", (req, res) => {
   answerController
-    .deleteAnswer(req)
+    .deleteAnswer(req.params.answerId)
     .then((response) => {
       res.status(200).json(response);
     })
