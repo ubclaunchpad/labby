@@ -4,8 +4,6 @@ DROP procedure IF EXISTS `load_questions`;
 
 DROP procedure IF EXISTS `load_questions_answers`;
 
-DROP procedure IF EXISTS `load_questions_answers`;
-
 DROP procedure IF EXISTS `load_conditions`;
  
  
