@@ -26,5 +26,8 @@ CALL save_cost('COSTID-B', 10.0, 'ANSWERID-B', 'ORG-A');
 CALL save_cost('COSTID-C', 10.0, 'ANSWERID-B', 'ORG-A');
 CALL save_cost('COSTID-D', 10.0, 'ANSWERID-B', 'ORG-A');
 
+-- Populate Condition
+CALL save_condition('CONDITION-A', 'RANDOM-ID-B', 'ANSWERID-B', 'multi','TRUE');
+CALL save_condition('CONDITION-B', 'RANDOM-ID-B', 'ANSWERID-C', 'multi','FALSE');
 
 
