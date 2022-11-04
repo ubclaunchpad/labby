@@ -16,20 +16,23 @@ CREATE PROCEDURE `save_question` (
    IN `_question_id` VARCHAR(50),
    IN `_question` VARCHAR(50),
    IN `_question_type` VARCHAR(50),
-   IN `_question_order` INT
+   IN `_question_order` INT,
+   IN `_mandatory` BOOLEAN
  
 ) BEGIN REPLACE INTO `questions` (
    `question_id`,
    `question`,
    `question_type`,
-   `position_index`
+   `position_index`,
+   `mandatory`
 )
 VALUES
    (
    `_question_id`,
    `_question`,
    `_question_type`,
-   `_question_order`
+   `_question_order`,
+   `_mandatory`
    );
   
 END $$
