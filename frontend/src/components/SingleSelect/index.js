@@ -148,7 +148,20 @@ function SingleSelect({ question }) {
       <div className="GlobalEditorComponentFooter">
         <div className="GlobalEditorLogicAdded">Logic Added</div>
         <div className="GlobalEditorRequiredQuestion">
-          <Checkbox style={{ color: "#AEAEAE", padding: 3 }} />
+          <Checkbox
+            style={{ color: "#AEAEAE", padding: 3 }}
+            checked={question.mandatory === 1}
+            onClick={(e) => {
+              dispatch({
+                type: SAVE_QUESTION,
+                payload: {
+                  ...question,
+                  mandatory: e.target.checked,
+                  question_index: question.position_index,
+                },
+              });
+            }}
+          />
           Required
         </div>
       </div>

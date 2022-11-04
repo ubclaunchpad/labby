@@ -10,6 +10,7 @@ export default class QuestionController {
         question_title: req.body.question_title,
         question_type: req.body.question_type,
         question_index: req.body.question_index,
+        mandatory: req.body.mandatory,
       };
 
       QuestionModel.insertQuestion(question, (err, result) => {

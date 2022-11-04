@@ -23,6 +23,7 @@ export const saveQuestions = async (payload) => {
       question_title: payload.question_title,
       question_type: payload.question_type,
       question_index: payload.question_index,
+      mandatory: payload.mandatory,
     });
 
     const questions = await axios.post("question/", data);
