@@ -75,3 +75,16 @@
     font-size: 16px;
     margin-bottom: 30px;
 }
+
+.FormBuilderQuestion--short {
+    border: 2px solid #666666;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 150px;
+    font-size: 16px;
+    margin-bottom: 30px;
+}

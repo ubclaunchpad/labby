@@ -8,3 +8,7 @@
 .text-box {
   border-radius: 20px;
 }
+
+.GlobalEditorComponent--textline{
+  min-height: 150px; 
+}
