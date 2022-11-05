@@ -1,10 +1,12 @@
-USE `labby.db`;
+USE `labby`;
  
 DROP procedure IF EXISTS `load_questions`;
 
 DROP procedure IF EXISTS `load_questions_answers`;
 
 DROP procedure IF EXISTS `load_conditions`;
+
+DROP procedure IF EXISTS `load_cost`;
  
  
 DELIMITER $$
@@ -12,18 +14,7 @@ DELIMITER $$
 CREATE PROCEDURE `load_questions` ()
 
 BEGIN
-    SELECT questions.*, questions_answer.answer_id, questions_answer.fk_question_id, questions_answer.answer, questions_cost.*
-    FROM
-        questions
-    
-    LEFT JOIN questions_answer
-        ON questions.question_id = questions_answer.fk_question_id
-
-    LEFT JOIN questions_cost
-        ON questions_answer.answer_id = questions_cost.fk_answer_id
-
-    ORDER BY 
-        position_index;
+    SELECT*FROM questions;
   
 END $$
 
@@ -34,7 +25,7 @@ BEGIN
     FROM
         questions
 
-    INNER JOIN questions_answer
+    LEFT JOIN questions_answer
         ON questions.question_id = questions_answer.fk_question_id
     
     ORDER BY 
@@ -46,6 +37,26 @@ CREATE PROCEDURE `load_conditions` ()
 
 BEGIN
     SELECT*FROM conditions;
+  
+END $$
+
+CREATE PROCEDURE `load_cost` ()
+
+BEGIN
+    SELECT question, answer, organization_name, cost
+    FROM
+        questions
+    
+    LEFT JOIN questions_answer
+        ON questions.question_id = questions_answer.fk_question_id
+
+    LEFT JOIN questions_cost
+        ON questions_answer.answer_id = questions_cost.fk_answer_id
+
+    LEFT JOIN organizations
+        ON organizations.organization_id = questions_cost.fk_organization_id
+    ORDER BY 
+        position_index;
   
 END $$
   
@@ -65,5 +76,6 @@ CALL save_answer('5','answer_six', 'type_two','1');
 
 CALL save_cost('0',100,'0');
 CALL save_cost('1',10,'1');
+
 
 
