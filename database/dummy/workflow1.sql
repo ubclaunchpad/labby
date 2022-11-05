@@ -19,14 +19,17 @@ CALL save_answer('ANSWERID-C','Option2','multi', 'RANDOM-ID-B');
 CALL save_answer('ANSWERID-D','Option3','multi', 'RANDOM-ID-B');
 
 -- Populate Organization
-CALL save_organization('ORG-A','ORG');
+CALL save_organization('ORG-A','ORG1');
+CALL save_organization('ORG-B','ORG2');
+CALL save_organization('ORG-C','ORG3');
 
 -- Populate Cost
 CALL save_cost('COSTID-B', 10.0, 'ANSWERID-B', 'ORG-A');
-CALL save_cost('COSTID-C', 10.0, 'ANSWERID-B', 'ORG-A');
-CALL save_cost('COSTID-D', 10.0, 'ANSWERID-B', 'ORG-A');
+CALL save_cost('COSTID-C', 10.0, 'ANSWERID-B', 'ORG-B');
+CALL save_cost('COSTID-D', 10.0, 'ANSWERID-B', 'ORG-C');
 
 -- Populate Condition
 CALL save_condition('CONDITION-A', 'RANDOM-ID-B', 'ANSWERID-B', 'multi','TRUE');
 CALL save_condition('CONDITION-B', 'RANDOM-ID-B', 'ANSWERID-C', 'multi','FALSE');
 
+12:46:05	CALL save_question('RANDOM-ID-A','My Sample Form','heading', 0)	Error Code: 1318. Incorrect number of arguments for PROCEDURE labby.save_question; expected 5, got 4	0.059 sec
