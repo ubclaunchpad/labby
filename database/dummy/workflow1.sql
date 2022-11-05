@@ -30,5 +30,3 @@ CALL save_cost('COSTID-D', 10.0, 'ANSWERID-B', 'ORG-A');
 CALL save_condition('CONDITION-A', 'RANDOM-ID-B', 'ANSWERID-B', 'multi','TRUE');
 CALL save_condition('CONDITION-B', 'RANDOM-ID-B', 'ANSWERID-C', 'multi','FALSE');
 
-12:00:42	CALL load_condition	Error Code: 1305. PROCEDURE labby.load_condition does not exist	0.060 sec
-
