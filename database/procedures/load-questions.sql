@@ -7,6 +7,8 @@ DROP procedure IF EXISTS `load_questions_answers`;
 DROP procedure IF EXISTS `load_conditions`;
 
 DROP procedure IF EXISTS `load_costs`;
+
+DROP procedure IF EXISTS `load_organization_costs`;
  
  
 DELIMITER $$
@@ -58,6 +60,23 @@ BEGIN
     ORDER BY 
         position_index;
   
+END $$
+
+CREATE PROCEDURE load_organization_costs (IN org VARCHAR(50))
+BEGIN
+SELECT question, answer, cost
+    FROM
+        questions
+    
+    LEFT JOIN questions_answer
+        ON questions.question_id = questions_answer.fk_question_id
+
+    LEFT JOIN questions_cost
+        ON questions_answer.answer_id = questions_cost.fk_answer_id
+        WHERE questions_cost.fk_organization_id = org
+
+    ORDER BY 
+        position_index;
 END $$
   
 DELIMITER ;
