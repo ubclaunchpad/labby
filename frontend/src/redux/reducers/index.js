@@ -1,11 +1,11 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from "redux";
 
-import questionReducer from './questionReducer';
-import logicReducer from './logicReducer';
+import questionReducer from "./questionReducer";
+import logicReducer from "./logicReducer";
 
 const rootReducer = combineReducers({
-    questionReducer,
-    logicReducer,
-})
+  questionReducer,
+  logicReducer,
+});
 
 export default rootReducer;
