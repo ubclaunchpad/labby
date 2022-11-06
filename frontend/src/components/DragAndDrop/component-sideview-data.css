@@ -1,0 +1,13 @@
+.draggableCardContent{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #666666;
+}
+.iconImage {
+    height: 20px;
+    width: 20px;
+    object-fit: contain;
+  }

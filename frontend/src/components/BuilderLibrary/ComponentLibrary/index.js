@@ -1,99 +1,77 @@
 import "./index.css";
-import { LibraryCard } from "../../Card";
-import MCIcon from "../../../assets/MultiChoice.png";
-import SCIcon from "../../../assets/SingleChoice.png";
-import TextAnswerIcon from "../../../assets/TextAnswer.png";
-import DropIcon from "../../../assets/Dropdown.png";
-import HeadingIcon from "../../../assets/Heading.png";
-import TextIcon from "../../../assets/TextLine.png";
-import UploadIcon from "../../../assets/FileUpload.png";
-import DownloadIcon from "../../../assets/FileDownload.png";
-import ContactIcon from "../../../assets/ContactInfo.png";
+import { useState } from "react";
+import { Draggable } from "react-beautiful-dnd";
+import StrictModeDroppable from "../../DragAndDrop/StrictModeDroppable";
+import styled from "styled-components";
+import { componentsSideViewData } from "../../DragAndDrop/component-sideview-dnd-data";
 
-const DraggableCard = ({ children }) => {
+const DraggableElementCard = styled.div``;
+const Clone = styled(DraggableElementCard)`
+  // + div {
+  //   display: none !important;
+  // }
+`;
+
+const DraggableElement = (props) => {
   return (
-    <LibraryCard>
-      <div className="draggableCardContent">{children}</div>
-    </LibraryCard>
+    <Draggable draggableId={props.id} index={props.index}>
+      {(provided, snapshot) => (
+        <>
+          <DraggableElementCard
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+            isDragging={snapshot.isDragging}
+          >
+            {props.ComponentToRender()}
+          </DraggableElementCard>
+          {/* {snapshot.isDragging && <Clone>{props.ComponentToRender()}</Clone>} */}
+        </>
+      )}
+    </Draggable>
+  );
+};
+
+const ElementSection = (props) => {
+  return (
+    <div className="elementContainer">
+      <div className="elementsTitle">{props.section.title}</div>
+      <StrictModeDroppable droppableId={props.section.id} isDropDisabled={true}>
+        {(provided) => (
+          <div ref={provided.innerRef} {...provided.droppableProps}>
+            {props.components.map((component, index) => (
+              <DraggableElement
+                ComponentToRender={component.component}
+                key={component.id}
+                id={component.id}
+                index={index}
+              />
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </StrictModeDroppable>
+    </div>
   );
 };
 
 function ComponentLibrary() {
+  const [sideviewData, setSideviewData] = useState(componentsSideViewData);
   return (
     <>
-      <div className="elementContainer">
-        <div className="elementsTitle">Question Elements</div>
-        <DraggableCard>
-          <img className="iconImage" src={MCIcon} alt="Multiple Choice" />{" "}
-          Multiple Choice
-        </DraggableCard>
-        <DraggableCard>
-          <img className="iconImage" src={SCIcon} alt="Single Selection" />{" "}
-          Single Selection
-        </DraggableCard>
-        <DraggableCard>
-          <img
-            className="iconImage"
-            src={TextAnswerIcon}
-            alt="Text
-          Answer"
-          />{" "}
-          Text Answer
-        </DraggableCard>
-        <DraggableCard>
-          <img className="iconImage" src={DropIcon} alt="Dropdown" /> Dropdown
-        </DraggableCard>
-      </div>
-
-      <div className="elementContainer">
-        <div className="elementsTitle">Layout Elements</div>
-        <DraggableCard>
-          <img className="iconImage" src={HeadingIcon} alt="Heading" /> Heading
-        </DraggableCard>
-        <DraggableCard>
-          <img
-            className="iconImage"
-            src={TextIcon}
-            alt="Text
-          Line"
-          />{" "}
-          Text Line
-        </DraggableCard>
-      </div>
-
-      <div className="elementContainer">
-        <div className="elementsTitle">Media Elements</div>
-        <DraggableCard>
-          <img
-            className="iconImage"
-            src={UploadIcon}
-            alt="File
-          Upload"
-          />{" "}
-          File Upload
-        </DraggableCard>
-        <DraggableCard>
-          <img
-            className="iconImage"
-            src={DownloadIcon}
-            alt="File
-          Download"
-          />{" "}
-          File Download
-        </DraggableCard>
-      </div>
-
-      <div className="elementContainer">
-        <div className="elementsTitle">Billing Elements</div>
-        <DraggableCard>
-          <img
-            className="iconImage"
-            src={ContactIcon}
-            alt="Contact Information"
-          />{" "}
-          Contact Information
-        </DraggableCard>
-      </div>
+      {sideviewData.sectionOrder.map((sectionId) => {
+        const section = sideviewData.sections[sectionId];
+        const components = section.componentIds.map(
+          (componentId) => sideviewData.components[componentId]
+        );
+        return (
+          <ElementSection
+            key={section.id}
+            section={section}
+            components={components}
+          />
+        );
+      })}
     </>
   );
 }
