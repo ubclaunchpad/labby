@@ -17,7 +17,7 @@ CREATE TABLE `questions_answer` (
 	PRIMARY KEY (`answer_id`),
 	FOREIGN KEY (fk_question_id) REFERENCES questions(question_id) ON DELETE CASCADE  
 );
-
+ 
 END$$
 
 DELIMITER ;
