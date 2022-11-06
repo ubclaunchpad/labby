@@ -52,7 +52,7 @@ END $$
 DELIMITER ;
 
 
-    -- A sample data set used to visualize joining tables
+-- A sample data set used to visualize joining tables
 CALL save_question('0','question_one','type_one');
 CALL save_question('1','question_two','type_two');
 

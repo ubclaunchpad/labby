@@ -49,7 +49,6 @@ const answerList = (state = defaultAnswerList, action) => {
           }
         }
       });
-      console.log(finalAnswers)
       return finalAnswers;
     }
     default: {

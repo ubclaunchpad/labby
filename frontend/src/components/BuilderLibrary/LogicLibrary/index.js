@@ -6,26 +6,57 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import DownArrow from "../../../assets/Arrow.png";
 import { appColor } from "../../../constants";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import {
+  SAVE_LOGIC,
+  SET_LOGIC_QUESTION,
+} from "../../../redux/actions/logicActions";
+import uuid from "react-uuid";
 
 function LogicLibrary() {
-  const rules = ["Display this question if", "Hide this question if"];
+  const dispatch = useDispatch();
+  const questionList = useSelector(
+    (state) => state.questionReducer.questionList
+  );
+  const answerList = useSelector((state) => state.questionReducer.answerList);
+  const selectedQuestion = useSelector(
+    (state) => state.logicReducer.currentLogicQuestion
+  );
 
-  const logicRule = "Display this question if";
+  const rules = ["Display this question if"];
+  const condition = ["Is Selected"];
+  const [selectedRule, setSelectedRule] = useState([]);
+
+  const [ifDisplay, setIfDisplay] = useState(rules[0]);
+  const [ifThisAnswer, setIfThisAnswer] = useState(null);
+  const [ifCondition, setIfCondition] = useState(condition[0]);
+
+  useEffect(() => {
+    if (!selectedQuestion && questionList.length > 1) {
+      dispatch({
+        type: SET_LOGIC_QUESTION,
+        payload: questionList[1],
+      });
+    }
+  }, [dispatch, selectedQuestion, questionList]);
 
   return (
     <div className="LogicView">
-      <div className="titleText">Display Logic</div>
+      <div className="titleText">{`Display Logic for Q${
+        selectedQuestion ? selectedQuestion.position_index : "1"
+      }`}</div>
       <div className="subtitleText">Rule</div>
       <div className="selectionBoxView">
         <Select
           className="selectBox"
           displayEmpty
-          value={logicRule}
-          onChange={(rule) => {
-            console.log(rule);
+          value={ifDisplay}
+          onChange={(e) => {
+            setIfDisplay(e.target.value);
           }}
           input={<OutlinedInput />}
-          renderValue={() => logicRule}
+          renderValue={(value) => value}
           inputProps={{ "aria-label": "Without label" }}
         >
           {rules.map((rule) => (
@@ -40,29 +71,54 @@ function LogicLibrary() {
       <div className="selectionBoxView">
         <Select
           className="selectBox"
-          displayEmpty
-          value={logicRule}
-          onChange={(rule) => {
-            console.log(rule);
+          value={ifThisAnswer ? ifThisAnswer : ""}
+          onChange={(e) => {
+            setIfThisAnswer(e.target.value);
           }}
           input={<OutlinedInput />}
-          renderValue={() => logicRule}
+          renderValue={(value) => value.question}
           inputProps={{ "aria-label": "Without label" }}
         >
-          {rules.map((rule) => (
-            <MenuItem key={rule} value={rule}>
-              {rule}
+          {questionList.slice(1).map((question) => (
+            <MenuItem key={question.question} value={question}>
+              {question.question}
             </MenuItem>
           ))}
         </Select>
-        <div className="answerSelectionBox">
-          {rules.map((rule) => (
-            <FormControlLabel
-              control={<Checkbox defaultChecked={false} />}
-              label={rule}
-            />
-          ))}
-        </div>
+        {ifThisAnswer &&
+          ifThisAnswer.question_id &&
+          answerList[ifThisAnswer.question_id] && (
+            <div className="answerSelectionBox">
+              {answerList[ifThisAnswer.question_id].map(
+                (answer) =>
+                  answer.answer && (
+                    <FormControlLabel
+                      key={answer.answer_id}
+                      control={
+                        <Checkbox
+                          defaultChecked={false}
+                          onClick={() => {
+                            if (selectedRule.includes(answer.answer_id)) {
+                              setSelectedRule(
+                                selectedRule.filter(
+                                  (item) => item !== answer.answer_id
+                                )
+                              );
+                            } else {
+                              setSelectedRule([
+                                ...selectedRule,
+                                answer.answer_id,
+                              ]);
+                            }
+                          }}
+                        />
+                      }
+                      label={answer.answer}
+                    />
+                  )
+              )}
+            </div>
+          )}
       </div>
       <img className="downArrowImage" src={DownArrow} alt="Down Arrow" />
       <div className="subtitleText">Condition</div>
@@ -70,15 +126,15 @@ function LogicLibrary() {
         <Select
           className="selectBox"
           displayEmpty
-          value={logicRule}
-          onChange={(rule) => {
-            console.log(rule);
+          value={ifCondition}
+          onChange={(e) => {
+            setIfCondition(e.target.value);
           }}
           input={<OutlinedInput />}
-          renderValue={() => logicRule}
+          renderValue={(value) => value}
           inputProps={{ "aria-label": "Without label" }}
         >
-          {rules.map((rule) => (
+          {condition.map((rule) => (
             <MenuItem key={rule} value={rule}>
               {rule}
             </MenuItem>
@@ -100,6 +156,21 @@ function LogicLibrary() {
           onMouseOut={(e) => {
             e.target.style.backgroundColor = appColor.lightGray;
             e.target.style.color = appColor.gray;
+          }}
+          onClick={() => {
+            selectedRule.forEach((rule) => {
+              dispatch({
+                type: SAVE_LOGIC,
+                payload: {
+                  condition_id: uuid(),
+                  question_id: selectedQuestion.question_id,
+                  answer_id: rule,
+                  condition_type: 2,
+                  parameters: true,
+                  result: true,
+                },
+              });
+            });
           }}
         >
           Save

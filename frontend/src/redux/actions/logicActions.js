@@ -1,0 +1,2 @@
+export const SET_LOGIC_QUESTION = "SET_LOGIC_QUESTION"
+export const SAVE_LOGIC = "SAVE_LOGIC"

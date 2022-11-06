@@ -15,6 +15,7 @@ import {
   SAVE_ANSWER,
   SAVE_QUESTION,
 } from "../../redux/actions/questionActions";
+import { SET_LOGIC_QUESTION } from "../../redux/actions/logicActions";
 
 function SingleSelect({ question }) {
   const dispatch = useDispatch();
@@ -43,7 +44,17 @@ function SingleSelect({ question }) {
   return (
     <div className="GlobalEditorComponent">
       <div className="GlobalEditorComponentHeader">
-        <div className="GlobalEditorQuestionNumber">{questionNum}</div>
+        <div
+          className="GlobalEditorQuestionNumber"
+          onClick={() => {
+            dispatch({
+              type: SET_LOGIC_QUESTION,
+              payload: question,
+            });
+          }}
+        >
+          {questionNum}
+        </div>
         <input
           className="GlobalEditorQuestionTitleInput"
           defaultValue={title}

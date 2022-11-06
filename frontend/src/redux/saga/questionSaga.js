@@ -1,4 +1,5 @@
 import { call, put, takeLatest } from "redux-saga/effects";
+import { SAVE_LOGIC } from "../actions/logicActions";
 import {
   DELETE_ANSWER,
   DELETE_QUESTION,
@@ -9,10 +10,17 @@ import {
   SET_LOADING,
   SET_QUESTION,
 } from "../actions/questionActions";
-import { getQuestions, removeAnswer, removeQuestion, saveAnswer, saveQuestions } from "../api/questionApi";
+import { saveLogics } from "../api/logicApi";
+import {
+  getQuestions,
+  removeAnswer,
+  removeQuestion,
+  saveAnswer,
+  saveQuestions,
+} from "../api/questionApi";
 
 export function* fetchQuestion() {
-  console.log("fetching")
+  console.log("fetching");
   yield put({ type: SET_LOADING, payload: true });
 
   const questions = yield call(getQuestions);
@@ -20,7 +28,7 @@ export function* fetchQuestion() {
   yield put({ type: SET_QUESTION, payload: questions.data });
   yield put({ type: SET_ANSWER, payload: questions.data });
   yield put({ type: SET_LOADING, payload: false });
-  yield put({type: SET_LOADING, payload: questions.data});
+  yield put({ type: SET_LOADING, payload: questions.data });
 }
 
 export function* saveQuestion({ payload }) {
@@ -33,14 +41,18 @@ export function* deleteQuestion({ payload }) {
   yield fetchQuestion();
 }
 
-export function* postAnswer({payload}) {
-  yield call(saveAnswer, payload); 
+export function* postAnswer({ payload }) {
+  yield call(saveAnswer, payload);
   yield fetchQuestion();
 }
 
-export function* deleteAnswer({payload}) {
+export function* deleteAnswer({ payload }) {
   yield call(removeAnswer, payload);
   yield fetchQuestion();
+}
+
+export function* saveLogic({ payload }) {
+  yield call(saveLogics, payload);
 }
 
 export default function* questionSaga() {
@@ -49,4 +61,5 @@ export default function* questionSaga() {
   yield takeLatest(DELETE_QUESTION, deleteQuestion);
   yield takeLatest(SAVE_ANSWER, postAnswer);
   yield takeLatest(DELETE_ANSWER, deleteAnswer);
+  yield takeLatest(SAVE_LOGIC, saveLogic);
 }
