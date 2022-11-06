@@ -17,6 +17,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import uuid from "react-uuid";
+import { SET_LOGIC_QUESTION } from "../../../redux/actions/logicActions";
 
 function DropdownEditor({ question }) {
   const dispatch = useDispatch();
@@ -44,7 +45,17 @@ function DropdownEditor({ question }) {
   return (
     <div className="GlobalEditorComponent">
       <div className="GlobalEditorComponentHeader">
-        <div className="GlobalEditorQuestionNumber">{questionNum}</div>
+        <div
+          className="GlobalEditorQuestionNumber"
+          onClick={() => {
+            dispatch({
+              type: SET_LOGIC_QUESTION,
+              payload: question,
+            });
+          }}
+        >
+          {questionNum}
+        </div>
         <input
           className="GlobalEditorQuestionTitleInput"
           defaultValue={title}

@@ -13,7 +13,7 @@ CREATE TABLE `organizations` (
 	organization_id VARCHAR(50) NOT NULL,
 	organization_name VARCHAR(50),
 	PRIMARY KEY (`organization_id`)
-);
+); 
 
 END$$
 

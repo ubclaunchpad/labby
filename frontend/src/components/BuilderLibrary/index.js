@@ -34,7 +34,7 @@ function BuilderLibrary() {
         </button>
       </div>
       <div className="ContentHolder">
-        {componentsMode ? ComponentLibrary() : LogicLibrary()}
+        {componentsMode ? <ComponentLibrary/> : <LogicLibrary/>}
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ CREATE TABLE `questions_cost` (
 	FOREIGN KEY (fk_answer_id) REFERENCES questions_answer(answer_id) ON DELETE CASCADE,
 	FOREIGN KEY (fk_organization_id) REFERENCES organizations(organization_id) ON DELETE CASCADE  
 );
-
+ 
 END$$
 
 DELIMITER ;

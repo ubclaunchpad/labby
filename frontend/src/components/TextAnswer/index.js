@@ -9,6 +9,7 @@ import {
   DELETE_QUESTION,
   SAVE_QUESTION,
 } from "../../redux/actions/questionActions";
+import { SET_LOGIC_QUESTION } from "../../redux/actions/logicActions";
 
 function TextAnswer({ question }) {
   const dispatch = useDispatch();
@@ -24,7 +25,17 @@ function TextAnswer({ question }) {
   return (
     <div className="GlobalEditorComponent">
       <div className="GlobalEditorComponentHeader">
-        <div className="GlobalEditorQuestionNumber">{questionNum}</div>
+        <div
+          className="GlobalEditorQuestionNumber"
+          onClick={() => {
+            dispatch({
+              type: SET_LOGIC_QUESTION,
+              payload: question,
+            });
+          }}
+        >
+          {questionNum}
+        </div>
         <input
           className="GlobalEditorQuestionTitleInput"
           defaultValue={title}
