@@ -1,6 +1,6 @@
 import { Upload } from "antd";
 import "./index.css";
-import UploadIcon from "../../assets/FileUpload.png";
+import DownloadIcon from "../../assets/FileDownload.png";
 import AWS from "aws-sdk";
 
 import { useEffect, useState } from "react";
@@ -16,15 +16,6 @@ import {
 import { SET_LOGIC_QUESTION } from "../../redux/actions/logicActions";
 
 const { Dragger } = Upload;
-
-const getDatetime = () => {
-  return new Date()
-    .toLocaleString("en-CA", {
-      hour12: false,
-    })
-    .replaceAll("/", "")
-    .replace(",", "");
-};
 
 const config = new AWS.Config({
   // Deprecated method of passing accessKeyId and secretAccessKey -- could not get new method to work
@@ -44,16 +35,13 @@ const props = {
 
     const objParams = {
       Bucket: "labby-app",
-      // TODO: Eventually change object key to question number + random generated ID/number
-      // need to save the randomly generated ID/number so it can also be retrieved
-      Key: `fileInput/${getDatetime()}/${file.name}`,
+      Key: `fileInput/${file.name}`,
       Body: file,
       ContentType: file.type,
     };
 
-    // TODO: Need to change where it only uploads to bucket upon form submission
     S3.putObject(objParams)
-      .on("httpUploadProgress", function ({ loaded, total }) {
+      .on("httpDownloadProgress", function ({ loaded, total }) {
         onProgress(
           {
             percent: Math.round((loaded / total) * 100),
@@ -79,7 +67,7 @@ function FileDownload({ question }) {
   const dispatch = useDispatch();
   const [questionNum, setQuestionNum] = useState("");
   const [title, setTitle] = useState("");
-
+  
   useEffect(() => {
     console.log(question);
     setQuestionNum(`Q${question.position_index}`);
@@ -129,10 +117,10 @@ function FileDownload({ question }) {
           }}
         />
       </div>
-      <div className="upload-file-container">
+      <div className="download-file-container">
         <Dragger {...props} style={{ borderRadius: 10 }}>
-          <img className="upload-icon" src={UploadIcon} alt="Upload File" />
-          <p>Drag and Drop Files</p>
+          <img className="download-icon" src={DownloadIcon} alt="Download File" />
+          <p>Download File</p>
         </Dragger>
       </div>
       <div className="GlobalEditorComponentFooter">
