@@ -12,7 +12,7 @@ const Clone = styled(DraggableElementCard)`
   // }
 `;
 
-const DraggableElement = (props) => {
+export const DraggableElement = (props) => {
   return (
     <Draggable draggableId={props.id} index={props.index}>
       {(provided, snapshot) => (
