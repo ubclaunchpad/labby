@@ -23,7 +23,7 @@ function TextLine({ question }) {
   }, [question]);
 
   return (
-    <div className="GlobalEditorComponent">
+    <div className="GlobalEditorComponent GlobalEditorComponent--textline">
       <div className="GlobalEditorComponentHeader">
         <div
           className="GlobalEditorQuestionNumber"
@@ -39,7 +39,7 @@ function TextLine({ question }) {
         <input
           className="GlobalEditorQuestionTitleInput"
           defaultValue={title}
-          placeholder="Type your form name here..."
+          placeholder="Type your text line here..."
           onBlur={(text) => {
             dispatch({
               type: SAVE_QUESTION,
@@ -65,48 +65,8 @@ function TextLine({ question }) {
           }}
         />
       </div>
-      <div className="text-box-container">
-        <Input.TextArea
-          placeholder="User types here..."
-          // onBlur={(text) => {
-          //   dispatch({
-          //     type: SAVE_QUESTION,
-          //     payload: {
-          //       ...question,
-          //       question_type: "textAnswer",
-          //       question_text: text.target.value,
-          //       question_index: question.position_index,
-          //     },
-          //   });
-          // }}
-
-          // TODO: Fix dispatch call
-          onBlur={() => {
-            console.log("TODO: Fix this dispatch call");
-          }}
-          rows={3}
-          className="text-box"
-        />
-      </div>
       <div className="GlobalEditorComponentFooter">
         <div className="GlobalEditorLogicAdded">Logic Added</div>
-        <div className="GlobalEditorRequiredQuestion">
-          <Checkbox
-            style={{ color: "#AEAEAE", padding: 3 }}
-            checked={question.mandatory === 1}
-            onClick={(e) => {
-              dispatch({
-                type: SAVE_QUESTION,
-                payload: {
-                  ...question,
-                  mandatory: e.target.checked,
-                  question_index: question.position_index,
-                },
-              });
-            }}
-          />
-          Required
-        </div>
       </div>
     </div>
   );
