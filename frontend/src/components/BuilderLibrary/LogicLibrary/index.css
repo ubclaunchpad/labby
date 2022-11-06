@@ -33,6 +33,8 @@
 }
 
 .answerSelectionBox {
+    flex: 1;
+    flex-direction: row;
     width: 100%;
     background-color: #909090;
     color: #666666;
@@ -41,6 +43,10 @@
     padding-left: 20px;
     padding-right: 20px;
     margin-top: 10px;
+}
+
+.answerSelectionBoxItem {
+    width: 100%;
 }
 
 .downArrowImage {
@@ -64,4 +70,5 @@
     font-size: 18px;
     font-weight: 600;
     transition-duration: 0.4s;
+    cursor: pointer;
 }

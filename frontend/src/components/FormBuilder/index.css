@@ -39,6 +39,7 @@
     font-size: 18px;
     font-weight: 600;
     transition-duration: 0.4s;
+    cursor: pointer;
 }
 
 .FormBuilderOutline {

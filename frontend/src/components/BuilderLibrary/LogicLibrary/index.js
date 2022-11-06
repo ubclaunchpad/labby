@@ -93,9 +93,11 @@ function LogicLibrary() {
                 (answer) =>
                   answer.answer && (
                     <FormControlLabel
+                      className="answerSelectionBoxItem"
                       key={answer.answer_id}
                       control={
                         <Checkbox
+                          style={{ color: appColor.gray }}
                           defaultChecked={false}
                           onClick={() => {
                             if (selectedRule.includes(answer.answer_id)) {
@@ -158,19 +160,23 @@ function LogicLibrary() {
             e.target.style.color = appColor.gray;
           }}
           onClick={() => {
-            selectedRule.forEach((rule) => {
-              dispatch({
-                type: SAVE_LOGIC,
-                payload: {
-                  condition_id: uuid(),
-                  question_id: selectedQuestion.question_id,
-                  answer_id: rule,
-                  condition_type: 2,
-                  parameters: true,
-                  result: true,
-                },
+            if (selectedRule.length > 0) {
+              selectedRule.forEach((rule) => {
+                dispatch({
+                  type: SAVE_LOGIC,
+                  payload: {
+                    condition_id: uuid(),
+                    question_id: selectedQuestion.question_id,
+                    answer_id: rule,
+                    condition_type: 2,
+                    parameters: true,
+                    result: true,
+                  },
+                });
               });
-            });
+            } else {
+              alert("Please select at least one answer");
+            }
           }}
         >
           Save
