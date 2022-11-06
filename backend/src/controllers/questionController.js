@@ -10,6 +10,7 @@ export default class QuestionController {
         question_title: req.body.question_title,
         question_type: req.body.question_type,
         question_index: req.body.question_index,
+        mandatory: req.body.mandatory,
       };
 
       QuestionModel.insertQuestion(question, (err, result) => {
@@ -34,11 +35,11 @@ export default class QuestionController {
     });
   }
 
-  deleteQuestion(req) {
+  deleteQuestion(id) {
     return new Promise((resolve, reject) => {
       const QuestionModel = new Question();
 
-      QuestionModel.deleteQuestion(req.body.question_id, (err, result) => {
+      QuestionModel.deleteQuestion(id, (err, result) => {
         if (err) {
           reject({ error: err });
         }

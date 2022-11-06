@@ -21,11 +21,11 @@ export default class AnswerController {
     });
   }
 
-  deleteAnswer(req) {
+  deleteAnswer(id) {
     return new Promise((resolve, reject) => {
       const AnswerModel = new Answer();
 
-      AnswerModel.deleteAnswer(req.body.answer_id, (err, result) => {
+      AnswerModel.deleteAnswer(id, (err, result) => {
         if (err) {
           reject({ error: err });
         }

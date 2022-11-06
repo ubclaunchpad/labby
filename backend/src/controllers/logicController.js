@@ -28,7 +28,7 @@ export default class LogicController {
         result: req.body.result,
       };
 
-      QuestionModel.insertLogic(condition, (err, result) => {
+      LogicModel.insertLogic(condition, (err, result) => {
         if (err) {
           reject({ error: err });
         }

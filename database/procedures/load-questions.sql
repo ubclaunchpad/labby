@@ -16,7 +16,18 @@ DELIMITER $$
 CREATE PROCEDURE `load_questions` ()
 
 BEGIN
-    SELECT*FROM questions;
+    SELECT questions.*, questions_answer.answer_id, questions_answer.fk_question_id, questions_answer.answer, questions_cost.*
+    FROM
+        questions
+    
+    LEFT JOIN questions_answer
+        ON questions.question_id = questions_answer.fk_question_id
+
+    LEFT JOIN questions_cost
+        ON questions_answer.answer_id = questions_cost.fk_answer_id
+
+    ORDER BY 
+        position_index;
   
 END $$
 
@@ -27,7 +38,7 @@ BEGIN
     FROM
         questions
 
-    LEFT JOIN questions_answer
+    INNER JOIN questions_answer
         ON questions.question_id = questions_answer.fk_question_id
     
     ORDER BY 
@@ -80,5 +91,4 @@ SELECT question, answer, cost
 END $$
   
 DELIMITER ;
-
 

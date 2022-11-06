@@ -2,16 +2,17 @@
 use labby;
 
 -- Populate the form title
-CALL save_question('RANDOM-ID-A','My Sample Form','heading', 0);
+CALL save_question('RANDOM-ID-A','My Sample Form','heading', 0, false);
 
 -- Populate some sample questions
-CALL save_question('RANDOM-ID-B','Request Type','multi', 1);
-CALL save_question('RANDOM-ID-C','Contact Details','contact', 2);
-CALL save_question('RANDOM-ID-D','Study Title','textline', 3);
-CALL save_question('RANDOM-ID-E','Sample Dropdown','dropdown', 4);
-CALL save_question('RANDOM-ID-F','Sample Upload','upload', 5);
-CALL save_question('RANDOM-ID-G','Edit Your Text!','text', 6);
-CALL save_question('RANDOM-ID-H','Edit Your Single Choice!','single', 7);
+CALL save_question('RANDOM-ID-B','Request Type','multi', 1, false);
+CALL save_question('RANDOM-ID-C','Contact Details','contact', 2, false);
+CALL save_question('RANDOM-ID-D','Study Title','textline', 3, false);
+CALL save_question('RANDOM-ID-E','Sample Dropdown','dropdown', 4, false);
+CALL save_question('RANDOM-ID-F','Sample Upload','upload', 5, false);
+CALL save_question('RANDOM-ID-G','Edit Your Text!','text', 6, false);
+CALL save_question('RANDOM-ID-H','Edit Your Single Choice!','single', 7, false);
+CALL save_question('RANDOM-ID-I','My Sample Heading','heading', 8, false);
 
 -- Populate Answers
 CALL save_answer('ANSWERID-B','Option1','multi', 'RANDOM-ID-B');
@@ -28,8 +29,7 @@ CALL save_cost('COSTID-B', 10.0, 'ANSWERID-B', 'ORG-A');
 CALL save_cost('COSTID-C', 10.0, 'ANSWERID-B', 'ORG-B');
 CALL save_cost('COSTID-D', 10.0, 'ANSWERID-B', 'ORG-C');
 
+
 -- Populate Condition
 CALL save_condition('CONDITION-A', 'RANDOM-ID-B', 'ANSWERID-B', 'multi','TRUE');
 CALL save_condition('CONDITION-B', 'RANDOM-ID-B', 'ANSWERID-C', 'multi','FALSE');
-
-12:46:05	CALL save_question('RANDOM-ID-A','My Sample Form','heading', 0)	Error Code: 1318. Incorrect number of arguments for PROCEDURE labby.save_question; expected 5, got 4	0.059 sec

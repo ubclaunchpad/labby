@@ -9,7 +9,11 @@ import Checkbox from "@mui/material/Checkbox";
 import X from "../../assets/X.png";
 import "./index.css";
 import "../../index.css";
-import { SAVE_QUESTION } from "../../redux/actions/questionActions";
+import {
+  DELETE_QUESTION,
+  SAVE_QUESTION,
+} from "../../redux/actions/questionActions";
+import { SET_LOGIC_QUESTION } from "../../redux/actions/logicActions";
 
 const { Dragger } = Upload;
 
@@ -85,7 +89,17 @@ function FileDownload({ question }) {
   return (
     <div className="GlobalEditorComponent">
       <div className="GlobalEditorComponentHeader">
-        <div className="GlobalEditorQuestionNumber">{questionNum}</div>
+        <div
+          className="GlobalEditorQuestionNumber"
+          onClick={() => {
+            dispatch({
+              type: SET_LOGIC_QUESTION,
+              payload: question,
+            });
+          }}
+        >
+          {questionNum}
+        </div>
         <input
           className="GlobalEditorQuestionTitleInput"
           defaultValue={title}
@@ -106,7 +120,12 @@ function FileDownload({ question }) {
           src={X}
           alt="Delete"
           onClick={() => {
-            console.log("Delete");
+            dispatch({
+              type: DELETE_QUESTION,
+              payload: {
+                question_id: question.question_id,
+              },
+            });
           }}
         />
       </div>
@@ -119,7 +138,20 @@ function FileDownload({ question }) {
       <div className="GlobalEditorComponentFooter">
         <div className="GlobalEditorLogicAdded">Logic Added</div>
         <div className="GlobalEditorRequiredQuestion">
-          <Checkbox style={{ color: "#AEAEAE", padding: 3 }} />
+          <Checkbox
+            style={{ color: "#AEAEAE", padding: 3 }}
+            checked={question.mandatory === 1}
+            onClick={(e) => {
+              dispatch({
+                type: SAVE_QUESTION,
+                payload: {
+                  ...question,
+                  mandatory: e.target.checked,
+                  question_index: question.position_index,
+                },
+              });
+            }}
+          />
           Required
         </div>
       </div>

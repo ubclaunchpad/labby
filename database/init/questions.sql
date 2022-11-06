@@ -14,6 +14,7 @@ CREATE TABLE `questions` (
   `question_type` VARCHAR(50),
   `question` VARCHAR(50),
   `position_index` INT,
+  `mandatory` BOOLEAN,
   PRIMARY KEY (`question_id`)
 );
 

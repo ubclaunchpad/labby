@@ -10,9 +10,12 @@ import { Checkbox } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import uuid from "react-uuid";
 import {
+  DELETE_ANSWER,
+  DELETE_QUESTION,
   SAVE_ANSWER,
   SAVE_QUESTION,
 } from "../../redux/actions/questionActions";
+import { SET_LOGIC_QUESTION } from "../../redux/actions/logicActions";
 
 function SingleSelect({ question }) {
   const dispatch = useDispatch();
@@ -31,13 +34,27 @@ function SingleSelect({ question }) {
 
   useEffect(() => {
     console.log(answerList);
-    setOptions(answerList[question.question_id] ?? []);
+    var optionList = answerList[question.question_id] ?? [];
+    if (!optionList.includes("")) {
+      optionList.push("");
+    }
+    setOptions(optionList);
   }, [answerList, question]);
 
   return (
     <div className="GlobalEditorComponent">
       <div className="GlobalEditorComponentHeader">
-        <div className="GlobalEditorQuestionNumber">{questionNum}</div>
+        <div
+          className="GlobalEditorQuestionNumber"
+          onClick={() => {
+            dispatch({
+              type: SET_LOGIC_QUESTION,
+              payload: question,
+            });
+          }}
+        >
+          {questionNum}
+        </div>
         <input
           className="GlobalEditorQuestionTitleInput"
           defaultValue={title}
@@ -58,78 +75,104 @@ function SingleSelect({ question }) {
           src={X}
           alt="Delete"
           onClick={() => {
-            console.log("Delete");
+            dispatch({
+              type: DELETE_QUESTION,
+              payload: {
+                question_id: question.question_id,
+              },
+            });
           }}
         />
       </div>
       {/* Copy Everything Except Content Below For Reusability */}
       <div className="single-select-options-container">
-          <FormControl>
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="female"
-              name="radio-buttons-group"
-            >
-              {options.map((option, index) => {
-                return (
-                  <div className="single-select-option" key={index}>
-                    <FormControlLabel control={<Radio />} label={option.answer} />
-                  </div>
-                );
-              })}
-            </RadioGroup>
-            <div className="new-question-input-container">
-              <div className="new-question-radio">
-                <FormControlLabel control={<Radio />} />
-              </div>
-                <input
-                  type="text"
-                  className="new-question-input"
-                  title="Add an option"
-                  defaultValue={""}
-                  placeholder="Click to add new option"
-                  onBlur={(e) => {
-                    const answerVal = e.target.value;
-                    if (answerVal.trim() !== "") {
-                      dispatch({
-                        type: SAVE_ANSWER,
-                        payload: {
-                          answer_id: uuid(),
-                          fk_question_id: question.question_id,
-                          question_type: question.question_type,
-                          answer: answerVal,
-                        },
-                      });
-                    }
-                    e.target.value = "";
-                  }}
-                  //   If we want to have key down functionality as well:
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
+        <FormControl>
+          <RadioGroup
+            aria-labelledby="demo-radio-buttons-group-label"
+            defaultValue="female"
+            name="radio-buttons-group"
+          >
+            {options.map((option, index) => {
+              return (
+                <div className="single-select-option" key={index}>
+                  <FormControlLabel control={<Radio />} />
+                  <input
+                    type="text"
+                    className="new-question-input"
+                    defaultValue={option.answer}
+                    placeholder="Click to add new option"
+                    onBlur={(e) => {
                       const answerVal = e.target.value;
                       if (answerVal.trim() !== "") {
                         dispatch({
                           type: SAVE_ANSWER,
                           payload: {
-                            answer_id: uuid(),
+                            answer_id: option.answer_id ?? uuid(),
                             fk_question_id: question.question_id,
                             question_type: question.question_type,
                             answer: answerVal,
                           },
                         });
+                      } else {
+                        dispatch({
+                          type: DELETE_ANSWER,
+                          payload: {
+                            answer_id: option.answer_id,
+                          },
+                        });
                       }
                       e.target.value = "";
-                    }
-                  }}
-                />
-            </div>
-          </FormControl>
+                    }}
+                    //   If we want to have key down functionality as well:
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        const answerVal = e.target.value;
+                        if (answerVal.trim() !== "") {
+                          dispatch({
+                            type: SAVE_ANSWER,
+                            payload: {
+                              answer_id: option.answer_id ?? uuid(),
+                              fk_question_id: question.question_id,
+                              question_type: question.question_type,
+                              answer: answerVal,
+                            },
+                          });
+                        } else {
+                          dispatch({
+                            type: DELETE_ANSWER,
+                            payload: {
+                              answer_id: option.answer_id,
+                            },
+                          });
+                        }
+                        e.target.value = "";
+                      }
+                    }}
+                  />
+                </div>
+              );
+            })}
+          </RadioGroup>
+        </FormControl>
       </div>
       {/* Copy Everything Except Content Above For Reusability */}
       <div className="GlobalEditorComponentFooter">
         <div className="GlobalEditorLogicAdded">Logic Added</div>
         <div className="GlobalEditorRequiredQuestion">
-          <Checkbox style={{ color: "#AEAEAE", padding: 3 }} />
+          <Checkbox
+            style={{ color: "#AEAEAE", padding: 3 }}
+            checked={question.mandatory === 1}
+            onClick={(e) => {
+              dispatch({
+                type: SAVE_QUESTION,
+                payload: {
+                  ...question,
+                  mandatory: e.target.checked,
+                  question_index: question.position_index,
+                },
+              });
+            }}
+          />
           Required
         </div>
       </div>
