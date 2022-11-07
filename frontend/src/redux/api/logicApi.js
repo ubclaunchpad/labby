@@ -37,11 +37,7 @@ export const getLogics = async () => {
 
 export const deleteLogic = async (payload) => {
   try {
-    var data = JSON.stringify({
-      logic_id: payload.logic_id,
-    });
-
-    const logics = await axios.delete("logic/", data);
+    const logics = await axios.delete(`logic/${payload.logic_id}`);
 
     return logics;
   } catch (err) {

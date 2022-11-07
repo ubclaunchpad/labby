@@ -10,5 +10,9 @@
 }
 
 .GlobalEditorComponent--textline{
-  min-height: 150px; 
+  min-height: 80px; 
+}
+
+.LogicPadding {
+  margin-top: 20px;
 }

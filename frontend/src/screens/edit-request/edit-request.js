@@ -11,6 +11,7 @@ import {
   componentsSideViewData,
 } from "../../components/DragAndDrop/component-sideview-dnd-data";
 import "./edit-request.css";
+import LogicView from "../../components/LogicView";
 
 function EditRequest() {
   const dispatch = useDispatch();
@@ -67,11 +68,11 @@ function EditRequest() {
     <div className="EditRequestPage">
       <div style={{ backgroundColor: "green", width: "100px" }}>{Header()}</div>
       <DragDropContext onDragEnd={dragEndHandler}>
-        {/* <div style={{ flex: 6 }}>{FormBuilder()}</div> */}
         <div style={{ flex: 6 }}>
           <FormBuilder data={data} />
         </div>
         <div style={{ flex: 2 }}>{BuilderLibrary()}</div>
+        <LogicView />
       </DragDropContext>
     </div>
   );

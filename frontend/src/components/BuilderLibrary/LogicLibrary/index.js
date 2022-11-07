@@ -42,7 +42,7 @@ function LogicLibrary() {
   }, [dispatch, selectedQuestion, questionList]);
 
   return (
-    <div className="LogicView">
+    <div className="LogicViewContainer">
       <div className="titleText">{`Display Logic for Q${
         selectedQuestion ? selectedQuestion.position_index : "1"
       }`}</div>
@@ -174,6 +174,7 @@ function LogicLibrary() {
                   },
                 });
               });
+              alert("Logic Saved!");
             } else {
               alert("Please select at least one answer");
             }

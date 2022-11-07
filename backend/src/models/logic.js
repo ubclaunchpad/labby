@@ -10,8 +10,19 @@ const Strategy = {
 };
 
 export class Logic {
+  getLogic(result) {
+    con.query(`CALL load_conditions()`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res[0]);
+      }
+    });
+  }
+
   deleteLogic(id, result) {
-    con.query(`DELETE FROM questions WHERE question_id="TODO"`, (err, res) => {
+    con.query(`CALL delete_condition(?)`, id, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);

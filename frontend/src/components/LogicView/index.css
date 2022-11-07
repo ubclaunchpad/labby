@@ -1,0 +1,68 @@
+.LogicContainer {
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+    background-color: #00000050;
+    position: absolute;
+}
+
+.LogicView {
+    width: 80vw;
+    height: 50vh;
+    z-index: 2;
+    background-color: white;
+    position: absolute;
+    top: 25%;
+    left: 10%;
+    border-radius: 10px;
+    padding: 30px;
+}
+
+.LogicTitle {
+    font-size: 20px;
+    font-weight: 600;
+    color: #666666;
+    margin-bottom: 10px;
+}
+
+.LogicText {
+    font-size: 16px;
+    color: #666666;
+}
+
+.LogicDivider {
+    background-color: #909090;
+    height: 2px;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.LogicArrow {
+    width: 15px;
+    height: 15px;
+    object-fit: contain;
+    align-self: center;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.LogicItem {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+    flex-direction: row;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.LogicDeleteButton {
+    height: 30px;
+    width: 75px;
+    border: 0;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}

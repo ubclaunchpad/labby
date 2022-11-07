@@ -75,6 +75,7 @@
     border: 1px solid #AEAEAE;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 /* Required (checkbox) */

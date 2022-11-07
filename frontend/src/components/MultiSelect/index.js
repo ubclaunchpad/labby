@@ -13,10 +13,12 @@ import {
   SAVE_ANSWER,
   SAVE_QUESTION,
 } from "../../redux/actions/questionActions";
-import { SET_LOGIC_QUESTION } from "../../redux/actions/logicActions";
+import { SET_LOGIC_QUESTION, SET_LOGIC_VIEW_QUESTION } from "../../redux/actions/logicActions";
+import { TOGGLE_LOGIC } from "../../redux/actions/uiActions";
 
 function MultiSelect({ question }) {
   const dispatch = useDispatch();
+  const logicList = useSelector((state) => state.logicReducer.logicList);
 
   const [options, setOptions] = useState([]);
   const answerList = useSelector((state) => state.questionReducer.answerList);
@@ -148,7 +150,25 @@ function MultiSelect({ question }) {
       </div>
       {/* Copy Everything Except Content Above For Reusability */}
       <div className="GlobalEditorComponentFooter">
-        <div className="GlobalEditorLogicAdded">Logic Added</div>
+      {logicList[question.question_id] ? (
+          <div
+            className="GlobalEditorLogicAdded"
+            onClick={() => {
+              dispatch({
+                type: TOGGLE_LOGIC,
+                payload: true,
+              });
+              dispatch({
+                type: SET_LOGIC_VIEW_QUESTION,
+                payload: question,
+              });
+            }}
+          >
+            Logic Added
+          </div>
+        ) : (
+          <div />
+        )}
         <div className="GlobalEditorRequiredQuestion">
           <Checkbox
             style={{ color: "#AEAEAE", padding: 3 }}
