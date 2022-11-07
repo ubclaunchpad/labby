@@ -14,7 +14,7 @@ import TextLine from "../TextLine";
 import { clsx } from "clsx";
 import { QuestionBuilder } from "../DragAndDrop/QuestionBuilder";
 
-function FormBuilder() {
+function FormBuilder(props) {
   const questionList = useSelector(
     (state) => state.questionReducer.questionList
   );
@@ -79,7 +79,7 @@ function FormBuilder() {
       <div className="ScrollBox FormBuilder">
         <div className="FormBuilderOutline">
           {/* Drag  and drop example */}
-          <QuestionBuilder />
+          <QuestionBuilder data={props.data}/>
           {/* End drag and drop */}
           {questionList.length ? (
             questionList.slice(1).map((question) => {

@@ -2,8 +2,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import StrictModeDroppable from "./StrictModeDroppable";
 import { DraggableElement } from "../BuilderLibrary/ComponentLibrary";
-import {QuestionData} from "./question-dnd-data";
-import {componentsSideViewData} from "./component-sideview-dnd-data.js";
+import { QuestionData } from "./question-dnd-data";
+import { componentsSideViewData } from "./component-sideview-dnd-data.js";
 
 const QuestionContainer = styled.div`
   border: ${(props) =>
@@ -20,8 +20,9 @@ const QuestionContainer = styled.div`
   margin-bottom: 30px;
 `;
 
-export const QuestionBuilder = () => {
-  const [data, setData] = useState(QuestionData);
+export const QuestionBuilder = (props) => {
+  // const [data, setData] = useState(QuestionData);
+  const data = props.data;
   return (
     <StrictModeDroppable droppableId="question-builder">
       {(provided, snapshot) => (
@@ -31,22 +32,20 @@ export const QuestionBuilder = () => {
           isDraggingOver={snapshot.isDraggingOver}
         >
           Drag and Drop to add components( Heading is an example)
-          {data.droppedComponentsIds.map((componentId, index) =>
-              {
-                const componentToRender =
-                  componentsSideViewData.components[componentId].component;
-                // const newComponentId = uuidv4();
-                const newComponentId = componentId;
-                return (
-                  <DraggableElement
-                    ComponentToRender={componentToRender}
-                    key={newComponentId}
-                    id={newComponentId}
-                    index={index}
-                  />
-                );
-              }
-            )}
+          {data.droppedComponentsIds.map((componentId, index) => {
+            const componentToRender =
+              componentsSideViewData.components[componentId].component;
+            // const newComponentId = uuidv4();
+            const newComponentId = componentId;
+            return (
+              <DraggableElement
+                ComponentToRender={componentToRender}
+                key={newComponentId}
+                id={newComponentId}
+                index={index}
+              />
+            );
+          })}
           {provided.placeholder}
         </QuestionContainer>
       )}
