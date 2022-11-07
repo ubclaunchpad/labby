@@ -2,6 +2,7 @@
 // And their initial order - which changes during  runtime as elements  are dragged around
 
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 
 import { LibraryCard } from "../Card";
 import "./component-sideview-data.css";
@@ -130,7 +131,7 @@ export const componentsSideViewData = {
       component: FileDownloadCard,
     },
     "contact-info": {
-      id: "contact-infor",
+      id: "contact-info",
       component: ContactInfoCard,
     },
   },
@@ -168,4 +169,12 @@ export const componentsSideViewData = {
     "media-elements",
     "billing-elements",
   ],
+};
+
+export const QuestionData = {
+  droppedComponents: [
+    { originId: "heading", id: uuidv4(), component: HeadingCard },
+  ],
+  "droppedComponentsOrder": []
+  // droppedComponentsOrder: ["heading"],
 };

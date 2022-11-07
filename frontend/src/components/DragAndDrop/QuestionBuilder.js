@@ -2,8 +2,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import StrictModeDroppable from "./StrictModeDroppable";
 import { DraggableElement } from "../BuilderLibrary/ComponentLibrary";
-import { QuestionData } from "./question-dnd-data";
 import { componentsSideViewData } from "./component-sideview-dnd-data.js";
+import { v4 as uuidv4 } from "uuid";
 
 const QuestionContainer = styled.div`
   border: ${(props) =>
@@ -21,8 +21,7 @@ const QuestionContainer = styled.div`
 `;
 
 export const QuestionBuilder = (props) => {
-  // const [data, setData] = useState(QuestionData);
-  const data = props.data;
+  const { data } = props;
   return (
     <StrictModeDroppable droppableId="question-builder">
       {(provided, snapshot) => (
@@ -31,12 +30,15 @@ export const QuestionBuilder = (props) => {
           {...provided.droppableProps}
           isDraggingOver={snapshot.isDraggingOver}
         >
-          Drag and Drop to add components( Heading is an example)
-          {data.droppedComponentsIds.map((componentId, index) => {
-            const componentToRender =
-              componentsSideViewData.components[componentId].component;
-            // const newComponentId = uuidv4();
-            const newComponentId = componentId;
+          Drag and Drop to add components:
+          {data.droppedComponentsOrder.map((componentId, index) => {
+            const componentToRenderObject = data.droppedComponents.filter(
+              (component) => {
+                return component.id === componentId;
+              }
+            );
+            const componentToRender = componentToRenderObject[0].component;
+            const newComponentId = componentToRenderObject[0].id;
             return (
               <DraggableElement
                 ComponentToRender={componentToRender}
