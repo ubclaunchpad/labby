@@ -29,8 +29,11 @@ function EditRequest() {
       //If element is not dropped in a QuestionBuilder
       return;
     }
-    if (result.source.droppableId === result.destination.droppableId) {
-      //TODO: enable reordering in Question dropbox later
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      //If element dragged around its own box and order of the draggable element didn't change
       return;
     }
     console.log(`
@@ -41,6 +44,19 @@ function EditRequest() {
         destination-id:${result.destination.droppableId}.
         destination-order:${result.destination.index}.
     `);
+
+    if (source.droppableId === destination.droppableId) {
+      //To reorder elements in Question dropbox
+      const newDroppedComponentsOrder = Array.from(data.droppedComponentsOrder);
+      newDroppedComponentsOrder.splice(source.index, 1);
+      newDroppedComponentsOrder.splice(destination.index, 0, draggableId);
+      const newData = {
+        ...data,
+        droppedComponentsOrder: newDroppedComponentsOrder,
+      };
+      setData(newData);
+      return;
+    }
 
     const newDroppedComponentId = uuidv4();
 
