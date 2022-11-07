@@ -79,8 +79,7 @@ function FormBuilder() {
         <div className="FormBuilderOutline">
           {questionList.length ? (
             questionList.slice(1).map((question) => {
-              const isHeadingOrTextline = question.question_type == "heading" || question.question_type == "textline"; 
-              console.log("this is the heading or textline --> ", question.question_type, isHeadingOrTextline); 
+              const isHeadingOrTextline = question.question_type === "heading" || question.question_type === "textline"; 
               return (
                 <div
                   className={clsx("FormBuilderQuestion", isHeadingOrTextline && "FormBuilderQuestion--short")}

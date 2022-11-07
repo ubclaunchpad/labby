@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { SAVE_LOGIC } from "../actions/logicActions";
+import { SAVE_LOGIC, SET_LOGIC } from "../actions/logicActions";
 import {
   DELETE_ANSWER,
   DELETE_QUESTION,
@@ -10,7 +10,7 @@ import {
   SET_LOADING,
   SET_QUESTION,
 } from "../actions/questionActions";
-import { saveLogics } from "../api/logicApi";
+import { getLogics, saveLogics } from "../api/logicApi";
 import {
   getQuestions,
   removeAnswer,
@@ -22,6 +22,10 @@ import {
 export function* fetchQuestion() {
   console.log("fetching");
   yield put({ type: SET_LOADING, payload: true });
+
+  const logic = yield call(getLogics);
+  
+  yield put({ type: SET_LOGIC, payload: logic.data });
 
   const questions = yield call(getQuestions);
 
@@ -53,6 +57,7 @@ export function* deleteAnswer({ payload }) {
 
 export function* saveLogic({ payload }) {
   yield call(saveLogics, payload);
+  yield fetchQuestion();
 }
 
 export default function* questionSaga() {

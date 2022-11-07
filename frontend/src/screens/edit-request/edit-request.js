@@ -5,6 +5,7 @@ import BuilderLibrary from "../../components/BuilderLibrary";
 import FormBuilder from "../../components/FormBuilder";
 import Header from "../../components/Header";
 import "./edit-request.css";
+import LogicView from "../../components/LogicView";
 
 function EditRequest() {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function EditRequest() {
       <div style={{ backgroundColor: "green", width: "100px" }}>{Header()}</div>
       <div style={{ flex: 6 }}>{FormBuilder()}</div>
       <div style={{ flex: 2 }}>{BuilderLibrary()}</div>
+      <LogicView />
     </div>
   );
 }

@@ -1,7 +1,5 @@
-import { Input } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import Checkbox from "@mui/material/Checkbox";
 import X from "../../assets/X.png";
 import "./index.css";
 import "../index.css";
@@ -9,10 +7,12 @@ import {
   DELETE_QUESTION,
   SAVE_QUESTION,
 } from "../../redux/actions/questionActions";
-import { SET_LOGIC_QUESTION } from "../../redux/actions/logicActions";
+import { SET_LOGIC_QUESTION, SET_LOGIC_VIEW_QUESTION } from "../../redux/actions/logicActions";
+import { TOGGLE_LOGIC } from "../../redux/actions/uiActions";
 
 function TextLine({ question }) {
   const dispatch = useDispatch();
+  const logicList = useSelector((state) => state.logicReducer.logicList);
   const [questionNum, setQuestionNum] = useState("");
   const [title, setTitle] = useState("");
 
@@ -66,7 +66,25 @@ function TextLine({ question }) {
         />
       </div>
       <div className="GlobalEditorComponentFooter">
-        <div className="GlobalEditorLogicAdded">Logic Added</div>
+        {logicList[question.question_id] ? (
+          <div
+            className="GlobalEditorLogicAdded LogicPadding"
+            onClick={() => {
+              dispatch({
+                type: TOGGLE_LOGIC,
+                payload: true,
+              });
+              dispatch({
+                type: SET_LOGIC_VIEW_QUESTION,
+                payload: question,
+              });
+            }}
+          >
+            Logic Added
+          </div>
+        ) : (
+          <div />
+        )}
       </div>
     </div>
   );
