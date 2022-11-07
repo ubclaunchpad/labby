@@ -1,63 +1,51 @@
 import "./index.css";
 import { NavLink } from "react-router-dom";
+import tasks from "../../assets/Tasks.png";
+import form from "../../assets/Form.png";
+import money from "../../assets/Money.png";
+import statistics from "../../assets/Statistics.png";
+import settings from "../../assets/Settings.png";
 
 function Header() {
   return (
-    <div data-testid="header">
-      <div className="Header">
-        <div className="HeaderImage">
-          {/* <img src={Labby} alt="Labby Logo" style={{ height: 50 }} /> */}
-        </div>
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            isActive ? "HeaderTitleActive" : "HeaderTitle"
-          }
-        >
-          Tasks
+    // <div className="header-container" data-testid="header">
+    <div className="Header">
+      <NavLink
+        to="/"
+        // className={({ isActive }) =>
+        //   isActive ? "HeaderTitleActive" : "HeaderTitle"
+        // }
+        className="header-navbar--title"
+      >
+        Labby
+      </NavLink>
+
+      {/* <hr>Idk why there is no hr here </hr> */}
+
+      <div className="header-navbar-navigation--buttons">
+        <NavLink to="/" className="header-navbar--navlink">
+          <img className="header-navbar--icon" src={tasks} alt="" />
         </NavLink>
-        <NavLink
-          data-testid="all-components"
-          to="/all-components"
-          className={({ isActive }) =>
-            isActive ? "HeaderTitleActive" : "HeaderTitle"
-          }
-        >
-          Components
+
+        <NavLink to="/billing" className="header-navbar--navlink">
+          <img className="header-navbar--icon" src={money} alt="" />
         </NavLink>
-        <NavLink
-          to="/billing"
-          className={({ isActive }) =>
-            isActive ? "HeaderTitleActive" : "HeaderTitle"
-          }
-        >
-          Billing
+
+        <NavLink to="/request" className="header-navbar--navlink">
+          <img className="header-navbar--icon--form" src={form} alt="" />
         </NavLink>
-        <NavLink
-          to="/users"
-          className={({ isActive }) =>
-            isActive ? "HeaderTitleActive" : "HeaderTitle"
-          }
-        >
-          Users
-        </NavLink>
-        <NavLink
-          to="/edit-request"
-          className={({ isActive }) =>
-            isActive ? "HeaderTitleActive" : "HeaderTitle"
-          }
-        >
-          Edit Request Form
-        </NavLink>
-        <NavLink
-          to="/request"
-          className={({ isActive }) =>
-            isActive ? "HeaderTitleActive" : "HeaderTitle"
-          }
-        >
-          Request Form
+
+        <NavLink to="./" className="header-navbar--navlink">
+          <img className="header-navbar--form" src={statistics} alt="" />
         </NavLink>
       </div>
+
+      <NavLink
+        to="/settings"
+        className="header-navbar--navlink header-navbar--settings-navlink"
+      >
+        <img className="header-navbar--form" src={settings} alt="" />
+      </NavLink>
     </div>
   );
 }
