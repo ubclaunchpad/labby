@@ -27,16 +27,16 @@ function Header() {
           <img className="header-navbar--icon" src={tasks} alt="" />
         </NavLink>
 
+        <NavLink to="/request" className="header-navbar--navlink">
+          <img className="header-navbar--icon--skinny" src={form} alt="" />
+        </NavLink>
+
         <NavLink to="/billing" className="header-navbar--navlink">
           <img className="header-navbar--icon" src={money} alt="" />
         </NavLink>
 
-        <NavLink to="/request" className="header-navbar--navlink">
-          <img className="header-navbar--icon--form" src={form} alt="" />
-        </NavLink>
-
         <NavLink to="./" className="header-navbar--navlink">
-          <img className="header-navbar--form" src={statistics} alt="" />
+          <img className="header-navbar--skinny" src={statistics} alt="" />
         </NavLink>
       </div>
 
