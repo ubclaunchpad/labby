@@ -53,5 +53,7 @@
 }
 
 hr {
-    border-top: 1px solid red;
+    border: 2px solid #757575;
+    width: 80%;
+    border-radius: 5px;
   }

@@ -20,7 +20,7 @@ function Header() {
         Labby
       </NavLink>
 
-      {/* <hr>Idk why there is no hr here </hr> */}
+      <hr></hr>
 
       <div className="header-navbar-navigation--buttons">
         <NavLink to="/" className="header-navbar--navlink">
