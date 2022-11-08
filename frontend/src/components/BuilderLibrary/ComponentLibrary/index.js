@@ -5,7 +5,9 @@ import StrictModeDroppable from "../../DragAndDrop/StrictModeDroppable";
 import styled from "styled-components";
 import { componentsSideViewData } from "../../DragAndDrop/component-sideview-dnd-data";
 
-const DraggableElementCard = styled.div``;
+const DraggableElementCard = styled.div`
+  width: 100%;
+`;
 const Clone = styled(DraggableElementCard)`
   // + div {
   //   display: none !important;

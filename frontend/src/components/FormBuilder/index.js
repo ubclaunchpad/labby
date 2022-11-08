@@ -77,10 +77,8 @@ function FormBuilder(props) {
         </div>
       </div>
       <div className="ScrollBox FormBuilder">
+        <QuestionBuilder data={props.data} />
         <div className="FormBuilderOutline">
-          {/* Drag  and drop example */}
-          <QuestionBuilder data={props.data} />
-          {/* End drag and drop */}
           {questionList.length ? (
             questionList.slice(1).map((question) => {
               const isHeadingOrTextline =
