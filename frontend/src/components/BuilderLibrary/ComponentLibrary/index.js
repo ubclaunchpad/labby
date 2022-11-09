@@ -1,5 +1,4 @@
 import "./index.css";
-import { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import StrictModeDroppable from "../../DragAndDrop/StrictModeDroppable";
 import styled from "styled-components";
@@ -7,11 +6,6 @@ import { componentsSideViewData } from "../../DragAndDrop/component-sideview-dnd
 
 const DraggableElementCard = styled.div`
   width: 100%;
-`;
-const Clone = styled(DraggableElementCard)`
-  // + div {
-  //   display: none !important;
-  // }
 `;
 
 export const DraggableElement = (props) => {
@@ -27,7 +21,6 @@ export const DraggableElement = (props) => {
           >
             {props.ComponentToRender()}
           </DraggableElementCard>
-          {/* {snapshot.isDragging && <Clone>{props.ComponentToRender()}</Clone>} */}
         </>
       )}
     </Draggable>
@@ -58,13 +51,12 @@ const ElementSection = (props) => {
 };
 
 function ComponentLibrary() {
-  const [sideviewData, setSideviewData] = useState(componentsSideViewData);
   return (
     <>
-      {sideviewData.sectionOrder.map((sectionId) => {
-        const section = sideviewData.sections[sectionId];
+      {componentsSideViewData.sectionOrder.map((sectionId) => {
+        const section = componentsSideViewData.sections[sectionId];
         const components = section.componentIds.map(
-          (componentId) => sideviewData.components[componentId]
+          (componentId) => componentsSideViewData.components[componentId]
         );
         return (
           <ElementSection

@@ -1,38 +1,32 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { DragDropContext } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
-import { LOAD_QUESTION } from "../../redux/actions/questionActions";
+import {
+  LOAD_QUESTION,
+  REORDER_QUESTION,
+  SAVE_QUESTION,
+} from "../../redux/actions/questionActions";
 import BuilderLibrary from "../../components/BuilderLibrary";
 import FormBuilder from "../../components/FormBuilder";
 import Header from "../../components/Header";
-import {
-  QuestionData,
-  componentsSideViewData,
-} from "../../components/DragAndDrop/component-sideview-dnd-data";
 import "./edit-request.css";
 import LogicView from "../../components/LogicView";
 
 function EditRequest() {
   const dispatch = useDispatch();
-  const questionList = useSelector(
-    (state) => state.questionReducer.questionList
-  );
 
   useEffect(() => {
     dispatch({ type: LOAD_QUESTION });
   }, [dispatch]);
 
-  const [data, setData] = useState(questionList);
-
   const dragEndHandler = (result) => {
-    console.log(result);
     const { destination, source, draggableId } = result;
-    const droppedOutside = !destination; //If element is not dropped in a QuestionBuilder
+    const droppedOutside = !destination; // If element is not dropped in a QuestionBuilder
     const droppedOnSamePlace =
       destination &&
       destination.droppableId === source.droppableId &&
-      destination.index === source.index; //If element dragged around its own box and order of the draggable element didn't change
+      destination.index === source.index; // If element dragged around its own box and order of the draggable element didn't change
     if (droppedOutside || droppedOnSamePlace) {
       return;
     }
@@ -46,38 +40,26 @@ function EditRequest() {
     `);
 
     if (source.droppableId === destination.droppableId) {
-      //To reorder elements in Question dropbox
-      const newDroppedComponentsOrder = Array.from(data.droppedComponentsOrder);
-      newDroppedComponentsOrder.splice(source.index, 1);
-      newDroppedComponentsOrder.splice(destination.index, 0, draggableId);
-      const newData = {
-        ...data,
-        droppedComponentsOrder: newDroppedComponentsOrder,
-      };
-      setData(newData);
+      // To reorder elements in Question dropbox
+      dispatch({
+        type: REORDER_QUESTION,
+        payload: {
+          sourcePosition: source.index,
+          destinationPosition: destination.index,
+        },
+      });
       return;
     }
 
-    const newDroppedComponentId = uuidv4();
+    const newQuestion = {
+      question_id: uuidv4(),
+      question_title: "Enter Question Title",
+      question_type: draggableId,
+      question_index: destination.index + 1,
+      mandatory: false,
+    }
 
-    const newDroppedComponentsOrder = Array.from(data.droppedComponentsOrder);
-    newDroppedComponentsOrder.push(newDroppedComponentId);
-
-    const newDroppedComponents = Array.from(data.droppedComponents);
-    const newDroppedComponent = {
-      originId: draggableId,
-      id: newDroppedComponentId,
-      component: componentsSideViewData.components[draggableId].component,
-    };
-    newDroppedComponents.push(newDroppedComponent);
-    console.log(newDroppedComponents);
-
-    const newData = {
-      ...data,
-      droppedComponents: newDroppedComponents,
-      droppedComponentsOrder: newDroppedComponentsOrder,
-    };
-    setData(newData);
+    dispatch({type: SAVE_QUESTION, payload: newQuestion});
   };
 
   return (

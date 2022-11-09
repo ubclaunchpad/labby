@@ -98,16 +98,16 @@ export const ContactInfoCard = () => {
 
 export const componentsSideViewData = {
   components: {
-    "multiple-choice": {
-      id: "multiple-choice",
+    "multi": {
+      id: "multi",
       component: MultipleChoiceCard,
     },
-    "single-selection": {
-      id: "single-selection",
+    "single": {
+      id: "single",
       component: SingleSelectionCard,
     },
-    "text-answer": {
-      id: "text-answer",
+    "text": {
+      id: "text",
       component: TextAnswerCard,
     },
     dropdown: {
@@ -118,20 +118,20 @@ export const componentsSideViewData = {
       id: "heading",
       component: HeadingCard,
     },
-    "text-line": {
-      id: "text-line",
+    "textline": {
+      id: "textline",
       component: TextLineCard,
     },
-    "file-upload": {
-      id: "file-upload",
+    "upload": {
+      id: "upload",
       component: FileUploadCard,
     },
-    "file-download": {
-      id: "file-download",
+    "download": {
+      id: "download",
       component: FileDownloadCard,
     },
-    "contact-info": {
-      id: "contact-info",
+    "contact": {
+      id: "contact",
       component: ContactInfoCard,
     },
   },
@@ -140,26 +140,26 @@ export const componentsSideViewData = {
       id: "question-elements",
       title: "Question Elements",
       componentIds: [
-        "multiple-choice",
-        "single-selection",
-        "text-answer",
+        "multi",
+        "single",
+        "text",
         "dropdown",
       ],
     },
     "layout-elements": {
       id: "layout-elements",
       title: "Layout Elements",
-      componentIds: ["heading", "text-line"],
+      componentIds: ["heading", "textline"],
     },
     "media-elements": {
       id: "media-elements",
       title: "Media Elements",
-      componentIds: ["file-upload", "file-download"],
+      componentIds: ["upload", "download"],
     },
     "billing-elements": {
       id: "billing-elements",
       title: "Billing Elements",
-      componentIds: ["contact-info"],
+      componentIds: ["contact"],
     },
   },
   //For reordering the sections

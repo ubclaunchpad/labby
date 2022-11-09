@@ -4,6 +4,8 @@ import {
   DELETE_ANSWER,
   DELETE_QUESTION,
   LOAD_QUESTION,
+  REARRANGE_QUESTION,
+  REORDER_QUESTION,
   SAVE_ANSWER,
   SAVE_QUESTION,
   SET_ANSWER,
@@ -15,6 +17,7 @@ import {
   getQuestions,
   removeAnswer,
   removeQuestion,
+  reorderQuestionAPI,
   saveAnswer,
   saveQuestions,
 } from "../api/questionApi";
@@ -60,6 +63,11 @@ export function* saveLogic({ payload }) {
   yield fetchQuestion();
 }
 
+export function* reorderQuestion({ payload }) {
+  yield call(reorderQuestionAPI, payload);
+  yield put({ type: REARRANGE_QUESTION, payload})
+}
+
 export default function* questionSaga() {
   yield takeLatest(LOAD_QUESTION, fetchQuestion);
   yield takeLatest(SAVE_QUESTION, saveQuestion);
@@ -67,4 +75,5 @@ export default function* questionSaga() {
   yield takeLatest(SAVE_ANSWER, postAnswer);
   yield takeLatest(DELETE_ANSWER, deleteAnswer);
   yield takeLatest(SAVE_LOGIC, saveLogic);
+  yield takeLatest(REORDER_QUESTION, reorderQuestion);
 }
