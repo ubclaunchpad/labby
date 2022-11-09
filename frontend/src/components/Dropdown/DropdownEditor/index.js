@@ -9,6 +9,7 @@ import "../../index.css";
 import {
   DELETE_ANSWER,
   DELETE_QUESTION,
+  LOAD_QUESTION,
   SAVE_ANSWER,
   SAVE_QUESTION,
 } from "../../../redux/actions/questionActions";
@@ -17,12 +18,18 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import uuid from "react-uuid";
-import { SET_LOGIC_QUESTION, SET_LOGIC_VIEW_QUESTION } from "../../../redux/actions/logicActions";
+import {
+  SET_LOGIC_QUESTION,
+  SET_LOGIC_VIEW_QUESTION,
+} from "../../../redux/actions/logicActions";
 import { TOGGLE_LOGIC } from "../../../redux/actions/uiActions";
 
 function DropdownEditor({ question }) {
   const dispatch = useDispatch();
   const logicList = useSelector((state) => state.logicReducer.logicList);
+  const questionList = useSelector(
+    (state) => state.questionReducer.questionList
+  );
   const [questionNum, setQuestionNum] = useState("");
   const [title, setTitle] = useState("");
 
@@ -71,6 +78,7 @@ function DropdownEditor({ question }) {
                 question_index: question.position_index,
               },
             });
+            dispatch({ type: LOAD_QUESTION });
           }}
         />
         <img
@@ -84,6 +92,14 @@ function DropdownEditor({ question }) {
                 question_id: question.question_id,
               },
             });
+            questionList.forEach((questionObj) => {
+              if (questionObj.position_index >= question.position_index) {
+                questionObj.question_index = questionObj.position_index - 1;
+                questionObj.question_title = questionObj.question;
+                dispatch({ type: SAVE_QUESTION, payload: questionObj });
+              }
+            });
+            dispatch({ type: LOAD_QUESTION });
           }}
         />
       </div>
@@ -192,6 +208,7 @@ function DropdownEditor({ question }) {
                   question_index: question.position_index,
                 },
               });
+              dispatch({ type: LOAD_QUESTION });
             }}
           />
           Required

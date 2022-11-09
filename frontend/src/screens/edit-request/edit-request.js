@@ -1,10 +1,9 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
 import {
   LOAD_QUESTION,
-  REORDER_QUESTION,
   SAVE_QUESTION,
 } from "../../redux/actions/questionActions";
 import BuilderLibrary from "../../components/BuilderLibrary";
@@ -15,6 +14,9 @@ import LogicView from "../../components/LogicView";
 
 function EditRequest() {
   const dispatch = useDispatch();
+  const questionList = useSelector(
+    (state) => state.questionReducer.questionList
+  );
 
   useEffect(() => {
     dispatch({ type: LOAD_QUESTION });
@@ -41,13 +43,28 @@ function EditRequest() {
 
     if (source.droppableId === destination.droppableId) {
       // To reorder elements in Question dropbox
-      dispatch({
-        type: REORDER_QUESTION,
-        payload: {
-          sourcePosition: source.index,
-          destinationPosition: destination.index,
-        },
+      const movedQuestion = questionList[source.index + 1];
+      questionList.forEach((questionObj) => {
+        if (questionObj.position_index >= source.index + 1) {
+          questionObj.question_index = questionObj.position_index - 1;
+          questionObj.position_index = questionObj.question_index;
+          questionObj.question_title = questionObj.question;
+          dispatch({ type: SAVE_QUESTION, payload: questionObj });
+        }
       });
+      questionList.forEach((questionObj) => {
+        if (questionObj.position_index >= destination.index + 1) {
+          questionObj.question_index = questionObj.position_index + 1;
+          questionObj.position_index = questionObj.question_index;
+          questionObj.question_title = questionObj.question;
+          dispatch({ type: SAVE_QUESTION, payload: questionObj });
+        }
+      });
+      movedQuestion.question_index = destination.index + 1;
+      movedQuestion.position_index = movedQuestion.question_index;
+      movedQuestion.question_title = movedQuestion.question;
+      dispatch({ type: SAVE_QUESTION, payload: movedQuestion });
+      dispatch({ type: LOAD_QUESTION });
       return;
     }
 
@@ -57,9 +74,20 @@ function EditRequest() {
       question_type: draggableId,
       question_index: destination.index + 1,
       mandatory: false,
-    }
+    };
 
-    dispatch({type: SAVE_QUESTION, payload: newQuestion});
+    dispatch({ type: SAVE_QUESTION, payload: newQuestion });
+    const indexLimit = destination.index + 1;
+
+    questionList.forEach((question) => {
+      if (question.position_index >= indexLimit) {
+        question.question_index = question.position_index + 1;
+        question.question_title = question.question;
+        dispatch({ type: SAVE_QUESTION, payload: question });
+      }
+    });
+
+    dispatch({ type: LOAD_QUESTION });
   };
 
   return (

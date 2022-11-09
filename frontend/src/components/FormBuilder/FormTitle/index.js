@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { appColor } from "../../../constants";
-import { SAVE_QUESTION } from "../../../redux/actions/questionActions";
+import { LOAD_QUESTION, SAVE_QUESTION } from "../../../redux/actions/questionActions";
 import "./index.css";
 
 function FormTitle() {
@@ -36,6 +36,7 @@ function FormTitle() {
               question_index: 0,
             },
           });
+          dispatch({ type: LOAD_QUESTION });
         }}
       />
     </div>
