@@ -42,19 +42,6 @@
     cursor: pointer;
 }
 
-.FormBuilderOutline {
-    border: 2px dashed #EEEEEE;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    padding: 10px;
-    padding-bottom: 200px;
-    margin-bottom: 100px;
-}
-
 .DragAndDropText {
     display: flex;
     flex-direction: column;
@@ -75,6 +62,7 @@
     min-height: 300px;
     font-size: 16px;
     margin-bottom: 30px;
+    background-color: white;
 }
 
 .FormBuilderQuestion--short {
@@ -88,4 +76,5 @@
     min-height: 80px;
     font-size: 16px;
     margin-bottom: 30px;
+    background-color: white;
 }

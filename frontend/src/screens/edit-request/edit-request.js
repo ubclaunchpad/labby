@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
@@ -15,34 +15,34 @@ import LogicView from "../../components/LogicView";
 
 function EditRequest() {
   const dispatch = useDispatch();
+  const questionList = useSelector(
+    (state) => state.questionReducer.questionList
+  );
 
   useEffect(() => {
     dispatch({ type: LOAD_QUESTION });
   }, [dispatch]);
 
-  const [data, setData] = useState(QuestionData);
+  const [data, setData] = useState(questionList);
 
   const dragEndHandler = (result) => {
-    // console.log(data);
+    console.log(result);
     const { destination, source, draggableId } = result;
-    if (!destination) {
-      //If element is not dropped in a QuestionBuilder
-      return;
-    }
-    if (
+    const droppedOutside = !destination; //If element is not dropped in a QuestionBuilder
+    const droppedOnSamePlace =
+      destination &&
       destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      //If element dragged around its own box and order of the draggable element didn't change
+      destination.index === source.index; //If element dragged around its own box and order of the draggable element didn't change
+    if (droppedOutside || droppedOnSamePlace) {
       return;
     }
     console.log(`
         Element dropped 
-        draggable id:${result.draggableId}. 
-        source-id:${result.source.droppableId}.
-        source-order:${result.source.index}.
-        destination-id:${result.destination.droppableId}.
-        destination-order:${result.destination.index}.
+        Dragged Element ID:${draggableId}. 
+        source-id:${source.droppableId}.
+        source-position:${source.index}.
+        destination-id:${destination.droppableId}.
+        destination-position:${destination.index}.
     `);
 
     if (source.droppableId === destination.droppableId) {
@@ -85,7 +85,7 @@ function EditRequest() {
       <div style={{ backgroundColor: "green", width: "100px" }}>{Header()}</div>
       <DragDropContext onDragEnd={dragEndHandler}>
         <div style={{ flex: 6 }}>
-          <FormBuilder data={data} />
+          <FormBuilder />
         </div>
         <div style={{ flex: 2 }}>{BuilderLibrary()}</div>
         <LogicView />

@@ -12,9 +12,27 @@ import FileDownload from "../FileDownload";
 import Heading from "../Heading";
 import TextLine from "../TextLine";
 import { clsx } from "clsx";
-import { QuestionBuilder } from "../DragAndDrop/QuestionBuilder";
 
-function FormBuilder(props) {
+import styled from "styled-components";
+import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
+import { DraggableElement } from "../BuilderLibrary/ComponentLibrary";
+
+const QuestionContainer = styled.div`
+  border: ${(props) =>
+    props.isDraggingOver ? "2px dashed #666666" : "2px dashed #EEEEEE"};
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 16px;
+  padding: 10px;
+  padding-bottom: 200px;
+  margin-bottom: 100px;
+`;
+
+function FormBuilder() {
   const questionList = useSelector(
     (state) => state.questionReducer.questionList
   );
@@ -77,32 +95,51 @@ function FormBuilder(props) {
         </div>
       </div>
       <div className="ScrollBox FormBuilder">
-        <QuestionBuilder data={props.data} />
-        <div className="FormBuilderOutline">
-          {questionList.length ? (
-            questionList.slice(1).map((question) => {
-              const isHeadingOrTextline =
-                question.question_type === "heading" ||
-                question.question_type === "textline";
-              return (
+        <StrictModeDroppable droppableId="question-builder">
+          {(provided, snapshot) => (
+            <QuestionContainer
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              isDraggingOver={snapshot.isDraggingOver}
+            >
+              {questionList.length ? (
+                questionList.slice(1).map((question, index) => {
+                  const isHeadingOrTextline =
+                    question.question_type === "heading" ||
+                    question.question_type === "textline";
+                  const componentToRender = () => (
+                    <div
+                      className={clsx(
+                        "FormBuilderQuestion",
+                        isHeadingOrTextline && "FormBuilderQuestion--short"
+                      )}
+                      key={question.question_id}
+                      style={{ color: appColor.gray }}
+                    >
+                      {renderQuestion(question)}
+                    </div>
+                  );
+                  return (
+                    <DraggableElement
+                      ComponentToRender={componentToRender}
+                      key={question.question_id}
+                      id={question.question_id}
+                      index={index}
+                    />
+                  );
+                })
+              ) : (
                 <div
-                  className={clsx(
-                    "FormBuilderQuestion",
-                    isHeadingOrTextline && "FormBuilderQuestion--short"
-                  )}
-                  key={question.question_id + question.answer_id}
+                  className="DragAndDropText"
                   style={{ color: appColor.gray }}
                 >
-                  {renderQuestion(question)}
+                  Drag and drop to add components
                 </div>
-              );
-            })
-          ) : (
-            <div className="DragAndDropText" style={{ color: appColor.gray }}>
-              Drag and drop to add components
-            </div>
+              )}
+              {provided.placeholder}
+            </QuestionContainer>
           )}
-        </div>
+        </StrictModeDroppable>
       </div>
     </div>
   );
