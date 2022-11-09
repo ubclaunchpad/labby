@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import {
+  REARRANGE_QUESTION,
   REPLACE_QUESTION,
   SET_ANSWER,
   SET_QUESTION,
@@ -25,6 +26,14 @@ const questionList = (state = defaultQuestionList, action) => {
       const { questionIndex, questionObject } = action.payload;
       state[questionIndex] = questionObject;
       return [...state];
+    }
+    case REARRANGE_QUESTION: {
+      const { sourcePosition, destinationPosition } = action.payload;
+      const first = state[0];
+      const arrangeList = state.slice(1);
+      const [removed] = arrangeList.splice(sourcePosition, 1);
+      arrangeList.splice(destinationPosition, 0, removed);
+      return [...[first], ...arrangeList]
     }
     default: {
       return state;

@@ -34,6 +34,21 @@ export const saveQuestions = async (payload) => {
   }
 };
 
+export const reorderQuestionAPI = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      sourcePosition: payload.sourcePosition,
+      destinationPosition: payload.destinationPosition
+    });
+
+    // const questions = await axios.post("question/", data);
+
+    // return questions;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const removeQuestion = async (payload) => {
   try {
     const questions = await axios.delete(`question/${payload.question_id}`);

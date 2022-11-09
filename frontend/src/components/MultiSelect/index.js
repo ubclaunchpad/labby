@@ -28,13 +28,13 @@ function MultiSelect({ question }) {
 
   useEffect(() => {
     console.log(question);
-    setQuestionNum(`Q${question.position_index}`);
-    setTitle(question.question);
+    setQuestionNum(`Q${question.position_index ?? 0}`);
+    setTitle(question.question ?? "");
   }, [question]);
 
   useEffect(() => {
     console.log(answerList);
-    var optionList = answerList[question.question_id] ?? [];
+    var optionList = answerList[question.question_id ?? ""] ?? [];
     if (!optionList.includes("")) {
       optionList.push("");
     }
