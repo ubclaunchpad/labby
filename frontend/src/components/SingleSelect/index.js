@@ -139,7 +139,6 @@ function SingleSelect({ question }) {
                           },
                         });
                       }
-                      e.target.value = "";
                     }}
                     //   If we want to have key down functionality as well:
                     onKeyDown={(e) => {
@@ -163,7 +162,6 @@ function SingleSelect({ question }) {
                             },
                           });
                         }
-                        e.target.value = "";
                       }
                     }}
                   />

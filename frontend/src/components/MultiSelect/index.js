@@ -132,7 +132,6 @@ function MultiSelect({ question }) {
                         },
                       });
                     }
-                    e.target.value = "";
                   }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
@@ -155,7 +154,6 @@ function MultiSelect({ question }) {
                           },
                         });
                       }
-                      e.target.value = "";
                     }
                   }}
                 />
