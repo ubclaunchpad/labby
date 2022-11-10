@@ -29,8 +29,9 @@
     align-items: center;
     height: 30%;
 }
+
 .header-navbar--navlink{
-   
+   display: flex;
 }
 
 .header-navbar--settings-navlink{

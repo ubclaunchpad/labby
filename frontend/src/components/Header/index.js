@@ -35,7 +35,7 @@ function Header() {
           <img className="header-navbar--icon" src={money} alt="" />
         </NavLink>
 
-        <NavLink to="./" className="header-navbar--navlink">
+        <NavLink to="/statistic" className="header-navbar--navlink">
           <img className="header-navbar--skinny" src={statistics} alt="" />
         </NavLink>
       </div>
