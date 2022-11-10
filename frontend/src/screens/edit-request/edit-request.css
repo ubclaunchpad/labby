@@ -4,3 +4,8 @@
     width: 100vw;
     height: 100vh;
 }
+
+.headerComponent{
+   width:6%;
+   min-width: 100px;
+}

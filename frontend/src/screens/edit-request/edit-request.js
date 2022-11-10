@@ -92,7 +92,7 @@ function EditRequest() {
 
   return (
     <div className="EditRequestPage">
-      <div style={{ backgroundColor: "green", width: "100px" }}>{Header()}</div>
+      <div className="headerComponent">{Header()}</div>
       <DragDropContext onDragEnd={dragEndHandler}>
         <div style={{ flex: 6 }}>
           <FormBuilder />
