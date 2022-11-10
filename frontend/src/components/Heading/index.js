@@ -5,14 +5,21 @@ import "./index.css";
 import "../index.css";
 import {
   DELETE_QUESTION,
+  LOAD_QUESTION,
   SAVE_QUESTION,
 } from "../../redux/actions/questionActions";
-import { SET_LOGIC_QUESTION, SET_LOGIC_VIEW_QUESTION } from "../../redux/actions/logicActions";
+import {
+  SET_LOGIC_QUESTION,
+  SET_LOGIC_VIEW_QUESTION,
+} from "../../redux/actions/logicActions";
 import { TOGGLE_LOGIC } from "../../redux/actions/uiActions";
 
 function Heading({ question }) {
   const dispatch = useDispatch();
   const logicList = useSelector((state) => state.logicReducer.logicList);
+  const questionList = useSelector(
+    (state) => state.questionReducer.questionList
+  );
   const [questionNum, setQuestionNum] = useState("");
   const [title, setTitle] = useState("");
 
@@ -49,6 +56,7 @@ function Heading({ question }) {
                 question_index: question.position_index,
               },
             });
+            dispatch({ type: LOAD_QUESTION });
           }}
         />
         <img
@@ -62,12 +70,20 @@ function Heading({ question }) {
                 question_id: question.question_id,
               },
             });
+            questionList.forEach((questionObj) => {
+              if (questionObj.position_index >= question.position_index) {
+                questionObj.question_index = questionObj.position_index - 1;
+                questionObj.question_title = questionObj.question;
+                dispatch({ type: SAVE_QUESTION, payload: questionObj });
+              }
+            });
+            dispatch({ type: LOAD_QUESTION });
           }}
         />
       </div>
 
       <div className="GlobalEditorComponentFooter">
-      {logicList[question.question_id] ? (
+        {logicList[question.question_id] ? (
           <div
             className="GlobalEditorLogicAdded LogicPadding"
             onClick={() => {

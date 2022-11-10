@@ -11,8 +11,8 @@ BEGIN
 
 CREATE TABLE `conditions` (
 	condition_id VARCHAR(50) NOT NULL, 
-	fk_question_id VARCHAR(50),
-	fk_answer_id VARCHAR(50),
+	fk_question_id VARCHAR(50) NOT NULL,
+	fk_answer_id VARCHAR(50) NOT NULL,
 	condition_type VARCHAR(50),
 	condition_parameter VARCHAR(50),
 	PRIMARY KEY (`condition_id`),

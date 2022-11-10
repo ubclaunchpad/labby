@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { SAVE_LOGIC, SET_LOGIC } from "../actions/logicActions";
 import {
   DELETE_ANSWER,
@@ -37,12 +37,10 @@ export function* fetchQuestion() {
 
 export function* saveQuestion({ payload }) {
   yield call(saveQuestions, payload);
-  yield fetchQuestion();
 }
 
 export function* deleteQuestion({ payload }) {
   yield call(removeQuestion, payload);
-  yield fetchQuestion();
 }
 
 export function* postAnswer({ payload }) {
@@ -62,7 +60,7 @@ export function* saveLogic({ payload }) {
 
 export default function* questionSaga() {
   yield takeLatest(LOAD_QUESTION, fetchQuestion);
-  yield takeLatest(SAVE_QUESTION, saveQuestion);
+  yield takeEvery(SAVE_QUESTION, saveQuestion);
   yield takeLatest(DELETE_QUESTION, deleteQuestion);
   yield takeLatest(SAVE_ANSWER, postAnswer);
   yield takeLatest(DELETE_ANSWER, deleteAnswer);
