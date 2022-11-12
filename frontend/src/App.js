@@ -13,6 +13,8 @@ function App() {
             <Route path="/users" element={<EditRequest />} />
             <Route path="/edit-request" element={<EditRequest />} />
             <Route path="/request" element={<EditRequest />} />
+            <Route path="/statistic" element={<EditRequest />} />
+            <Route path="/settings" element={<EditRequest />} />
         </Routes>
       </BrowserRouter>
     </div>

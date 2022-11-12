@@ -1,60 +1,72 @@
-
 .Header {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    min-height: 100px;
-    padding-left: 5%;
-    padding-right: 5%;
-    background-color: #909090;
-    position: -webkit-sticky; /*For safari*/
-    position: sticky;
-    height: 100%; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100px;
+  padding-left: 5%;
+  padding-right: 5%;
+  position: -webkit-sticky; /*For safari*/
+  position: sticky;
+  height: 100%;
 }
 
-.header-navbar--title{
-    font-weight: 800; 
-    font-size: 24px;
-    margin-top:50%; 
-    margin-bottom: 50%;
-    color: #757575;
+.header-navbar--title {
+  font-weight: 800;
+  font-size: 20px;
+  margin-top: 50%;
+  margin-bottom: 50%;
+  color: white;
+  text-emphasis: none;
+  text-decoration: none;
 }
 
-.header-navbar-navigation--buttons{
-    margin-top: 40%; /* Remove when adding in the horizontal rule*/
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 30%;
+.header-navbar--title:hover {
+  text-emphasis: none;
+  text-decoration: none;
+  color: #353535;
 }
 
-.header-navbar--navlink{
-   display: flex;
+.header-navbar-navigation--buttons {
+  margin-top: 40%; /* Remove when adding in the horizontal rule*/
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 30%;
 }
 
-.header-navbar--settings-navlink{
-    margin-top: auto;
-    margin-bottom: 50%;
+.header-navbar--navlink {
+  display: flex;
+  width: 50px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
 }
 
-.header-navbar--icon{
-    height: 30px;
-    width: 30px;
-    /* margin-top: 20px; 
-    margin-bottom: 20px; */
-
+.header-navbar--navlink--active {
+  background-color: #5974e9;
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.header-navbar--icon--skinny{
-    height: 30px;
-    width: 25px;
-    /* margin-top: 20px; 
-    margin-bottom: 20px; */
+
+.header-navbar--settings-navlink {
+  margin-top: auto;
+  margin-bottom: 50%;
+}
+
+.header-navbar--icon {
+  height: 30px;
+  width: 30px;
+  object-fit: contain;
 }
 
 hr {
-    border: 2px solid #757575;
-    width: 80%;
-    border-radius: 5px;
-  }
+  border: 2px solid #8a9df8;
+  width: 80%;
+  border-radius: 5px;
+}

@@ -5,46 +5,131 @@ import form from "../../assets/Form.png";
 import money from "../../assets/Money.png";
 import statistics from "../../assets/Statistics.png";
 import settings from "../../assets/Settings.png";
+import tasksSelected from "../../assets/TasksSelected.png";
+import formSelected from "../../assets/FormSelected.png";
+import moneySelected from "../../assets/MoneySelected.png";
+import statisticsSelected from "../../assets/StatisticsSelected.png";
+import settingsSelected from "../../assets/SettingsSelected.png";
+import { appColor } from "../../constants";
 
 function Header() {
   return (
-    // <div className="header-container" data-testid="header">
-    <div className="Header">
-      <NavLink
-        to="/"
-        // className={({ isActive }) =>
-        //   isActive ? "HeaderTitleActive" : "HeaderTitle"
-        // }
-        className="header-navbar--title"
-      >
+    <div className="Header" style={{ backgroundColor: appColor.primary }}>
+      <NavLink to="/" className="header-navbar--title">
         Labby
       </NavLink>
 
-      <hr></hr>
+      <hr />
 
       <div className="header-navbar-navigation--buttons">
-        <NavLink to="/" className="header-navbar--navlink">
-          <img className="header-navbar--icon" src={tasks} alt="" />
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive
+              ? "header-navbar--navlink--active"
+              : "header-navbar--navlink"
+          }
+        >
+          {({ isActive }) =>
+            isActive ? (
+              <img
+                className="header-navbar--icon"
+                src={tasksSelected}
+                alt="Tasks"
+              />
+            ) : (
+              <img className="header-navbar--icon" src={tasks} alt="Tasks" />
+            )
+          }
         </NavLink>
 
-        <NavLink to="/request" className="header-navbar--navlink">
-          <img className="header-navbar--icon--skinny" src={form} alt="" />
+        <NavLink
+          to="/edit-request"
+          className={({ isActive }) =>
+            isActive
+              ? "header-navbar--navlink--active"
+              : "header-navbar--navlink"
+          }
+        >
+          {({ isActive }) =>
+            isActive ? (
+              <img
+                className="header-navbar--icon"
+                src={formSelected}
+                alt="Form"
+              />
+            ) : (
+              <img className="header-navbar--icon" src={form} alt="Form" />
+            )
+          }
         </NavLink>
 
-        <NavLink to="/billing" className="header-navbar--navlink">
-          <img className="header-navbar--icon" src={money} alt="" />
+        <NavLink
+          to="/billing"
+          className={({ isActive }) =>
+            isActive
+              ? "header-navbar--navlink--active"
+              : "header-navbar--navlink"
+          }
+        >
+          {({ isActive }) =>
+            isActive ? (
+              <img
+                className="header-navbar--icon"
+                src={moneySelected}
+                alt="Billing"
+              />
+            ) : (
+              <img className="header-navbar--icon" src={money} alt="Billing" />
+            )
+          }
         </NavLink>
 
-        <NavLink to="/statistic" className="header-navbar--navlink">
-          <img className="header-navbar--skinny" src={statistics} alt="" />
+        <NavLink
+          to="/statistic"
+          className={({ isActive }) =>
+            isActive
+              ? "header-navbar--navlink--active"
+              : "header-navbar--navlink"
+          }
+        >
+          {({ isActive }) =>
+            isActive ? (
+              <img
+                className="header-navbar--icon"
+                src={statisticsSelected}
+                alt="Stats"
+              />
+            ) : (
+              <img
+                className="header-navbar--icon"
+                src={statistics}
+                alt="Stats"
+              />
+            )
+          }
         </NavLink>
       </div>
 
       <NavLink
         to="/settings"
-        className="header-navbar--navlink header-navbar--settings-navlink"
+        className={({ isActive }) =>
+          isActive
+            ? "header-navbar--navlink--active header-navbar--settings-navlink"
+            : "header-navbar--navlink header-navbar--settings-navlink"
+        }
       >
-        <img className="header-navbar--form" src={settings} alt="" />
+        {({ isActive }) =>
+          isActive ? (
+            <img
+              className="header-navbar--icon"
+              src={settingsSelected}
+              alt="Setting"
+            />
+          ) : (
+            <img className="header-navbar--icon" src={settings} alt="Setting" />
+          )
+        }
       </NavLink>
     </div>
   );
