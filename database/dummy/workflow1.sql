@@ -24,5 +24,14 @@ CALL save_cost('COSTID-B', 10.0, 'ANSWERID-B', 'ORG-A');
 CALL save_cost('COSTID-C', 10.0, 'ANSWERID-B', 'ORG-A');
 CALL save_cost('COSTID-D', 10.0, 'ANSWERID-B', 'ORG-A');
 
+-- Populate User
+CALL addUser('USERA', 'ORG-A', 'JackSparrow');
+CALL addUser('USERB', 'ORG-A', 'JackMa');
+CALL addUser('USERC', 'ORG-A', 'JackandJill');
+
+-- Populate Surveys
+CALL addSurvey('SURVEYA', 'USERA', 	2008-11-11);
+CALL addSurvey('SURVEYB', 'USERA', 	2008-11-11);
+CALL addSurvey('SURVEYC', 'USERA', 	2008-11-11);
 
 
