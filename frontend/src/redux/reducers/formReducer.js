@@ -34,7 +34,7 @@ const formQuestions = (state = defaultQuestionlist, action) => {
 const formResponses = (state = defaultAnswerList, action) => {
   switch (action.type) {
     case ADD_ANSWER: {
-      var answerList = {};
+      var answerList = [];
       action.payload.forEach((questions_answer) => {
         answerList.push(questions_answer);
       });
