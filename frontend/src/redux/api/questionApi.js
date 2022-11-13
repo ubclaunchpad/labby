@@ -23,11 +23,49 @@ export const saveQuestions = async (payload) => {
       question_title: payload.question_title,
       question_type: payload.question_type,
       question_index: payload.question_index,
+      mandatory: payload.mandatory,
     });
 
     const questions = await axios.post("question/", data);
 
     return questions;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const removeQuestion = async (payload) => {
+  try {
+    const questions = await axios.delete(`question/${payload.question_id}`);
+
+    return questions;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const saveAnswer = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      answer_id: payload.answer_id,
+      fk_question_id: payload.fk_question_id,
+      question_type: payload.question_type,
+      answer: payload.answer,
+    });
+
+    const answers = await axios.post("answer/", data);
+
+    return answers;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const removeAnswer = async (payload) => {
+  try {
+    const answers = await axios.delete(`answer/${payload.answer_id}`);
+
+    return answers;
   } catch (err) {
     return console.error(err);
   }

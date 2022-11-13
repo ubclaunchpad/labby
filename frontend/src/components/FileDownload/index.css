@@ -1,0 +1,11 @@
+.download-file-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+}
+
+.download-icon {
+  height: 5%;
+  width: 5%;
+}

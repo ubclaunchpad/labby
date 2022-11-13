@@ -1,39 +1,72 @@
 .Header {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100px;
-    padding-left: 5%;
-    padding-right: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100px;
+  padding-left: 5%;
+  padding-right: 5%;
+  position: -webkit-sticky; /*For safari*/
+  position: sticky;
+  height: 100%;
+}
 
-    position: -webkit-sticky; /*For safari*/
-    position: sticky;
-    top: 48px;
+.header-navbar--title {
+  font-weight: 800;
+  font-size: 20px;
+  margin-top: 50%;
+  margin-bottom: 50%;
+  color: white;
+  text-emphasis: none;
+  text-decoration: none;
 }
-.HeaderImage {
-    flex: 1;
+
+.header-navbar--title:hover {
+  text-emphasis: none;
+  text-decoration: none;
+  color: #353535;
 }
-.HeaderTitle {
-    flex: 1;
-    color: #40B4E5;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 20px;
-    text-align: center;
-    margin-bottom: 30px;
+
+.header-navbar-navigation--buttons {
+  margin-top: 40%; /* Remove when adding in the horizontal rule*/
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 30%;
 }
-.HeaderTitleActive {
-    flex: 1;
-    color: #002145;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 20px;
-    text-align: center;
-    margin-bottom: 30px;
+
+.header-navbar--navlink {
+  display: flex;
+  width: 50px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
 }
-.HeaderBar {
-    background-color: #002145;
-    width: '100%';
-    height: 5px;
+
+.header-navbar--navlink--active {
+  background-color: #5974e9;
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-navbar--settings-navlink {
+  margin-top: auto;
+  margin-bottom: 50%;
+}
+
+.header-navbar--icon {
+  height: 30px;
+  width: 30px;
+  object-fit: contain;
+}
+
+hr {
+  border: 2px solid #8a9df8;
+  width: 80%;
+  border-radius: 5px;
 }

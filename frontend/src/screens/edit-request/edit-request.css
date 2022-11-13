@@ -1,6 +1,10 @@
 .EditRequestPage {
-    display: flex;
-    flex-direction: row;
-    width: 100vw;
-    height: 100vh;
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+}
+
+.headerComponent {
+  width: 80px;
 }

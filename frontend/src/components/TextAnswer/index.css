@@ -1,0 +1,12 @@
+.text-box-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+
+.text-box {
+  border-radius: 20px;
+}

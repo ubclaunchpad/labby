@@ -1,7 +1,36 @@
+import "./index.css";
 import { useSelector } from "react-redux";
 import { appColor } from "../../constants";
+import DropdownEditor from "../Dropdown/DropdownEditor";
+import FileInput from "../FileInput";
+import TextAnswer from "../TextAnswer";
+import MultiSelect from "../MultiSelect";
+import SingleSelect from "../SingleSelect";
 import FormTitle from "./FormTitle";
-import "./index.css";
+import ContactInfo from "../ContactInfo";
+import FileDownload from "../FileDownload";
+import Heading from "../Heading";
+import TextLine from "../TextLine";
+import { clsx } from "clsx";
+
+import styled from "styled-components";
+import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
+import { DraggableElement } from "../BuilderLibrary/ComponentLibrary";
+
+const QuestionContainer = styled.div`
+  border: ${(props) =>
+    props.isDraggingOver ? "2px dashed #666666" : "2px dashed #EEEEEE"};
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 16px;
+  padding: 10px;
+  padding-bottom: 200px;
+  margin-bottom: 100px;
+`;
 
 function FormBuilder() {
   const questionList = useSelector(
@@ -11,95 +40,23 @@ function FormBuilder() {
   function renderQuestion(question) {
     switch (question.question_type) {
       case "multi":
-        return (
-          <div
-            className="FormBuilderQuestion"
-            key={question.question_id}
-            style={{ color: appColor.gray }}
-          >
-            {question.question + " @ Q" + question.position_index}
-          </div>
-        );
+        return <MultiSelect question={question} />;
       case "single":
-        return (
-          <div
-            className="FormBuilderQuestion"
-            key={question.question_id}
-            style={{ color: appColor.gray }}
-          >
-            {question.question + " @ Q" + question.position_index}
-          </div>
-        );
+        return <SingleSelect question={question} />;
       case "text":
-        return (
-          <div
-            className="FormBuilderQuestion"
-            key={question.question_id}
-            style={{ color: appColor.gray }}
-          >
-            {question.question + " @ Q" + question.position_index}
-          </div>
-        );
+        return <TextAnswer question={question} />;
       case "dropdown":
-        return (
-          <div
-            className="FormBuilderQuestion"
-            key={question.question_id}
-            style={{ color: appColor.gray }}
-          >
-            {question.question + " @ Q" + question.position_index}
-          </div>
-        );
+        return <DropdownEditor question={question} />;
       case "heading":
-        return (
-          <div
-            className="FormBuilderQuestion"
-            key={question.question_id}
-            style={{ color: appColor.gray }}
-          >
-            {question.question + " @ Q" + question.position_index}
-          </div>
-        );
+        return <Heading question={question} />;
       case "textline":
-        return (
-          <div
-            className="FormBuilderQuestion"
-            key={question.question_id}
-            style={{ color: appColor.gray }}
-          >
-            {question.question + " @ Q" + question.position_index}
-          </div>
-        );
+        return <TextLine question={question} />;
       case "upload":
-        return (
-          <div
-            className="FormBuilderQuestion"
-            key={question.question_id}
-            style={{ color: appColor.gray }}
-          >
-            {question.question + " @ Q" + question.position_index}
-          </div>
-        );
+        return <FileInput question={question} />;
       case "download":
-        return (
-          <div
-            className="FormBuilderQuestion"
-            key={question.question_id}
-            style={{ color: appColor.gray }}
-          >
-            {question.question + " @ Q" + question.position_index}
-          </div>
-        );
+        return <FileDownload question={question} />;
       case "contact":
-        return (
-          <div
-            className="FormBuilderQuestion"
-            key={question.question_id}
-            style={{ color: appColor.gray }}
-          >
-            {question.question + " @ Q" + question.position_index}
-          </div>
-        );
+        return <ContactInfo question={question} />;
       default:
         return null;
     }
@@ -138,15 +95,51 @@ function FormBuilder() {
         </div>
       </div>
       <div className="ScrollBox FormBuilder">
-        <div className="FormBuilderOutline">
-          {questionList.length ? (
-            questionList.slice(1).map((question) => renderQuestion(question))
-          ) : (
-            <div className="DragAndDropText" style={{ color: appColor.gray }}>
-              Drag and drop to add components
-            </div>
+        <StrictModeDroppable droppableId="question-builder">
+          {(provided, snapshot) => (
+            <QuestionContainer
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              isDraggingOver={snapshot.isDraggingOver}
+            >
+              {questionList.length ? (
+                questionList.slice(1).map((question, index) => {
+                  const isHeadingOrTextline =
+                    question.question_type === "heading" ||
+                    question.question_type === "textline";
+                  const componentToRender = () => (
+                    <div
+                      className={clsx(
+                        "FormBuilderQuestion",
+                        isHeadingOrTextline && "FormBuilderQuestion--short"
+                      )}
+                      key={question.question_id}
+                      style={{ color: appColor.gray }}
+                    >
+                      {renderQuestion(question)}
+                    </div>
+                  );
+                  return (
+                    <DraggableElement
+                      ComponentToRender={componentToRender}
+                      key={question.question_id}
+                      id={question.question_id}
+                      index={index}
+                    />
+                  );
+                })
+              ) : (
+                <div
+                  className="DragAndDropText"
+                  style={{ color: appColor.gray }}
+                >
+                  Drag and drop to add components
+                </div>
+              )}
+              {provided.placeholder}
+            </QuestionContainer>
           )}
-        </div>
+        </StrictModeDroppable>
       </div>
     </div>
   );

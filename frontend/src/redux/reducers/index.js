@@ -1,10 +1,13 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from "redux";
 
-import questionReducer from './questionReducer';
+import questionReducer from "./questionReducer";
+import logicReducer from "./logicReducer";
+import uiReducer from "./uiReducer";
 
 const rootReducer = combineReducers({
-    questionReducer,
-  // Here you can registering another reducers.
-})
+  questionReducer,
+  logicReducer,
+  uiReducer,
+});
 
 export default rootReducer;

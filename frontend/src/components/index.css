@@ -1,0 +1,91 @@
+/* Global CSS Shared Between Components */
+
+/* Form Editor Components */
+.GlobalEditorComponent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 300px;
+    padding: 20px;
+}
+
+.GlobalEditorComponentHeader {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+}
+/* Question Number (div) */
+.GlobalEditorQuestionNumber {
+    background-color: #D9D9D9;
+    border-radius: 15px;
+    color: #666666;
+    height: 45px;
+    width: 55px;
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Question Title (input) */
+.GlobalEditorQuestionTitleInput {
+    height: 45px;
+    border: 0;
+    background-color: #D9D9D9;
+    width: 80%;
+    border-radius: 15px;
+    margin-left: 10px;
+    font-size: 18px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.GlobalEditorQuestionTitleInput:focus {
+    outline: none;
+}
+
+/* Delete Question (img) */
+.GlobalEditorDelete {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.GlobalEditorComponentContent {
+    display: flex;
+    flex: 3;
+}
+
+.GlobalEditorComponentFooter {
+    display: flex;
+    flex: 1;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+/* Logic Added (div) */
+.GlobalEditorLogicAdded {
+    display: flex;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 30px;
+    border-radius: 15px;
+    font-size: 14px;
+    color: #AEAEAE;
+    border: 1px solid #AEAEAE;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Required (checkbox) */
+.GlobalEditorRequiredQuestion {
+    display: flex;
+    height: 30px;
+    font-size: 14px;
+    color: #AEAEAE;
+    justify-content: center;
+    align-items: center;
+}
+

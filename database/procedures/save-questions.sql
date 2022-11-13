@@ -16,20 +16,23 @@ CREATE PROCEDURE `save_question` (
    IN `_question_id` VARCHAR(50),
    IN `_question` VARCHAR(50),
    IN `_question_type` VARCHAR(50),
-   IN `_question_order` INT
+   IN `_question_order` INT,
+   IN `_mandatory` BOOLEAN
  
 ) BEGIN REPLACE INTO `questions` (
    `question_id`,
    `question`,
    `question_type`,
-   `position_index`
+   `position_index`,
+   `mandatory`
 )
 VALUES
    (
    `_question_id`,
    `_question`,
    `_question_type`,
-   `_question_order`
+   `_question_order`,
+   `_mandatory`
    );
   
 END $$
@@ -102,20 +105,23 @@ CREATE PROCEDURE `save_condition` (
    IN `_condition_id` VARCHAR(50),
    IN `_fk_question_id` VARCHAR(50),
    IN `_fk_answer_id` VARCHAR(50),
-   IN `_is_true` BOOLEAN
+   IN `_condition_type` VARCHAR(50),
+   IN `_condition_parameter` VARCHAR(50)
  
 ) BEGIN REPLACE INTO `conditions` (
-   `organization_id`,
-   `organization_name`,
+   `condition_id`,
+   `fk_question_id`,
    `fk_answer_id`,
-   `is_true`
+   `condition_type`,
+   `condition_parameter`
 )
 VALUES
    (
    `_condition_id`,
    `_fk_question_id`,
    `_fk_answer_id`,
-   `_is_true`
+   `_condition_type`,
+   `_condition_parameter`
    );
   
 END $$
