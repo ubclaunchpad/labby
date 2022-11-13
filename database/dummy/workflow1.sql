@@ -1,6 +1,7 @@
 -- The following is a sample set of commands to populate the database with data
 use labby;
 
+
 -- Populate the form title
 CALL save_question('RANDOM-ID-A','My Sample Form','heading', 0, false);
 
@@ -28,6 +29,19 @@ CALL save_organization('ORG-C','ORG3');
 CALL save_cost('COSTID-B', 10.0, 'ANSWERID-B', 'ORG-A');
 CALL save_cost('COSTID-C', 10.0, 'ANSWERID-B', 'ORG-B');
 CALL save_cost('COSTID-D', 10.0, 'ANSWERID-B', 'ORG-C');
+
+-- Populate User
+CALL addUser('USERA', 'ORG-A', 'JackSparrow');
+CALL addUser('USERB', 'ORG-A', 'JackMa');
+CALL addUser('USERC', 'ORG-A', 'JackandJill');
+
+-- Populate Surveys
+CALL addSurvey('SURVEYA', 'USERA', 	2008-11-11);
+CALL addSurvey('SURVEYB', 'USERA', 	2008-11-11);
+CALL addSurvey('SURVEYC', 'USERA', 	2008-11-11);
+
+-- Popular Answers
+CALL addAnswer('ANSWERA', 'SURVEYA', 'RANDOM-ID-B', 'ANSWERID-B', "Disease #1")
 
 
 -- Populate Condition
