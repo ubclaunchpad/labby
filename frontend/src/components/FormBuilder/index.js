@@ -12,6 +12,7 @@ import FileDownload from "../FileDownload";
 import Heading from "../Heading";
 import TextLine from "../TextLine";
 import { clsx } from "clsx";
+import { NavLink } from "react-router-dom";
 
 import styled from "styled-components";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
@@ -65,32 +66,38 @@ function FormBuilder() {
   return (
     <div>
       <div className="FormBuilderHeader FormBuilder">
-        <div className="FormBuilderTitle" style={{ color: appColor.primaryBlack }}>
+        <div
+          className="FormBuilderTitle"
+          style={{ color: appColor.primaryBlack }}
+        >
           Form Builder
         </div>
         <div className="FormTitle">
           {FormTitle()}
           <div className="FormPreview">
-            <button
-              className="FormPreviewButton"
-              style={{
-                backgroundColor: appColor.primaryLight,
-                color: appColor.white,
-              }}
-              onMouseOver={(e) => {
-                e.target.style.backgroundColor = appColor.primary;
-                e.target.style.color = appColor.white;
-              }}
-              onMouseOut={(e) => {
-                e.target.style.backgroundColor = appColor.primaryLight;
-                e.target.style.color = appColor.white;
-              }}
-              onClick={() => {
-                alert("Preview Not Available Yet!");
-              }}
-            >
-              Preview
-            </button>
+            <NavLink to="/request-form">
+              <button
+                className="FormPreviewButton"
+                style={{
+                  backgroundColor: appColor.primaryLight,
+                  color: appColor.white,
+                }}
+                onMouseOver={(e) => {
+                  e.target.style.backgroundColor = appColor.primary;
+                  e.target.style.color = appColor.white;
+                }}
+                onMouseOut={(e) => {
+                  e.target.style.backgroundColor = appColor.primaryLight;
+                  e.target.style.color = appColor.white;
+                }}
+                // TODO: open modal onClick which after confirmation leads to customer request form
+                // onClick={() => {
+                //   alert("Preview Not Available Yet!");
+                // }}
+              >
+                Preview
+              </button>
+            </NavLink>
           </div>
         </div>
       </div>
