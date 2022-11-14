@@ -33,35 +33,36 @@ const QuestionContainer = styled.div`
   margin-bottom: 100px;
 `;
 
+// TODO: create separate renderQuestion for customer form
+export function renderQuestion(question) {
+  switch (question.question_type) {
+    case "multi":
+      return <MultiSelect question={question} />;
+    case "single":
+      return <SingleSelect question={question} />;
+    case "text":
+      return <TextAnswer question={question} />;
+    case "dropdown":
+      return <DropdownEditor question={question} />;
+    case "heading":
+      return <Heading question={question} />;
+    case "textline":
+      return <TextLine question={question} />;
+    case "upload":
+      return <FileInput question={question} />;
+    case "download":
+      return <FileDownload question={question} />;
+    case "contact":
+      return <ContactInfo question={question} />;
+    default:
+      return null;
+  }
+}
+
 function FormBuilder() {
   const questionList = useSelector(
     (state) => state.questionReducer.questionList
   );
-
-  function renderQuestion(question) {
-    switch (question.question_type) {
-      case "multi":
-        return <MultiSelect question={question} />;
-      case "single":
-        return <SingleSelect question={question} />;
-      case "text":
-        return <TextAnswer question={question} />;
-      case "dropdown":
-        return <DropdownEditor question={question} />;
-      case "heading":
-        return <Heading question={question} />;
-      case "textline":
-        return <TextLine question={question} />;
-      case "upload":
-        return <FileInput question={question} />;
-      case "download":
-        return <FileDownload question={question} />;
-      case "contact":
-        return <ContactInfo question={question} />;
-      default:
-        return null;
-    }
-  }
 
   return (
     <div>

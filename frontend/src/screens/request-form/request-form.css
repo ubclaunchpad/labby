@@ -10,5 +10,16 @@
   height: 100%;
 }
 .requestFormContainer {
-    flex: 1;
+  flex: 1;
+  padding: 0 50px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+.formTitle {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: left;
+  padding-top: 25px;
+  padding-bottom: 5px;
 }
