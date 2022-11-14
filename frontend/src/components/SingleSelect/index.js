@@ -6,6 +6,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import X from "../../assets/X.png";
+import DragDots from "../../assets/DragDots.png";
 import { Checkbox } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import uuid from "react-uuid";
@@ -104,6 +105,7 @@ function SingleSelect({ question }) {
       </div>
       {/* Copy Everything Except Content Below For Reusability */}
       <div className="single-select-options-container">
+      <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
         <FormControl style={{width: "100%"}}>
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"

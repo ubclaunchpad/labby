@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "@mui/material/Checkbox";
 import X from "../../assets/X.png";
+import DragDots from "../../assets/DragDots.png";
 import "./index.css";
 import "../../index.css";
 import {
@@ -152,10 +153,15 @@ function FileInput({ question }) {
         />
       </div>
       <div className="upload-file-container">
-        <Dragger {...props} style={{ borderRadius: 10 }}>
-          <img className="upload-icon" src={UploadIcon} alt="Upload File" />
-          <p>Drag and Drop Files</p>
-        </Dragger>
+        <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
+        <div className="upload-file-container-inner">
+          <Dragger {...props} style={{ borderRadius: 10 }}>
+            <img className="upload-icon" src={UploadIcon} alt="Upload File" />
+            <p className="upload-text" style={{ marginBottom: 20 }}>
+              Customer Will Upload File Here
+            </p>
+          </Dragger>
+        </div>
       </div>
       <div className="GlobalEditorComponentFooter">
         {logicList[question.question_id] ? (

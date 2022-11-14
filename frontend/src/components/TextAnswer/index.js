@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import X from "../../assets/X.png";
+import DragDots from "../../assets/DragDots.png";
 import "./index.css";
 import "../index.css";
 import {
@@ -84,6 +85,7 @@ function TextAnswer({ question }) {
         />
       </div>
       <div className="text-box-container">
+      <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
         <Input.TextArea
           placeholder="User types here..."
           rows={3}

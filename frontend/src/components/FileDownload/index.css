@@ -1,11 +1,29 @@
 .download-file-container {
   display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding-left: 5px;
+  padding-right: 5px;
+  height: 200px;
+}
+
+.download-file-container-inner {
+  display: flex;
   flex-direction: column;
   width: 100%;
   justify-content: center;
+  height: 100%;
 }
 
 .download-icon {
-  height: 5%;
-  width: 5%;
+  height: 22px;
+  width: 22px;
+  object-fit: contain;
+  margin: 30px;
+}
+
+.download-text {
+  font-size: 16px;
+  color: #666666;
 }

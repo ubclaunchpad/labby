@@ -7,12 +7,15 @@
     width: 100%;
     min-height: 300px;
     padding: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 .GlobalEditorComponentHeader {
     display: flex;
     flex: 1;
     flex-direction: row;
+    align-items: center;
 }
 /* Question Number (div) */
 .GlobalEditorQuestionNumber {
@@ -43,6 +46,15 @@
 }
 .GlobalEditorQuestionTitleInput:focus {
     outline: none;
+}
+
+.GlobalDragDot {
+    width: 5px;
+    height: 15px;
+    object-fit: contain;
+    position: relative;
+    left: -25px;
+    display: flex;
 }
 
 /* Delete Question (img) */

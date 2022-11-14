@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import X from "../../assets/X.png";
+import DragDots from "../../assets/DragDots.png";
 import "./index.css";
 import "../index.css";
 import {
@@ -32,8 +33,15 @@ function Heading({ question }) {
   return (
     <div className="GlobalEditorComponent  GlobalEditorComponent--heading ">
       <div className="GlobalEditorComponentHeader">
+        <img
+          className="GlobalDragDot"
+          src={DragDots}
+          style={{ left: "-20px" }}
+          alt="DragDots"
+        />
         <div
           className="GlobalEditorQuestionNumber"
+          style={{ marginLeft: "-5px" }}
           onClick={() => {
             dispatch({
               type: SET_LOGIC_QUESTION,

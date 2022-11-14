@@ -2,6 +2,7 @@ import "./index.css";
 import "../index.css";
 import { useEffect, useState } from "react";
 import X from "../../assets/X.png";
+import DragDots from "../../assets/DragDots.png";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import { Checkbox } from "@mui/material";
@@ -102,7 +103,8 @@ function MultiSelect({ question }) {
       </div>
       {/* Copy Everything Except Content Below For Reusability */}
       <div className="single-select-options-container">
-        <FormControl style={{width: "100%"}}>
+        <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
+        <FormControl style={{ width: "100%" }}>
           {options.map((option, index) => {
             return (
               <div className="single-select-option" key={index}>

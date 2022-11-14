@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "@mui/material/Checkbox";
 import X from "../../assets/X.png";
+import DragDots from "../../assets/DragDots.png";
 import "./index.css";
 import "../index.css";
 import {
@@ -96,6 +97,8 @@ function ContactInfo({ question }) {
       </div>
       {/* Copy Everything Except Content Below For Reusability */}
       <div className="contact-info-container">
+        <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
+        <div className="contact-info-container-inner">
         <div className="contact-info-row">
           <span className="contact-info-field-label">Full Name</span>
           <input
@@ -139,6 +142,7 @@ function ContactInfo({ question }) {
               setTelephone(e.target.value);
             }}
           ></input>
+        </div>
         </div>
       </div>
       {/* Copy Everything Except Content Above For Reusability */}

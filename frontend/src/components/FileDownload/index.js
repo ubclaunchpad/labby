@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "@mui/material/Checkbox";
 import X from "../../assets/X.png";
+import DragDots from "../../assets/DragDots.png";
 import "./index.css";
 import "../../index.css";
 import {
@@ -136,14 +137,19 @@ function FileDownload({ question }) {
         />
       </div>
       <div className="download-file-container">
-        <Dragger {...props} style={{ borderRadius: 10 }}>
-          <img
-            className="download-icon"
-            src={DownloadIcon}
-            alt="Download File"
-          />
-          <p>Download File</p>
-        </Dragger>
+        <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
+        <div className="download-file-container-inner">
+          <Dragger {...props} style={{ borderRadius: 10 }}>
+            <img
+              className="download-icon"
+              src={DownloadIcon}
+              alt="Download File"
+            />
+            <p className="download-text" style={{marginBottom: 20}}>
+              Upload File For Customer to Download
+            </p>
+          </Dragger>
+        </div>
       </div>
       <div className="GlobalEditorComponentFooter">
         {logicList[question.question_id] ? (

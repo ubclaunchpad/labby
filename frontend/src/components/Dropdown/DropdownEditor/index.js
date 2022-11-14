@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "@mui/material/Checkbox";
 import X from "../../../assets/X.png";
+import DragDots from "../../../assets/DragDots.png";
 import "./index.css";
 import "../../index.css";
 import {
@@ -105,6 +106,7 @@ function DropdownEditor({ question }) {
       </div>
       {/* Copy Everything Except Content Below For Reusability */}
       <div className="single-select-options-container">
+      <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
         <FormControl style={{width: "100%"}}>
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
