@@ -20,7 +20,7 @@ function FormTitle() {
   return (
     <div
       className="FormTitleInput"
-      style={{ backgroundColor: appColor.lightGray }}
+      style={{ backgroundColor: appColor.primaryWhite }}
     >
       <input
         className="FormTitleTextInput"

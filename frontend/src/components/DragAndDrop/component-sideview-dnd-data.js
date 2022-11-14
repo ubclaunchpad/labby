@@ -176,5 +176,4 @@ export const QuestionData = {
     { originId: "heading", id: uuidv4(), component: HeadingCard },
   ],
   "droppedComponentsOrder": []
-  // droppedComponentsOrder: ["heading"],
 };

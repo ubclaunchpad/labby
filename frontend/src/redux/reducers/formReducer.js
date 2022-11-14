@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { ADD_QUESTION } from "../actions/formActions";
+import { ADD_QUESTION, ADD_RESPONSE } from "../actions/formActions";
 
 const defaultQuestionlist = {
   multi: [],
@@ -33,7 +33,7 @@ const formQuestions = (state = defaultQuestionlist, action) => {
 
 const formResponses = (state = defaultAnswerList, action) => {
   switch (action.type) {
-    case ADD_ANSWER: {
+    case ADD_RESPONSE: {
       var answerList = [];
       action.payload.forEach((questions_answer) => {
         answerList.push(questions_answer);

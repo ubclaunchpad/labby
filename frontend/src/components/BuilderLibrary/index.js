@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { appColor } from "../../constants";
 import ComponentLibrary from "./ComponentLibrary";
 import "./index.css";
 import LogicLibrary from "./LogicLibrary";
@@ -11,7 +12,8 @@ function BuilderLibrary() {
         <button
           className="ComponentsTab titleText"
           style={{
-            backgroundColor: componentsMode ? "#AEAEAE" : "#D9D9D9",
+            backgroundColor: componentsMode ? "#ECEDF3" : "#FFFFFF",
+            color: appColor.primaryBlack,
             borderBottomRightRadius: componentsMode ? "0px" : "20px",
           }}
           onClick={() => {
@@ -23,7 +25,8 @@ function BuilderLibrary() {
         <button
           className="LogicTab titleText"
           style={{
-            backgroundColor: componentsMode ? "#D9D9D9" : "#AEAEAE",
+            backgroundColor: componentsMode ? "#FFFFFF" : "#ECEDF3",
+            color: appColor.primaryBlack,
             borderBottomLeftRadius: componentsMode ? "20px" : "0px",
           }}
           onClick={() => {

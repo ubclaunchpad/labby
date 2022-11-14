@@ -4,6 +4,7 @@ export const appColor = {
     primaryDark: "#5974E9",
     primaryBlack: "#353535",
     primaryWhite: "#ECEDF3",
+    white: "#FFFFFF",
     gray: '#666666',
     lightGray: '#EEEEEE',
     darkGray: '#909090'

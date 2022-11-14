@@ -16,7 +16,7 @@
 }
 /* Question Number (div) */
 .GlobalEditorQuestionNumber {
-    background-color: #D9D9D9;
+    background-color: #ECEDF3;
     border-radius: 15px;
     color: #666666;
     height: 45px;
@@ -33,7 +33,7 @@
 .GlobalEditorQuestionTitleInput {
     height: 45px;
     border: 0;
-    background-color: #D9D9D9;
+    background-color: #ECEDF3;
     width: 80%;
     border-radius: 15px;
     margin-left: 10px;

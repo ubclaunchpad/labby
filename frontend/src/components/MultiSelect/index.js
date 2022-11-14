@@ -102,7 +102,7 @@ function MultiSelect({ question }) {
       </div>
       {/* Copy Everything Except Content Below For Reusability */}
       <div className="single-select-options-container">
-        <FormControl>
+        <FormControl style={{width: "100%"}}>
           {options.map((option, index) => {
             return (
               <div className="single-select-option" key={index}>

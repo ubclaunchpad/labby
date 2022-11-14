@@ -1,6 +1,6 @@
 .HeaderTab {
     height: 60px;
-    background-color: #AEAEAE;
+    background-color: #ECEDF3;
 }
 
 .ComponentsTab {
@@ -20,7 +20,7 @@
 .ContentHolder {
     height: calc(100vh - 60px);
     padding: 15px;
-    background-color: #AEAEAE;
+    background-color: #ECEDF3;
     overflow: scroll;
 }
 

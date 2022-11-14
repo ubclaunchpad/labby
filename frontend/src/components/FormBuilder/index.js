@@ -19,7 +19,7 @@ import { DraggableElement } from "../BuilderLibrary/ComponentLibrary";
 
 const QuestionContainer = styled.div`
   border: ${(props) =>
-    props.isDraggingOver ? "2px dashed #666666" : "2px dashed #EEEEEE"};
+    props.isDraggingOver ? "2px dashed #909090" : "2px dashed #ECEDF3"};
   border-radius: 15px;
   display: flex;
   flex-direction: column;
@@ -65,7 +65,7 @@ function FormBuilder() {
   return (
     <div>
       <div className="FormBuilderHeader FormBuilder">
-        <div className="FormBuilderTitle" style={{ color: appColor.gray }}>
+        <div className="FormBuilderTitle" style={{ color: appColor.primaryBlack }}>
           Form Builder
         </div>
         <div className="FormTitle">
@@ -74,16 +74,16 @@ function FormBuilder() {
             <button
               className="FormPreviewButton"
               style={{
-                backgroundColor: appColor.lightGray,
-                color: appColor.gray,
+                backgroundColor: appColor.primaryLight,
+                color: appColor.white,
               }}
               onMouseOver={(e) => {
-                e.target.style.backgroundColor = "#4CAF50";
-                e.target.style.color = "#FFFFFF";
+                e.target.style.backgroundColor = appColor.primary;
+                e.target.style.color = appColor.white;
               }}
               onMouseOut={(e) => {
-                e.target.style.backgroundColor = appColor.lightGray;
-                e.target.style.color = appColor.gray;
+                e.target.style.backgroundColor = appColor.primaryLight;
+                e.target.style.color = appColor.white;
               }}
               onClick={() => {
                 alert("Preview Not Available Yet!");

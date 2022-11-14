@@ -104,7 +104,7 @@ function SingleSelect({ question }) {
       </div>
       {/* Copy Everything Except Content Below For Reusability */}
       <div className="single-select-options-container">
-        <FormControl>
+        <FormControl style={{width: "100%"}}>
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
             defaultValue="female"
