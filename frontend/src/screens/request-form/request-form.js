@@ -16,23 +16,23 @@ export const RequestForm = () => {
         <Header />
       </div>
       <div className="requestFormContainer">
-        <div className="formTitle">
-          {questionList[0].question}
-        </div>
+        <div className="formTitle">{questionList[0].question}</div>
         {questionList.slice(1).map((question, index) => {
           const isHeadingOrTextline =
             question.question_type === "heading" ||
             question.question_type === "textline";
           return (
-            <div
-              className={clsx(
-                "FormBuilderQuestion",
-                isHeadingOrTextline && "FormBuilderQuestion--short"
-              )}
-              key={question.question_id}
-              style={{ color: appColor.gray }}
-            >
-              {renderQuestion(question)}
+            <div>
+              <div
+                className={clsx(
+                  "FormBuilderQuestion",
+                  isHeadingOrTextline && "FormBuilderQuestion--short"
+                )}
+                key={question.question_id}
+                style={{ color: appColor.gray }}
+              >
+                {renderQuestion(question)}
+              </div>
             </div>
           );
         })}
