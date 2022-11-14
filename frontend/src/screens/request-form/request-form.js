@@ -16,7 +16,9 @@ export const RequestForm = () => {
         <Header />
       </div>
       <div className="requestFormContainer">
-        <div className="formTitle">Request Form</div>
+        <div className="formTitle">
+          {questionList[0].question}
+        </div>
         {questionList.slice(1).map((question, index) => {
           const isHeadingOrTextline =
             question.question_type === "heading" ||
