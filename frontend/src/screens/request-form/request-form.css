@@ -1,0 +1,22 @@
+.requestFormPage {
+  height: 100vh;
+  display: flex;
+}
+.headerComponent {
+  width: 80px;
+  height: 100%;
+}
+.requestFormContainer {
+  flex: 1;
+  padding: 0 100px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+.formTitle {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: left;
+  padding-top: 25px;
+  padding-bottom: 5px;
+}
