@@ -76,7 +76,7 @@ function FormBuilder() {
         <div className="FormTitle">
           {FormTitle()}
           <div className="FormPreview">
-            <NavLink to="/request-form">
+            <NavLink to="/request">
               <button
                 className="FormPreviewButton"
                 style={{
@@ -91,10 +91,6 @@ function FormBuilder() {
                   e.target.style.backgroundColor = appColor.primaryLight;
                   e.target.style.color = appColor.white;
                 }}
-                // TODO: open modal onClick which after confirmation leads to customer request form
-                // onClick={() => {
-                //   alert("Preview Not Available Yet!");
-                // }}
               >
                 Preview
               </button>

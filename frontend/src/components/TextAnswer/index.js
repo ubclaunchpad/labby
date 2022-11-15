@@ -88,7 +88,7 @@ function TextAnswer({ question }) {
       <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
         <Input.TextArea
           placeholder="User types here..."
-          rows={3}
+          rows={10}
           className="text-box"
         />
       </div>

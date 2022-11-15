@@ -2,13 +2,12 @@
   height: 100vh;
   display: flex;
 }
-.headerComponent {
-  width: 80px;
-  height: 100%;
-}
 .requestFormContainer {
   flex: 1;
-  padding: 0 100px;
+  padding-left: 200px;
+  padding-right: 200px;
+  padding-top: 100px;
+  padding-bottom: 100px;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
@@ -18,5 +17,5 @@
   font-weight: bold;
   text-align: left;
   padding-top: 25px;
-  padding-bottom: 5px;
+  padding-bottom: 50px;
 }
