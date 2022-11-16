@@ -44,11 +44,21 @@ function DropdownEditor({ question }) {
   }, [question]);
 
   useEffect(() => {
-    console.log(answerList);
-    var optionList = answerList[question.question_id] ?? [];
-    if (!optionList.includes("")) {
-      optionList.push("");
-    }
+    var optionList = answerList[question.question_id ?? ""] ?? [];
+    optionList = optionList.sort((a, b) => {
+      let fa = a.answer;
+      let fb = b.answer;
+
+      if (fa < fb) {
+        return -1;
+      }
+      if (fa > fb) {
+        return 1;
+      }
+      return 0;
+    });
+    optionList = optionList.filter((option) => option !== "");
+    optionList.push("");
     setOptions(optionList);
   }, [answerList, question]);
 
@@ -87,18 +97,18 @@ function DropdownEditor({ question }) {
           src={X}
           alt="Delete"
           onClick={() => {
-            dispatch({
-              type: DELETE_QUESTION,
-              payload: {
-                question_id: question.question_id,
-              },
-            });
             questionList.forEach((questionObj) => {
               if (questionObj.position_index >= question.position_index) {
                 questionObj.question_index = questionObj.position_index - 1;
                 questionObj.question_title = questionObj.question;
                 dispatch({ type: SAVE_QUESTION, payload: questionObj });
               }
+            });
+            dispatch({
+              type: DELETE_QUESTION,
+              payload: {
+                question_id: question.question_id,
+              },
             });
             dispatch({ type: LOAD_QUESTION });
           }}
@@ -142,29 +152,12 @@ function DropdownEditor({ question }) {
                           },
                         });
                       }
+                      setOptions([]);
                     }}
                     //   If we want to have key down functionality as well:
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
-                        const answerVal = e.target.value;
-                        if (answerVal.trim() !== "") {
-                          dispatch({
-                            type: SAVE_ANSWER,
-                            payload: {
-                              answer_id: option.answer_id ?? uuid(),
-                              fk_question_id: question.question_id,
-                              question_type: question.question_type,
-                              answer: answerVal,
-                            },
-                          });
-                        } else {
-                          dispatch({
-                            type: DELETE_ANSWER,
-                            payload: {
-                              answer_id: option.answer_id,
-                            },
-                          });
-                        }
+                        e.target.blur();
                       }
                     }}
                   />

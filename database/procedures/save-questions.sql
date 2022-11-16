@@ -19,7 +19,7 @@ CREATE PROCEDURE `save_question` (
    IN `_question_order` INT,
    IN `_mandatory` BOOLEAN
  
-) BEGIN REPLACE INTO `questions` (
+) BEGIN INSERT INTO `questions` (
    `question_id`,
    `question`,
    `question_type`,
@@ -33,7 +33,13 @@ VALUES
    `_question_type`,
    `_question_order`,
    `_mandatory`
-   );
+   )
+ON DUPLICATE KEY UPDATE 
+   questions.question_id=`_question_id`, 
+   questions.question=`_question`, 
+   questions.question_type=`_question_type`,
+   questions.position_index=`_question_order`,
+   questions.mandatory=`_mandatory`;
   
 END $$
  
@@ -43,12 +49,11 @@ CREATE PROCEDURE `save_answer` (
    IN `_question_type` VARCHAR(50),
    IN `_fk_question_id` VARCHAR(50)
  
-) BEGIN REPLACE INTO `questions_answer` (
+) BEGIN INSERT INTO `questions_answer` (
    `answer_id`,
    `answer`,
    `question_type`,
    `fk_question_id`
-  
 )
 VALUES
    (
@@ -56,8 +61,12 @@ VALUES
    `_answer`,
    `_question_type`,
   `_fk_question_id`
- 
-   );
+   )
+ON DUPLICATE KEY UPDATE 
+   questions_answer.answer_id=`_answer_id`, 
+   questions_answer.answer=`_answer`, 
+   questions_answer.question_type=`_question_type`,
+   questions_answer.fk_question_id=`_fk_question_id`;
   
 END $$
  
@@ -89,7 +98,7 @@ CREATE PROCEDURE `save_organization` (
    IN `_organization_id` VARCHAR(50),
    IN `_organization_name` VARCHAR(50)
  
-) BEGIN REPLACE INTO `organizations` (
+) BEGIN INSERT INTO `organizations` (
    `organization_id`,
    `organization_name`
 )
@@ -97,7 +106,10 @@ VALUES
    (
    `_organization_id`,
    `_organization_name`
-   );
+   )
+ON DUPLICATE KEY UPDATE 
+   organizations.organization_id=`_organization_id`, 
+   organizations.organization_name=`_organization_name`;
   
 END $$
 

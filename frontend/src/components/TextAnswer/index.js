@@ -27,7 +27,6 @@ function TextAnswer({ question }) {
   const [title, setTitle] = useState("");
 
   useEffect(() => {
-    console.log(question);
     setQuestionNum(`Q${question.position_index}`);
     setTitle(question.question);
   }, [question]);
@@ -67,12 +66,6 @@ function TextAnswer({ question }) {
           src={X}
           alt="Delete"
           onClick={() => {
-            dispatch({
-              type: DELETE_QUESTION,
-              payload: {
-                question_id: question.question_id,
-              },
-            });
             questionList.forEach((questionObj) => {
               if (questionObj.position_index >= question.position_index) {
                 questionObj.question_index = questionObj.position_index - 1;
@@ -80,12 +73,18 @@ function TextAnswer({ question }) {
                 dispatch({ type: SAVE_QUESTION, payload: questionObj });
               }
             });
+            dispatch({
+              type: DELETE_QUESTION,
+              payload: {
+                question_id: question.question_id,
+              },
+            });
             dispatch({ type: LOAD_QUESTION });
           }}
         />
       </div>
       <div className="text-box-container">
-      <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
+        <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
         <Input.TextArea
           placeholder="User types here..."
           rows={10}
