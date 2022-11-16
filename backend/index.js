@@ -5,6 +5,7 @@ import questionRouter from "./src/routes/questionRoute.js";
 import logicRouter from "./src/routes/logicRoute.js";
 import answerRouter from "./src/routes/answerRoute.js";
 import orderRouter from "./src/routes/orderRoute.js";
+import responseRouter from "./src/routes/responseRoute.js"
 
 const app = express();
 const port = 8080;
@@ -21,6 +22,7 @@ app.use("/question", questionRouter);
 app.use("/logic", logicRouter);
 app.use("/answer", answerRouter);
 app.use("/reorder", orderRouter);
+app.use("/reponse", responseRouter);
 
 app.listen(port, () => {
   console.log(`Labby backend listening on port ${port}`);
