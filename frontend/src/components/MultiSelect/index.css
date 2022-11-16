@@ -48,3 +48,14 @@
 .new-question-checkbox{
     width: 30px;
 }
+
+.customer__component__subtitle{
+    text-align: left;
+    margin-left: 1%;
+}
+
+.customer__component__title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
