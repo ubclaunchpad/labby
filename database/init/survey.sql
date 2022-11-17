@@ -15,9 +15,10 @@ CREATE TABLE `surveys` (
 	fk_user_id VARCHAR (50),
 	date_created DATETIME,
 	PRIMARY KEY (`survey_id`),
-	FOREIGN KEY (fk_user_id) REFERENCES users(user_id)
+	FOREIGN KEY (fk_user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 END$$
+
 
 
 CREATE PROCEDURE `addSurvey` (
