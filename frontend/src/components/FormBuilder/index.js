@@ -33,8 +33,7 @@ const QuestionContainer = styled.div`
   margin-bottom: 100px;
 `;
 
-// TODO: create separate renderQuestion for customer form
-export function renderQuestion(question) {
+function renderQuestion(question) {
   switch (question.question_type) {
     case "multi":
       return <MultiSelect question={question} />;

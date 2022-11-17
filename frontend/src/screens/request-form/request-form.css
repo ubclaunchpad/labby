@@ -2,6 +2,7 @@
   height: 100vh;
   display: flex;
 }
+
 .requestFormContainer {
   flex: 1;
   padding-left: 200px;
@@ -12,10 +13,23 @@
   flex-direction: column;
   overflow-y: scroll;
 }
+
 .formTitle {
   font-size: 32px;
   font-weight: bold;
   text-align: left;
   padding-top: 25px;
   padding-bottom: 50px;
+}
+
+.FormResponseQuestion {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 100px;
+  font-size: 16px;
+  margin-bottom: 30px;
+  background-color: white;
 }
