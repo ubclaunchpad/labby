@@ -7,7 +7,7 @@ export default class SurveyController {
       const SurveyModel = new Survey();
 
       const survey = {
-        survey_id: req.body.survey,
+        survey_id: req.body.survey_id,
         fk_user_id: req.body.fk_user_id,
         date_created: req.body.date_created,
       };

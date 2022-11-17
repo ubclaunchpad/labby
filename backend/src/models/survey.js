@@ -2,7 +2,7 @@ import con from "../config/Database.js";
 
 export class Survey {
   
-  inserSurvey(newSurvey, result) {
+  insertSurvey(newSurvey, result) {
     con.query(
       "CALL addSurvey(?, ?, ?)",
       [
@@ -29,7 +29,7 @@ export class Survey {
       [
         newResponse.answer_id,
         newResponse.fk_survey_id,
-        newResponse.fk_question_type,
+        newResponse.fk_question_id,
         newResponse.fk_questions_answer_id,
         newResponse.answer,
       ],
