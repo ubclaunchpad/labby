@@ -17,8 +17,8 @@ function Dropdown({ question }) {
   }, [answerList, question]);
 
   return (
-    <div className="dropdownContainer">
-      <div className="label">{question.question}</div>
+    <div className="GlobalCustomerQuestionContainer">
+      <div className="GlobalQuestionTitle">{question.question}</div>
       <select className="select" value={selectedValue ? selectedValue.answer : ""} onChange={handleChange}>
         {options.map((option) => (
           <option key={option.answer_id} value={option}>{option.answer}</option>

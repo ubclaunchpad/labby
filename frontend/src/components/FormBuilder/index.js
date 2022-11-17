@@ -7,7 +7,6 @@ import TextAnswer from "../TextAnswer";
 import MultiSelect from "../MultiSelect";
 import SingleSelect from "../SingleSelect";
 import FormTitle from "./FormTitle";
-import ContactInfo from "../ContactInfo";
 import FileDownload from "../FileDownload";
 import Heading from "../Heading";
 import TextLine from "../TextLine";
@@ -17,6 +16,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { DraggableElement } from "../BuilderLibrary/ComponentLibrary";
+import ContactInfoEditor from "../ContactInfo/ContactInfoEditor";
 
 const QuestionContainer = styled.div`
   border: ${(props) =>
@@ -52,7 +52,7 @@ function renderQuestion(question) {
     case "download":
       return <FileDownload question={question} />;
     case "contact":
-      return <ContactInfo question={question} />;
+      return <ContactInfoEditor question={question} />;
     default:
       return null;
   }
