@@ -2,7 +2,7 @@ import "./index.css";
 import { useSelector } from "react-redux";
 import { appColor } from "../../constants";
 import DropdownEditor from "../Dropdown/DropdownEditor";
-import FileInput from "../FileInput";
+import FileInputEditor from "../FileInput/FileInputEditor";
 import TextAnswer from "../TextAnswer";
 import MultiSelect from "../MultiSelect";
 import SingleSelect from "../SingleSelect";
@@ -48,7 +48,7 @@ function renderQuestion(question) {
     case "textline":
       return <TextLine question={question} />;
     case "upload":
-      return <FileInput question={question} />;
+      return <FileInputEditor question={question} />;
     case "download":
       return <FileDownload question={question} />;
     case "contact":
