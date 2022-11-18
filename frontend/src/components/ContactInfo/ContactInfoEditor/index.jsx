@@ -1,91 +1,22 @@
-import { Upload } from "antd";
 import "./index.css";
-import UploadIcon from "../../assets/FileUpload.png";
-// import AWS from "aws-sdk";
-
+import "../../index.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "@mui/material/Checkbox";
-import X from "../../assets/X.png";
-import DragDots from "../../assets/DragDots.png";
-import "./index.css";
-import "../../index.css";
+import X from "../../../assets/X.png";
+import DragDots from "../../../assets/DragDots.png";
 import {
   DELETE_QUESTION,
   LOAD_QUESTION,
   SAVE_QUESTION,
-} from "../../redux/actions/questionActions";
+} from "../../../redux/actions/questionActions";
 import {
   SET_LOGIC_QUESTION,
   SET_LOGIC_VIEW_QUESTION,
-} from "../../redux/actions/logicActions";
-import { TOGGLE_LOGIC } from "../../redux/actions/uiActions";
+} from "../../../redux/actions/logicActions";
+import { TOGGLE_LOGIC } from "../../../redux/actions/uiActions";
 
-const { Dragger } = Upload;
-
-// const getDatetime = () => {
-//   return new Date()
-//     .toLocaleString("en-CA", {
-//       hour12: false,
-//     })
-//     .replaceAll("/", "")
-//     .replace(",", "");
-// };
-
-// const config = new AWS.Config({
-//   // Deprecated method of passing accessKeyId and secretAccessKey -- could not get new method to work
-//   accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
-//   secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
-//   region: "ca-central-1",
-// });
-
-// USE FOR CLIENT-SIDED COMPONENT
-const props = {
-  onChange: () => {
-    console.log("Uploading to S3 disabled on lab-sided component");
-  },
-
-  //  ============= UNCOMMENT BELOW FOR CLIENT-SIDED COMPONENT ===============
-  //   multiple: true,
-  //   customRequest({ file, onError, onProgress, onSuccess }) {
-  //     AWS.config.update(config);
-  //     const S3 = new AWS.S3({});
-  //     console.log("DEBUG filename: ", file.name);
-  //     console.log("DEBUG file type ", file.type);
-  //     const objParams = {
-  //       Bucket: "labby-app",
-  //       // TODO: Eventually change object key to question number + random generated ID/number
-  //       // need to save the randomly generated ID/number so it can also be retrieved
-  //       Key: `fileInput/${getDatetime()}/${file.name}`,
-  //       Body: file,
-  //       ContentType: file.type,
-  //     };
-  //     // TODO: Need to change where it only uploads to bucket upon form submission
-  //     S3.putObject(objParams)
-  //       .on("httpUploadProgress", function ({ loaded, total }) {
-  //         onProgress(
-  //           {
-  //             percent: Math.round((loaded / total) * 100),
-  //           },
-  //           file
-  //         );
-  //       })
-  //       .send(function (err, data) {
-  //         if (err) {
-  //           onError();
-  //           console.log("Issue in S3.putObject.send()");
-  //           console.log(`Error Code: ${err.code}`);
-  //           console.log(`Error Message: ${err.message}`);
-  //         } else {
-  //           onSuccess(data.response, file);
-  //           console.log("Send completed in S3.putObject.send()");
-  //         }
-  //       });
-  //   },
-  // ============= UNCOMMENT ABOVE FOR CLIENT-SIDED COMPONENT ===============
-};
-
-function FileInput({ question }) {
+function ContactInfoEditor({ question }) {
   const dispatch = useDispatch();
   const logicList = useSelector((state) => state.logicReducer.logicList);
   const questionList = useSelector(
@@ -93,6 +24,16 @@ function FileInput({ question }) {
   );
   const [questionNum, setQuestionNum] = useState("");
   const [title, setTitle] = useState("");
+
+  const [fullName, setFullName] = useState("");
+  const [institution, setInstitution] = useState("");
+  const [email, setEmail] = useState("");
+  const [telephone, setTelephone] = useState("");
+
+  useEffect(() => {
+    const fields = { fullName, institution, email, telephone };
+    console.log(fields);
+  }, [fullName, institution, email, telephone]);
 
   useEffect(() => {
     setQuestionNum(`Q${question.position_index}`);
@@ -151,17 +92,57 @@ function FileInput({ question }) {
           }}
         />
       </div>
-      <div className="upload-file-container">
+      {/* Copy Everything Except Content Below For Reusability */}
+      <div className="contact-info-container">
         <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
-        <div className="upload-file-container-inner">
-          <Dragger {...props} style={{ borderRadius: 10 }}>
-            <img className="upload-icon" src={UploadIcon} alt="Upload File" />
-            <p className="upload-text" style={{ marginBottom: 20 }}>
-              Customer Will Upload File Here
-            </p>
-          </Dragger>
+        <div className="contact-info-container-inner">
+        <div className="contact-info-row">
+          <span className="contact-info-field-label">Full Name</span>
+          <input
+            className="contact-info-user-input"
+            type="text"
+            placeholder="User Types Here... "
+            onBlur={(e) => {
+              setFullName(e.target.value);
+            }}
+          ></input>
+        </div>
+        <div className="contact-info-row">
+          <span className="contact-info-field-label">Institution</span>
+          <input
+            className="contact-info-user-input"
+            type="text"
+            placeholder="User Types Here... "
+            onBlur={(e) => {
+              setInstitution(e.target.value);
+            }}
+          ></input>
+        </div>
+        <div className="contact-info-row">
+          <span className="contact-info-field-label">Email</span>
+          <input
+            className="contact-info-user-input"
+            type="email"
+            placeholder="User Types Here... "
+            onBlur={(e) => {
+              setEmail(e.target.value);
+            }}
+          ></input>
+        </div>
+        <div className="contact-info-row">
+          <span className="contact-info-field-label">Telephone</span>
+          <input
+            className="contact-info-user-input"
+            type="number"
+            placeholder="User Types Here... "
+            onBlur={(e) => {
+              setTelephone(e.target.value);
+            }}
+          ></input>
+        </div>
         </div>
       </div>
+      {/* Copy Everything Except Content Above For Reusability */}
       <div className="GlobalEditorComponentFooter">
         {logicList[question.question_id] ? (
           <div
@@ -205,4 +186,4 @@ function FileInput({ question }) {
   );
 }
 
-export default FileInput;
+export default ContactInfoEditor;

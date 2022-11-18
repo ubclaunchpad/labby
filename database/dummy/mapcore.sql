@@ -1,7 +1,7 @@
 CALL save_question('MAPCORE-001','MAPcore & GPEC Service Request Form','heading', 0, false);
 CALL save_question('MAPCORE-002','Request Type','multi', 1, true);
 CALL save_question('MAPCORE-003','Contact Details','contact', 2, true);
-CALL save_question('MAPCORE-004','Study Title','textline', 3, true);
+CALL save_question('MAPCORE-004','Study Title','text', 3, true);
 CALL save_question('MAPCORE-005','Microtomy','heading', 4, false);
 CALL save_question('MAPCORE-006','Microtomy (FFPE Only)','multi', 5, false);
 CALL save_question('MAPCORE-007','Histochemistry','heading', 6, false);
@@ -14,12 +14,12 @@ CALL save_question('MAPCORE-013','Imaging and Analysis','heading', 12, false);
 CALL save_question('MAPCORE-014','Slide Scanning','multi', 13, false);
 CALL save_question('MAPCORE-015','Scoring and Analysis','multi', 14, false);
 CALL save_question('MAPCORE-016','Tissue Type','multi', 15, false);
-CALL save_question('MAPCORE-017','Relevant Tissue Details','textline', 16, false);
-CALL save_question('MAPCORE-018','Number of Blocks/Slides','textline', 17, false);
+CALL save_question('MAPCORE-017','Relevant Tissue Details','text', 16, false);
+CALL save_question('MAPCORE-018','Number of Blocks/Slides','text', 17, false);
 CALL save_question('MAPCORE-019','Coring Details','heading', 18, false);
 CALL save_question('MAPCORE-020','Cores Size','multi', 19, false);
 CALL save_question('MAPCORE-021','Number of Cores Per Block','multi', 20, false);
-CALL save_question('MAPCORE-022','Comments','textline', 21, false);
+CALL save_question('MAPCORE-022','Comments','text', 21, false);
 CALL save_question('MAPCORE-023','Detailed Service Request Form Template','download', 22, false);
 CALL save_question('MAPCORE-024','Relevant File Upload','upload', 23, false);
 

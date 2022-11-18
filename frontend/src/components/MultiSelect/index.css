@@ -23,6 +23,7 @@
     width: 100%;
     padding-left: 5px;
     padding-right: 5px;
+    min-height: 150px;
     align-items: center;
 }
 

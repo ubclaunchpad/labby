@@ -7,7 +7,6 @@ import TextAnswer from "../TextAnswer";
 import MultiSelect from "../MultiSelect";
 import SingleSelect from "../SingleSelect";
 import FormTitle from "./FormTitle";
-import ContactInfo from "../ContactInfo";
 import FileDownload from "../FileDownload";
 import Heading from "../Heading";
 import TextLine from "../TextLine";
@@ -17,6 +16,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { DraggableElement } from "../BuilderLibrary/ComponentLibrary";
+import ContactInfoEditor from "../ContactInfo/ContactInfoEditor";
 
 const QuestionContainer = styled.div`
   border: ${(props) =>
@@ -33,8 +33,7 @@ const QuestionContainer = styled.div`
   margin-bottom: 100px;
 `;
 
-// TODO: create separate renderQuestion for customer form
-export function renderQuestion(question) {
+function renderQuestion(question) {
   switch (question.question_type) {
     case "multi":
       return <MultiSelect question={question} />;
@@ -53,7 +52,7 @@ export function renderQuestion(question) {
     case "download":
       return <FileDownload question={question} />;
     case "contact":
-      return <ContactInfo question={question} />;
+      return <ContactInfoEditor question={question} />;
     default:
       return null;
   }
@@ -76,7 +75,7 @@ function FormBuilder() {
         <div className="FormTitle">
           {FormTitle()}
           <div className="FormPreview">
-            <NavLink to="/request-form">
+            <NavLink to="/request">
               <button
                 className="FormPreviewButton"
                 style={{
@@ -91,10 +90,6 @@ function FormBuilder() {
                   e.target.style.backgroundColor = appColor.primaryLight;
                   e.target.style.color = appColor.white;
                 }}
-                // TODO: open modal onClick which after confirmation leads to customer request form
-                // onClick={() => {
-                //   alert("Preview Not Available Yet!");
-                // }}
               >
                 Preview
               </button>

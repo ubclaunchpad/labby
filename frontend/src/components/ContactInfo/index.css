@@ -1,61 +1,3 @@
-.question-header-row {
-  margin-top: 15px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  width: 100%;
-  height: 3em;
-  align-items: center;
-}
-
-.question-number-container {
-  display: flex;
-  margin-left: 2%;
-  margin-right: 5%;
-  height: 80%;
-  width: 7%;
-  background: #d9d9d9;
-  border-radius: 15px;
-  align-items: center;
-  justify-content: center;
-}
-
-.question-number-text {
-  font-size: 16px;
-  text-align: center;
-  color: #666666;
-}
-
-.question-name-input {
-  background-color: #d9d9d9;
-  border: none;
-  border-radius: 15px;
-  height: 80%;
-  width: 55%;
-  font-size: 16px;
-  padding-left: 2%;
-  margin-right: 25%;
-}
-.question-close-button-container {
-  border-radius: 20px;
-  height: 30px;
-  width: 30px;
-  display: flex;
-  justify-content: center;
-  /* align-items: center; */
-}
-.question-close-button-container:hover {
-  background-color: rgba(50, 50, 50, 0.1);
-}
-.question-cancel-button {
-  font-size: 18px;
-  /* text-align: center;  */
-  background: transparent;
-  border: none;
-  align-self: right;
-}
-
 .single-select-question-builder-container {
   position: relative;
   margin-top: 15px;
@@ -83,11 +25,13 @@
   width: 100%;
 }
 
-.contact-info-row {
+.contact-info-row-customer {
   height: 3em;
   display: flex;
   height: 15%;
-  align-items: center;
+  justify-content: left;
+  align-items: flex-start;
+  flex-direction: column;
 }
 
 .contact-info-field-label {
@@ -101,45 +45,16 @@
   text-align: left;
 }
 
-.contact-info-user-input {
+.contact-info-user-input-customer {
   border: 1px solid #666666;
   border-radius: 10px;
-  padding-left: 2%;
+  padding-left: 10px;
+  margin-bottom: 10px;
   height: 2.5em;
-  margin-left: 2%;
-  width: 45%;
+  width: 100%;
 }
 
 .contact-info-user-input:focus {
   outline: none;
 }
 
-.question-footer-row {
-  margin: 15px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 100%;
-  height: 3em;
-  align-items: center;
-}
-
-.question-logic-added-sign {
-  font-size: 1em;
-  font-weight: 400;
-  margin-left: 2%;
-  display: flex;
-  width: 15%;
-  border: 2px solid #aeaeae;
-  color: #aeaeae;
-  border-radius: 15px;
-  height: 80%;
-  align-items: center;
-  justify-content: center;
-}
-
-.question-required-checkbox {
-  margin-right: 2%;
-  color: #aeaeae;
-}

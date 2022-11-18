@@ -1,42 +1,78 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import Header from "../../components/Header";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./request-form.css";
-import { renderQuestion } from "../../components/FormBuilder";
-import { clsx } from "clsx";
 import { appColor } from "../../constants";
+import { LOAD_QUESTION } from "../../redux/actions/questionActions";
+import MultiSelect from "../../components/MultiSelect";
+import SingleSelect from "../../components/SingleSelect";
+import TextAnswer from "../../components/TextAnswer";
+import Dropdown from "../../components/Dropdown";
+import Heading from "../../components/Heading";
+import TextLine from "../../components/TextLine";
+import FileInput from "../../components/FileInput";
+import FileDownload from "../../components/FileDownload";
+import ContactInfo from "../../components/ContactInfo";
 
-export const RequestForm = () => {
+function RequestForm() {
+  const dispatch = useDispatch();
   const questionList = useSelector(
     (state) => state.questionReducer.questionList
   );
-  return (
-    <div className="requestFormPage">
-      <div className="headerComponent">
-        <Header />
-      </div>
-      <div className="requestFormContainer">
-        <div className="formTitle">{questionList[0].question}</div>
-        {questionList.slice(1).map((question, index) => {
-          const isHeadingOrTextline =
-            question.question_type === "heading" ||
-            question.question_type === "textline";
-          return (
-            <div>
-              <div
-                className={clsx(
-                  "FormBuilderQuestion",
-                  isHeadingOrTextline && "FormBuilderQuestion--short"
-                )}
-                key={question.question_id}
-                style={{ color: appColor.gray }}
-              >
-                {renderQuestion(question)}
+
+  useEffect(() => {
+    dispatch({ type: LOAD_QUESTION });
+  }, [dispatch]);
+
+  function renderQuestion(question) {
+    switch (question.question_type) {
+      case "multi":
+        return <MultiSelect question={question} />;
+      case "single":
+        return <SingleSelect question={question} />;
+      case "text":
+        return <TextAnswer question={question} />;
+      case "dropdown":
+        return <Dropdown question={question} />;
+      case "heading":
+        return <Heading question={question} />;
+      case "textline":
+        return <TextLine question={question} />;
+      case "upload":
+        return <FileInput question={question} />;
+      case "download":
+        return <FileDownload question={question} />;
+      case "contact":
+        return <ContactInfo question={question} />;
+      default:
+        return null;
+    }
+  }
+
+  if (questionList.length !== 0) {
+    return (
+      <div className="requestFormPage">
+        <div className="requestFormContainer">
+          <div className="formTitle" style={{ color: appColor.primaryBlack }}>
+            {questionList[0].question}
+          </div>
+          {questionList.slice(1).map((question) => {
+            return (
+              <div key={question.question_id}>
+                <div
+                  className="FormResponseQuestion"
+                  style={{ color: appColor.gray }}
+                >
+                  {renderQuestion(question)}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  } else {
+    return null;
+  }
+}
+
+export default RequestForm;
