@@ -17,10 +17,10 @@
 }
 
 .upload-icon {
-  height: 22px;
-  width: 22px;
+  height: 26px;
+  width: 26px;
   object-fit: contain;
-  margin: 30px;
+  margin: 10px;
 }
 
 .upload-text {
