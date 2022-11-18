@@ -1,8 +1,10 @@
 import "./index.css";
-import "../index.css";
+import "../../index.css";
+
+// import "../index.css";
 import { useEffect, useState } from "react";
-import X from "../../assets/X.png";
-import DragDots from "../../assets/DragDots.png";
+import X from "../../../assets/X.png";
+import DragDots from "../../../assets/DragDots.png";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import { Checkbox } from "@mui/material";
@@ -14,12 +16,12 @@ import {
   LOAD_QUESTION,
   SAVE_ANSWER,
   SAVE_QUESTION,
-} from "../../redux/actions/questionActions";
+} from "../../../redux/actions/questionActions";
 import {
   SET_LOGIC_QUESTION,
   SET_LOGIC_VIEW_QUESTION,
-} from "../../redux/actions/logicActions";
-import { TOGGLE_LOGIC } from "../../redux/actions/uiActions";
+} from "../../../redux/actions/logicActions";
+import { TOGGLE_LOGIC } from "../../../redux/actions/uiActions";
 
 function MultiSelect({ question }) {
   const dispatch = useDispatch();
@@ -35,24 +37,80 @@ function MultiSelect({ question }) {
   const [title, setTitle] = useState("");
 
   useEffect(() => {
-    console.log(question);
     setQuestionNum(`Q${question.position_index ?? 0}`);
     setTitle(question.question ?? "");
   }, [question]);
 
   useEffect(() => {
-    console.log(answerList);
     var optionList = answerList[question.question_id ?? ""] ?? [];
-    if (!optionList.includes("")) {
-      optionList.push("");
-    }
+    optionList = optionList.sort((a, b) => {
+      let fa = a.answer;
+      let fb = b.answer;
+
+      if (fa < fb) {
+        return -1;
+      }
+      if (fa > fb) {
+        return 1;
+      }
+      return 0;
+    });
+    optionList = optionList.filter((option) => option !== "");
+    optionList.push("");
     setOptions(optionList);
   }, [answerList, question]);
 
   return (
     <div className="GlobalEditorComponent">
       <div className="GlobalEditorComponentHeader">
-        <div className="customer__component__title">{question.question}</div>
+        <div
+          className="GlobalEditorQuestionNumber"
+          onClick={() => {
+            dispatch({
+              type: SET_LOGIC_QUESTION,
+              payload: question,
+            });
+          }}
+        >
+          {questionNum}
+        </div>
+        <input
+          className="GlobalEditorQuestionTitleInput"
+          defaultValue={title}
+          placeholder="Type your form name here..."
+          onBlur={(text) => {
+            dispatch({
+              type: SAVE_QUESTION,
+              payload: {
+                ...question,
+                question_title: text.target.value,
+                question_index: question.position_index,
+              },
+            });
+            dispatch({ type: LOAD_QUESTION });
+          }}
+        />
+        <img
+          className="GlobalEditorDelete"
+          src={X}
+          alt="Delete"
+          onClick={() => {
+            questionList.forEach((questionObj) => {
+              if (questionObj.position_index >= question.position_index) {
+                questionObj.question_index = questionObj.position_index - 1;
+                questionObj.question_title = questionObj.question;
+                dispatch({ type: SAVE_QUESTION, payload: questionObj });
+              }
+            });
+            dispatch({
+              type: DELETE_QUESTION,
+              payload: {
+                question_id: question.question_id,
+              },
+            });
+            dispatch({ type: LOAD_QUESTION });
+          }}
+        />
       </div>
       <div className="customer__component__subtitle">Select all that apply</div>
 
@@ -89,28 +147,11 @@ function MultiSelect({ question }) {
                         },
                       });
                     }
+                    setOptions([]);
                   }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
-                      const answerVal = e.target.value;
-                      if (answerVal.trim() !== "") {
-                        dispatch({
-                          type: SAVE_ANSWER,
-                          payload: {
-                            answer_id: option.answer_id ?? uuid(),
-                            fk_question_id: question.question_id,
-                            question_type: question.question_type,
-                            answer: answerVal,
-                          },
-                        });
-                      } else {
-                        dispatch({
-                          type: DELETE_ANSWER,
-                          payload: {
-                            answer_id: option.answer_id,
-                          },
-                        });
-                      }
+                      e.target.blur();
                     }
                   }}
                 />

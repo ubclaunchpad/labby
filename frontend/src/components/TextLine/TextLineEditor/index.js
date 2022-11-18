@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import X from "../../assets/X.png";
-import DragDots from "../../assets/DragDots.png";
+import X from "../../../assets/X.png";
+import DragDots from "../../../assets/DragDots.png";
 import "./index.css";
-import "../index.css";
+import "../../index.css";
 import {
   DELETE_QUESTION,
   LOAD_QUESTION,

@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { MultiSelect } from "./index";
 import { Provider } from "react-redux";
-import Store from "../../redux/store";
+import Store from "../../../redux/store";
 import userEvent from "@testing-library/user-event";
 
 describe("A test suite for the single select component", () => {

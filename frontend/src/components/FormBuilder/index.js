@@ -3,13 +3,13 @@ import { useSelector } from "react-redux";
 import { appColor } from "../../constants";
 import DropdownEditor from "../Dropdown/DropdownEditor";
 import FileInput from "../FileInput";
-import TextAnswer from "../TextAnswer";
-import MultiSelect from "../MultiSelect";
+import TextAnswer from "../TextAnswer/TextAnswerEditor";
+import MultiSelect from "../MultiSelect/MultiSelectEditor";
 import SingleSelect from "../SingleSelect";
 import FormTitle from "./FormTitle";
 import FileDownload from "../FileDownload";
-import Heading from "../Heading";
-import TextLine from "../TextLine";
+import Heading from "../Heading/HeadingEditor";
+import TextLine from "../../index.js";
 import { clsx } from "clsx";
 import { NavLink } from "react-router-dom";
 

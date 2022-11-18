@@ -1,21 +1,23 @@
+import { Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import X from "../../assets/X.png";
-import DragDots from "../../assets/DragDots.png";
+import Checkbox from "@mui/material/Checkbox";
+import X from "../../../assets/X.png";
+import DragDots from "../../../assets/DragDots.png";
 import "./index.css";
-import "../index.css";
+import "../../index.css";
 import {
   DELETE_QUESTION,
   LOAD_QUESTION,
   SAVE_QUESTION,
-} from "../../redux/actions/questionActions";
+} from "../../../redux/actions/questionActions";
 import {
   SET_LOGIC_QUESTION,
   SET_LOGIC_VIEW_QUESTION,
-} from "../../redux/actions/logicActions";
-import { TOGGLE_LOGIC } from "../../redux/actions/uiActions";
+} from "../../../redux/actions/logicActions";
+import { TOGGLE_LOGIC } from "../../../redux/actions/uiActions";
 
-function Heading({ question }) {
+function TextAnswer({ question }) {
   const dispatch = useDispatch();
   const logicList = useSelector((state) => state.logicReducer.logicList);
   const questionList = useSelector(
@@ -30,17 +32,10 @@ function Heading({ question }) {
   }, [question]);
 
   return (
-    <div className="GlobalEditorComponent  GlobalEditorComponent--heading ">
+    <div className="GlobalEditorComponent">
       <div className="GlobalEditorComponentHeader">
-        <img
-          className="GlobalDragDot"
-          src={DragDots}
-          style={{ left: "-20px" }}
-          alt="DragDots"
-        />
         <div
           className="GlobalEditorQuestionNumber"
-          style={{ marginLeft: "-5px" }}
           onClick={() => {
             dispatch({
               type: SET_LOGIC_QUESTION,
@@ -53,7 +48,7 @@ function Heading({ question }) {
         <input
           className="GlobalEditorQuestionTitleInput"
           defaultValue={title}
-          placeholder="Type your heading here..."
+          placeholder="Type your form name here..."
           onBlur={(text) => {
             dispatch({
               type: SAVE_QUESTION,
@@ -88,11 +83,18 @@ function Heading({ question }) {
           }}
         />
       </div>
-
+      <div className="text-box-container">
+        <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
+        <Input.TextArea
+          placeholder="User types here..."
+          rows={10}
+          className="text-box"
+        />
+      </div>
       <div className="GlobalEditorComponentFooter">
         {logicList[question.question_id] ? (
           <div
-            className="GlobalEditorLogicAdded LogicPadding"
+            className="GlobalEditorLogicAdded"
             onClick={() => {
               dispatch({
                 type: TOGGLE_LOGIC,
@@ -109,9 +111,27 @@ function Heading({ question }) {
         ) : (
           <div />
         )}
+        <div className="GlobalEditorRequiredQuestion">
+          <Checkbox
+            style={{ color: "#AEAEAE", padding: 3 }}
+            checked={question.mandatory === 1}
+            onClick={(e) => {
+              dispatch({
+                type: SAVE_QUESTION,
+                payload: {
+                  ...question,
+                  mandatory: e.target.checked,
+                  question_index: question.position_index,
+                },
+              });
+              dispatch({ type: LOAD_QUESTION });
+            }}
+          />
+          Required
+        </div>
       </div>
     </div>
   );
 }
 
-export default Heading;
+export default TextAnswer;
