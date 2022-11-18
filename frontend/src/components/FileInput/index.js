@@ -1,5 +1,4 @@
 import { Upload } from "antd";
-import "./index.css";
 import UploadIcon from "../../assets/FileUpload.png";
 import AWS from "aws-sdk";
 import "./index.css";
@@ -60,7 +59,7 @@ function FileInput({ question }) {
           }}
         >
           <img className="upload-icon" src={UploadIcon} alt="Upload File" />
-          <p className="upload-text" style={{ marginBottom: 20 }}>
+          <p className="upload-text">
             Drag and Drop Files
           </p>
         </Dragger>
