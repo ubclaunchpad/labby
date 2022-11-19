@@ -12,6 +12,7 @@ import TextLine from "../../components/TextLine";
 import FileInput from "../../components/FileInput";
 import FileDownload from "../../components/FileDownload";
 import ContactInfo from "../../components/ContactInfo";
+import CostEstimate from "../../components/CostEstimate";
 
 function RequestForm() {
   const dispatch = useDispatch();
@@ -53,8 +54,14 @@ function RequestForm() {
       <div className="requestFormPage">
         <div className="requestFormContainer">
           <div className="formTitle" style={{ color: appColor.primaryBlack }}>
-            {questionList[0].question}
+            {questionList[0].question }
           </div>
+             <div
+                  className="CostEstimate"
+                  style={{ color: appColor.gray }}
+                >
+                   {CostEstimate()}
+            </div>
           {questionList.slice(1).map((question) => {
             return (
               <div key={question.question_id}>
