@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { ADD_QUESTION, ADD_RESPONSE } from "../actions/formActions";
+import { ADD_QUESTION, ADD_RESPONSE, REMOVE_RESPONSE } from "../actions/formActions";
 
 const defaultQuestionlist = {
   multi: [],
@@ -13,7 +13,7 @@ const defaultQuestionlist = {
   contact: [],
 };
 
-const defaultAnswerList = {};
+const defaultAnswerList = [];
 
 const formQuestions = (state = defaultQuestionlist, action) => {
   switch (action.type) {
@@ -34,11 +34,12 @@ const formQuestions = (state = defaultQuestionlist, action) => {
 const formResponses = (state = defaultAnswerList, action) => {
   switch (action.type) {
     case ADD_RESPONSE: {
-      var answerList = [];
-      action.payload.forEach((questions_answer) => {
-        answerList.push(questions_answer);
-      });
-      return answerList;
+      state.push(action.payload);
+      return [...state];
+    }
+    case REMOVE_RESPONSE: {
+      state = state.filter((response) => response.answer_id !== action.payload);
+      return [...state];
     }
     default: {
       return state;

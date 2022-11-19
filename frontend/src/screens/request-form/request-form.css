@@ -33,3 +33,19 @@
   margin-bottom: 30px;
   background-color: white;
 }
+
+.FormSubmit {
+  flex: 1;
+  text-align: start;
+}
+
+.FormSubmitButton {
+  height: 45px;
+  width: 150px;
+  border: 0;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
