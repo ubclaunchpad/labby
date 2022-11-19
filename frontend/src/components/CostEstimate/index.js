@@ -2,8 +2,6 @@
 import "./index.css";
 import { appColor } from "../../constants";
 import X from "../../assets/X.png";
-// import Divider from "../Divider";
-import { width } from "@mui/system";
 
 
 function CostEstimate() {
