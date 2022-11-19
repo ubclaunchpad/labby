@@ -1,19 +1,16 @@
-.requestFormPage {
-  height: 100vh;
-  display: flex;
-}
-
+/* * {
+  border: 1px solid red;
+} */
 .requestFormContainer {
-  flex: 1;
-  padding-left: 200px;
-  padding-right: 200px;
-  padding-top: 100px;
-  padding-bottom: 100px;
+  height: 100vh;
+  padding-left: 100px;
+  padding-right: 100px;
+  padding-top: 50px;
+  padding-bottom: 50px;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
 }
-
 .formTitle {
   font-size: 32px;
   font-weight: bold;
@@ -32,4 +29,13 @@
   font-size: 16px;
   margin-bottom: 30px;
   background-color: white;
+}
+.requestContent {
+  display: flex;
+}
+.requestQuestions {
+  flex-grow: 1;
+}
+.costEstimate {
+   
 }

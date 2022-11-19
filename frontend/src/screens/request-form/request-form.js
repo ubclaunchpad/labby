@@ -51,29 +51,28 @@ function RequestForm() {
 
   if (questionList.length !== 0) {
     return (
-      <div className="requestFormPage">
-        <div className="requestFormContainer">
-          <div className="formTitle" style={{ color: appColor.primaryBlack }}>
-            {questionList[0].question }
-          </div>
-             <div
-                  className="CostEstimate"
-                  style={{ color: appColor.gray }}
-                >
-                   {CostEstimate()}
-            </div>
-          {questionList.slice(1).map((question) => {
-            return (
-              <div key={question.question_id}>
-                <div
-                  className="FormResponseQuestion"
-                  style={{ color: appColor.gray }}
-                >
-                  {renderQuestion(question)}
+      <div className="requestFormContainer">
+        <div className="formTitle" style={{ color: appColor.primaryBlack }}>
+          {questionList[0].question}
+        </div>
+        <div className="requestContent">
+          <div className="requestQuestions">
+            {questionList.slice(1).map((question) => {
+              return (
+                <div key={question.question_id}>
+                  <div
+                    className="FormResponseQuestion"
+                    style={{ color: appColor.gray }}
+                  >
+                    {renderQuestion(question)}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+          <div className="CostEstimate" style={{ color: appColor.gray }}>
+            {CostEstimate()}
+          </div>
         </div>
       </div>
     );
