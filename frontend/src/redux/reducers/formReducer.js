@@ -11,6 +11,7 @@ import {
   REMOVE_EMAIL_RESPONSE,
   ADD_PHONE_RESPONSE,
   REMOVE_PHONE_RESPONSE,
+  REMOVE_SINGLE_RESPONSE,
 } from "../actions/formActions";
 
 const defaultQuestionlist = {
@@ -46,12 +47,27 @@ const formQuestions = (state = defaultQuestionlist, action) => {
 const formResponses = (state = defaultAnswerList, action) => {
   switch (action.type) {
     case ADD_RESPONSE: {
-      state = state.filter((response) => response.id !== action.payload.id);
+      state = state.filter(
+        (response) =>
+          response.question.question_id !== action.payload.question.question_id ||
+          response.response !== action.payload.response
+      );
       state.push(action.payload);
       return [...state];
     }
     case REMOVE_RESPONSE: {
-      state = state.filter((response) => response.id !== action.payload.id);
+      state = state.filter(
+        (response) =>
+          response.question.question_id !== action.payload.question.question_id ||
+          response.response !== action.payload.response
+      );
+      return [...state];
+    }
+    case REMOVE_SINGLE_RESPONSE: {
+      state = state.filter(
+        (response) =>
+          response.question.question_id !== action.payload.question.question_id
+      );
       return [...state];
     }
     case ADD_FULLNAME_RESPONSE: {

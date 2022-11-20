@@ -4,6 +4,9 @@ import AWS from "aws-sdk";
 import "./index.css";
 import "../../index.css";
 import Divider from "../Divider";
+import { useDispatch } from "react-redux";
+import { ADD_RESPONSE } from "../../redux/actions/formActions";
+import uuid from "react-uuid";
 
 const { Dragger } = Upload;
 
@@ -15,6 +18,8 @@ const config = new AWS.Config({
 });
 
 function FileInput({ question }) {
+  const dispatch = useDispatch();
+
   return (
     <div className="GlobalCustomerQuestionContainer">
       <div className="GlobalQuestionTitle">{question.question}</div>
@@ -54,6 +59,14 @@ function FileInput({ question }) {
                 } else {
                   onSuccess(data.response, file);
                   console.log("Send completed in S3.putObject.send()");
+                  dispatch({
+                    type: ADD_RESPONSE,
+                    payload: {
+                      id: uuid(),
+                      response: objParams.Key,
+                      question: question,
+                    },
+                  });
                 }
               });
           }}
