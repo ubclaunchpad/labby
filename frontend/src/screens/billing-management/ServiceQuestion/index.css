@@ -1,0 +1,56 @@
+.ServiceQuestionInput {
+    flex: 12;
+    border-radius: 15px;
+}
+
+.ServiceQuestionSelectInput {
+    height: 45px;
+    border: 0;
+    background-color: transparent;
+    width: 95%;
+}
+
+.ServiceQuestionSelectInput:focus {
+    outline: none;
+}
+
+.DropdownIcon{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ServiceQuestionSelect {
+    height: 45px;
+    width: 100%;
+    border: 0;
+    border-radius: 15px;
+    background-color: #f2f2f2;
+    display: flex;
+    flex-direction: row;
+
+    background-color: #EEEEEE;
+    border-radius: 15px;
+    display: flex;
+    margin: 15px;
+    width: 100%;
+    padding: 12px 150px;
+    flex-grow: 3;
+}
+
+.ServiceQuestionSelect:hover {
+    background-color: #f2f2f2;
+}
+
+.ServiceQuestionSelect:focus {
+    outline: none;
+}
+
+.ServiceQuestionSelect:active {
+    outline: none;
+}
+
+.ServiceQuestionSelect:visited {
+    outline: none;
+}

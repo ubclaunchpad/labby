@@ -1,0 +1,57 @@
+.BillingManagement {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.BillingManagementHeader {
+    height: 150px;
+}
+
+.ScrollBox {
+    overflow: auto;
+    max-height: calc(100vh - 150px);
+}
+
+.BillingManagementTitle {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: left;
+    padding-top: 22px;
+    padding-bottom: 5px;
+}
+
+.ServiceQuestion {
+    display: flex;
+    flex-direction: row;
+    height: 45px;
+    
+}
+
+.BillingAdd {
+    flex: 3;
+    text-align: end;
+}
+
+.BillingAddButton {
+    height: 45px;
+    width: 150px;
+    border: 0;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    margin-right: 85px;
+}
+
+.BillingAddButton:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.BillingEdit {
+    flex: 1;
+    text-align: end;
+    margin-right: 30px;
+    margin-top: 10px;
+}
