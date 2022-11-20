@@ -12,15 +12,14 @@ import TextLine from "../../components/TextLine";
 import FileInput from "../../components/FileInput";
 import FileDownload from "../../components/FileDownload";
 import ContactInfo from "../../components/ContactInfo";
+import { SUBMIT_FORM } from "../../redux/actions/formActions";
 
 function RequestForm() {
   const dispatch = useDispatch();
   const questionList = useSelector(
     (state) => state.questionReducer.questionList
   );
-  const formResponses = useSelector(
-    (state) => state.formReducer.formResponses
-  );
+  const formResponses = useSelector((state) => state.formReducer.formResponses);
 
   useEffect(() => {
     dispatch({ type: LOAD_QUESTION });
@@ -71,27 +70,27 @@ function RequestForm() {
             );
           })}
           <div className="FormSubmit">
-              <button
-                className="FormSubmitButton"
-                style={{
-                  backgroundColor: appColor.primaryLight,
-                  color: appColor.white,
-                }}
-                onMouseOver={(e) => {
-                  e.target.style.backgroundColor = appColor.primary;
-                  e.target.style.color = appColor.white;
-                }}
-                onMouseOut={(e) => {
-                  e.target.style.backgroundColor = appColor.primaryLight;
-                  e.target.style.color = appColor.white;
-                }}
-                onClick={() => {
-                  alert("Form Submitted");
-                  console.log(formResponses)
-                }}
-              >
-                Submit
-              </button>
+            <button
+              className="FormSubmitButton"
+              style={{
+                backgroundColor: appColor.primaryLight,
+                color: appColor.white,
+              }}
+              onMouseOver={(e) => {
+                e.target.style.backgroundColor = appColor.primary;
+                e.target.style.color = appColor.white;
+              }}
+              onMouseOut={(e) => {
+                e.target.style.backgroundColor = appColor.primaryLight;
+                e.target.style.color = appColor.white;
+              }}
+              onClick={() => {
+                dispatch({ type: SUBMIT_FORM, payload: formResponses });
+                alert("Form Submitted");
+              }}
+            >
+              Submit
+            </button>
           </div>
         </div>
       </div>
