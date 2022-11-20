@@ -87,11 +87,9 @@ function FormBuilder() {
                 }}
                 onMouseOver={(e) => {
                   e.target.style.backgroundColor = appColor.primary;
-                  e.target.style.color = appColor.white;
                 }}
                 onMouseOut={(e) => {
                   e.target.style.backgroundColor = appColor.primaryLight;
-                  e.target.style.color = appColor.white;
                 }}
               >
                 Preview

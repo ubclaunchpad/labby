@@ -7,7 +7,7 @@
 .titleText {
     align-self: flex-start;
     font-weight: 600;
-    color: #666;
+    color: #353535;
     margin-bottom: 5px;
     font-size: 18px;
 }
@@ -15,7 +15,7 @@
 .subtitleText {
     align-self: flex-start;
     font-weight: 600;
-    color: #666;
+    color: #353535;
     margin-bottom: 5px;
     font-size: 16px;
     margin-top: 15px;
@@ -28,16 +28,33 @@
 
 .selectBox {
     width: 100%;
-    background-color: #909090;
-    color: #666666;
+    background-color: white;
+    color: #353535;
+    padding: 10px;
+    padding-left: 20px;
+    border-radius: 10px;
+    height: 70px;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("../../../assets/DropdownArrow.svg");
+    background-size: 16px;
+    background-repeat: no-repeat;
+    background-position: calc(100% - 16px) center;
+    border: none;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.selectBox:focus {
+    outline: none;
 }
 
 .answerSelectionBox {
     flex: 1;
     flex-direction: row;
     width: 100%;
-    background-color: #909090;
-    color: #666666;
+    background-color: white;
+    color: #353535;
     border-radius: 10px;
     padding: 10px;
     padding-left: 20px;
@@ -66,7 +83,7 @@
     height: 45px;
     width: 150px;
     border: 0;
-    border-radius: 20px;
+    border-radius: 10px;
     font-size: 18px;
     font-weight: 600;
     transition-duration: 0.4s;
