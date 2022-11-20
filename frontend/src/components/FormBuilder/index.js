@@ -2,14 +2,14 @@ import "./index.css";
 import { useSelector } from "react-redux";
 import { appColor } from "../../constants";
 import DropdownEditor from "../Dropdown/DropdownEditor";
-import FileInput from "../FileInput";
-import TextAnswer from "../TextAnswer/TextAnswerEditor";
-import MultiSelect from "../MultiSelect/MultiSelectEditor";
+import FileInputEditor from "../FileInput/FileInputEditor";
+import TextAnswer from "../TextAnswer";
+import MultiSelect from "../MultiSelect";
 import SingleSelect from "../SingleSelect";
 import FormTitle from "./FormTitle";
-import FileDownload from "../FileDownload";
-import Heading from "../Heading/HeadingEditor";
-import TextLine from "../../index.js";
+import Heading from "../Heading";
+import FileDownloadEditor from "../FileDownload/FileDownloadEditor";
+import TextLine from "../TextLine";
 import { clsx } from "clsx";
 import { NavLink } from "react-router-dom";
 
@@ -48,9 +48,9 @@ function renderQuestion(question) {
     case "textline":
       return <TextLine question={question} />;
     case "upload":
-      return <FileInput question={question} />;
+      return <FileInputEditor question={question} />;
     case "download":
-      return <FileDownload question={question} />;
+      return <FileDownloadEditor question={question} />;
     case "contact":
       return <ContactInfoEditor question={question} />;
     default:
@@ -61,6 +61,9 @@ function renderQuestion(question) {
 function FormBuilder() {
   const questionList = useSelector(
     (state) => state.questionReducer.questionList
+  );
+  const selectedQuestion = useSelector(
+    (state) => state.logicReducer.currentLogicQuestion
   );
 
   return (
@@ -110,6 +113,10 @@ function FormBuilder() {
                   const isHeadingOrTextline =
                     question.question_type === "heading" ||
                     question.question_type === "textline";
+                  const isSelected =
+                    selectedQuestion &&
+                    question &&
+                    selectedQuestion.question_id === question.question_id;
                   const componentToRender = () => (
                     <div
                       className={clsx(
@@ -117,7 +124,13 @@ function FormBuilder() {
                         isHeadingOrTextline && "FormBuilderQuestion--short"
                       )}
                       key={question.question_id}
-                      style={{ color: appColor.gray }}
+                      style={{
+                        color: appColor.gray,
+                        borderColor: isSelected
+                          ? appColor.primary
+                          : appColor.darkGray,
+                        borderWidth: isSelected ? "3px" : "2px",
+                      }}
                     >
                       {renderQuestion(question)}
                     </div>

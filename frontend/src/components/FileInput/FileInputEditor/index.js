@@ -1,6 +1,8 @@
-import { Input } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { Upload } from "antd";
+import "./index.css";
+import UploadIcon from "../../../assets/FileUpload.png";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "@mui/material/Checkbox";
 import X from "../../../assets/X.png";
 import DragDots from "../../../assets/DragDots.png";
@@ -17,7 +19,15 @@ import {
 } from "../../../redux/actions/logicActions";
 import { TOGGLE_LOGIC } from "../../../redux/actions/uiActions";
 
-function TextAnswer({ question }) {
+const { Dragger } = Upload;
+
+const props = {
+  onChange: () => {
+    console.log("Uploading to S3 disabled on lab-sided component");
+  },
+};
+
+function FileInputEditor({ question }) {
   const dispatch = useDispatch();
   const logicList = useSelector((state) => state.logicReducer.logicList);
   const questionList = useSelector(
@@ -83,13 +93,16 @@ function TextAnswer({ question }) {
           }}
         />
       </div>
-      <div className="text-box-container">
+      <div className="upload-file-container">
         <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
-        <Input.TextArea
-          placeholder="User types here..."
-          rows={5}
-          className="text-box"
-        />
+        <div className="upload-file-container-inner">
+          <Dragger {...props} style={{ borderRadius: 10 }}>
+            <img className="upload-icon" src={UploadIcon} alt="Upload File" />
+            <p className="upload-text" style={{ marginBottom: 20 }}>
+              Customer Will Upload File Here
+            </p>
+          </Dragger>
+        </div>
       </div>
       <div className="GlobalEditorComponentFooter">
         {logicList[question.question_id] ? (
@@ -134,4 +147,4 @@ function TextAnswer({ question }) {
   );
 }
 
-export default TextAnswer;
+export default FileInputEditor;
