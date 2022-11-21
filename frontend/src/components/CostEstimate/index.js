@@ -4,7 +4,6 @@ import "./index.css";
 import { appColor } from "../../constants";
 import MoneyGray from "../../assets/MoneyGray.png";
 import Ellipse from "../../assets/Ellipse.png";
-import Dollar from "../../assets/Dollar.png";
 import X from "../../assets/X.png";
 
 
