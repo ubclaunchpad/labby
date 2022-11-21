@@ -4,20 +4,20 @@ import "./index.css";
 import { appColor } from "../../constants";
 import MoneyGray from "../../assets/MoneyGray.png";
 import Ellipse from "../../assets/Ellipse.png";
+import Dollar from "../../assets/Dollar.png";
 import X from "../../assets/X.png";
 
 
 function CostEstimate() {
   const dispatch = useDispatch();
-  const costEstimateView = false;
-  // useSelector((state) => state.costEstimateReducer.costEstimateView);
+  const costEstimateView = useSelector((state) => state.costEstimateReducer.costEstimateView);
 
   if (costEstimateView) {
     return (
       <div
-        className="CostEstimateContainer"
-        style={{ backgroundColor: appColor.white }}
-         >
+      className="CostEstimateContainer"
+      style={{ background: appColor.white }}
+      >
          <button
           className="CostEstimateCollapsedContainer"
           style={{ backgroundColor: appColor.lightGray }}
@@ -33,36 +33,35 @@ function CostEstimate() {
           
         </button>
       </div>
-
     );
   } else {
     return (
-    <div
-    className="CostEstimateContainer"
-    style={{ background: "#F5F5F5" }}
-     >
-       <img
-      className="CostEstimateDelete"
-      src={X}
-      alt="Delete"
-        onClick={() => {
-          dispatch({
-            type: TOGGLE_LOGIC,
-            payload: true,
-          });
-        }}
-    />
-    <div className="CostEstimateTitle">Cost Estimate</div>
-   
-    <span className="CostEstimateHeadings">
-            <p>Service</p>
-            <p>Quantity</p>
-            <p>Cost</p>
-    </span>
-    <div className = "CostEstimateDivider" />
-    <div className = "CostDivider" />
-    <div className="CostEstimateTotal">Total</div>
-  </div>
+      <div
+      className="CostEstimateContainer"
+      style={{ background: "#F5F5F5" }}
+      >
+        <img
+        className="CostEstimateDelete"
+        src={X}
+        alt="Delete"
+          onClick={() => {
+            dispatch({
+              type: TOGGLE_LOGIC,
+              payload: true,
+            });
+          }}
+      />
+      <div className="CostEstimateTitle">Cost Estimate</div>
+    
+      <span className="CostEstimateHeadings">
+              <p>Service</p>
+              <p>Quantity</p>
+              <p>Cost</p>
+      </span>
+      <div className = "CostEstimateDivider" />
+      <div className = "CostDivider" />
+      <div className="CostEstimateTotal">Total</div>
+    </div>
   );}
 }
 export default CostEstimate;

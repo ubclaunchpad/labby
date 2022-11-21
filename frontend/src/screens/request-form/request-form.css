@@ -1,6 +1,4 @@
-/* * {
-  border: 1px solid red;
-} */
+
 .requestFormContainer {
   height: 100vh;
   padding-left: 100px;
@@ -24,7 +22,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 100%;
+  width: 80%;
   min-height: 100px;
   font-size: 16px;
   margin-bottom: 30px;
@@ -37,5 +35,5 @@
   flex-grow: 1;
 }
 .costEstimate {
-   
+
 }
