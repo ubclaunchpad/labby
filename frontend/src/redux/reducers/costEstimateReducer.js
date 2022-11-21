@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
-import { TOGGLE_LOGIC } from "../actions/uiActions";
+import { TOGGLE_LOGIC} from "../actions/uiActions";
 
-const defaultLogicView = false;
+const defaultCostEstimate = true;
 
-const logicView = (state = defaultLogicView, action) => {
+const costEstimateView = (state = defaultCostEstimate, action) => {
   switch (action.type) {
     case TOGGLE_LOGIC: {
       return action.payload;
@@ -15,6 +15,7 @@ const logicView = (state = defaultLogicView, action) => {
 };
 
 export default combineReducers({
-  logicView,
+  costEstimateView,
 });
 
+//(true, click) => close

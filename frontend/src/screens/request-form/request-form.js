@@ -70,7 +70,7 @@ function RequestForm() {
               );
             })}
           </div>
-          <div className="CostEstimate" style={{ color: appColor.gray }}>
+          <div className="CostEstimate" style={{ color: appColor.white }}>
             {CostEstimate()}
           </div>
         </div>
