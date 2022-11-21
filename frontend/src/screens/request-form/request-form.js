@@ -12,7 +12,12 @@ import TextLine from "../../components/TextLine";
 import FileInput from "../../components/FileInput";
 import FileDownload from "../../components/FileDownload";
 import ContactInfo from "../../components/ContactInfo";
-import CostEstimate from "../../components/CostEstimate";
+import {
+  CostEstimate,
+  CostEstimateCollapsed,
+  CostEstimateFull,
+} from "../../components/CostEstimate";
+import { TOGGLE_LOGIC } from "../../redux/actions/uiActions";
 
 function RequestForm() {
   const dispatch = useDispatch();
@@ -23,6 +28,10 @@ function RequestForm() {
   useEffect(() => {
     dispatch({ type: LOAD_QUESTION });
   }, [dispatch]);
+
+  const costEstimateView = useSelector(
+    (state) => state.costEstimateReducer.costEstimateView
+  );
 
   function renderQuestion(question) {
     switch (question.question_type) {
@@ -70,8 +79,22 @@ function RequestForm() {
               );
             })}
           </div>
-          <div className="CostEstimate" style={{ color: appColor.white }}>
-            {CostEstimate()}
+          <div
+            className="CostEstimate"
+            style={{ color: appColor.white }}
+            onClick={() => {
+              dispatch({
+                type: TOGGLE_LOGIC,
+                payload: false,
+              });
+            }}
+          >
+            {/* {CostEstimate()} */}
+            {costEstimateView ? (
+              <CostEstimateCollapsed />
+            ) : (
+              <CostEstimateFull />
+            )}
           </div>
         </div>
       </div>

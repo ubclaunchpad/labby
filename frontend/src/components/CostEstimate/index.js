@@ -6,18 +6,19 @@ import MoneyGray from "../../assets/MoneyGray.png";
 import Ellipse from "../../assets/Ellipse.png";
 import X from "../../assets/X.png";
 
-
-function CostEstimate() {
+export const CostEstimate = () => {
   const dispatch = useDispatch();
-  const costEstimateView = useSelector((state) => state.costEstimateReducer.costEstimateView);
+  const costEstimateView = useSelector(
+    (state) => state.costEstimateReducer.costEstimateView
+  );
 
   if (costEstimateView) {
     return (
       <div
-      className="CostEstimateContainer"
-      style={{ background: appColor.white }}
+        className="CostEstimateContainer"
+        style={{ background: appColor.white }}
       >
-         <button
+        <button
           className="CostEstimateCollapsedContainer"
           style={{ backgroundColor: appColor.lightGray }}
           onClick={() => {
@@ -27,40 +28,71 @@ function CostEstimate() {
             });
           }}
         >
-            <img className="Ellipse" src={Ellipse} />
-            <img className="MoneyGray" src={MoneyGray} />
-          
+          <img className="Ellipse" src={Ellipse} />
+          <img className="MoneyGray" src={MoneyGray} />
         </button>
       </div>
     );
   } else {
     return (
-      <div
-      className="CostEstimateContainer"
-      style={{ background: "#F5F5F5" }}
-      >
+      <div className="CostEstimateContainer" style={{ background: "#F5F5F5" }}>
         <img
-        className="CostEstimateDelete"
-        src={X}
-        alt="Delete"
+          className="CostEstimateDelete"
+          src={X}
+          alt="Delete"
           onClick={() => {
             dispatch({
               type: TOGGLE_LOGIC,
               payload: true,
             });
           }}
-      />
+        />
+        <div className="CostEstimateTitle">Cost Estimate</div>
+
+        <span className="CostEstimateHeadings">
+          <p>Service</p>
+          <p>Quantity</p>
+          <p>Cost</p>
+        </span>
+        <div className="CostEstimateDivider" />
+        <div className="CostDivider" />
+        <div className="CostEstimateTotal">Total</div>
+      </div>
+    );
+  }
+};
+
+export const CostEstimateCollapsed = () => {
+  return (
+    <div
+      className="CostEstimateContainer"
+      style={{ background: appColor.white }}
+    >
+      <button
+        className="CostEstimateCollapsedContainer"
+        style={{ backgroundColor: appColor.lightGray }}
+      >
+        <img className="Ellipse" src={Ellipse} />
+        <img className="MoneyGray" src={MoneyGray} />
+      </button>
+    </div>
+  );
+};
+
+export const CostEstimateFull = () => {
+  return (
+    <div className="CostEstimateContainer" style={{ background: "#F5F5F5" }}>
+      <img className="CostEstimateDelete" src={X} alt="Delete" />
       <div className="CostEstimateTitle">Cost Estimate</div>
-    
+
       <span className="CostEstimateHeadings">
-              <p>Service</p>
-              <p>Quantity</p>
-              <p>Cost</p>
+        <p>Service</p>
+        <p>Quantity</p>
+        <p>Cost</p>
       </span>
-      <div className = "CostEstimateDivider" />
-      <div className = "CostDivider" />
+      <div className="CostEstimateDivider" />
+      <div className="CostDivider" />
       <div className="CostEstimateTotal">Total</div>
     </div>
-  );}
-}
-export default CostEstimate;
+  );
+};
