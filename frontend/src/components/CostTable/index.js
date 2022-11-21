@@ -1,9 +1,12 @@
-import React from "react";
 import { Table } from "antd";
-import "./index.css";
 import "antd/dist/antd.min.css";
+import "./index.css";
 
- const CostTable = () => {
+//TODO: make the cells editable
+//TODO: Add row funcionality
+const CostTable = () => {
+  const { Column } = Table;
+
   const columns = [
     {
       title: "Service",
@@ -14,7 +17,6 @@ import "antd/dist/antd.min.css";
       title: "Description",
       dataIndex: "description",
       key: "description",
-      
     },
     {
       title: "Internal",
@@ -32,8 +34,8 @@ import "antd/dist/antd.min.css";
       key: "industry",
     },
   ];
-  
 
+  // TODO: replace with redux
   const dataSource = [
     {
       key: "1",
@@ -63,7 +65,23 @@ import "antd/dist/antd.min.css";
       industry: "$",
     },
   ];
-  return <Table className="table" dataSource={dataSource} columns={columns} />;
+
+  return (
+    <>
+      {/* <Table className="table" dataSource={dataSource} columns={columns} /> */}
+      <Table className="table" dataSource={dataSource} pagination={false}>
+        {columns.map((column) => {
+          return (
+            <Column
+              title={column.title}
+              dataIndex={column.dataIndex}
+              key={column.key}
+            />
+          );
+        })}
+      </Table>
+    </>
+  );
 };
 
 export default CostTable;
