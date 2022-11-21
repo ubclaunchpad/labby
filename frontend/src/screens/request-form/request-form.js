@@ -70,7 +70,7 @@ function RequestForm() {
               return (
                 <div key={question.question_id}>
                   <div
-                    className="FormResponseQuestion"
+                    className="FormRequestQuestion"
                     style={{ color: appColor.gray }}
                   >
                     {renderQuestion(question)}
@@ -85,7 +85,7 @@ function RequestForm() {
             onClick={() => {
               dispatch({
                 type: TOGGLE_LOGIC,
-                payload: false,
+                payload: null
               });
             }}
           >
