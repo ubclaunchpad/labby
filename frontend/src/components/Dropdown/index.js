@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Divider from "../Divider";
 import "./index.css";
 import uuid from "react-uuid";
-import { ADD_RESPONSE } from "../../redux/actions/formActions";
+import { ADD_RESPONSE, REMOVE_SINGLE_RESPONSE } from "../../redux/actions/formActions";
 
 function Dropdown({ question }) {
   const dispatch = useDispatch();
@@ -12,6 +12,12 @@ function Dropdown({ question }) {
   const [selectedValue, setSelectedValue] = useState(null);
   const handleChange = (event) => {
     const selected = JSON.parse(event.target.value);
+    dispatch({
+      type: REMOVE_SINGLE_RESPONSE,
+      payload: {
+        question: question,
+      },
+    });
     dispatch({
       type: ADD_RESPONSE,
       payload: {
@@ -30,7 +36,10 @@ function Dropdown({ question }) {
 
   return (
     <div className="GlobalCustomerQuestionContainer">
-      <div className="GlobalQuestionTitle">{question.question}</div>
+      <div className="GlobalQuestionTitle">
+        {question.question}{" "}
+        <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
+      </div>
       <select className="select" onChange={handleChange}>
         {selectedValue === null && <option key={"Default"} value={""} />}
         {options.map((option) => (

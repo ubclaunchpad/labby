@@ -38,7 +38,10 @@ function SingleSelect({ question }) {
 
   return (
     <div className="GlobalCustomerQuestionContainer">
-      <div className="GlobalQuestionTitle">{question.question}</div>
+      <div className="GlobalQuestionTitle">
+        {question.question}{" "}
+        <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
+      </div>
       <div className="single-select-options-container">
         <FormControl style={{ width: "100%" }}>
           <RadioGroup

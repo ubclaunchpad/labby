@@ -23,7 +23,10 @@ function ContactInfo({ question }) {
 
   return (
     <div className="GlobalCustomerQuestionContainer">
-      <div className="GlobalQuestionTitle">{question.question}</div>
+      <div className="GlobalQuestionTitle">
+        {question.question}{" "}
+        <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
+      </div>
       <div className="contact-info-container">
         <div className="contact-info-container-inner">
           <div className="contact-info-row-customer">

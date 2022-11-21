@@ -34,33 +34,42 @@ function MultiSelect({ question }) {
 
   return (
     <div className="GlobalCustomerQuestionContainer">
-      <div className="GlobalQuestionTitle">{question.question}</div>
+      <div className="GlobalQuestionTitle">
+        {question.question}{" "}
+        <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
+      </div>
       <div className="customer__component__subtitle">Select all that apply</div>
       <div className="single-select-options-container">
         <FormControl style={{ width: "100%" }}>
           {options.map((option, index) => {
             return (
               <div className="single-select-option" key={index}>
-                <FormControlLabel control={<Checkbox onClick={(e) => {
-                  if (e.target.checked) {
-                    dispatch({
-                      type: ADD_RESPONSE,
-                      payload: {
-                        id: uuid(),
-                        response: option.answer_id,
-                        question: question,
-                      },
-                    });
-                  } else {
-                    dispatch({
-                      type: REMOVE_RESPONSE,
-                      payload: {
-                        response: option.answer_id,
-                        question: question,
-                      },
-                    });
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      onClick={(e) => {
+                        if (e.target.checked) {
+                          dispatch({
+                            type: ADD_RESPONSE,
+                            payload: {
+                              id: uuid(),
+                              response: option.answer_id,
+                              question: question,
+                            },
+                          });
+                        } else {
+                          dispatch({
+                            type: REMOVE_RESPONSE,
+                            payload: {
+                              response: option.answer_id,
+                              question: question,
+                            },
+                          });
+                        }
+                      }}
+                    />
                   }
-                }} />} />
+                />
                 <div className="new-question-input">{option.answer}</div>
               </div>
             );

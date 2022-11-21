@@ -22,7 +22,10 @@ function FileInput({ question }) {
 
   return (
     <div className="GlobalCustomerQuestionContainer">
-      <div className="GlobalQuestionTitle">{question.question}</div>
+      <div className="GlobalQuestionTitle">
+        {question.question}{" "}
+        <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
+      </div>
       <div className="upload-file-container-inner">
         <Dragger
           multiple
@@ -72,9 +75,7 @@ function FileInput({ question }) {
           }}
         >
           <img className="upload-icon" src={UploadIcon} alt="Upload File" />
-          <p className="upload-text">
-            Drag and Drop Files
-          </p>
+          <p className="upload-text">Drag and Drop Files</p>
         </Dragger>
       </div>
       <Divider />
