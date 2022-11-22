@@ -5,10 +5,16 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Divider from "../Divider";
+import {
+  ADD_RESPONSE,
+  REMOVE_SINGLE_RESPONSE,
+} from "../../redux/actions/formActions";
+import uuid from "react-uuid";
 
 function SingleSelect({ question }) {
+  const dispatch = useDispatch();
   const [options, setOptions] = useState([]);
   const answerList = useSelector((state) => state.questionReducer.answerList);
 
@@ -32,18 +38,44 @@ function SingleSelect({ question }) {
 
   return (
     <div className="GlobalCustomerQuestionContainer">
-      <div className="GlobalQuestionTitle">{question.question}</div>
+      <div className="GlobalQuestionTitle">
+        {question.question}{" "}
+        <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
+      </div>
       <div className="single-select-options-container">
         <FormControl style={{ width: "100%" }}>
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="female"
             name="radio-buttons-group"
           >
             {options.map((option, index) => {
               return (
                 <div className="single-select-option" key={index}>
-                  <FormControlLabel control={<Radio />} />
+                  <FormControlLabel
+                    value={option.answer}
+                    control={
+                      <Radio
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            dispatch({
+                              type: REMOVE_SINGLE_RESPONSE,
+                              payload: {
+                                question: question,
+                              },
+                            });
+                            dispatch({
+                              type: ADD_RESPONSE,
+                              payload: {
+                                id: uuid(),
+                                response: option.answer_id,
+                                question: question,
+                              },
+                            });
+                          }
+                        }}
+                      />
+                    }
+                  />
                   <div className="new-question-input">{option.answer}</div>
                 </div>
               );

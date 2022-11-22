@@ -16,7 +16,7 @@ export class Survey {
           result(error,null);
         } else {
           result(null, {
-            result: `Response ${results.answer_id} Saved Successfully`,
+            result: `Response ${results.survey_id} Saved Successfully`,
           });
         }
       }

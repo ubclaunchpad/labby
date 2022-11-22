@@ -12,12 +12,15 @@ import TextLine from "../../components/TextLine";
 import FileInput from "../../components/FileInput";
 import FileDownload from "../../components/FileDownload";
 import ContactInfo from "../../components/ContactInfo";
+import { SUBMIT_FORM } from "../../redux/actions/formActions";
 
 function RequestForm() {
   const dispatch = useDispatch();
   const questionList = useSelector(
     (state) => state.questionReducer.questionList
   );
+  const formResponses = useSelector((state) => state.formReducer.formResponses);
+  const logicList = useSelector((state) => state.logicReducer.logicList);
 
   useEffect(() => {
     dispatch({ type: LOAD_QUESTION });
@@ -48,7 +51,7 @@ function RequestForm() {
     }
   }
 
-  if (questionList.length !== 0) {
+  if (questionList.length !== 0 && logicList.length !== 0) {
     return (
       <div className="requestFormPage">
         <div className="requestFormContainer">
@@ -56,6 +59,23 @@ function RequestForm() {
             {questionList[0].question}
           </div>
           {questionList.slice(1).map((question) => {
+            const logicNeeded = logicList[question.question_id] ?? [];
+            var show = true;
+            logicNeeded.forEach((logic) => {
+              if (
+                formResponses.findIndex(
+                  (response) =>
+                    response.question.answer_id === logic.fk_answer_id
+                ) === -1
+              ) {
+                show = false;
+              }
+            });
+
+            if (!show) {
+              return null;
+            }
+
             return (
               <div key={question.question_id}>
                 <div
@@ -67,6 +87,47 @@ function RequestForm() {
               </div>
             );
           })}
+          <div className="FormSubmit">
+            <button
+              className="FormSubmitButton"
+              style={{
+                backgroundColor: appColor.primaryLight,
+                color: appColor.white,
+              }}
+              onMouseOver={(e) => {
+                e.target.style.backgroundColor = appColor.primary;
+                e.target.style.color = appColor.white;
+              }}
+              onMouseOut={(e) => {
+                e.target.style.backgroundColor = appColor.primaryLight;
+                e.target.style.color = appColor.white;
+              }}
+              onClick={() => {
+                var filled = true;
+                questionList.forEach((question) => {
+                  if (question.mandatory) {
+                    if (
+                      formResponses.filter(
+                        (response) =>
+                          response.question.question_id === question.question_id
+                      ).length === 0
+                    ) {
+                      filled = false;
+                      return;
+                    }
+                  }
+                });
+                if (filled) {
+                  dispatch({ type: SUBMIT_FORM, payload: formResponses });
+                  alert("Form Submitted");
+                } else {
+                  alert("Please fill out all mandatory fields");
+                }
+              }}
+            >
+              Submit
+            </button>
+          </div>
         </div>
       </div>
     );
