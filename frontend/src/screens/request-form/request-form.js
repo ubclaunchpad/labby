@@ -13,11 +13,9 @@ import FileInput from "../../components/FileInput";
 import FileDownload from "../../components/FileDownload";
 import ContactInfo from "../../components/ContactInfo";
 import {
-  CostEstimate,
   CostEstimateCollapsed,
   CostEstimateFull,
 } from "../../components/CostEstimate";
-import { TOGGLE_LOGIC } from "../../redux/actions/uiActions";
 
 function RequestForm() {
   const dispatch = useDispatch();
