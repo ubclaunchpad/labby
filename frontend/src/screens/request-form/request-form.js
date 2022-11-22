@@ -82,14 +82,7 @@ function RequestForm() {
           <div
             className="CostEstimate"
             style={{ color: appColor.white }}
-            onClick={() => {
-              dispatch({
-                type: TOGGLE_LOGIC,
-                payload: null
-              });
-            }}
           >
-            {/* {CostEstimate()} */}
             {costEstimateView ? (
               <CostEstimateCollapsed />
             ) : (
