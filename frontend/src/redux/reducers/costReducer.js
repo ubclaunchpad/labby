@@ -1,5 +1,9 @@
 import { combineReducers } from "redux";
-import { ADD_SERVICE } from "../actions/costActions";
+import {
+  ADD_SERVICE,
+  DELETE_SERVICE,
+  SAVE_CELL_DATA,
+} from "../actions/costActions";
 
 const defaultCostDataSourceData = [
   {
@@ -37,6 +41,11 @@ const costTableServices = (state = defaultCostDataSourceData, action) => {
       state.push(action.payload);
       return [...state];
     }
+    case DELETE_SERVICE: {
+      return action.payload;
+    }
+    case SAVE_CELL_DATA:
+      return action.payload;
     default:
       return state;
   }

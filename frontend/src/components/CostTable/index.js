@@ -1,6 +1,10 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ADD_SERVICE } from "../../redux/actions/costActions";
+import {
+  ADD_SERVICE,
+  DELETE_SERVICE,
+  SAVE_CELL_DATA,
+} from "../../redux/actions/costActions";
 import { Table, Form, Popconfirm, Button, Input } from "antd";
 import { appColor } from "../../constants";
 import "antd/dist/antd.min.css";
@@ -55,7 +59,6 @@ const CostTable = () => {
     },
   ];
 
-  // TODO: replace with redux
   const dispatch = useDispatch();
   const dataSource = useSelector(
     (state) => state.costReducer.costTableServices
@@ -63,21 +66,19 @@ const CostTable = () => {
 
   const [count, setCount] = useState(3);
 
-  // const [dataSource, setDataSource] = useState(dataSourceData);
   const handleDelete = (key) => {
     const newData = dataSource.filter((item) => item.key !== key);
-    //TODO: setDataSource(newData);
+    dispatch({ type: DELETE_SERVICE, payload: newData });
   };
   const handleAdd = () => {
     const newData = {
       key: count + 1,
       service: `New Service ${count}`,
-      description: "Click here to edit...",
+      description: "Click here to edit... ",
       internal: "$",
       external: "$",
       industry: "$",
     };
-    // setDataSource([...dataSource, newData]);
     dispatch({ type: ADD_SERVICE, payload: newData });
     setCount(count + 1);
   };
@@ -89,7 +90,7 @@ const CostTable = () => {
       ...item,
       ...row,
     });
-    // TODO: setDataSource(newData);
+    dispatch({ type: SAVE_CELL_DATA, payload: newData });
   };
 
   const EditableContext = React.createContext(null);
