@@ -12,7 +12,6 @@ const CostTable = () => {
       title: "Service",
       dataIndex: "service",
       key: "service",
-      width: "30%",
       editable: true,
     },
     {
@@ -20,6 +19,7 @@ const CostTable = () => {
       dataIndex: "description",
       key: "description",
       editable: true,
+      width: "60%",
     },
     {
       title: "Internal",
@@ -92,7 +92,7 @@ const CostTable = () => {
   };
   const handleAdd = () => {
     const newData = {
-      key: count,
+      key: count+1,
       service: `New Service ${count}`,
       description: "Description goes here",
       internal: "$",
