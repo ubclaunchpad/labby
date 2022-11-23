@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { TOGGLE_LOGIC } from "../../redux/actions/uiActions";
 import "./index.css";
 import { appColor } from "../../constants";
@@ -20,8 +20,8 @@ export const CostEstimateCollapsed = () => {
           });
         }}
       >
-        <img className="Ellipse" src={Ellipse} />
-        <img className="MoneyGray" src={MoneyGray} />
+        <img className="Ellipse" src={Ellipse} alt="Ellipse" />
+        <img className="MoneyGray" src={MoneyGray} alt="Money" />
       </button>
 
   );

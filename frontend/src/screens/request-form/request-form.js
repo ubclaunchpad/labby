@@ -87,7 +87,7 @@ function RequestForm() {
             return (
               <div key={question.question_id}>
                 <div
-                  className="FormResponseQuestion"
+                  className="FormRequestQuestion"
                   style={{ color: appColor.gray }}
                 >
                   {renderQuestion(question)}
