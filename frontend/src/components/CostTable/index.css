@@ -8,15 +8,23 @@
 }
 .ServiceQuestionSelect {
   border: 0;
-  border-radius: 15px;
   background-color: #eeeeee;
-  border-radius: 15px;
+  border-radius: 10px;
   height: 45px;
   padding-left: 16px;
   padding-right: 16px;
   display: flex;
   flex-direction: row;
   flex-basis: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("../../assets/DropdownArrow.svg");
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 16px) center;
+}
+.ServiceQuestionSelect:focus {
+  outline: none;
 }
 .BillingAddButton {
   height: 45px;

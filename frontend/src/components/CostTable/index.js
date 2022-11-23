@@ -4,8 +4,6 @@ import { appColor } from "../../constants";
 import "antd/dist/antd.min.css";
 import "./index.css";
 
-//TODO: make the cells editable
-//TODO: Add row funcionality
 const CostTable = () => {
   const { Column } = Table;
   const columns = [
@@ -95,7 +93,7 @@ const CostTable = () => {
     const newData = {
       key: count + 1,
       service: `New Service ${count}`,
-      description: "Description goes here",
+      description: "Click here to edit...",
       internal: "$",
       external: "$",
       industry: "$",
@@ -212,7 +210,6 @@ const CostTable = () => {
   return (
     <div>
       <div className="addService">
-        {/* TODO: replace select with customer dropdown component */}
         <select
           className="ServiceQuestionSelect"
           value="Select your service question here..."
