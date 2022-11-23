@@ -1,10 +1,12 @@
 import { all, fork } from 'redux-saga/effects';
 import questionSaga from './questionSaga';
 import logicSaga from './logicSaga';
+import surveySaga from './surveySaga';
 
 export default function* rootSaga() {
     yield all([
       fork(questionSaga),
-      fork(logicSaga)
+      fork(logicSaga),
+      fork(surveySaga)
     ]);
   }

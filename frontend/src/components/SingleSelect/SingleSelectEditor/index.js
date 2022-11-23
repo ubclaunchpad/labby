@@ -1,12 +1,15 @@
 import "./index.css";
-import "../index.css";
+import "../../index.css";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Checkbox from "@mui/material/Checkbox";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
 import X from "../../../assets/X.png";
 import DragDots from "../../../assets/DragDots.png";
-import "./index.css";
-import "../../index.css";
+import { Checkbox } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import uuid from "react-uuid";
 import {
   DELETE_ANSWER,
   DELETE_QUESTION,
@@ -14,31 +17,26 @@ import {
   SAVE_ANSWER,
   SAVE_QUESTION,
 } from "../../../redux/actions/questionActions";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import uuid from "react-uuid";
 import {
   SET_LOGIC_QUESTION,
   SET_LOGIC_VIEW_QUESTION,
 } from "../../../redux/actions/logicActions";
 import { TOGGLE_LOGIC } from "../../../redux/actions/uiActions";
 
-function DropdownEditor({ question }) {
+function SingleSelectEditor({ question }) {
   const dispatch = useDispatch();
   const logicList = useSelector((state) => state.logicReducer.logicList);
   const questionList = useSelector(
     (state) => state.questionReducer.questionList
   );
-  const [questionNum, setQuestionNum] = useState("");
-  const [title, setTitle] = useState("");
 
   const [options, setOptions] = useState([]);
   const answerList = useSelector((state) => state.questionReducer.answerList);
 
+  const [questionNum, setQuestionNum] = useState("");
+  const [title, setTitle] = useState("");
+
   useEffect(() => {
-    console.log(question);
     setQuestionNum(`Q${question.position_index}`);
     setTitle(question.question);
   }, [question]);
@@ -116,8 +114,8 @@ function DropdownEditor({ question }) {
       </div>
       {/* Copy Everything Except Content Below For Reusability */}
       <div className="single-select-options-container">
-        <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
-        <FormControl style={{ width: "100%" }}>
+      <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
+        <FormControl style={{width: "100%"}}>
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
             defaultValue="female"
@@ -211,4 +209,4 @@ function DropdownEditor({ question }) {
   );
 }
 
-export default DropdownEditor;
+export default SingleSelectEditor;

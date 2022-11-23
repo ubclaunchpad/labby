@@ -113,4 +113,5 @@
     color: #666666;
     margin-bottom: 20px;
     text-align: left;
+    display: flex;
 }

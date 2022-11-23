@@ -34,14 +34,14 @@
   flex-direction: column;
 }
 
-.contact-info-field-label {
+.contact-info-field-label-customer {
   font-weight: 500;
   color: #666666;
   font-size: 16px;
   margin-right: 2%;
   margin-bottom: 2%;
   margin-top: 1%;
-  width: 12%;
+  width: 100%;
   text-align: left;
 }
 

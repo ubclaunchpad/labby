@@ -35,7 +35,8 @@ function LogicView() {
           <div className="LogicText">{`For Q${selectedQuestion.position_index}: ${selectedQuestion.question}`}</div>
           <div className="LogicDivider" />
           {logicList[selectedQuestion.question_id].map((logic) => {
-            const answerObjArray = Object.values(answerList)[0].filter(
+            const answerArray = Object.values(answerList).flat();
+            const answerObjArray = answerArray.filter(
               (answer) => answer.answer_id === logic.fk_answer_id
             );
             const answerObj = answerObjArray[0];
@@ -65,16 +66,14 @@ function LogicView() {
                   <button
                     className="LogicDeleteButton"
                     style={{
-                      backgroundColor: appColor.lightGray,
-                      color: appColor.gray,
+                      backgroundColor: appColor.primaryLight,
+                      color: appColor.white,
                     }}
                     onMouseOver={(e) => {
-                      e.target.style.backgroundColor = "#4CAF50";
-                      e.target.style.color = "#FFFFFF";
+                      e.target.style.backgroundColor = appColor.primaryDark;
                     }}
                     onMouseOut={(e) => {
-                      e.target.style.backgroundColor = appColor.lightGray;
-                      e.target.style.color = appColor.gray;
+                      e.target.style.backgroundColor = appColor.primaryLight;
                     }}
                     onClick={() => {
                       dispatch({
