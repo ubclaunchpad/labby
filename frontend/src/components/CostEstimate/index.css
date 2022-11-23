@@ -1,7 +1,7 @@
 
 .CostEstimateContainer {
   position: absolute;
-  right: 10vh;
+  right: 12vh;
   bottom: 6vh;
   width: 25vw;
   height: 80vh;
@@ -61,7 +61,7 @@
 
 .CostEstimateCollapsedContainer {
     position: fixed;
-    right: 10vh;
+    right: 12vh;
     bottom: 8vh;
     border-radius: 15px;
     width: 80px;
