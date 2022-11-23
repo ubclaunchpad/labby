@@ -1,5 +1,6 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { Table, Form, Popconfirm, Button, Input } from "antd";
+import { appColor } from "../../constants";
 import "antd/dist/antd.min.css";
 import "./index.css";
 
@@ -92,7 +93,7 @@ const CostTable = () => {
   };
   const handleAdd = () => {
     const newData = {
-      key: count+1,
+      key: count + 1,
       service: `New Service ${count}`,
       description: "Description goes here",
       internal: "$",
@@ -210,17 +211,39 @@ const CostTable = () => {
 
   return (
     <div>
-      {/* <Table className="table" dataSource={dataSource} pagination={false}>
-        {columns.map((column) => {
-          return (
-            <Column
-              title={column.title}
-              dataIndex={column.dataIndex}
-              key={column.key}
-            />
-          );
-        })}
-      </Table> */}
+      <div className="addService">
+        {/* TODO: replace select with customer dropdown component */}
+        <select
+          className="ServiceQuestionSelect"
+          value="Select your service question here..."
+          onChange={() => {}}
+        >
+          <option value="Select your service question here..." disabled>
+            Select your service question here...
+          </option>
+          <option value="sectioning">Sectioning</option>
+          <option value="macrodisection">Macrodisection</option>
+          <option value="scrolling">Scrolling</option>
+        </select>
+        <button
+          className="BillingAddButton"
+          style={{
+            backgroundColor: appColor.lightGray,
+            color: appColor.gray,
+          }}
+          onMouseOver={(e) => {
+            e.target.style.backgroundColor = "#4CAF50";
+            e.target.style.color = "#FFFFFF";
+          }}
+          onMouseOut={(e) => {
+            e.target.style.backgroundColor = appColor.lightGray;
+            e.target.style.color = appColor.gray;
+          }}
+          onClick={handleAdd}
+        >
+          Add
+        </button>
+      </div>
       <Table
         className="table"
         pagination={false}
@@ -230,15 +253,6 @@ const CostTable = () => {
         dataSource={dataSource}
         columns={renderedColumns}
       />
-      <Button
-        onClick={handleAdd}
-        type="primary"
-        style={{
-          marginBottom: 16,
-        }}
-      >
-        Add a row
-      </Button>
     </div>
   );
 };

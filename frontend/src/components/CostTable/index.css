@@ -1,6 +1,37 @@
 .table {
   margin-top: 30px;
 }
+.addService {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ServiceQuestionSelect {
+  border: 0;
+  border-radius: 15px;
+  background-color: #eeeeee;
+  border-radius: 15px;
+  height: 45px;
+  padding-left: 16px;
+  padding-right: 16px;
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+}
+.BillingAddButton {
+  height: 45px;
+  width: 150px;
+  border: 0;
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.BillingAddButton:hover {
+  background-color: #4caf50;
+  color: white;
+}
 
 /* Antd global styling messing with our desired styling
 So try and beat it with CSS specificity */
