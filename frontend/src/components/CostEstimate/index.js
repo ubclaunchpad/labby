@@ -9,24 +9,21 @@ import X from "../../assets/X.png";
 export const CostEstimateCollapsed = () => {
   const dispatch = useDispatch();
   return (
-    <div
-      className="CostEstimateContainer"
-      style={{ background: appColor.white }}
-      onClick={() => {
-        dispatch({
-          type: TOGGLE_LOGIC,
-          payload: null
-        });
-      }}
-    >
+
       <button
         className="CostEstimateCollapsedContainer"
         style={{ backgroundColor: appColor.lightGray }}
+        onClick={() => {
+          dispatch({
+            type: TOGGLE_LOGIC,
+            payload: null
+          });
+        }}
       >
         <img className="Ellipse" src={Ellipse} />
         <img className="MoneyGray" src={MoneyGray} />
       </button>
-    </div>
+
   );
 };
 

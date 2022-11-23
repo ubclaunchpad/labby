@@ -1,8 +1,8 @@
 
 .CostEstimateContainer {
-  position: sticky;
-  right: 2%;
-  top: 5%;
+  position: absolute;
+  right: 10vh;
+  bottom: 6vh;
   width: 25vw;
   height: 80vh;
   margin-bottom: 15px;
