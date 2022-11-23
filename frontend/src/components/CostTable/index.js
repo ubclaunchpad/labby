@@ -1,4 +1,6 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ADD_SERVICE } from "../../redux/actions/costActions";
 import { Table, Form, Popconfirm, Button, Input } from "antd";
 import { appColor } from "../../constants";
 import "antd/dist/antd.min.css";
@@ -54,40 +56,17 @@ const CostTable = () => {
   ];
 
   // TODO: replace with redux
+  const dispatch = useDispatch();
+  const dataSource = useSelector(
+    (state) => state.costReducer.costTableServices
+  );
+
   const [count, setCount] = useState(3);
-  const dataSourceData = [
-    {
-      key: "1",
-      service: "Sectioning",
-      description:
-        "Lorem ipsum dolor sit amet, et paulo voluptatum pro, erat delenit posidonium est in. Ut iisque ornatus eam, ei ",
-      internal: "$150",
-      external: "$",
-      industry: "$",
-    },
-    {
-      key: "2",
-      service: "Macrodisection",
-      description:
-        "Lorem ipsum dolor sit amet, et paulo voluptatum pro, erat delenit posidonium est in. Ut iisque ornatus eam, ei ",
-      internal: "$150",
-      external: "$",
-      industry: "$",
-    },
-    {
-      key: "3",
-      service: "Scrolling",
-      description:
-        "Lorem ipsum dolor sit amet, et paulo voluptatum pro, erat delenit posidonium est in. Ut iisque ornatus eam, ei ",
-      internal: "$150",
-      external: "$",
-      industry: "$",
-    },
-  ];
-  const [dataSource, setDataSource] = useState(dataSourceData);
+
+  // const [dataSource, setDataSource] = useState(dataSourceData);
   const handleDelete = (key) => {
     const newData = dataSource.filter((item) => item.key !== key);
-    setDataSource(newData);
+    //TODO: setDataSource(newData);
   };
   const handleAdd = () => {
     const newData = {
@@ -98,7 +77,8 @@ const CostTable = () => {
       external: "$",
       industry: "$",
     };
-    setDataSource([...dataSource, newData]);
+    // setDataSource([...dataSource, newData]);
+    dispatch({ type: ADD_SERVICE, payload: newData });
     setCount(count + 1);
   };
   const handleSave = (row) => {
@@ -109,7 +89,7 @@ const CostTable = () => {
       ...item,
       ...row,
     });
-    setDataSource(newData);
+    // TODO: setDataSource(newData);
   };
 
   const EditableContext = React.createContext(null);
