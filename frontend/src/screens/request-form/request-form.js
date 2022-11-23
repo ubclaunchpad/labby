@@ -12,6 +12,10 @@ import TextLine from "../../components/TextLine";
 import FileInput from "../../components/FileInput";
 import FileDownload from "../../components/FileDownload";
 import ContactInfo from "../../components/ContactInfo";
+import {
+  CostEstimateCollapsed,
+  CostEstimateFull,
+} from "../../components/CostEstimate";
 import { SUBMIT_FORM } from "../../redux/actions/formActions";
 
 function RequestForm() {
@@ -25,6 +29,10 @@ function RequestForm() {
   useEffect(() => {
     dispatch({ type: LOAD_QUESTION });
   }, [dispatch]);
+
+  const costEstimateView = useSelector(
+    (state) => state.costEstimateReducer.costEstimateView
+  );
 
   function renderQuestion(question) {
     switch (question.question_type) {
@@ -79,7 +87,7 @@ function RequestForm() {
             return (
               <div key={question.question_id}>
                 <div
-                  className="FormResponseQuestion"
+                  className="FormRequestQuestion"
                   style={{ color: appColor.gray }}
                 >
                   {renderQuestion(question)}
@@ -129,6 +137,16 @@ function RequestForm() {
             </button>
           </div>
         </div>
+        <div
+            className="CostEstimate"
+            style={{ color: appColor.white }}
+          >
+            {costEstimateView ? (
+              <CostEstimateCollapsed />
+            ) : (
+              <CostEstimateFull />
+            )}
+            </div>
       </div>
     );
   } else {

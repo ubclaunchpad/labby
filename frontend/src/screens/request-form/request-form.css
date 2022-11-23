@@ -22,7 +22,7 @@
   padding-bottom: 50px;
 }
 
-.FormResponseQuestion {
+.FormRequestQuestion {
   display: flex;
   flex-direction: column;
   justify-content: center;
