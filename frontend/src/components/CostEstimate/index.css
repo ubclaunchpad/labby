@@ -1,0 +1,95 @@
+
+.CostEstimateContainer {
+  position: absolute;
+  right: 12vh;
+  bottom: 6vh;
+  width: 25vw;
+  height: 80vh;
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 10px;
+}
+.CostEstimateTitle {
+    font-size: 20px;
+    font-weight: 600;
+    color: #666666;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.CostEstimateDivider {
+    height: 1px;
+    width: 90%;
+    margin-bottom: 20px;
+    position: absolute;
+    top: 90px;
+    border: 2px solid #D9D9D9;
+}
+
+
+.CostEstimateTotal {
+    font-size: 20px;
+    font-weight: 600;
+    color: #666666;
+    margin-bottom: 10px;
+    position: absolute;
+    bottom: 20px;
+    text-align: left;
+}
+
+.CostEstimateHeadings {
+    width: 100%;
+}
+
+.CostEstimateHeadings p{
+    float: left;
+    padding: 10px;
+    width: 33.333%;
+    font-size: 10px;
+    color: #666666;
+}
+
+.CostDivider {
+    border: 2px solid #D9D9D9;
+    height: 1px;
+    width: 90%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: absolute;
+    bottom: 60px;
+}
+
+.CostEstimateCollapsedContainer {
+    position: fixed;
+    right: 12vh;
+    bottom: 8vh;
+    border-radius: 15px;
+    width: 80px;
+    height: 80px;
+    border: none;
+    cursor: pointer;
+    color: #F5F5F5;
+  }
+
+  .MoneyGray {
+    position: absolute;
+    right: 39.5%;
+    bottom: 32.5%;
+    height: 28px;
+    width: 16px;
+  } 
+  .Ellipse {
+
+    height: 50px;
+    width: 50px;
+  }
+
+  .CostEstimateDelete {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    position: absolute;
+    right: 6%;
+    top: 4%;
+    size: 50%;
+  }

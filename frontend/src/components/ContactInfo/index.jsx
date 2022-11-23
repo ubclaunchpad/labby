@@ -1,22 +1,32 @@
 import "./index.css";
 import "../index.css";
-import { useEffect, useState } from "react";
 import Divider from "../Divider";
+import uuid from "react-uuid";
+import { useDispatch } from "react-redux";
+import {
+  ADD_EMAIL_RESPONSE,
+  ADD_FULLNAME_RESPONSE,
+  ADD_INSTITUTION_RESPONSE,
+  ADD_PHONE_RESPONSE,
+  REMOVE_EMAIL_RESPONSE,
+  REMOVE_FULLNAME_RESPONSE,
+  REMOVE_INSTITUTION_RESPONSE,
+  REMOVE_PHONE_RESPONSE,
+} from "../../redux/actions/formActions";
 
 function ContactInfo({ question }) {
-  const [fullName, setFullName] = useState("");
-  const [institution, setInstitution] = useState("");
-  const [email, setEmail] = useState("");
-  const [telephone, setTelephone] = useState("");
-
-  useEffect(() => {
-    const fields = { fullName, institution, email, telephone };
-    console.log(fields);
-  }, [fullName, institution, email, telephone]);
+  const dispatch = useDispatch();
+  const nameAnswerId = uuid();
+  const institutionAnswerId = uuid();
+  const emailAnswerId = uuid();
+  const telephoneAnswerId = uuid();
 
   return (
     <div className="GlobalCustomerQuestionContainer">
-      <div className="GlobalQuestionTitle">{question.question}</div>
+      <div className="GlobalQuestionTitle">
+        {question.question}{" "}
+        <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
+      </div>
       <div className="contact-info-container">
         <div className="contact-info-container-inner">
           <div className="contact-info-row-customer">
@@ -26,7 +36,21 @@ function ContactInfo({ question }) {
               type="text"
               placeholder="Type Here... "
               onBlur={(e) => {
-                setFullName(e.target.value);
+                if (e.target.value !== "") {
+                  dispatch({
+                    type: ADD_FULLNAME_RESPONSE,
+                    payload: {
+                      id: nameAnswerId,
+                      response: "FULLNAME_" + e.target.value,
+                      question: question,
+                    },
+                  });
+                } else {
+                  dispatch({
+                    type: REMOVE_FULLNAME_RESPONSE,
+                    payload: { question: question },
+                  });
+                }
               }}
             ></input>
           </div>
@@ -39,7 +63,21 @@ function ContactInfo({ question }) {
               type="text"
               placeholder="Type Here... "
               onBlur={(e) => {
-                setInstitution(e.target.value);
+                if (e.target.value !== "") {
+                  dispatch({
+                    type: ADD_INSTITUTION_RESPONSE,
+                    payload: {
+                      id: institutionAnswerId,
+                      response: "INSTITUTION_" + e.target.value,
+                      question: question,
+                    },
+                  });
+                } else {
+                  dispatch({
+                    type: REMOVE_INSTITUTION_RESPONSE,
+                    payload: { question: question },
+                  });
+                }
               }}
             ></input>
           </div>
@@ -50,7 +88,21 @@ function ContactInfo({ question }) {
               type="email"
               placeholder="Type Here... "
               onBlur={(e) => {
-                setEmail(e.target.value);
+                if (e.target.value !== "") {
+                  dispatch({
+                    type: ADD_EMAIL_RESPONSE,
+                    payload: {
+                      id: emailAnswerId,
+                      response: "EMAIL_" + e.target.value,
+                      question: question,
+                    },
+                  });
+                } else {
+                  dispatch({
+                    type: REMOVE_EMAIL_RESPONSE,
+                    payload: { question: question },
+                  });
+                }
               }}
             ></input>
           </div>
@@ -61,7 +113,21 @@ function ContactInfo({ question }) {
               type="number"
               placeholder="Type Here... "
               onBlur={(e) => {
-                setTelephone(e.target.value);
+                if (e.target.value !== "") {
+                  dispatch({
+                    type: ADD_PHONE_RESPONSE,
+                    payload: {
+                      id: telephoneAnswerId,
+                      response: "PHONE_" + e.target.value,
+                      question: question,
+                    },
+                  });
+                } else {
+                  dispatch({
+                    type: REMOVE_PHONE_RESPONSE,
+                    payload: { question: question },
+                  });
+                }
               }}
             ></input>
           </div>

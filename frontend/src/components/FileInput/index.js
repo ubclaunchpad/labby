@@ -4,6 +4,9 @@ import AWS from "aws-sdk";
 import "./index.css";
 import "../../index.css";
 import Divider from "../Divider";
+import { useDispatch } from "react-redux";
+import { ADD_RESPONSE } from "../../redux/actions/formActions";
+import uuid from "react-uuid";
 
 const { Dragger } = Upload;
 
@@ -15,9 +18,14 @@ const config = new AWS.Config({
 });
 
 function FileInput({ question }) {
+  const dispatch = useDispatch();
+
   return (
     <div className="GlobalCustomerQuestionContainer">
-      <div className="GlobalQuestionTitle">{question.question}</div>
+      <div className="GlobalQuestionTitle">
+        {question.question}{" "}
+        <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
+      </div>
       <div className="upload-file-container-inner">
         <Dragger
           multiple
@@ -54,14 +62,20 @@ function FileInput({ question }) {
                 } else {
                   onSuccess(data.response, file);
                   console.log("Send completed in S3.putObject.send()");
+                  dispatch({
+                    type: ADD_RESPONSE,
+                    payload: {
+                      id: uuid(),
+                      response: objParams.Key,
+                      question: question,
+                    },
+                  });
                 }
               });
           }}
         >
           <img className="upload-icon" src={UploadIcon} alt="Upload File" />
-          <p className="upload-text">
-            Drag and Drop Files
-          </p>
+          <p className="upload-text">Drag and Drop Files</p>
         </Dragger>
       </div>
       <Divider />

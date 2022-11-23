@@ -9,18 +9,10 @@
   border-radius: 20px;
 }
 
-.GlobalEditorComponent--textline{
+.GlobalEditorComponent--heading {
   min-height: 80px; 
 }
 
 .LogicPadding {
   margin-top: 20px;
-}
-
-.QuestionLine {
-  font-size: 18px;
-  font-weight: 600;
-  color: #666666;
-  margin-bottom: 20px;
-  text-align: left;
 }

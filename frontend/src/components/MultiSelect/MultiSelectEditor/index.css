@@ -40,7 +40,6 @@
     display: flex; 
     border: none;
     width: 100%;
-    text-align: left;
 }
 
 .new-question-input:focus{
@@ -49,8 +48,4 @@
 
 .new-question-checkbox{
     width: 30px;
-}
-
-.customer__component__subtitle{
-    text-align: left;
 }

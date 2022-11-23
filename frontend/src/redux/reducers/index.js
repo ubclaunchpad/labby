@@ -5,6 +5,7 @@ import logicReducer from "./logicReducer";
 import uiReducer from "./uiReducer";
 import formReducer from "./formReducer";
 import costReducer from "./costReducer";
+import costEstimateReducer from "./costEstimateReducer";
 
 const rootReducer = combineReducers({
   questionReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   uiReducer,
   formReducer,
   costReducer,
+  costEstimateReducer,
 });
 
 export default rootReducer;

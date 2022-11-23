@@ -3,20 +3,20 @@ import { useSelector } from "react-redux";
 import { appColor } from "../../constants";
 import DropdownEditor from "../Dropdown/DropdownEditor";
 import FileInputEditor from "../FileInput/FileInputEditor";
-import TextAnswer from "../TextAnswer";
-import MultiSelect from "../MultiSelect";
-import SingleSelect from "../SingleSelect";
+import TextAnswerEditor from "../TextAnswer/TextAnswerEditor";
+import MultiSelectEditor from "../MultiSelect/MultiSelectEditor";
+import ContactInfoEditor from "../ContactInfo/ContactInfoEditor";
+import SingleSelectEditor from "../SingleSelect/SingleSelectEditor";
 import FormTitle from "./FormTitle";
-import Heading from "../Heading";
+import HeadingEditor from "../Heading/HeadingEditor";
 import FileDownloadEditor from "../FileDownload/FileDownloadEditor";
-import TextLine from "../TextLine";
+import TextLineEditor from "../TextLine/TextLineEditor";
 import { clsx } from "clsx";
 import { NavLink } from "react-router-dom";
 
 import styled from "styled-components";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { DraggableElement } from "../BuilderLibrary/ComponentLibrary";
-import ContactInfoEditor from "../ContactInfo/ContactInfoEditor";
 
 const QuestionContainer = styled.div`
   border: ${(props) =>
@@ -36,17 +36,17 @@ const QuestionContainer = styled.div`
 function renderQuestion(question) {
   switch (question.question_type) {
     case "multi":
-      return <MultiSelect question={question} />;
+      return <MultiSelectEditor question={question} />;
     case "single":
-      return <SingleSelect question={question} />;
+      return <SingleSelectEditor question={question} />;
     case "text":
-      return <TextAnswer question={question} />;
+      return <TextAnswerEditor question={question} />;
     case "dropdown":
       return <DropdownEditor question={question} />;
     case "heading":
-      return <Heading question={question} />;
+      return <HeadingEditor question={question} />;
     case "textline":
-      return <TextLine question={question} />;
+      return <TextLineEditor question={question} />;
     case "upload":
       return <FileInputEditor question={question} />;
     case "download":
@@ -87,11 +87,9 @@ function FormBuilder() {
                 }}
                 onMouseOver={(e) => {
                   e.target.style.backgroundColor = appColor.primary;
-                  e.target.style.color = appColor.white;
                 }}
                 onMouseOut={(e) => {
                   e.target.style.backgroundColor = appColor.primaryLight;
-                  e.target.style.color = appColor.white;
                 }}
               >
                 Preview

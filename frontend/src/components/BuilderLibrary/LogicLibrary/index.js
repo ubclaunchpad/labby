@@ -1,7 +1,4 @@
 import "./index.css";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import DownArrow from "../../../assets/Arrow.png";
@@ -48,43 +45,36 @@ function LogicLibrary() {
       }`}</div>
       <div className="subtitleText">Rule</div>
       <div className="selectionBoxView">
-        <Select
+        <select
           className="selectBox"
-          displayEmpty
           value={ifDisplay}
           onChange={(e) => {
             setIfDisplay(e.target.value);
           }}
-          input={<OutlinedInput />}
-          renderValue={(value) => value}
-          inputProps={{ "aria-label": "Without label" }}
         >
           {rules.map((rule) => (
-            <MenuItem key={rule} value={rule}>
+            <option key={rule} value={rule}>
               {rule}
-            </MenuItem>
+            </option>
           ))}
-        </Select>
+        </select>
       </div>
       <img className="downArrowImage" src={DownArrow} alt="Down Arrow" />
       <div className="subtitleText">Answer</div>
       <div className="selectionBoxView">
-        <Select
+        <select
           className="selectBox"
-          value={ifThisAnswer ? ifThisAnswer : ""}
           onChange={(e) => {
-            setIfThisAnswer(e.target.value);
+            setIfThisAnswer(JSON.parse(e.target.value));
           }}
-          input={<OutlinedInput />}
-          renderValue={(value) => value.question}
-          inputProps={{ "aria-label": "Without label" }}
         >
+          {ifThisAnswer === null && <option key={"Default"} value={""} />}
           {questionList.slice(1).map((question) => (
-            <MenuItem key={question.question} value={question}>
+            <option key={question.question} value={JSON.stringify(question)}>
               {question.question}
-            </MenuItem>
+            </option>
           ))}
-        </Select>
+        </select>
         {ifThisAnswer &&
           ifThisAnswer.question_id &&
           answerList[ifThisAnswer.question_id] && (
@@ -97,7 +87,7 @@ function LogicLibrary() {
                       key={answer.answer_id}
                       control={
                         <Checkbox
-                          style={{ color: appColor.gray }}
+                          style={{ color: appColor.primaryBlack }}
                           defaultChecked={false}
                           onClick={() => {
                             if (selectedRule.includes(answer.answer_id)) {
@@ -125,39 +115,33 @@ function LogicLibrary() {
       <img className="downArrowImage" src={DownArrow} alt="Down Arrow" />
       <div className="subtitleText">Condition</div>
       <div className="selectionBoxView">
-        <Select
+        <select
           className="selectBox"
-          displayEmpty
           value={ifCondition}
           onChange={(e) => {
             setIfCondition(e.target.value);
           }}
-          input={<OutlinedInput />}
-          renderValue={(value) => value}
-          inputProps={{ "aria-label": "Without label" }}
         >
           {condition.map((rule) => (
-            <MenuItem key={rule} value={rule}>
+            <option key={rule} value={rule}>
               {rule}
-            </MenuItem>
+            </option>
           ))}
-        </Select>
+        </select>
       </div>
       <div className="buttonView">
         <button
           className="SaveLogicButton"
           style={{
-            backgroundColor: appColor.lightGray,
-            color: appColor.gray,
+            backgroundColor: appColor.primaryLight,
+            color: appColor.white,
             textAlign: "center",
           }}
           onMouseOver={(e) => {
-            e.target.style.backgroundColor = "#4CAF50";
-            e.target.style.color = "#FFFFFF";
+            e.target.style.backgroundColor = appColor.primaryDark;
           }}
           onMouseOut={(e) => {
-            e.target.style.backgroundColor = appColor.lightGray;
-            e.target.style.color = appColor.gray;
+            e.target.style.backgroundColor = appColor.primaryLight;
           }}
           onClick={() => {
             if (selectedRule.length > 0) {
@@ -180,7 +164,7 @@ function LogicLibrary() {
             }
           }}
         >
-          Save
+          Save Logic
         </button>
       </div>
     </div>

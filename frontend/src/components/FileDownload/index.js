@@ -24,7 +24,10 @@ function FileDownload({ question }) {
 
   return (
     <div className="GlobalCustomerQuestionContainer">
-      <div className="GlobalQuestionTitle">{question.question}</div>
+      <div className="GlobalQuestionTitle">
+        {question.question}{" "}
+        <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
+      </div>
       {options.map((option) => (
         <div
           className="download-file-container-customer"
@@ -57,7 +60,9 @@ function FileDownload({ question }) {
             src={DownloadIcon}
             alt="Download File"
           />
-          <p className="download-text-customer">Download {option.answer.split("_")[1]}</p>
+          <p className="download-text-customer">
+            Download {option.answer.split("_")[1]}
+          </p>
         </div>
       ))}
       <Divider />
