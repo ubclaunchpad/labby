@@ -5,13 +5,12 @@ import {
   DELETE_SERVICE,
   SAVE_CELL_DATA,
 } from "../../redux/actions/costActions";
-import { Table, Form, Popconfirm, Button, Input } from "antd";
+import { Table, Form, Popconfirm, Input } from "antd";
 import { appColor } from "../../constants";
 import "antd/dist/antd.min.css";
 import "./index.css";
 
 const CostTable = () => {
-  const { Column } = Table;
   const columns = [
     {
       title: "Service",
@@ -53,7 +52,7 @@ const CostTable = () => {
             title="Sure to delete?"
             onConfirm={() => handleDelete(record.key)}
           >
-            <a>Delete</a>
+            <p>Delete</p>
           </Popconfirm>
         ) : null,
     },

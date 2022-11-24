@@ -106,41 +106,44 @@ function FormBuilder() {
               {...provided.droppableProps}
               isDraggingOver={snapshot.isDraggingOver}
             >
-              {questionList.length ? (
+              {questionList.length > 1 ? (
                 questionList.slice(1).map((question, index) => {
-                  const isHeadingOrTextline =
-                    question.question_type === "heading" ||
-                    question.question_type === "textline";
-                  const isSelected =
-                    selectedQuestion &&
-                    question &&
-                    selectedQuestion.question_id === question.question_id;
-                  const componentToRender = () => (
-                    <div
-                      className={clsx(
-                        "FormBuilderQuestion",
-                        isHeadingOrTextline && "FormBuilderQuestion--short"
-                      )}
-                      key={question.question_id}
-                      style={{
-                        color: appColor.gray,
-                        borderColor: isSelected
-                          ? appColor.primary
-                          : appColor.darkGray,
-                        borderWidth: isSelected ? "3px" : "2px",
-                      }}
-                    >
-                      {renderQuestion(question)}
-                    </div>
-                  );
-                  return (
-                    <DraggableElement
-                      ComponentToRender={componentToRender}
-                      key={question.question_id}
-                      id={question.question_id}
-                      index={index}
-                    />
-                  );
+                  if (question.position_index > 0) {
+                    const isHeadingOrTextline =
+                      question.question_type === "heading" ||
+                      question.question_type === "textline";
+                    const isSelected =
+                      selectedQuestion &&
+                      question &&
+                      selectedQuestion.question_id === question.question_id;
+                    const componentToRender = () => (
+                      <div
+                        className={clsx(
+                          "FormBuilderQuestion",
+                          isHeadingOrTextline && "FormBuilderQuestion--short"
+                        )}
+                        key={question.question_id}
+                        style={{
+                          color: appColor.gray,
+                          borderColor: isSelected
+                            ? appColor.primary
+                            : appColor.darkGray,
+                          borderWidth: isSelected ? "3px" : "2px",
+                        }}
+                      >
+                        {renderQuestion(question)}
+                      </div>
+                    );
+                    return (
+                      <DraggableElement
+                        ComponentToRender={componentToRender}
+                        key={question.question_id}
+                        id={question.question_id}
+                        index={index}
+                      />
+                    );
+                  }
+                  return null;
                 })
               ) : (
                 <div

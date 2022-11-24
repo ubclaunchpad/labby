@@ -34,6 +34,7 @@ function FormTitle() {
               question_title: text.target.value,
               question_type: "heading",
               question_index: 0,
+              mandatory: false,
             },
           });
           dispatch({ type: LOAD_QUESTION });
