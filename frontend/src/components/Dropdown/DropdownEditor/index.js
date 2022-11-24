@@ -197,6 +197,7 @@ function DropdownEditor({ question }) {
                 type: SAVE_QUESTION,
                 payload: {
                   ...question,
+                  question_title: question.question,
                   mandatory: e.target.checked,
                   question_index: question.position_index,
                 },
