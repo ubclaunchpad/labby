@@ -60,7 +60,7 @@ function SingleSelect({ question }) {
                             dispatch({
                               type: REMOVE_SINGLE_RESPONSE,
                               payload: {
-                                question: question,
+                                question: option,
                               },
                             });
                             dispatch({
@@ -68,7 +68,7 @@ function SingleSelect({ question }) {
                               payload: {
                                 id: uuid(),
                                 response: option.answer_id,
-                                question: question,
+                                question: option,
                               },
                             });
                           }

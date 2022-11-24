@@ -54,7 +54,7 @@ function MultiSelect({ question }) {
                             payload: {
                               id: uuid(),
                               response: option.answer_id,
-                              question: question,
+                              question: option,
                             },
                           });
                         } else {
@@ -62,7 +62,7 @@ function MultiSelect({ question }) {
                             type: REMOVE_RESPONSE,
                             payload: {
                               response: option.answer_id,
-                              question: question,
+                              question: option,
                             },
                           });
                         }
