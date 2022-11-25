@@ -3,6 +3,7 @@ USE `labby`;
 DROP TABLE IF EXISTS `tasks`;
 DROP PROCEDURE IF EXISTS `createTasks`;
 
+
 DELIMITER $$
 
 CREATE PROCEDURE `createTasks` ()

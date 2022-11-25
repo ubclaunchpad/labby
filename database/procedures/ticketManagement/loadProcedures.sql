@@ -9,15 +9,12 @@ CREATE PROCEDURE `load_tasks` ()
 
 BEGIN
     SELECT*FROM tasks;
-
-        LEFT JOIN organizations
-        ON organizations.organization_id = questions_cost.fk_organization_id
   
 END $$
 
-CREATE PROCEDURE 'load_tasks_state' (IN task_state VARCHAR(50))
+CREATE PROCEDURE `load_tasks_state` (IN task_state VARCHAR(50))
 BEGIN
-SELECT task
+SELECT *
     FROM
         tasks
         WHERE tasks.task_state = task_state;
