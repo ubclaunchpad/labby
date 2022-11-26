@@ -8,26 +8,6 @@ import "./index.css";
 
 // const Column = styled.div``
 
-const ticketDragEndHandler = (result) => {
-  const { destination, source, draggableId } = result;
-  const droppedOutside = !destination;
-  const droppedOnSamePlace =
-    destination &&
-    destination.droppableId === source.droppableId &&
-    destination.index === source.index;
-  if (droppedOutside || droppedOnSamePlace) {
-    return;
-  }
-  console.log(`
-        Task dropped 
-        Dragged Task ID:${draggableId}. 
-        source-id:${source.droppableId}.
-        source-position:${source.index}.
-        destination-id:${destination.droppableId}.
-        destination-position:${destination.index}.
-    `);
-};
-
 const Task = (props) => {
   return (
     <Draggable draggableId={props.task.id} index={props.index}>
@@ -71,6 +51,43 @@ const TicketBoardColumn = (props) => {
 
 export const TicketBoard = () => {
   const [ticketBoardDndData, setTicketBoardDndData] = useState(ticketBoardData);
+
+  const ticketDragEndHandler = (result) => {
+    const { destination, source, draggableId } = result;
+    const droppedOutside = !destination;
+    const droppedOnSamePlace =
+      destination &&
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index;
+    if (droppedOutside || droppedOnSamePlace) {
+      return;
+    }
+    console.log(`
+          Task dropped 
+          Dragged Task ID:${draggableId}. 
+          source-id:${source.droppableId}.
+          source-position:${source.index}.
+          destination-id:${destination.droppableId}.
+          destination-position:${destination.index}.
+      `);
+    const sourceColumn = ticketBoardDndData.columns[source.droppableId];
+    const newSourceTaskIds = Array.from(sourceColumn.taskIds);
+    newSourceTaskIds.splice(source.index, 1);
+    newSourceTaskIds.splice(destination.index, 0, draggableId);
+    const newSourceColumn = {
+      ...sourceColumn,
+      taskIds: newSourceTaskIds,
+    };
+    const newData = {
+      ...ticketBoardDndData,
+      columns: {
+        ...ticketBoardDndData.columns,
+        [newSourceColumn.id]: newSourceColumn,
+      },
+    };
+    setTicketBoardDndData(newData);
+  };
+
   return (
     <div className="ticketBoardContainer">
       <div className="searchTicketSection">
