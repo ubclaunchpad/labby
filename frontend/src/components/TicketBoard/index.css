@@ -59,7 +59,7 @@
   background-color: #ecedf3;
   margin: 8px;
   border-radius: 8px;
-  /* min-height: 300px; */
+  min-height: 100px;
   flex: 1;
 }
 .columnTitle {

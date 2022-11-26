@@ -71,18 +71,44 @@ export const TicketBoard = () => {
           destination-position:${destination.index}.
       `);
     const sourceColumn = ticketBoardDndData.columns[source.droppableId];
+    const destColumn = ticketBoardDndData.columns[destination.droppableId];
+    if (sourceColumn === destColumn) {
+      const newSourceTaskIds = Array.from(sourceColumn.taskIds);
+      newSourceTaskIds.splice(source.index, 1);
+      newSourceTaskIds.splice(destination.index, 0, draggableId);
+      const newSourceColumn = {
+        ...sourceColumn,
+        taskIds: newSourceTaskIds,
+      };
+      const newData = {
+        ...ticketBoardDndData,
+        columns: {
+          ...ticketBoardDndData.columns,
+          [newSourceColumn.id]: newSourceColumn,
+        },
+      };
+      setTicketBoardDndData(newData);
+      return;
+    }
+    //move  tasks between columns
     const newSourceTaskIds = Array.from(sourceColumn.taskIds);
     newSourceTaskIds.splice(source.index, 1);
-    newSourceTaskIds.splice(destination.index, 0, draggableId);
     const newSourceColumn = {
       ...sourceColumn,
       taskIds: newSourceTaskIds,
+    };
+    const newDestTaskIds = Array.from(destColumn.taskIds);
+    newDestTaskIds.splice(destination.index, 0, draggableId);
+    const newDestColumn = {
+      ...destColumn,
+      taskIds: newDestTaskIds,
     };
     const newData = {
       ...ticketBoardDndData,
       columns: {
         ...ticketBoardDndData.columns,
-        [newSourceColumn.id]: newSourceColumn,
+        [sourceColumn.id]: newSourceColumn,
+        [destColumn.id]: newDestColumn,
       },
     };
     setTicketBoardDndData(newData);
