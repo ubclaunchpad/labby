@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 
 export const ticketBoardData = {
+  // tasks:{},
   tasks: {
     "task-1": {
       id: "task-1",
@@ -71,21 +72,25 @@ export const ticketBoardData = {
       id: "adopt-me",
       title: "Adopt me",
       taskIds: ["task-1", "task-2", "task-3"],
+      //   taskIds: [],
     },
     todo: {
       id: "todo",
       title: "Todo",
       taskIds: ["task-4"],
+      //   taskIds: [],
     },
     "in-progress": {
       id: "in-progress",
       title: "In Progress",
       taskIds: ["task-5", "task-6", "task-7", "task-8"],
+      //   taskIds: [],
     },
     completed: {
       id: "completed",
       title: "Completed",
       taskIds: ["task-9"],
+      //   taskIds: [],
     },
   },
   columnOrder: ["adopt-me", "todo", "in-progress", "completed"],

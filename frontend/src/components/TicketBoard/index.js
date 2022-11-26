@@ -1,12 +1,9 @@
-import React, { useState } from "react";
 import { Input } from "antd";
 import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
-import { ticketBoardData } from "../DragAndDrop/ticket-dnd-data";
-// import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { UPDATE_TICKET_BOARD } from "../../redux/actions/ticketActions";
 import "./index.css";
-
-// const Column = styled.div``
 
 const Task = (props) => {
   return (
@@ -50,7 +47,10 @@ const TicketBoardColumn = (props) => {
 };
 
 export const TicketBoard = () => {
-  const [ticketBoardDndData, setTicketBoardDndData] = useState(ticketBoardData);
+  const dispatch = useDispatch();
+  const ticketBoardDndData = useSelector(
+    (state) => state.ticketReducer.ticketBoardDndData
+  );
 
   const ticketDragEndHandler = (result) => {
     const { destination, source, draggableId } = result;
@@ -87,7 +87,7 @@ export const TicketBoard = () => {
           [newSourceColumn.id]: newSourceColumn,
         },
       };
-      setTicketBoardDndData(newData);
+      dispatch({ type: UPDATE_TICKET_BOARD, payload: newData });
       return;
     }
     //move  tasks between columns
@@ -111,7 +111,7 @@ export const TicketBoard = () => {
         [destColumn.id]: newDestColumn,
       },
     };
-    setTicketBoardDndData(newData);
+    dispatch({ type: UPDATE_TICKET_BOARD, payload: newData });
   };
 
   return (
