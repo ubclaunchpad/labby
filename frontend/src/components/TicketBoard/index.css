@@ -53,10 +53,28 @@
 .ticketBoard {
   display: flex;
   justify-content: space-between;
-  gap: 18px;
+  align-items: flex-start;
 }
 .column {
   background-color: #ecedf3;
-  min-height: 300px;
+  margin: 8px;
+  border-radius: 8px;
+  /* min-height: 300px; */
   flex: 1;
+}
+.columnTitle {
+  color: #353535;
+  font-weight: bold;
+  text-align: left;
+  padding: 8px;
+}
+.taskList{
+    padding: 8px;
+}
+.task{
+    margin-bottom: 8px;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: #fff;
+    min-height: 100px;
 }

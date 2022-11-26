@@ -1,7 +1,32 @@
 import React, { useState } from "react";
 import { Input } from "antd";
 import { ticketBoardData } from "../DragAndDrop/ticket-dnd-data";
+// import styled from "styled-components";
 import "./index.css";
+
+// const Column = styled.div``
+
+const Task = (props) => {
+  return (
+    <div className="task">
+      {props.task.code}<br/>
+      {props.task.title}
+    </div>
+  );
+};
+
+const TicketBoardColumn = (props) => {
+  return (
+    <div className="column">
+      <div className="columnTitle">{props.column.title}</div>
+      <div className="taskList">
+        {props.tasks.map((task) => {
+          return <Task key={task.id} task={task} />;
+        })}
+      </div>
+    </div>
+  );
+};
 
 export const TicketBoard = () => {
   const [ticketBoardDndData, setTicketBoardDndData] = useState(ticketBoardData);
@@ -28,7 +53,9 @@ export const TicketBoard = () => {
           const tasks = column.taskIds.map(
             (taskId) => ticketBoardDndData.tasks[taskId]
           );
-          return <div className="column">{column.title}</div>;
+          return (
+            <TicketBoardColumn key={columnId} column={column} tasks={tasks} />
+          );
         })}
       </div>
     </div>
