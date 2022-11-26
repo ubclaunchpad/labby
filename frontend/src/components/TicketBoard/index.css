@@ -1,0 +1,50 @@
+/* * {
+  border: 1px solid red;
+} */
+.ticketBoardContainer {
+  display: flex;
+  flex-direction: column;
+}
+.searchTicketSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 65%;
+}
+.ticketBoardSearch {
+  border: 0;
+  background-color: #ecedf3;
+  border-radius: 15px;
+  height: 45px;
+  padding-left: 40px;
+  padding-right: 16px;
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("../../assets/SearchIcon.svg");
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: calc(0% + 16px) center;
+}
+.ticketBoardDropdown:focus {
+  outline: none;
+}
+.ticketBoardDropdown {
+  border: 0;
+  background-color: #ecedf3;
+  border-radius: 15px;
+  height: 45px;
+  padding-left: 16px;
+  padding-right: 16px;
+  display: flex;
+  flex-direction: row;
+  flex-basis: 120px;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("../../assets/DropdownArrow.svg");
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 32px) center;
+}
