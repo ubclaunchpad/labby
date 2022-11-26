@@ -4,12 +4,14 @@
 .ticketBoardContainer {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 .searchTicketSection {
   display: flex;
   align-items: center;
   gap: 12px;
   width: 65%;
+  margin-bottom: 24px;
 }
 .ticketBoardSearch {
   border: 0;
@@ -47,4 +49,14 @@
   background-size: 16px;
   background-repeat: no-repeat;
   background-position: calc(100% - 32px) center;
+}
+.ticketBoard {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+}
+.column {
+  background-color: #ecedf3;
+  min-height: 300px;
+  flex: 1;
 }

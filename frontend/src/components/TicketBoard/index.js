@@ -1,8 +1,10 @@
+import React, { useState } from "react";
 import { Input } from "antd";
-import { appColor } from "../../constants";
+import { ticketBoardData } from "../DragAndDrop/ticket-dnd-data";
 import "./index.css";
 
 export const TicketBoard = () => {
+  const [ticketBoardDndData, setTicketBoardDndData] = useState(ticketBoardData);
   return (
     <div className="ticketBoardContainer">
       <div className="searchTicketSection">
@@ -20,7 +22,15 @@ export const TicketBoard = () => {
           <option value="scrolling">Scrolling</option>
         </select>
       </div>
-      <div>Board goes here</div>
+      <div className="ticketBoard">
+        {ticketBoardDndData.columnOrder.map((columnId) => {
+          const column = ticketBoardDndData.columns[columnId];
+          const tasks = column.taskIds.map(
+            (taskId) => ticketBoardDndData.tasks[taskId]
+          );
+          return <div className="column">{column.title}</div>;
+        })}
+      </div>
     </div>
   );
 };
