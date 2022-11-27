@@ -23,7 +23,7 @@ function Header() {
 
       <div className="header-navbar-navigation--buttons">
         <NavLink
-          to="/"
+          to="/tickets"
           className={({ isActive }) =>
             isActive
               ? "header-navbar--navlink--active"
