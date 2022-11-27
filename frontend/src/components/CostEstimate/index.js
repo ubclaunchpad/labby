@@ -29,6 +29,9 @@ export const CostEstimateCollapsed = () => {
 
 export const CostEstimateFull = () => {
   const dispatch = useDispatch();
+  // const costEstimateList = useSelector(
+  //   (state) => state.questionReducer.questionList
+  // );
   return (
     <div className="CostEstimateContainer" style={{ background: "#F5F5F5" }}>
       <img className="CostEstimateDelete" src={X} alt="Delete" 
