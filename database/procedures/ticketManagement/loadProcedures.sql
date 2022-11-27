@@ -2,6 +2,7 @@ USE `labby`;
 
 DROP procedure IF EXISTS `load_tasks`;
 DROP procedure IF EXISTS `load_tasks_state`;
+DROP procedure IF EXISTS `load_tasks_subtasks`;
 
 DELIMITER $$
 
@@ -21,5 +22,15 @@ SELECT *
 
 END $$
 
+CREATE PROCEDURE `load_tasks_subtasks` ()
+BEGIN
+SELECT tasks.*, subtasks.*
+    FROM
+        tasks
+
+    LEFT JOIN subtasks
+        ON tasks.task_id = subtasks.fk_task_id;
+
+END $$
   
 DELIMITER ;

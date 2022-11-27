@@ -52,4 +52,3 @@ VALUES
 END $$
   
 DELIMITER ;
-
