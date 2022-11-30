@@ -2,15 +2,14 @@ import con from "../config/Database.js";
 import { QuoteHelper } from "./quoteHelper.js";
 
 export class Quote {
-    insertCost(quote, result) {
+    insertCost(costData, result) {
         con.query(
             "CALL save_cost(?, ?, ?, ?)",
             [
-                quote.cost_id,
-                quote.cost,
-                quote.answer_id,
-                quote.organization,
-
+                costData.cost_id,
+                costData.cost,
+                costData.answer_id,
+                costData.organization,
             ],
             function (error, results) {
                 if (error) {
@@ -18,15 +17,15 @@ export class Quote {
                     result(error, null);
                 } else {
                     result(null, {
-                        result: `Quote ${quote.cost} Saved Successfully, Inserted ID: ${results.cost_id}`,
+                        result: `Cost of ${costData.cost} Saved Successfully for Answer ID: ${costData.answer_id}, Inserted ID: ${results.cost_id}`,
                     });
                 }
             }
         );
     }
 
-    getCost(organization, answerId) {
-        return QuoteHelper.getSpecificCost(organization, answerId);
+    getCost(organization, answerId, result) {
+        return QuoteHelper.getAnswerCost(organization, answerId, result);
     }
 
     deleteCost(answerId, result) {
@@ -39,7 +38,7 @@ export class Quote {
                     result(error, null);
                 } else {
                     result(null, {
-                        result: `Quote ${quote.cost} Deleted Successfully, Deleted ID: ${results.cost_id}`,
+                        result: `Cost for Answer ${answerId} Deleted Successfully, Deleted ID: ${results.cost_id}`,
                     });
                 }
             }

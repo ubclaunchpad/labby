@@ -1,11 +1,11 @@
 import { Router } from "express";
-import QuoteController from "../controllers/quoteController";
+import QuoteController from "../controllers/quoteController.js";
 
 const router = Router();
 const quoteController = new QuoteController();
 
 router.post("/", (req, res) => {
-    if (!req.body) {
+    if (!req || req == undefined || req.body.length == undefined || !req.body) {
         res.status(400).send({
             message: "Content can not be empty!",
         });
@@ -21,10 +21,17 @@ router.post("/", (req, res) => {
         });
 });
 
-router.get("/", (req, res) => {
+router.post("/getQuote", (req, res) => {
+    if (!req || req == undefined || req.body.length == undefined || !req.body) {
+        console.log("REQUESRT BODY HERE", req.body.length);
+        res.status(400).send({
+            message: "Content can not be empty!",
+        });
+        return;
+    }
     quoteController
         .getQuote(req)
-        .then((response) => {
+        .then((response) => { 
             res.status(200).json(response);
         })
         .catch((err) => {

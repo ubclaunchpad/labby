@@ -1,44 +1,45 @@
 
 export var QuoteHelper = () => {
-    const quoteHashMap = new Map();
+    const organizationCosts = new Map();
 
-    function addToMap(orgId, getCostResult) {
-        answerHashMap = new Map();
+    function addToMap(orgId, orgCosts) {
+      const answerCosts = new Map();
 
-        for (let costResult in getCostResult) {
-            // POTENTIAL ISSUE: this isn't the answer id, it's the answer --> ask to change stored procedure? 
-            answerHashMap.set(costResult.answer, costResult.cost); // key is the answer id, value is the cost associated with it
+        for (let orgCost in orgCosts) {
+            answerCosts.set(orgCost.answer, orgCost.cost);
         }
-        quoteHashMap.set(orgId, answerHashMap); // 
+        organizationCosts.set(orgId, answerCosts);
     }
-    function getOrganizationCosts(orgId) {
+    function getOrganizationCosts(orgId, result) {
         con.query(
             "CALL load_organization_costs(?)",
             orgId,
-            function (error, results) {
+            function (error, res) {
                 if (error) {
                     console.log("error: ", error);
-                    result(error, null);
+                    result(error); 
                 } else {
-                    addToMap(orgId, results)
+                    addToMap(orgId, res)
                 }
             }
         )
     }
 
-    function populateHashMap(orgId) {
-        if (quoteHashmap.has(orgId)) {
+    function populateOrgCosts(orgId, result) {
+        if (organizationCosts.has(orgId)) {
             return;
         } else {
-            getOrganizationCosts(orgId);
+            getOrganizationCosts(orgId, result);
         }
-
     }
 
-    function getSpecificCost(orgId, answerId) {
-        populateHashMap(orgId);
-        orgMap = quoteHashMap.get(orgId);
-        return orgMap.get(answerId)
+    function getAnswerCost(orgId, answerId, result) {
+        populateOrgCosts(orgId, result);
+        orgMap = organizationCosts.get(orgId);
+        if (orgMap.has(answerId)) {
+            return orgMap.get(answerId);
+        } else {
+            return 0;
+        }
     }
-
 }

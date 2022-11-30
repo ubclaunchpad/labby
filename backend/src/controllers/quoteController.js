@@ -1,15 +1,17 @@
-import { Quote } from "../models/quote";
+import { Quote } from "../models/quote.js";
 export default class QuoteController {
 
     saveCost(req) {
         return new Promise((resolve, reject) => {
+            if (!req.body.answer_id ||!req.body.organization || !req.body.cost) {
+                return reject({error: "Error with request body."})
+            }
             const QuoteModel = new Quote();
-
             const costData = {
                 answer_id: req.body.answer_id,
                 organization: req.body.organization,
                 cost: req.body.cost,
-                cost_id: req.body.cost, // where is this generated? 
+                cost_id: Math.floor(Math.random() * 100),
             };
             QuoteModel.insertCost(costData, (err, result) => {
                 if (err) {
@@ -22,6 +24,9 @@ export default class QuoteController {
 
     getQuote(req) {
         return new Promise((resolve, reject) => {
+            if (!req.body.answer_id ||!req.body.organization || !req.body.cost) {
+                return reject({error: "Error with request body."})
+            }
 
             const QuoteModel = new Quote();
             const responses = req.body.responses;
@@ -29,32 +34,14 @@ export default class QuoteController {
             let totalCost = 0;
 
             for (let response in responses) {
-                totalCost += QuoteModel.getCost(organization, response, (err, result) => {
+                totalCost += QuoteModel.getCost(organization, response, (err) => {
                     if (err) {
-                        reject({ error: err });
+                        return reject({ error: err });
                     }
-                    resolve(result);
                 });
+                resolve(totalCost);
             }
-
-            //  for (response in responses) {
-            //     let question_id = response[0]; // assumes first index is question id
-
-            //     for (let i = 1; i < response.length; i++) {
-            //         const costData = {
-            //             answer_id: response[i],
-            //             question_id: question_id,
-            //             organization: organization,
-            //         }
-
-            //         totalCost += QuoteModel.getCost(costData, (err, result) => {
-            //             if (err) {
-            //                 reject({ error: err });
-            //             }
-            //             resolve(result);
-            //         });
-            //     }
-            // }
+        
         });
     }
 
