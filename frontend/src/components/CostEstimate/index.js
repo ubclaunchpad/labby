@@ -1,10 +1,12 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { TOGGLE_LOGIC } from "../../redux/actions/uiActions";
 import "./index.css";
 import { appColor } from "../../constants";
 import MoneyGray from "../../assets/MoneyGray.png";
 import Ellipse from "../../assets/Ellipse.png";
+import { Table } from "antd";
 import X from "../../assets/X.png";
+import { SET_COST } from "../../redux/actions/costActions";
 
 export const CostEstimateCollapsed = () => {
   const dispatch = useDispatch();
@@ -27,11 +29,11 @@ export const CostEstimateCollapsed = () => {
   );
 };
 
-export const CostEstimateFull = () => {
+export const CostEstimateFull = () =>  {
   const dispatch = useDispatch();
-  // const costEstimateList = useSelector(
-  //   (state) => state.questionReducer.questionList
-  // );
+  const costEstimateList = useSelector((state) => state.costEstimateReducer.costEstimateList);
+  const formResponses = useSelector((state) => state.formReducer.formResponses);
+
   return (
     <div className="CostEstimateContainer" style={{ background: "#F5F5F5" }}>
       <img className="CostEstimateDelete" src={X} alt="Delete" 
@@ -48,6 +50,34 @@ export const CostEstimateFull = () => {
         <p>Quantity</p>
         <p>Cost</p>
       </span>
+
+      <div className="costs">
+
+      <Table
+        className="table"
+        dataSource={costEstimateList}
+      />
+      {/* //printing costs */}
+
+      <div>
+        {
+          costEstimateList.forEach((cost) => {
+             if (
+              formResponses.findIndex(
+                (response) =>
+                   response.question.answer_id === cost.fk_answer_id
+                   ) === -1
+              ) {
+                  return (
+                   <div className="cost">{cost.cost}</div>
+               );
+              }
+          })
+        } 
+      </div>
+
+      </div>
+
       <div className="CostEstimateDivider" />
       <div className="CostDivider" />
       <div className="CostEstimateTotal">Total</div>
