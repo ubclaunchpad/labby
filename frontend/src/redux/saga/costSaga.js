@@ -13,10 +13,3 @@ export function* fetchCost() {
 
     yield put({ type: SET_COST, payload: costEstimates.data }); //got all costs?
   }
-
-//   export default function* questionSaga() {
-//     yield takeLatest(LOAD_QUESTION, fetchQuestion);
-//     yield takeEvery(SAVE_QUESTION, saveQuestion);
-   
-//   the first event listener adds answer to list
-//   for answer in list, filter for 
