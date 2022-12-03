@@ -3,6 +3,7 @@ import {LOAD_COST, SET_COST} from "../actions/costActions";
 import { getCosts } from "../api/costApi";
   
 export default function* costSaga() {
+    console.log("saga");
     yield takeEvery(LOAD_COST, fetchCost);
   }
 

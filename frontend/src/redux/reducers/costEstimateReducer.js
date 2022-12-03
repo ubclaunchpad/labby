@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { TOGGLE_LOGIC } from "../actions/uiActions";
-import {SET_COST} from "../actions/costActions";
+import {SET_COST, LOAD_COST} from "../actions/costActions";
 
 
 const defaultCostEstimate = true;
@@ -23,6 +23,7 @@ const defaultCostEstimateList = [];
 const costEstimateList = (state = defaultCostEstimateList, action) => {
   switch (action.type) {
     case SET_COST: {
+      console.log("set cost")
       var costIds = [];
       var finalCostEstimates = [];
       action.payload.forEach((cost) => { //costEstimates.data
@@ -32,6 +33,9 @@ const costEstimateList = (state = defaultCostEstimateList, action) => {
         }
       });
       return finalCostEstimates;
+    }
+    case LOAD_COST: {
+      console.log("loading costs")
     }
     default: {
       return state;
