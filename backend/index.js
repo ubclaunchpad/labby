@@ -4,8 +4,7 @@ import bodyParser from "body-parser";
 import questionRouter from "./src/routes/questionRoute.js";
 import logicRouter from "./src/routes/logicRoute.js";
 import answerRouter from "./src/routes/answerRoute.js";
-import orderRouter from "./src/routes/orderRoute.js";
-import surveyRouter from "./src/routes/surveyRoute.js"
+import quoteRouter from "./src/routes/quoteRoute.js";
 
 const app = express();
 const port = 8080;
@@ -21,9 +20,9 @@ app.get("/", (_, res) => {
 app.use("/question", questionRouter);
 app.use("/logic", logicRouter);
 app.use("/answer", answerRouter);
-app.use("/reorder", orderRouter);
-app.use("/survey", surveyRouter);
+app.use("/quote", quoteRouter);
 
 app.listen(port, () => {
   console.log(`Labby backend listening on port ${port}`);
 });
+
