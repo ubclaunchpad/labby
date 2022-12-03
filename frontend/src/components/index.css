@@ -7,16 +7,19 @@
     width: 100%;
     min-height: 300px;
     padding: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 .GlobalEditorComponentHeader {
     display: flex;
     flex: 1;
     flex-direction: row;
+    align-items: center;
 }
 /* Question Number (div) */
 .GlobalEditorQuestionNumber {
-    background-color: #D9D9D9;
+    background-color: #ECEDF3;
     border-radius: 15px;
     color: #666666;
     height: 45px;
@@ -26,13 +29,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 /* Question Title (input) */
 .GlobalEditorQuestionTitleInput {
     height: 45px;
     border: 0;
-    background-color: #D9D9D9;
+    background-color: #ECEDF3;
     width: 80%;
     border-radius: 15px;
     margin-left: 10px;
@@ -42,6 +46,15 @@
 }
 .GlobalEditorQuestionTitleInput:focus {
     outline: none;
+}
+
+.GlobalDragDot {
+    width: 5px;
+    height: 15px;
+    object-fit: contain;
+    position: relative;
+    left: -25px;
+    display: flex;
 }
 
 /* Delete Question (img) */
@@ -88,3 +101,17 @@
     align-items: center;
 }
 
+
+/* Customer Form Components */
+.GlobalCustomerQuestionContainer {
+    width: 50%;
+}
+
+.GlobalQuestionTitle {
+    font-size: 24px;
+    font-weight: 600;
+    color: #666666;
+    margin-bottom: 20px;
+    text-align: left;
+    display: flex;
+}

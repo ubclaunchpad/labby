@@ -1,75 +1,56 @@
-import React, { useState } from "react";
-import Select from "react-select";
-import makeAnimated from "react-select/animated";
-// import { getQuestions } from "../../redux/api/questionApi";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Divider from "../Divider";
 import "./index.css";
-import { DefaultCard } from "../Card";
+import uuid from "react-uuid";
+import { ADD_RESPONSE, REMOVE_SINGLE_RESPONSE } from "../../redux/actions/formActions";
 
-//Default prop values
-const defaultLabel = "Dropdown title: ";
-const defaultOptions = [
-  { label: "Option 1", value: "Option1" },
-  { label: "Option 2", value: "Option2" },
-  { label: "Option 3", value: "Option3" },
-  { label: "Option 4", value: "Option4" },
-  { label: "Option 5", value: "Option5" },
-];
-
-export const DropdownDefault = ({
-  label = defaultLabel,
-  options = defaultOptions,
-}) => {
-  //Maybe declare state in App.js instead and just pass the value as a prop
-  const [selectedValue, setSelectedValue] = useState("Option0");
-  //Maybe pass handler function as a prop
+function Dropdown({ question }) {
+  const dispatch = useDispatch();
+  const answerList = useSelector((state) => state.questionReducer.answerList);
+  const [options, setOptions] = useState([]);
+  const [selectedValue, setSelectedValue] = useState(null);
   const handleChange = (event) => {
-    setSelectedValue(event.target.value);
+    const selected = JSON.parse(event.target.value);
+    dispatch({
+      type: REMOVE_SINGLE_RESPONSE,
+      payload: {
+        question: question,
+      },
+    });
+    dispatch({
+      type: ADD_RESPONSE,
+      payload: {
+        id: uuid(),
+        response: selected.answer,
+        question: selected,
+      },
+    });
+    setSelectedValue(selected);
   };
 
+  useEffect(() => {
+    const optionList = answerList[question.question_id ?? ""] ?? [];
+    setOptions(optionList);
+  }, [answerList, question]);
+
   return (
-    <DefaultCard>
-      <label className="label">{label} </label>
-      <br />
-      <select className="select" value={selectedValue} onChange={handleChange}>
-        <option value="option0">Option 0</option>
+    <div className="GlobalCustomerQuestionContainer">
+      <div className="GlobalQuestionTitle">
+        {question.question}{" "}
+        <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
+      </div>
+      <select className="select" onChange={handleChange}>
+        {selectedValue === null && <option key={"Default"} value={""} />}
         {options.map((option) => (
-          <option value={option.value}>{option.label}</option>
+          <option key={option.answer_id} value={JSON.stringify(option)}>
+            {option.answer}
+          </option>
         ))}
       </select>
-
-      {/* For debugging */}
-      <p>User selected {selectedValue}</p>
-    </DefaultCard>
+      <Divider />
+    </div>
   );
-};
+}
 
-//Another dropdown component using react select library (https://react-select.com/home)
-export const DropdownAdvanced = ({
-  label = defaultLabel,
-  options = defaultOptions,
-}) => {
-  //declare state in App.js instead
-  const [selectedOption, setSelectedOption] = useState("Option1");
-  //Maybe pass handler function as a prop
-  //TODO: debug the state changes
-  const handleChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
-  const animatedComponents = makeAnimated();
-  return (
-    <DefaultCard>
-      <form>
-        <label className="label">{label}</label>
-        <Select
-          defaultValue={[options[0], options[2]]}
-          options={options}
-          onChange={handleChange}
-          closeMenuOnSelect={true}
-          isMulti
-          components={animatedComponents}
-        />
-        <p>User selected {selectedOption}</p>
-      </form>
-    </DefaultCard>
-  );
-};
+export default Dropdown;

@@ -1,0 +1,51 @@
+.requestFormPage {
+  height: 100vh;
+  display: flex;
+}
+
+.requestFormContainer {
+  flex: 1;
+  padding-left: 200px;
+  padding-right: 200px;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.formTitle {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: left;
+  padding-top: 25px;
+  padding-bottom: 50px;
+}
+
+.FormRequestQuestion {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 100px;
+  font-size: 16px;
+  margin-bottom: 30px;
+  background-color: white;
+}
+
+.FormSubmit {
+  flex: 1;
+  text-align: start;
+}
+
+.FormSubmitButton {
+  height: 45px;
+  width: 150px;
+  border: 0;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}

@@ -1,8 +1,14 @@
-.label {
-  font-size: 1.25rem;
-  line-height: 2;
-}
 .select{
-  padding: 8px 12px;
+  padding: 10px;
+  border-radius: 10px;
   width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("../../assets/DropdownArrow.svg");
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 16px) center;
+}
+.select:focus {
+  outline: none;
 }

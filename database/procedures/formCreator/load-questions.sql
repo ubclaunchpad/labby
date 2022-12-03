@@ -73,7 +73,7 @@ BEGIN
   
 END $$
 
-CREATE PROCEDURE load_organization_costs (IN org VARCHAR(50))
+CREATE PROCEDURE `load_organization_costs` (IN org VARCHAR(50))
 BEGIN
 SELECT question, answer, cost
     FROM

@@ -11,7 +11,7 @@ BEGIN
 
 CREATE TABLE `questions_cost` (
 	cost_id VARCHAR(50) NOT NULL,
-	fk_answer_id VARCHAR(50),
+	fk_answer_id VARCHAR(50) NOT NULL,
 	fk_organization_id VARCHAR(50),
 	cost DOUBLE,
 	PRIMARY KEY (`cost_id`),

@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "@mui/material/Checkbox";
 import X from "../../../assets/X.png";
+import DragDots from "../../../assets/DragDots.png";
 import "./index.css";
 import "../../index.css";
 import {
   DELETE_ANSWER,
   DELETE_QUESTION,
+  LOAD_QUESTION,
   SAVE_ANSWER,
   SAVE_QUESTION,
 } from "../../../redux/actions/questionActions";
@@ -17,12 +19,18 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import uuid from "react-uuid";
-import { SET_LOGIC_QUESTION, SET_LOGIC_VIEW_QUESTION } from "../../../redux/actions/logicActions";
+import {
+  SET_LOGIC_QUESTION,
+  SET_LOGIC_VIEW_QUESTION,
+} from "../../../redux/actions/logicActions";
 import { TOGGLE_LOGIC } from "../../../redux/actions/uiActions";
 
 function DropdownEditor({ question }) {
   const dispatch = useDispatch();
   const logicList = useSelector((state) => state.logicReducer.logicList);
+  const questionList = useSelector(
+    (state) => state.questionReducer.questionList
+  );
   const [questionNum, setQuestionNum] = useState("");
   const [title, setTitle] = useState("");
 
@@ -36,11 +44,21 @@ function DropdownEditor({ question }) {
   }, [question]);
 
   useEffect(() => {
-    console.log(answerList);
-    var optionList = answerList[question.question_id] ?? [];
-    if (!optionList.includes("")) {
-      optionList.push("");
-    }
+    var optionList = answerList[question.question_id ?? ""] ?? [];
+    optionList = optionList.sort((a, b) => {
+      let fa = a.answer;
+      let fb = b.answer;
+
+      if (fa < fb) {
+        return -1;
+      }
+      if (fa > fb) {
+        return 1;
+      }
+      return 0;
+    });
+    optionList = optionList.filter((option) => option !== "");
+    optionList.push("");
     setOptions(optionList);
   }, [answerList, question]);
 
@@ -71,6 +89,7 @@ function DropdownEditor({ question }) {
                 question_index: question.position_index,
               },
             });
+            dispatch({ type: LOAD_QUESTION });
           }}
         />
         <img
@@ -78,18 +97,27 @@ function DropdownEditor({ question }) {
           src={X}
           alt="Delete"
           onClick={() => {
+            questionList.forEach((questionObj) => {
+              if (questionObj.position_index >= question.position_index) {
+                questionObj.question_index = questionObj.position_index - 1;
+                questionObj.question_title = questionObj.question;
+                dispatch({ type: SAVE_QUESTION, payload: questionObj });
+              }
+            });
             dispatch({
               type: DELETE_QUESTION,
               payload: {
                 question_id: question.question_id,
               },
             });
+            dispatch({ type: LOAD_QUESTION });
           }}
         />
       </div>
       {/* Copy Everything Except Content Below For Reusability */}
       <div className="single-select-options-container">
-        <FormControl>
+        <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
+        <FormControl style={{ width: "100%" }}>
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
             defaultValue="female"
@@ -124,31 +152,12 @@ function DropdownEditor({ question }) {
                           },
                         });
                       }
-                      e.target.value = "";
+                      setOptions([]);
                     }}
                     //   If we want to have key down functionality as well:
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
-                        const answerVal = e.target.value;
-                        if (answerVal.trim() !== "") {
-                          dispatch({
-                            type: SAVE_ANSWER,
-                            payload: {
-                              answer_id: option.answer_id ?? uuid(),
-                              fk_question_id: question.question_id,
-                              question_type: question.question_type,
-                              answer: answerVal,
-                            },
-                          });
-                        } else {
-                          dispatch({
-                            type: DELETE_ANSWER,
-                            payload: {
-                              answer_id: option.answer_id,
-                            },
-                          });
-                        }
-                        e.target.value = "";
+                        e.target.blur();
                       }
                     }}
                   />
@@ -188,10 +197,12 @@ function DropdownEditor({ question }) {
                 type: SAVE_QUESTION,
                 payload: {
                   ...question,
+                  question_title: question.question,
                   mandatory: e.target.checked,
                   question_index: question.position_index,
                 },
               });
+              dispatch({ type: LOAD_QUESTION });
             }}
           />
           Required

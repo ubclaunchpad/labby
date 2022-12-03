@@ -12,7 +12,7 @@ export const LibraryCard = (props) => {
   return (
     <div
       className="libraryCardContainer"
-      style={{ backgroundColor: appColor.darkGray }}
+      style={{ backgroundColor: appColor.white }}
     >
       {props.children}
     </div>

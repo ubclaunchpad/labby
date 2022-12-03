@@ -1,117 +1,56 @@
 import { Input } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import Checkbox from "@mui/material/Checkbox";
-import X from "../../assets/X.png";
 import "./index.css";
 import "../index.css";
+import Divider from "../Divider";
+import { useDispatch } from "react-redux";
+import uuid from "react-uuid";
 import {
-  DELETE_QUESTION,
-  SAVE_QUESTION,
-} from "../../redux/actions/questionActions";
-import { SET_LOGIC_QUESTION, SET_LOGIC_VIEW_QUESTION } from "../../redux/actions/logicActions";
-import { TOGGLE_LOGIC } from "../../redux/actions/uiActions";
+  ADD_RESPONSE,
+  REMOVE_SINGLE_RESPONSE,
+} from "../../redux/actions/formActions";
 
 function TextAnswer({ question }) {
   const dispatch = useDispatch();
-  const logicList = useSelector((state) => state.logicReducer.logicList);
-  const [questionNum, setQuestionNum] = useState("");
-  const [title, setTitle] = useState("");
-
-  useEffect(() => {
-    console.log(question);
-    setQuestionNum(`Q${question.position_index}`);
-    setTitle(question.question);
-  }, [question]);
 
   return (
-    <div className="GlobalEditorComponent">
-      <div className="GlobalEditorComponentHeader">
-        <div
-          className="GlobalEditorQuestionNumber"
-          onClick={() => {
-            dispatch({
-              type: SET_LOGIC_QUESTION,
-              payload: question,
-            });
-          }}
-        >
-          {questionNum}
-        </div>
-        <input
-          className="GlobalEditorQuestionTitleInput"
-          defaultValue={title}
-          placeholder="Type your form name here..."
-          onBlur={(text) => {
-            dispatch({
-              type: SAVE_QUESTION,
-              payload: {
-                ...question,
-                question_title: text.target.value,
-                question_index: question.position_index,
-              },
-            });
-          }}
-        />
-        <img
-          className="GlobalEditorDelete"
-          src={X}
-          alt="Delete"
-          onClick={() => {
-            dispatch({
-              type: DELETE_QUESTION,
-              payload: {
-                question_id: question.question_id,
-              },
-            });
-          }}
-        />
+    <div className="GlobalCustomerQuestionContainer">
+      <div className="GlobalQuestionTitle">
+        {question.question}{" "}
+        <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
       </div>
       <div className="text-box-container">
         <Input.TextArea
           placeholder="User types here..."
-          rows={3}
+          rows={5}
           className="text-box"
-        />
-      </div>
-      <div className="GlobalEditorComponentFooter">
-        {logicList[question.question_id] ? (
-          <div
-            className="GlobalEditorLogicAdded"
-            onClick={() => {
+          onBlur={(e) => {
+            if (e.target.value !== "") {
               dispatch({
-                type: TOGGLE_LOGIC,
-                payload: true,
-              });
-              dispatch({
-                type: SET_LOGIC_VIEW_QUESTION,
-                payload: question,
-              });
-            }}
-          >
-            Logic Added
-          </div>
-        ) : (
-          <div />
-        )}
-        <div className="GlobalEditorRequiredQuestion">
-          <Checkbox
-            style={{ color: "#AEAEAE", padding: 3 }}
-            checked={question.mandatory === 1}
-            onClick={(e) => {
-              dispatch({
-                type: SAVE_QUESTION,
+                type: REMOVE_SINGLE_RESPONSE,
                 payload: {
-                  ...question,
-                  mandatory: e.target.checked,
-                  question_index: question.position_index,
+                  question: question,
                 },
               });
-            }}
-          />
-          Required
-        </div>
+              dispatch({
+                type: ADD_RESPONSE,
+                payload: {
+                  id: uuid(),
+                  response: e.target.value,
+                  question: question,
+                },
+              });
+            } else {
+              dispatch({
+                type: REMOVE_SINGLE_RESPONSE,
+                payload: {
+                  question: question,
+                },
+              });
+            }
+          }}
+        />
       </div>
+      <Divider />
     </div>
   );
 }
