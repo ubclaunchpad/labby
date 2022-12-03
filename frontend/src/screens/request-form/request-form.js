@@ -59,10 +59,23 @@ function RequestForm() {
     }
   }
 
+  const progressBar = document.getElementById("progressBar");
+  const requestFormContainer = document.querySelector(".requestFormContainer");
+  if (requestFormContainer) {
+    requestFormContainer.addEventListener("scroll", () => {
+      let maxPageHeight =
+        requestFormContainer.scrollHeight - window.innerHeight;
+      progressBar.style.width = `${
+        (requestFormContainer.scrollTop/ maxPageHeight) * 100
+      }%`;
+    });
+  }
+
   if (questionList.length !== 0 && logicList.length !== 0) {
     return (
       <div className="requestFormPage">
         <div className="requestFormContainer">
+          <div id="progressBar"></div>
           <div className="formTitle" style={{ color: appColor.primaryBlack }}>
             {questionList[0].question}
           </div>
