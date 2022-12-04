@@ -25,7 +25,8 @@ export class Quote {
     }
 
     getCost(organization, answerId, result) {
-        return QuoteHelper.getAnswerCost(organization, answerId, result);
+        let helper = new QuoteHelper();
+        return helper.getAnswerCost(organization, answerId, result);
     }
 
     deleteCost(answerId, result) {

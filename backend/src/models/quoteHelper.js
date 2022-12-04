@@ -1,8 +1,8 @@
 
-export var QuoteHelper = () => {
-    const organizationCosts = new Map();
+export class QuoteHelper {
+    organizationCosts = new Map();
 
-    function addToMap(orgId, orgCosts) {
+    addToMap(orgId, orgCosts) {
       const answerCosts = new Map();
 
         for (let orgCost in orgCosts) {
@@ -10,7 +10,8 @@ export var QuoteHelper = () => {
         }
         organizationCosts.set(orgId, answerCosts);
     }
-    function getOrganizationCosts(orgId, result) {
+    
+    getOrganizationCosts(orgId, result) {
         con.query(
             "CALL load_organization_costs(?)",
             orgId,
@@ -25,7 +26,7 @@ export var QuoteHelper = () => {
         )
     }
 
-    function populateOrgCosts(orgId, result) {
+    populateOrgCosts(orgId, result) {
         if (organizationCosts.has(orgId)) {
             return;
         } else {
@@ -33,7 +34,7 @@ export var QuoteHelper = () => {
         }
     }
 
-    function getAnswerCost(orgId, answerId, result) {
+    getAnswerCost(orgId, answerId, result) {
         populateOrgCosts(orgId, result);
         orgMap = organizationCosts.get(orgId);
         if (orgMap.has(answerId)) {
