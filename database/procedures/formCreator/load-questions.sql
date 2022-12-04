@@ -75,7 +75,7 @@ END $$
 
 CREATE PROCEDURE `load_organization_costs` (IN org VARCHAR(50))
 BEGIN
-SELECT question, answer, cost
+SELECT question, answer, fk_answer_id, cost
     FROM
         questions
     

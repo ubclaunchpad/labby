@@ -35,16 +35,12 @@ export class Quote {
         });
       }
 
-    getCost(organization, answerId, result) {
-        console.log("getCost")
+    async getCost(organization, answerId) {
         let helper = new QuoteHelper();
-        console.log(organization)
-        console.log(answerId)
 
-        let answer =  helper.getAnswerCost(organization, answerId, result);
+        let result = await helper.getAnswerCost(organization, answerId);
 
-        console.log(answer)
-        return answer
+        return result;
     }
 
     deleteCost(answerId, result) {
