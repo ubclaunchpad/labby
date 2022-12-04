@@ -24,9 +24,27 @@ export class Quote {
         );
     }
 
+    loadQuote(result) {
+        con.query("CALL load_costs", (err, res) => {
+          if (err) {
+            console.log("error: ", err);
+            result(err, null);
+          } else {
+            result(null, res[0]);
+          }
+        });
+      }
+
     getCost(organization, answerId, result) {
+        console.log("getCost")
         let helper = new QuoteHelper();
-        return helper.getAnswerCost(organization, answerId, result);
+        console.log(organization)
+        console.log(answerId)
+
+        let answer =  helper.getAnswerCost(organization, answerId, result);
+
+        console.log(answer)
+        return answer
     }
 
     deleteCost(answerId, result) {

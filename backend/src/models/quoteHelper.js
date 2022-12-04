@@ -5,10 +5,13 @@ export class QuoteHelper {
     addToMap(orgId, orgCosts) {
       const answerCosts = new Map();
 
+      console.log(answerCosts);
+
         for (let orgCost in orgCosts) {
             answerCosts.set(orgCost.answer, orgCost.cost);
         }
-        organizationCosts.set(orgId, answerCosts);
+        console.log(answerCosts)
+        this.organizationCosts.set(orgId, answerCosts);
     }
     
     getOrganizationCosts(orgId, result) {
@@ -20,23 +23,29 @@ export class QuoteHelper {
                     console.log("error: ", error);
                     result(error); 
                 } else {
-                    addToMap(orgId, res)
+                    console.log(res);
+                    this.addToMap(orgId, res);
                 }
             }
         )
     }
 
     populateOrgCosts(orgId, result) {
-        if (organizationCosts.has(orgId)) {
+        console.log(this.organizationCosts.has(orgId))
+        if (this.organizationCosts.has(orgId)) {
             return;
         } else {
-            getOrganizationCosts(orgId, result);
+            this.getOrganizationCosts(orgId, result);
         }
     }
 
     getAnswerCost(orgId, answerId, result) {
-        populateOrgCosts(orgId, result);
-        orgMap = organizationCosts.get(orgId);
+        console.log("getAnswerCost")
+        this.populateOrgCosts(orgId, result);
+        console.log("populateOrgCosts")
+        orgMap = this.organizationCosts.get(orgId);
+        console.log("getAnswerCost")
+        console.log(orgMap)
         if (orgMap.has(answerId)) {
             return orgMap.get(answerId);
         } else {

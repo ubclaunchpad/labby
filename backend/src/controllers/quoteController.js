@@ -22,6 +22,19 @@ export default class QuoteController {
         });
     }
 
+    loadQuote() {
+        return new Promise((resolve, reject) => {
+          const QuoteModel = new Quote();
+    
+          QuoteModel.loadQuote((err, result) => {
+            if (err) {
+              reject({ error: err });
+            }
+            resolve(result);
+          });
+        });
+      }
+
     getQuote(req) {
         return new Promise((resolve, reject) => {
             const QuoteModel = new Quote();
@@ -29,14 +42,20 @@ export default class QuoteController {
             const organization = req.body.organization;
             let totalCost = 0;
 
-            for (let response in responses) {
-                totalCost += QuoteModel.getCost(organization, response, (err) => {
+            console.log(responses);
+
+            responses.forEach((response) => {
+                console.log(response)
+                let cost = QuoteModel.getCost(organization, response, (err, result) => {
                     if (err) {
-                        return reject({ error: err });
+                        reject({ error: err });
                     }
+                    return result;
                 });
+                console.log(cost);
+                totalCost += cost;
                 resolve(totalCost);
-            }
+            });
         
         });
     }
