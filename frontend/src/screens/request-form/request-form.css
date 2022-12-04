@@ -49,3 +49,11 @@
   transition-duration: 0.4s;
   cursor: pointer;
 }
+
+#progressBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  border-bottom: 5px solid #627bf6;
+}
