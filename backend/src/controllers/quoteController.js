@@ -24,10 +24,6 @@ export default class QuoteController {
 
     getQuote(req) {
         return new Promise((resolve, reject) => {
-            if (!req.body.answer_id ||!req.body.organization || !req.body.cost) {
-                return reject({error: "Error with request body."})
-            }
-
             const QuoteModel = new Quote();
             const responses = req.body.responses;
             const organization = req.body.organization;
