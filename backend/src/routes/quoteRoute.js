@@ -22,8 +22,7 @@ router.post("/", (req, res) => {
 });
 
 router.post("/getQuote", (req, res) => {
-    if (!req || req == undefined || req.body.length == undefined || !req.body) {
-        console.log("REQUESRT BODY HERE", req.body.length);
+    if (!req || req == undefined || !req.body) {
         res.status(400).send({
             message: "Content can not be empty!",
         });
