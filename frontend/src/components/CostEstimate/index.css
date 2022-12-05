@@ -93,3 +93,26 @@
     top: 4%;
     size: 50%;
   }
+
+  .costEstimateTable td{
+    color: #666666;
+    float: left;
+    padding: 10px;
+    width: 33.333%;
+    font-size: 10px;
+
+  }
+
+  .costEstimateTable tr{
+    width: 100%;
+  }
+
+  .costEstimateFinalCost {
+    font-size: 20px;
+    font-weight: 600;
+    color: #666666;
+    margin-bottom: 10px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+  }

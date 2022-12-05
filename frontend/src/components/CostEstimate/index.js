@@ -51,36 +51,28 @@ export const CostEstimateFull = () =>  {
         <p>Cost</p>
       </span>
 
-      <div className="costs">
-
-      <Table
-        className="table"
-        dataSource={costEstimateList}
-      />
-      {/* //printing costs */}
-
       <div>
-        {
-          costEstimateList.forEach((cost) => {
-             if (
-              formResponses.findIndex(
-                (response) =>
-                   response.question.answer_id === cost.fk_answer_id
-                   ) === -1
-              ) {
-                  return (
-                   <div className="cost">{cost.cost}</div>
-               );
-              }
-          })
-        } 
-      </div>
+      {costEstimateList.map((cost) => (
+            <p key={cost.cost_id} value={JSON.stringify(cost)}>
+              {cost.cost}
+            </p>
+          ))}
 
-      </div>
 
+      {/* <table className="costEstimateTable">
+      <tbody>
+      <tr>
+        <td>cost</td>
+        <td>xservice</td>
+        <td>$price</td>
+      </tr>
+      </tbody>
+      </table> */}
+      </div>
       <div className="CostEstimateDivider" />
       <div className="CostDivider" />
       <div className="CostEstimateTotal">Total</div>
+      <div className="costEstimateFinalCost">$amount</div>
     </div>
   );
 };

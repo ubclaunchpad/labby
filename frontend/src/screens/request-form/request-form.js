@@ -31,9 +31,19 @@ function RequestForm() {
     dispatch({ type: LOAD_QUESTION });
   }, [dispatch]);
 
+
+  //every time there is a change in a response
+  // useEffect(() => {
+  //   console.log(formResponses);
+  //   dispatch({ type: LOAD_COST });
+  // }, [formResponses]);
+
   useEffect(() => {
-    dispatch({ type: LOAD_COST });
+    console.log(formResponses);
+    dispatch( {type: LOAD_COST,
+      payload: { formResponses: formResponses }});
   }, [formResponses]);
+
 
   const costEstimateView = useSelector(
     (state) => state.costEstimateReducer.costEstimateView

@@ -17,25 +17,22 @@ const costEstimateView = (state = defaultCostEstimate, action) => {
   }
 };
 
-
 const defaultCostEstimateList = [];
 
 const costEstimateList = (state = defaultCostEstimateList, action) => {
   switch (action.type) {
     case SET_COST: {
-      console.log("set cost")
+      console.log("setting");
       var costIds = [];
       var finalCostEstimates = [];
-      action.payload.forEach((cost) => { //costEstimates.data
+      action.payload.forEach((cost) => {
         if (!costIds.includes(cost.cost_id)) {
           costIds.push(cost.cost_id);
           finalCostEstimates.push(cost);
         }
       });
+      console.log(finalCostEstimates);
       return finalCostEstimates;
-    }
-    case LOAD_COST: {
-      console.log("loading costs")
     }
     default: {
       return state;
@@ -47,35 +44,3 @@ export default combineReducers({
   costEstimateView,
   costEstimateList
 });
-
-// };
-
-// const defaultCostDataSourceData = [
-//   {
-//     key: "1",
-//     service: "Sectioning",
-//     description:
-//       "Lorem ipsum dolor sit amet, et paulo voluptatum pro, erat delenit posidonium est in. Ut iisque ornatus eam, ei ",
-//     internal: "$150",
-//     external: "$",
-//     industry: "$",
-//   },
-//   {
-//     key: "2",
-//     service: "Macrodisection",
-//     description:
-//       "Lorem ipsum dolor sit amet, et paulo voluptatum pro, erat delenit posidonium est in. Ut iisque ornatus eam, ei ",
-//     internal: "$150",
-//     external: "$",
-//     industry: "$",
-//   },
-//   {
-//     key: "3",
-//     service: "Scrolling",
-//     description:
-//       "Lorem ipsum dolor sit amet, et paulo voluptatum pro, erat delenit posidonium est in. Ut iisque ornatus eam, ei ",
-//     internal: "$150",
-//     external: "$",
-//     industry: "$",
-//   },
-// ];
