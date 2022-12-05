@@ -4,9 +4,8 @@ import "./index.css";
 import { appColor } from "../../constants";
 import MoneyGray from "../../assets/MoneyGray.png";
 import Ellipse from "../../assets/Ellipse.png";
-import { Table } from "antd";
 import X from "../../assets/X.png";
-import { SET_COST } from "../../redux/actions/costActions";
+
 
 export const CostEstimateCollapsed = () => {
   const dispatch = useDispatch();
@@ -31,7 +30,7 @@ export const CostEstimateCollapsed = () => {
 
 export const CostEstimateFull = () =>  {
   const dispatch = useDispatch();
-  const costEstimateList = useSelector((state) => state.costEstimateReducer.costEstimateList);
+  const costEstimateMap = useSelector((state) => state.costEstimateReducer.costEstimateList);
   const formResponses = useSelector((state) => state.formReducer.formResponses);
 
   return (
@@ -51,23 +50,17 @@ export const CostEstimateFull = () =>  {
         <p>Cost</p>
       </span>
 
-      <div>
-      {costEstimateList.map((cost) => (
-            <p key={cost.cost_id} value={JSON.stringify(cost)}>
-              {cost.cost}
-            </p>
-          ))}
+      <div className="CostEstimates">
+      {formResponses.map((response) => {
+        console.log(costEstimateMap.get(response.question.answer));
+        const cost = costEstimateMap.get(response.question.answer);
+        if (cost != null) {
+            return (
+              <li key={response.id}>{cost}</li>
+            );}
+          })}
 
 
-      {/* <table className="costEstimateTable">
-      <tbody>
-      <tr>
-        <td>cost</td>
-        <td>xservice</td>
-        <td>$price</td>
-      </tr>
-      </tbody>
-      </table> */}
       </div>
       <div className="CostEstimateDivider" />
       <div className="CostDivider" />

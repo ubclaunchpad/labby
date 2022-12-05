@@ -18,27 +18,23 @@ const costEstimateView = (state = defaultCostEstimate, action) => {
 };
 
 const defaultCostEstimateList = [];
+const costEstimateMap = new Map();
 
 const costEstimateList = (state = defaultCostEstimateList, action) => {
   switch (action.type) {
     case SET_COST: {
-      console.log("setting");
-      var costIds = [];
-      var finalCostEstimates = [];
-      action.payload.forEach((cost) => {
-        if (!costIds.includes(cost.cost_id)) {
-          costIds.push(cost.cost_id);
-          finalCostEstimates.push(cost);
-        }
-      });
-      console.log(finalCostEstimates);
-      return finalCostEstimates;
+      action.payload.map((cost) => (
+        costEstimateMap.set(cost.answer, cost.cost)
+      ));
+      console.log(costEstimateMap);
+      return costEstimateMap;
     }
     default: {
       return state;
     }
   }
 };
+
 
 export default combineReducers({
   costEstimateView,

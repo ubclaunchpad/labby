@@ -8,7 +8,7 @@ const axios = defaultAxios.create({
 
 export const getCosts = async () => {
     try {
-      const costs = await axios.get("quote/"); //what goes here
+      const costs = await axios.get("quote/"); 
       return costs;
 
     } catch (err) {
@@ -23,8 +23,7 @@ export const getCosts = async () => {
         responses: payload.responses
       });
   
-      const cost = await axios.post("quote/getQuote", data);
-      console.log("api");
+      const cost = await axios.post("quote/getQuote/", data);
       return cost;
     } catch (err) {
       return console.error(err);
