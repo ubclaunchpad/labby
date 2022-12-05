@@ -1,45 +1,41 @@
+import con from "../config/Database.js";
 
-export var QuoteHelper = () => {
-    const organizationCosts = new Map();
+export class QuoteHelper {
+  organizationCosts = new Map();
 
-    function addToMap(orgId, orgCosts) {
-      const answerCosts = new Map();
-
-        for (let orgCost in orgCosts) {
-            answerCosts.set(orgCost.answer, orgCost.cost);
-        }
-        organizationCosts.set(orgId, answerCosts);
-    }
-    function getOrganizationCosts(orgId, result) {
-        con.query(
-            "CALL load_organization_costs(?)",
-            orgId,
-            function (error, res) {
-                if (error) {
-                    console.log("error: ", error);
-                    result(error); 
-                } else {
-                    addToMap(orgId, res)
-                }
-            }
-        )
-    }
-
-    function populateOrgCosts(orgId, result) {
-        if (organizationCosts.has(orgId)) {
-            return;
+  async getOrganizationCosts(orgId) {
+    return new Promise((resolve, reject) => {
+      con.query("CALL load_organization_costs(?)", orgId, (error, res) => {
+        if (error) {
+          console.log("error: ", error);
+          reject(error);
         } else {
-            getOrganizationCosts(orgId, result);
+          const answerCosts = new Map();
+          res[0].forEach((cost) => {
+            answerCosts.set(cost.fk_answer_id, cost.cost);
+          });
+          resolve(answerCosts);
         }
-    }
+      });
+    });
+  }
 
-    function getAnswerCost(orgId, answerId, result) {
-        populateOrgCosts(orgId, result);
-        orgMap = organizationCosts.get(orgId);
-        if (orgMap.has(answerId)) {
-            return orgMap.get(answerId);
-        } else {
-            return 0;
-        }
+  async populateOrgCosts(orgId) {
+    if (this.organizationCosts.has(orgId)) {
+      return;
+    } else {
+      let res = await this.getOrganizationCosts(orgId);
+      this.organizationCosts.set(orgId, res);
     }
+  }
+
+  async getAnswerCost(orgId, answerId) {
+    await this.populateOrgCosts(orgId);
+    let orgMap = this.organizationCosts.get(orgId);
+    if (orgMap.has(answerId)) {
+      return orgMap.get(answerId);
+    } else {
+      return 0;
+    }
+  }
 }

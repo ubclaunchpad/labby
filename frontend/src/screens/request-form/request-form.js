@@ -18,6 +18,7 @@ import {
   CostEstimateFull,
 } from "../../components/CostEstimate";
 import { SUBMIT_FORM } from "../../redux/actions/formActions";
+import { TOGGLE_LOGIC } from "../../redux/actions/uiActions";
 
 function RequestForm() {
   const dispatch = useDispatch();
@@ -74,10 +75,23 @@ function RequestForm() {
     }
   }
 
+  const progressBar = document.getElementById("progressBar");
+  const requestFormContainer = document.querySelector(".requestFormContainer");
+  if (requestFormContainer) {
+    requestFormContainer.addEventListener("scroll", () => {
+      let maxPageHeight =
+        requestFormContainer.scrollHeight - window.innerHeight;
+      progressBar.style.width = `${
+        (requestFormContainer.scrollTop/ maxPageHeight) * 100
+      }%`;
+    });
+  }
+
   if (questionList.length !== 0 && logicList.length !== 0) {
     return (
       <div className="requestFormPage">
         <div className="requestFormContainer">
+          <div id="progressBar" style={{zIndex: 2}}></div>
           <div className="formTitle" style={{ color: appColor.primaryBlack }}>
             {questionList[0].question}
           </div>
@@ -141,8 +155,16 @@ function RequestForm() {
                   }
                 });
                 if (filled) {
-                  dispatch({ type: SUBMIT_FORM, payload: formResponses });
-                  alert("Form Submitted");
+                  if (!costEstimateView) {
+                    dispatch({ type: SUBMIT_FORM, payload: formResponses });
+                    alert("Form Submitted");
+                  } else {
+                    dispatch({
+                      type: TOGGLE_LOGIC,
+                      payload: null
+                    });
+                    alert("Please Review Your Cost Estimate and Submit!");
+                  }
                 } else {
                   alert("Please fill out all mandatory fields");
                 }

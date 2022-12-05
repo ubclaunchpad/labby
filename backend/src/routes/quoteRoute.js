@@ -21,9 +21,19 @@ router.post("/", (req, res) => {
         });
 });
 
+router.get("/", (_, res) => {
+    quoteController
+      .loadQuote()
+      .then((response) => {
+        res.status(200).json(response);
+      })
+      .catch((err) => {
+        res.status(404).json(err);
+      });
+  });
+
 router.post("/getQuote", (req, res) => {
-    if (!req || req == undefined || req.body.length == undefined || !req.body) {
-        console.log("REQUESRT BODY HERE", req.body.length);
+    if (!req || req == undefined || !req.body) {
         res.status(400).send({
             message: "Content can not be empty!",
         });

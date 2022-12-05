@@ -24,8 +24,23 @@ export class Quote {
         );
     }
 
-    getCost(organization, answerId, result) {
-        return QuoteHelper.getAnswerCost(organization, answerId, result);
+    loadQuote(result) {
+        con.query("CALL load_costs", (err, res) => {
+          if (err) {
+            console.log("error: ", err);
+            result(err, null);
+          } else {
+            result(null, res[0]);
+          }
+        });
+      }
+
+    async getCost(organization, answerId) {
+        let helper = new QuoteHelper();
+
+        let result = await helper.getAnswerCost(organization, answerId);
+
+        return result;
     }
 
     deleteCost(answerId, result) {

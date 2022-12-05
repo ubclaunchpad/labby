@@ -86,7 +86,7 @@ function Header() {
         </NavLink>
 
         <NavLink
-          to="/statistic"
+          to="/invoice"
           className={({ isActive }) =>
             isActive
               ? "header-navbar--navlink--active"

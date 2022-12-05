@@ -5,6 +5,7 @@ import EditRequest from "./screens/edit-request/edit-request";
 import RequestForm from "./screens/request-form/request-form";
 import BillingManagement from "./screens/billing-management/billing-management";
 import TicketManagement from "./screens/ticket-management/ticket-management";
+import Invoice from "./screens/invoice/invoice";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
           <Route path="/users" element={<EditRequest />} />
           <Route path="/edit-request" element={<EditRequest />} />
           <Route path="/request" element={<RequestForm />} />
-          <Route path="/statistic" element={<EditRequest />} />
+          <Route path="/invoice" element={<Invoice />} />
           <Route path="/settings" element={<EditRequest />} />
           <Route path="/tickets" element={<TicketManagement />} />
         </Routes>
