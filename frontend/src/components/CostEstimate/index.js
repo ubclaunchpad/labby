@@ -32,6 +32,7 @@ export const CostEstimateFull = () =>  {
   const dispatch = useDispatch();
   const costEstimateMap = useSelector((state) => state.costEstimateReducer.costEstimateList);
   const formResponses = useSelector((state) => state.formReducer.formResponses);
+  let costSum = 0;
 
   return (
     <div className="CostEstimateContainer" style={{ background: "#F5F5F5" }}>
@@ -52,12 +53,13 @@ export const CostEstimateFull = () =>  {
 
       <div className="CostEstimates">
       {formResponses.map((response) => {
-        console.log(costEstimateMap.get(response.question.answer));
         const cost = costEstimateMap.get(response.question.answer);
         if (cost != null) {
+          costSum += cost;
             return (
               <li key={response.id}>{cost}</li>
-            );}
+            );
+          }
           })}
 
 
@@ -65,7 +67,7 @@ export const CostEstimateFull = () =>  {
       <div className="CostEstimateDivider" />
       <div className="CostDivider" />
       <div className="CostEstimateTotal">Total</div>
-      <div className="costEstimateFinalCost">$amount</div>
+      <div className="costEstimateFinalCost">${costSum}</div>
     </div>
   );
 };
