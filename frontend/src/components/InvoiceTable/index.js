@@ -11,40 +11,41 @@ const InvoiceTable = () => {
   const columns = [
     {
       title: "SOW #",
-      dataIndex: "sow",
-      key: "sow",
-      editable: true,
+      dataIndex: "fk_sow_id",
+      key: "fk_sow_id",
+      editable: false,
     },
     {
       title: "Task",
-      dataIndex: "task",
-      key: "task",
-      editable: true,
+      dataIndex: "name",
+      key: "name",
+      editable: false,
     },
     {
       title: "Completion Date",
-      dataIndex: "date",
-      key: "date",
-      editable: true,
+      dataIndex: "completedTime",
+      key: "completedTime",
+      editable: false,
     },
     {
       title: "Project",
-      dataIndex: "project",
-      key: "project",
-      editable: true,
+      dataIndex: "billable_id",
+      key: "billable_id",
+      editable: false,
     },
     {
       title: "Bill Amount",
-      dataIndex: "amount",
-      key: "amount",
-      editable: true,
+      dataIndex: "cost",
+      key: "cost",
+      editable: false,
     }
   ];
 
   const dispatch = useDispatch();
   const dataSource = useSelector(
-    (state) => state.costReducer.costTableServices
+    (state) => state.billingReducer.billingList
   );
+  console.log(dataSource)
   const handleSave = (row) => {
     const newData = [...dataSource];
     const index = newData.findIndex((item) => row.key === item.key);
