@@ -4,20 +4,92 @@ import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_TICKET_BOARD } from "../../redux/actions/ticketActions";
 import "./index.css";
+import { clsx } from "clsx";
+import { NotificationIcon } from "../Icons/NotifcationIcon";
+import { CheckBoxIcon } from "../Icons/CheckBoxIcon";
+import { AssigneeIcon } from "../Icons/AssigneeIcon";
 
 const Task = (props) => {
+  console.log("These are the props that are passed in --->", props);
+  const getCompletedSubtasks = (subtasks = []) => {
+    console.log("there is a subtask ");
+    const totalSubtasks = subtasks?.length;
+    const completedSubtasks = subtasks
+      .map((subtask) => subtask.completed)
+      .filter(Boolean).length;
+    console.log(
+      "These are the total subtasks --->",
+      totalSubtasks,
+      completedSubtasks
+    );
+    return { totalSubtasks, completedSubtasks };
+  };
+  const subtasks = props?.task?.subtasks;
+  const { totalSubtasks, completedSubtasks } = getCompletedSubtasks(subtasks);
+  const assignees = props?.task?.assignees;
+  const isReminder = props?.task.reminder;
   return (
     <Draggable draggableId={props.task.id} index={props.index}>
       {(provided, snapshot) => (
         <div
-          className="task"
+          className="task-card-container"
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          {props.task.code}
-          <br />
-          {props.task.title}
+          <div className="task-card-color-tab" />
+          <div className="task-card-content">
+            <div className="task-card__header">
+              <div className="task-card__code">{props.task.code}</div>
+              <div
+                className={clsx(
+                  isReminder && "task-card__reminder--notify-true",
+                  !isReminder && "task-card__reminder--notify-false"
+                )}
+              >
+                <div className="task-card__notificaton-container">
+                  <NotificationIcon
+                    color={isReminder ? "#FFFFFF" : "#000000"}
+                    className="notification-icon"
+                    width={25}
+                    height={20}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="task-card__body">
+              <div className="task-card__title">{props.task.title}</div>
+            </div>
+            <div className="task-card__footer">
+              {completedSubtasks > 0 && (
+                <div className="task-card__subtasks-container">
+                  <CheckBoxIcon
+                    className={"task-card__subtask-checkbox"}
+                    checkColor={"#E4E5EA"}
+                    boxColor={"#FFFFFF"}
+                    width={14}
+                    height={14}
+                  />
+                  <div className="task-card__subtasks-completed-text">{`${completedSubtasks} / ${totalSubtasks} `}</div>
+                </div>
+              )}
+              <div className="task-card__assignees-container">
+                {assignees.map((assignee) => {
+                  const assigneeInitials = `${assignee.firstName[0].toUpperCase()}${assignee.lastName[0].toUpperCase()}`;
+                  return (
+                    <div className="task-card__assignees-container">
+                      <AssigneeIcon
+                        shapeColor={"#E4E5EA"}
+                        textColor={"black"}
+                        className="task-card__assignee-container"
+                        label={assigneeInitials}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </Draggable>

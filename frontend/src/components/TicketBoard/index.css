@@ -71,10 +71,114 @@
 .taskList{
     padding: 8px;
 }
-.task{
+.task-card-container {
+  font-family: inherit;
+  font-size: 12px;
+  color: #6F6F6F;
+  display: flex; 
+  flex-direction: row; 
     margin-bottom: 8px;
-    padding: 8px;
     border-radius: 5px;
     background-color: #fff;
-    min-height: 100px;
+    min-height: 110px;
+}
+.task-card-color-tab {
+  font-family: inherit; 
+  background: #CBD848;
+  padding: 4px;
+  border-radius: 5px 0px 0px 5px;
+}
+.task-card-content{
+  display: flex; 
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;  
+  padding: 10px;
+
+
+}
+.task-card__header {
+  display: flex;
+  flex-direction: row; 
+  justify-content:space-between;
+}
+.task-card__code{
+  font-size: 16px;
+}
+.task-card__reminder--notify-true{
+  display: flex;
+  border-radius: 5px; 
+  background-color: #E08E89;
+  align-items: center;
+  justify-content: center;
+}
+.task-card__reminder--notify-false{
+  display: flex;
+  border-radius: 5px; 
+  background-color: none;
+  align-items: center;
+  justify-content: center;
+}
+.task-card__notificaton-container{
+  display:inline-block;
+  width: 30px; 
+  height: 30px; 
+}
+.notification-icon{
+  color: black;
+  margin: 3px;
+  padding-top: 1px;
+  }
+.task-card__body{
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row; 
+}
+
+.task-card__footer{
+  display: flex; 
+  flex-direction: row;
+  justify-content: space-between;
+}
+.task-card__subtasks-container{
+  display: flex; 
+  flex-direction: row;
+  align-items: center;
+  background: #E4E5EA; 
+  padding: 5px;
+  border-radius: 5px;
+}
+.task-card__subtask-checkbox{
+  display: inline-block; 
+  height: 14px;
+  margin-right: 5px;
+}
+
+.task-card__subtasks-completed-text{
+  margin-top: 1px;
+  display: inline-block;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.task-card__assignees-container{
+  display: flex; 
+  flex-direction: row;
+
+}
+
+.task-card__assignee-container{
+  /* padding: 5px; */
+  margin-left: 5px;
+}
+.task-card__assignee-initials{
+  font-size: 10px;
+  position: relative;
+  color: black;
+
+  transform: translate(-50%, -50%);
+  top: 25%;
+  left: 25%;
+
 }

@@ -7,8 +7,17 @@ export const ticketBoardData = {
       id: "task-1",
       code: "SOW123",
       title: "This is the ticket  title",
-      assignees: [],
-      reminder: false,
+      assignees: [
+        { firstName: "Chad", lastName: "Robinson", role: "Smart lab person" },
+        { firstName: "Mitsuki", lastName: "Miyazumi", role: "Lab Assistant" },
+      ],
+      reminder: true,
+      subtasks: [
+        { id: "123", completed: true, name: "subtask 1" },
+        { id: "456", completed: false, name: "subtask 2" },
+        { id: "789", completed: true, name: "subtask 3" },
+        { id: "10", completed: true, name: "subtask 3" },
+      ],
     },
     "task-2": {
       id: "task-2",
@@ -94,4 +103,5 @@ export const ticketBoardData = {
     },
   },
   columnOrder: ["adopt-me", "todo", "in-progress", "completed"],
+  colors: { 1: "#D4D145", 2: "#CF6973" },
 };
