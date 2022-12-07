@@ -32,12 +32,13 @@ function RequestForm() {
     dispatch({ type: LOAD_QUESTION });
   }, [dispatch]);
 
-
-  //every time there is a change in a response
   // useEffect(() => {
   //   console.log(formResponses);
   //   dispatch({ type: LOAD_COST });
   // }, [formResponses]);
+
+
+
 
   useEffect(() => {
     console.log(formResponses);

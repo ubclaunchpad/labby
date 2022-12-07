@@ -30,7 +30,7 @@ export const CostEstimateCollapsed = () => {
 
 export const CostEstimateFull = () =>  {
   const dispatch = useDispatch();
-  const costEstimateMap = useSelector((state) => state.costEstimateReducer.costEstimateList);
+  const costEstimateMap= useSelector((state) => state.costEstimateReducer.costEstimateList);
   const formResponses = useSelector((state) => state.formReducer.formResponses);
   let costSum = 0;
 
@@ -51,7 +51,7 @@ export const CostEstimateFull = () =>  {
         <p>Cost</p>
       </span>
 
-      <div className="CostEstimates">
+      {/* <div className="CostEstimates">
       {formResponses.map((response) => {
         const cost = costEstimateMap.get(response.question.answer);
         if (cost != null) {
@@ -63,7 +63,50 @@ export const CostEstimateFull = () =>  {
           })}
 
 
+      </div> */}
+
+      <div className="CostEstimates">
+      {formResponses.map((response) => {
+        const cost = costEstimateMap.get(response.question.answer);
+        if (cost != null) {
+          costSum += cost;
+            return (
+              <li key={response.id}>{response.question.answer}x1{cost}</li>
+            );
+          }
+          })}
+
+
       </div>
+
+      {/* <div className="CostEstimates">
+      {formResponses.map((response) => {
+        const cost = costEstimateList.get(response.question.answer);
+        // const org = response.question.fk_organization_id;
+        if (cost != null) {
+
+          costSum += cost;
+            return (
+              <li key={response.id}>{response.question.answer}{cost}</li>);
+        // const costArray = costEstimateMap.get(response.question.answer);
+        // {costArray.map((cost) => {
+        //   if (org == cost.organization_name) {
+        
+          
+        //         /*<div class="parent_cost">
+        //           <div class="child_cost"> {response.question.answer} </div>
+        //           <div class="child_cost"> x2 </div>
+        //           <div class="child_cost"> {cost.cost} </div>
+        //         </div>
+        //         */
+        //       );
+        //     }
+      //     }
+      //   })
+      // }
+
+      // </div> */}
+    }
 
       {/* <div className="CostEstimates">
       {costEstimateMap.map((response) => {
@@ -78,6 +121,7 @@ export const CostEstimateFull = () =>  {
 
 
       </div> */}
+    
       <div className="CostEstimateDivider" />
       <div className="CostDivider" />
       <div className="CostEstimateTotal">Total</div>

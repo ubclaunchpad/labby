@@ -2,13 +2,25 @@ import { call, put, takeEvery, takeLatest, all } from "redux-saga/effects";
 import {LOAD_COST, SET_COST} from "../actions/costActions";
 import { getCosts, getCost} from "../api/costApi";
 
-export function* fetchCost() {
+export function* fetchCost({ payload }) {
+  const costs = [];
     console.log("fetching");
- 
-    const costEstimates = yield call(getCosts); //api call for all costs
-    console.log(costEstimates.data);
+    let organization = "UBC";
+  
+    if (payload.formResponses.length != 0) {
+      for (var i = 0; i < payload.formResponses.length; i++) {
+        const org = payload.formResponses[i].question.fk_organization_id;
+        if (org != null) {
+          organization = org;
+        }
+      }
+    } 
+    costs.push(organization);
 
-    yield put({ type: SET_COST, payload: costEstimates.data }); //get all costs?
+    const costEstimates = yield call(getCosts); //api call for all costs
+    costs.push(costEstimates.data);
+
+    yield put({ type: SET_COST, payload: costs }); //get all costs?
   }
 
 // export function* fetchCost({ payload }) {

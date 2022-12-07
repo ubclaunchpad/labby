@@ -20,13 +20,35 @@ const costEstimateView = (state = defaultCostEstimate, action) => {
 const defaultCostEstimateList = [];
 const costEstimateMap = new Map();
 
+// const costEstimateList = (state = defaultCostEstimateList, action) => {
+//   switch (action.type) {
+//     case SET_COST: {
+//       action.payload.map((cost) => (
+//         costEstimateMap.set(cost.answer, cost.cost)
+//       ));
+//       console.log(costEstimateMap);
+//       return costEstimateMap;
+//     }
+//     default: {
+//       return state;
+//     }
+//   }
+// };
+
 const costEstimateList = (state = defaultCostEstimateList, action) => {
   switch (action.type) {
     case SET_COST: {
-      action.payload.map((cost) => (
-        costEstimateMap.set(cost.answer, cost.cost)
-      ));
-      console.log(costEstimateMap);
+      console.log(action.payload[0]);
+      const org = action.payload[0];
+
+      action.payload[1].map((cost) => { //costEstimates.data
+        if (cost.organization_name == org) {
+          costEstimateMap.set(cost.answer, cost.cost);
+          }
+           console.log(costEstimateMap);
+           return costEstimateMap;
+        
+      });
       return costEstimateMap;
     }
     default: {
