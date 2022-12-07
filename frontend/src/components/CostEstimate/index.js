@@ -52,7 +52,7 @@ export const CostEstimateFull = () =>  {
   let costSum = 0;
 
   return (
-    <div className="CostEstimateContainer" style={{ background: "#F5F5F5" }}>
+    <div className="CostEstimateContainer" style={{ background: "#ECEDF3" }}>
       <img className="CostEstimateDelete" src={X} alt="Delete" 
                   onClick={() => {
                     dispatch({
@@ -90,6 +90,8 @@ export const CostEstimateFull = () =>  {
       <div className="CostDivider" />
       <div className="CostEstimateTotal">Total</div>
       <div className="costEstimateFinalCost">${costSum}</div>
+      <div className="Warning"> This total is an automatically generated cost estimate</div>
+
     </div>
   );
 };
