@@ -69,17 +69,20 @@ export const CostEstimateFull = () =>  {
       </span>
 
       <div className="CostEstimates">
-      {formResponses.map((response) => {
-        const cost = costEstimateMap.get(response.question.answer);
-        if (cost != null) {
-          costSum += cost;
-            return (
-              <li key={response.id}>{response.question.answer}x1{cost}</li>
-            );
-          }
+        {formResponses.map((response) => {
+          const cost = costEstimateMap.get(response.question.answer);
+          if (cost != null) {
+            costSum += cost;
+              return (
+                <div class="CostBox">
+                  <div> {response.question.answer} </div>
+                  <div> x2 </div>
+                  <div> ${cost} </div>
+                </div>
+              );
+            }
+            <div> {costSum} </div>
           })}
-
-
       </div>
 
       {/* <div className="CostEstimates">
