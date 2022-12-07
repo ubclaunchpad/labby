@@ -57,7 +57,7 @@ export const CostEstimateFull = () =>  {
         if (cost != null) {
           costSum += cost;
             return (
-              <li key={response.id}>{cost}</li>
+              <li key={response.id}>{response.question.answer}{cost}</li>
             );
           }
           })}
