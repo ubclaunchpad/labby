@@ -26,6 +26,11 @@
     border: 2px solid #D9D9D9;
 }
 
+.ant-table .ant-table-container .ant-table-content table thead.ant-table-thead .ant-table-cell {
+  background-color: #ECEDF3;
+  border-radius: 0px 0px 0 0;
+}
+
 
 .CostEstimateTotal {
     font-size: 20px;

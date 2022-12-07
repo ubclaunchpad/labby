@@ -42,7 +42,7 @@ function RequestForm() {
   useEffect(() => {
     console.log(formResponses);
     dispatch(
-      {type: LOAD_COST,
+      {type: LOAD_COST, 
       payload: {formResponses: formResponses },
     });
   }, [formResponses]);

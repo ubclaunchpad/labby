@@ -9,7 +9,7 @@ export function* fetchCost() {
     console.log(costEstimates.data);
 
     yield put({ type: SET_COST, payload: costEstimates.data }); //get all costs?
-  }
+  } 
 
 // export function* fetchCost({ payload }) {
 //   console.log(payload);

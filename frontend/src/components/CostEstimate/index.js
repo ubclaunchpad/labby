@@ -4,6 +4,7 @@ import "./index.css";
 import { appColor } from "../../constants";
 import MoneyGray from "../../assets/MoneyGray.png";
 import Ellipse from "../../assets/Ellipse.png";
+import { Table } from "antd";
 import X from "../../assets/X.png";
 
 
@@ -28,11 +29,28 @@ export const CostEstimateCollapsed = () => {
   );
 };
 
+const columns = [
+  {
+    dataIndex: "answer",
+    key: "name",
+  },
+  {
+    dataIndex: "organization_name",
+    key: "quantity",
+  },
+  {
+    dataIndex: "cost",
+    key: "$"+"cost",
+  }
+]
+
+
 export const CostEstimateFull = () =>  {
   const dispatch = useDispatch();
-  const costEstimateMap = useSelector((state) => state.costEstimateReducer.costEstimateList);
+  const costEstimateList = useSelector((state) => state.costEstimateReducer.costEstimateList);
   const formResponses = useSelector((state) => state.formReducer.formResponses);
   let costSum = 0;
+  let costEstimateArr = [];
 
   return (
     <div className="CostEstimateContainer" style={{ background: "#F5F5F5" }}>
@@ -53,23 +71,35 @@ export const CostEstimateFull = () =>  {
 
       <div className="CostEstimates">
       {formResponses.map((response) => {
-        const cost = costEstimateMap.get(response.question.answer);
-        if (cost != null) {
-          costSum += cost;
-            return (
-              <li key={response.id}>{response.question.answer}{cost}</li>
-            );
+        const org = response.question.fk_organization_id;
+        const costArray = costEstimateList;
+        costArray.forEach((cost) => {
+          if (org == cost.organization_name) {
+            if (cost.cost != null && response.question.answer == cost.answer) {
+              costSum += cost.cost;
+              costEstimateArr.push(cost);
+                return (
+                  <li key={response.id}>{response.question.answer}{cost.cost}</li>
+                );
+              }
           }
           })}
+      )}
 
-
+      <Table
+        className="table"
+        dataSource={costEstimateArr}
+        columns={columns}
+        pagination={false}
+        showHeader={costEstimateArr.length = 0 ? false : true}
+      />
       </div>
 
       {/* <div className="CostEstimates">
       {costEstimateMap.map((response) => {
         const cost = costEstimateMap.get(response.question.answer);
         if (cost != null) {
-          costSum += cost;
+          costSum += cost;  
             return (
               <li key={response.answe}>{response.question.answer}{cost}</li>
             );
