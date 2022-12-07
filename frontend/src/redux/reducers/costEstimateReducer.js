@@ -3,7 +3,7 @@ import { TOGGLE_LOGIC } from "../actions/uiActions";
 import {SET_COST, LOAD_COST} from "../actions/costActions";
 
 
-const defaultCostEstimate = true;
+const defaultCostEstimate = false;
 
 
 const costEstimateView = (state = defaultCostEstimate, action) => {
@@ -11,7 +11,7 @@ const costEstimateView = (state = defaultCostEstimate, action) => {
     case TOGGLE_LOGIC: {
       return !state;
     }
-    default: {
+    default: { 
       return state;
     }
   }

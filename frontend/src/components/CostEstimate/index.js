@@ -4,6 +4,7 @@ import "./index.css";
 import { appColor } from "../../constants";
 import MoneyGray from "../../assets/MoneyGray.png";
 import Ellipse from "../../assets/Ellipse.png";
+import { Table } from "antd";
 import X from "../../assets/X.png";
 
 
@@ -28,6 +29,22 @@ export const CostEstimateCollapsed = () => {
   );
 };
 
+const columns = [
+  {
+    dataIndex: "answer",
+    key: "name",
+  },
+  {
+    dataIndex: "organization_name",
+    key: "quantity",
+  },
+  {
+    dataIndex: "cost",
+    key: "$"+"cost",
+  }
+]
+
+
 export const CostEstimateFull = () =>  {
   const dispatch = useDispatch();
   const costEstimateMap= useSelector((state) => state.costEstimateReducer.costEstimateList);
@@ -50,20 +67,6 @@ export const CostEstimateFull = () =>  {
         <p>Quantity</p>
         <p>Cost</p>
       </span>
-
-      {/* <div className="CostEstimates">
-      {formResponses.map((response) => {
-        const cost = costEstimateMap.get(response.question.answer);
-        if (cost != null) {
-          costSum += cost;
-            return (
-              <li key={response.id}>{response.question.answer}{cost}</li>
-            );
-          }
-          })}
-
-
-      </div> */}
 
       <div className="CostEstimates">
       {formResponses.map((response) => {
@@ -112,7 +115,7 @@ export const CostEstimateFull = () =>  {
       {costEstimateMap.map((response) => {
         const cost = costEstimateMap.get(response.question.answer);
         if (cost != null) {
-          costSum += cost;
+          costSum += cost;  
             return (
               <li key={response.answe}>{response.question.answer}{cost}</li>
             );
