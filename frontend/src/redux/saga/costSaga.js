@@ -12,6 +12,7 @@ export function* fetchCost({ payload }) {
         const org = payload.formResponses[i].question.fk_organization_id;
         if (org != null) {
           organization = org;
+          break;
         }
       }
     } 
