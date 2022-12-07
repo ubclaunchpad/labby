@@ -7,6 +7,7 @@ import formReducer from "./formReducer";
 import costReducer from "./costReducer";
 import costEstimateReducer from "./costEstimateReducer";
 import ticketReducer from "./ticketReducer";
+import billingReducer from "./billingReducer";
 
 const rootReducer = combineReducers({
   questionReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   costReducer,
   costEstimateReducer,
   ticketReducer,
+  billingReducer,
 });
 
 export default rootReducer;

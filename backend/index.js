@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import questionRouter from "./src/routes/questionRoute.js";
+import billingRouter from "./src/routes/billingRoute.js";
 import logicRouter from "./src/routes/logicRoute.js";
 import answerRouter from "./src/routes/answerRoute.js";
 import quoteRouter from "./src/routes/quoteRoute.js";
@@ -20,6 +21,7 @@ app.get("/", (_, res) => {
 });
 
 app.use("/question", questionRouter);
+app.use("/billing", billingRouter);
 app.use("/logic", logicRouter);
 app.use("/answer", answerRouter);
 app.use("/quote", quoteRouter);
