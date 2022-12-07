@@ -16,16 +16,17 @@ export const getCosts = async () => {
     }
   };
 
-  export const getCost = async (payload) => {
-    try {
-      var data = JSON.stringify({
-        organization: payload.organization,
-        responses: payload.responses
-      });
+  //single quote
+  // export const getCost = async (payload) => {
+  //   try {
+  //     var data = JSON.stringify({
+  //       organization: payload.organization,
+  //       responses: payload.responses,
+  //     });
   
-      const cost = await axios.post("quote/getQuote/", data);
-      return cost;
-    } catch (err) {
-      return console.error(err);
-    }
-  };
+  //     const cost = await axios.post("quote/getQuote/", data);
+  //     return cost;
+  //   } catch (err) {
+  //     return console.error(err);
+  //   }
+  // };

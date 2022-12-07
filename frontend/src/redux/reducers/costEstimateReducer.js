@@ -36,6 +36,18 @@ const costEstimateList = (state = defaultCostEstimateList, action) => {
 };
 
 
+// const costEstimateList = (state = defaultCostEstimateList, action) => {
+//   switch (action.type) {
+//     case SET_COST: {
+//       return action.payload;
+//     }
+//     default: {
+//       return state;
+//     }
+//   }
+// };
+
+
 export default combineReducers({
   costEstimateView,
   costEstimateList

@@ -64,6 +64,20 @@ export const CostEstimateFull = () =>  {
 
 
       </div>
+
+      {/* <div className="CostEstimates">
+      {costEstimateMap.map((response) => {
+        const cost = costEstimateMap.get(response.question.answer);
+        if (cost != null) {
+          costSum += cost;
+            return (
+              <li key={response.answe}>{response.question.answer}{cost}</li>
+            );
+          }
+          })}
+
+
+      </div> */}
       <div className="CostEstimateDivider" />
       <div className="CostDivider" />
       <div className="CostEstimateTotal">Total</div>
