@@ -116,3 +116,7 @@
     bottom: 20px;
     right: 20px;
   }
+
+  .CostEstimates li {
+    color: #666666;
+  }
