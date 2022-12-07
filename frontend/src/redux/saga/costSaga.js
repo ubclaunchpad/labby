@@ -12,15 +12,16 @@ export function* fetchCost({ payload }) {
         const org = payload.formResponses[i].question.fk_organization_id;
         if (org != null) {
           organization = org;
+          break;
         }
       }
     } 
     costs.push(organization);
 
-    const costEstimates = yield call(getCosts); //api call for all costs
+    const costEstimates = yield call(getCosts); 
     costs.push(costEstimates.data);
 
-    yield put({ type: SET_COST, payload: costs }); //get all costs?
+    yield put({ type: SET_COST, payload: costs }); 
   }
 
 // export function* fetchCost({ payload }) {
@@ -46,47 +47,9 @@ export function* fetchCost({ payload }) {
 //   console.log(fetchCost);
 //   yield put({ type: SET_COST, payload: fetchCost });
 //   }
-
-  
-//   export default function* costSaga() {
-//     yield takeEvery(LOAD_COST, fetchCost);
-//   }
-
-//   export function* fetchCost({ payload }) {
-//     console.log(payload);
-  
-//     let org = "ubc";
-  
-//     if (payload.formResponses.length != 0) {
-//       org = payload.formResponses[0].question.fk_organization_id;
-//     } 
-
-//     const costEstimates = yield call(getCosts); //api call for all costs
-//     console.log(costEstimates.data);
-  
-//       payload.formResponses.map((response) => {
-//         costEstimates.data.forEach((cost) => {
-//           if (response.response ==)
-//         });
-//       });
-//     console.log(org);
-//     console.log(fetchCost);
-//     yield put({ type: SET_COST, payload: fetchCost });
-//     }
   
     
     export default function* costSaga() {
       yield takeEvery(LOAD_COST, fetchCost);
     }
 
-  // yield all(
-  // payload.formResponses.forEach(response => {
-  //   // CostEstimateList.push(response.question.answer_id);
-  //   const responseBody = {
-  //     organization: org,
-  //     responses: response.question.answer_id,
-  //   };
-  //   const costEstimates = call(getCost, responseBody);
-  //   costEstimateMap.set(response.question.answer, costEstimates.data);
-  // })
-  // );
