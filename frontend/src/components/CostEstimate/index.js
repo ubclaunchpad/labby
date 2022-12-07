@@ -75,26 +75,15 @@ export const CostEstimateFull = () =>  {
             costSum += cost;
               return (
                 <div class="CostBox">
-                  <div> {response.question.answer} </div>
-                  <div> x2 </div>
-                  <div> ${cost} </div>
+                  <div class="CostLeft"> {response.question.answer} </div>
+                  <div class="CostCenter"> x2 </div>
+                  <div class="CostRight"> ${cost} </div>
                 </div>
               );
             }
             <div> {costSum} </div>
           })}
       </div>
-
-      {/* <div className="CostEstimates">
-          
-        //         /*<div class="parent_cost">
-        //           <div class="child_cost"> {response.question.answer} </div>
-        //           <div class="child_cost"> x2 </div>
-        //           <div class="child_cost"> {cost.cost} </div>
-        //         </div>
-
-
-      // </div> */}
 
     
       <div className="CostEstimateDivider" />

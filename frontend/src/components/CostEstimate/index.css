@@ -26,17 +26,6 @@
     border: 2px solid #D9D9D9;
 }
 
-.CostBox {
-  background-color: #FCFCFC;
-  border-radius: 15px;
-  padding: 25px;
-  margin-top: 10px;
-  display:flex; 
-  justify-content: space-between;
-  font-size: 15px;
-}
-
-
 .CostEstimateTotal {
     font-size: 20px;
     font-weight: 600;
@@ -131,4 +120,42 @@
   .CostEstimates{
     color: black;
     margin-top: 70px;
+  }
+
+  .CostBox {
+    background-color: #FCFCFC;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 10px;
+    display:flex; 
+    justify-content: space-between;
+    font-size: 15px;
+  }
+
+  .CostBox {
+    background-color: #FCFCFC;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 10px;
+    font-size: 15px;
+    display:flex; 
+   
+  }
+
+  .CostLeft {
+    flex: 1.4;
+    text-align: left;
+  }
+  .CostCenter {
+    flex: 1;
+    text-align: left;
+    display: flex;
+    align-items: center;
+  }
+  .CostRight{
+    flex:  0.3;
+    margin-right: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: right;
   }
