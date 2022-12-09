@@ -74,6 +74,7 @@ export const CostEstimateFull = () =>  {
       <div className="CostDivider" />
       <div className="CostEstimateTotal">Total</div>
       <div className="costEstimateFinalCost">${costSum}</div>
+      <div className="Warning"> This total is an automatically generated cost estimate</div>
     </div>
   );
 };
