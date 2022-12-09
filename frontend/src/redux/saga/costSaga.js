@@ -23,30 +23,6 @@ export function* fetchCost({ payload }) {
 
     yield put({ type: SET_COST, payload: costs }); 
   }
-
-// export function* fetchCost({ payload }) {
-//   console.log(payload);
-
-//   let org = "ubc";
-
-//   if (payload.formResponses.length != 0) {
-//     org = payload.formResponses[0].question.fk_organization_id;
-//   } 
-
-//   yield all(
-//     payload.formResponses.map((response) => {
-//       const answer = response.question.answer;
-//       const responseBody = {
-//               organization: org,
-//               responses: response.question.answer_id,
-//             };
-//       return call(getCost, responseBody);
-//     })
-//   );
-//   console.log(org);
-//   console.log(fetchCost);
-//   yield put({ type: SET_COST, payload: fetchCost });
-//   }
   
     
     export default function* costSaga() {

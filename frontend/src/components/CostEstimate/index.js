@@ -4,7 +4,6 @@ import "./index.css";
 import { appColor } from "../../constants";
 import MoneyGray from "../../assets/MoneyGray.png";
 import Ellipse from "../../assets/Ellipse.png";
-import { Table } from "antd";
 import X from "../../assets/X.png";
 
 
@@ -29,21 +28,6 @@ export const CostEstimateCollapsed = () => {
   );
 };
 
-const columns = [
-  {
-    dataIndex: "answer",
-    key: "name",
-  },
-  {
-    dataIndex: "organization_name",
-    key: "quantity",
-  },
-  {
-    dataIndex: "cost",
-    key: "$"+"cost",
-  }
-]
-
 
 export const CostEstimateFull = () =>  {
   const dispatch = useDispatch();
@@ -52,7 +36,7 @@ export const CostEstimateFull = () =>  {
   let costSum = 0;
 
   return (
-    <div className="CostEstimateContainer" style={{ background: "#ECEDF3" }}>
+    <div className="CostEstimateContainer" style={{ background: "#F5F5F5" }}>
       <img className="CostEstimateDelete" src={X} alt="Delete" 
                   onClick={() => {
                     dispatch({
@@ -74,7 +58,7 @@ export const CostEstimateFull = () =>  {
           if (cost != null) {
             costSum += cost;
               return (
-                <div class="CostBox">
+                <div class="CostBox" >
                   <div class="CostLeft"> {response.question.answer} </div>
                   <div class="CostCenter"> x2 </div>
                   <div class="CostRight"> ${cost} </div>
@@ -90,8 +74,6 @@ export const CostEstimateFull = () =>  {
       <div className="CostDivider" />
       <div className="CostEstimateTotal">Total</div>
       <div className="costEstimateFinalCost">${costSum}</div>
-      <div className="Warning"> This total is an automatically generated cost estimate</div>
-
     </div>
   );
 };
