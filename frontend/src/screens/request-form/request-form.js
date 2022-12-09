@@ -32,14 +32,6 @@ function RequestForm() {
     dispatch({ type: LOAD_QUESTION });
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   console.log(formResponses);
-  //   dispatch({ type: LOAD_COST });
-  // }, [formResponses]);
-
-
-
-
   useEffect(() => {
     console.log(formResponses);
     dispatch(
