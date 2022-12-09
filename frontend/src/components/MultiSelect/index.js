@@ -13,6 +13,8 @@ function MultiSelect({ question }) {
   const dispatch = useDispatch();
   const [options, setOptions] = useState([]);
   const answerList = useSelector((state) => state.questionReducer.answerList);
+  const [selectedAnswers, setSelectedAnswers] = useState([]);
+  const [quantityMap, setQuantityMap] = useState({});
 
   useEffect(() => {
     var optionList = answerList[question.question_id ?? ""] ?? [];
@@ -32,6 +34,21 @@ function MultiSelect({ question }) {
     setOptions(optionList);
   }, [answerList, question]);
 
+  function parseQuantity(quantity) {
+    let numbers = quantity.match(/\d+/g);
+    if (numbers === null) {
+      return [1, `1 unit`];
+    }
+    if (numbers.length === 1) {
+      return [parseInt(numbers[0]), `${parseInt(numbers[0])} units`];
+    }
+    let multiplied = parseInt(numbers[0]) * parseInt(numbers[1]);
+    return [
+      multiplied,
+      `${parseInt(numbers[0])} X ${parseInt(numbers[1])} = ${multiplied} units`,
+    ];
+  }
+
   return (
     <div className="GlobalCustomerQuestionContainer">
       <div className="GlobalQuestionTitle">
@@ -43,34 +60,73 @@ function MultiSelect({ question }) {
         <FormControl style={{ width: "100%" }}>
           {options.map((option, index) => {
             return (
-              <div className="single-select-option" key={index}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      onClick={(e) => {
-                        if (e.target.checked) {
-                          dispatch({
-                            type: ADD_RESPONSE,
-                            payload: {
-                              id: uuid(),
-                              response: option.answer_id,
-                              question: option,
-                            },
-                          });
-                        } else {
-                          dispatch({
-                            type: REMOVE_RESPONSE,
-                            payload: {
-                              response: option.answer_id,
-                              question: option,
-                            },
-                          });
-                        }
+              <div className="selectionBox" key={index}>
+                <div className="single-select-option">
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        onClick={(e) => {
+                          if (e.target.checked) {
+                            dispatch({
+                              type: ADD_RESPONSE,
+                              payload: {
+                                id: uuid(),
+                                response: option.answer_id,
+                                question: option,
+                              },
+                            });
+                            setSelectedAnswers([
+                              ...selectedAnswers,
+                              option.answer_id,
+                            ]);
+                          } else {
+                            dispatch({
+                              type: REMOVE_RESPONSE,
+                              payload: {
+                                response: option.answer_id,
+                                question: option,
+                              },
+                            });
+                            setSelectedAnswers(
+                              selectedAnswers.filter(
+                                (answer) => answer !== option.answer_id
+                              )
+                            );
+                          }
+                        }}
+                      />
+                    }
+                  />
+                  <div className="new-question-input">{option.answer}</div>
+                </div>
+                {selectedAnswers.includes(option.answer_id) ? (
+                  <div className="quantityBox">
+                    <input
+                      className="quantityInput"
+                      onBlur={(e) => {
+                        let quantity = parseQuantity(e.target.value);
+                        setQuantityMap({
+                          ...quantityMap,
+                          [option.answer_id]: quantity,
+                        });
+                        dispatch({
+                          type: ADD_RESPONSE,
+                          payload: {
+                            id: uuid(),
+                            response: option.answer_id,
+                            question: option,
+                            quantity: quantity[0],
+                          },
+                        });
                       }}
                     />
-                  }
-                />
-                <div className="new-question-input">{option.answer}</div>
+                    <div>
+                      {quantityMap[option.answer_id]
+                        ? quantityMap[option.answer_id][1]
+                        : ""}
+                    </div>
+                  </div>
+                ) : null}
               </div>
             );
           })}

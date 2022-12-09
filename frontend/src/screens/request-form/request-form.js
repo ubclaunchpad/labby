@@ -38,7 +38,7 @@ function RequestForm() {
       {type: LOAD_COST, 
       payload: {formResponses: formResponses },
     });
-  }, [formResponses]);
+  }, [dispatch, formResponses]);
 
 
   const costEstimateView = useSelector(

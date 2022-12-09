@@ -6,6 +6,25 @@
     align-self: right;
 }
 
+.selectionBox {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.quantityBox {
+    display: flex;
+    flex-direction: row;
+    width: 75%;
+    align-items: center;
+}
+
+.quantityInput {
+    width: 50%;
+    margin-right: 10px;
+    margin-left: 50px;
+}
+
 .single-select-option{
     display: flex; 
     align-items: center; 
