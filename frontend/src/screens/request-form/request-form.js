@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./request-form.css";
 import { appColor } from "../../constants";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
+import {LOAD_COST} from "../../redux/actions/costActions";
 import MultiSelect from "../../components/MultiSelect";
 import SingleSelect from "../../components/SingleSelect";
 import TextAnswer from "../../components/TextAnswer";
@@ -30,6 +31,15 @@ function RequestForm() {
   useEffect(() => {
     dispatch({ type: LOAD_QUESTION });
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log(formResponses);
+    dispatch(
+      {type: LOAD_COST, 
+      payload: {formResponses: formResponses },
+    });
+  }, [formResponses]);
+
 
   const costEstimateView = useSelector(
     (state) => state.costEstimateReducer.costEstimateView
@@ -166,7 +176,7 @@ function RequestForm() {
             {costEstimateView ? (
               <CostEstimateCollapsed />
             ) : (
-              <CostEstimateFull />
+              <CostEstimateFull/>
             )}
             </div>
       </div>

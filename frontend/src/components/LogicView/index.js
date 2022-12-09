@@ -50,12 +50,12 @@ function LogicView() {
                     src={SideArrow}
                     alt="Side Arrow"
                   />
-                  <div className="LogicText">{answerObj.question}</div>
+                  {/* <div className="LogicText">{answerObj.question}</div>
                   <img
                     className="LogicArrow"
                     src={SideArrow}
                     alt="Side Arrow"
-                  />
+                  /> */}
                   <div className="LogicText">{answerObj.answer}</div>
                   <img
                     className="LogicArrow"
