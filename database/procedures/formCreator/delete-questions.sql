@@ -1,5 +1,6 @@
 USE `labby`;
  
+DROP procedure IF EXISTS `delete_form`;
 DROP procedure IF EXISTS `delete_question`;
 DROP procedure IF EXISTS `delete_answer`;
 DROP procedure IF EXISTS `delete_cost`;
@@ -9,7 +10,13 @@ DROP procedure IF EXISTS `delete_condition`;
  
 DELIMITER $$
 
--- look into cascade delete
+CREATE PROCEDURE `delete_form`  (
+    IN id VARCHAR(50)
+)
+BEGIN
+    DELETE FROM forms WHERE form_id = id;
+END $$
+
 CREATE PROCEDURE `delete_question`  (
     IN id VARCHAR(50)
 )

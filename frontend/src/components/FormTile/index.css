@@ -1,0 +1,15 @@
+.formPageItem {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    background-color: aqua;
+    width: 20vw;
+}
+
+.formPageItemTitle {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+    padding-top: 22px;
+    padding-bottom: 5px;
+}
