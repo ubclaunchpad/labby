@@ -12,6 +12,7 @@ import {
   ADD_PHONE_RESPONSE,
   REMOVE_PHONE_RESPONSE,
   REMOVE_SINGLE_RESPONSE,
+  SET_FORMS,
 } from "../actions/formActions";
 
 const defaultQuestionlist = {
@@ -25,7 +26,7 @@ const defaultQuestionlist = {
   download: [],
   contact: [],
 };
-
+const defaultFormList = [];
 const defaultAnswerList = [];
 
 const formQuestions = (state = defaultQuestionlist, action) => {
@@ -144,4 +145,15 @@ const formResponses = (state = defaultAnswerList, action) => {
   }
 };
 
-export default combineReducers({ formQuestions, formResponses });
+const formList = (state = defaultFormList, action) => {
+  switch (action.type) {
+    case SET_FORMS: {
+      return action.payload;
+    }
+    default: {
+      return state;
+    }
+  }
+}
+
+export default combineReducers({ formQuestions, formResponses, formList });

@@ -12,7 +12,6 @@
   display: flex;
   flex: 1;
   flex-wrap: wrap;
-  background-color: green;
   justify-content: space-between;
 }
 .formPageTitle {

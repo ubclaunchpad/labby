@@ -1,5 +1,5 @@
 import { Router } from "express";
-import FormController from "../controllers/formController";
+import FormController from "../controllers/formController.js";
 
 const router = Router();
 const formController = new FormController();
