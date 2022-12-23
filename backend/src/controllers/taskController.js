@@ -23,6 +23,7 @@ export default class TaskController {
         if (err) {
           reject({ error: err });
         }
+        this.isTaskLoaded = false;
         resolve(result);
       });
     });
@@ -44,12 +45,38 @@ export default class TaskController {
         if (err) {
           reject({ error: err });
         }
+        this.isTaskLoaded = false;
         resolve(result);
       });
     });
   }
 
-  loadSubtasks() {
+  loadTasks() {
+    // added
+    return new Promise((resolve, reject) => {
+      const TaskModel = new Task();
+      TaskModel.loadTasks((err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+
+  loadTasks(state) {
+    return new Promise((resolve, reject) => {
+      const TaskModel = new Task();
+      TaskModel.loadtasks(state, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+
+  loadAllSubtasks() {
     const TaskModel = new Task();
     TaskModel.loadSubtasks((err, result) => {
       if (err) {
@@ -70,17 +97,48 @@ export default class TaskController {
     });
   }
 
-  async loadSubtask(taskId, result) {
-    if (!this.loadedSubtask) {
-      loadSubtasks();
-      populateTaskMap(result);
+  async loadSubtasks(taskId) {
+    if (!this.isTaskLoaded) {
+      try {
+        await loadAllSubtasks();
+      } catch (err) {
+        console.log(err);
+        return;
+      }
+      this.isTaskLoaded = true;
     }
-    if (this.tasks.has(taskId)) {
-      return this.tasks.get(taskId);
+    if (this.tasksMap.has(taskId)) {
+      return this.tasksMap.get(taskId);
     } else {
       return [];
     }
   }
 
-  populateTaskMap(result) {}
+  populateTaskMap(result) {} // why is this an empty function?
+
+  deleteTask(id) {
+    return new Promise((resolve, reject) => {
+      const TaskModel = new Task();
+      TaskModel.deleteTask(id, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        this.isTaskLoaded = false;
+        resolve(result);
+      });
+    });
+  }
+
+  deleteSubtask(id) {
+    return new Promise((resolve, reject) => {
+      const TaskModel = new Task();
+      TaskModel.deleteSubtask(id, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        this.isTaskLoaded = false;
+        resolve(result);
+      });
+    });
+  }
 }

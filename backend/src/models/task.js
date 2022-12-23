@@ -1,3 +1,4 @@
+import e from "express";
 import con from "../config/Database.js";
 // import { QuoteHelper } from "./quoteHelper.js";
 
@@ -70,6 +71,17 @@ export class Task {
     });
   }
 
+  loadTasks(state, result) {
+    con.query("CALL load_tasks_state(?)", state, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res[0]);
+      }
+    });
+  }
+
   async getTask() {
     let helper = new QuoteHelper();
 
@@ -78,14 +90,27 @@ export class Task {
     return result;
   }
 
-  deleteCost(answerId, result) {
-    con.query("CALL delete_cost(?)", answerId, function (error, results) {
+  deleteTask(taskId, result) {
+    con.query("CALL delete_task(?)", taskId, function (error, results) {
       if (error) {
         console.log("error: ", error);
         result(error, null);
       } else {
         result(null, {
-          result: `Cost for Answer ${answerId} Deleted Successfully, Deleted ID: ${results.cost_id}`,
+          result: `Task ${taskId} Deleted Successfully. Deleted ID: ${results.task_id}`,
+        });
+      }
+    });
+  }
+
+  deleteSubtask(subtaskId, result) {
+    con.query("CALL delete_subtask(?)", subtaskId, function (error, results) {
+      if (error) {
+        console.log("error: ", error);
+        result(error, null);
+      } else {
+        result(null, {
+          result: `Subtask ${subtaskId} Deleted Successfully. Deleted ID: ${results.subtask_id}`,
         });
       }
     });
