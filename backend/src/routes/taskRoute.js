@@ -60,7 +60,7 @@ router.get("/subtasks", (_, res) => {
     });
 });
 
-router.get("/:subtaskId", (_, res) => {
+router.get("subtask/:subtaskId", (_, res) => {
   taskController
     .loadSubtasks(req.params.subtaskId)
     .then((response) => {
@@ -82,7 +82,7 @@ router.delete("/:taskId", (req, res) => {
     });
 });
 
-router.delete("/:subtaskId", (req, res) => {
+router.delete("subtask/:subtaskId", (req, res) => {
   questionController
     .deleteSubtask(req.params.subtaskId)
     .then((response) => {
