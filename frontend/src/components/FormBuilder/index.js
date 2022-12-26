@@ -65,6 +65,7 @@ function FormBuilder() {
   const selectedQuestion = useSelector(
     (state) => state.logicReducer.currentLogicQuestion
   );
+  const formId = window.location.pathname.split("/")[2];
 
   return (
     <div>
@@ -78,7 +79,7 @@ function FormBuilder() {
         <div className="FormTitle">
           {FormTitle()}
           <div className="FormPreview">
-            <NavLink to="/request">
+            <NavLink to={`/request/${formId}`}>
               <button
                 className="FormPreviewButton"
                 style={{

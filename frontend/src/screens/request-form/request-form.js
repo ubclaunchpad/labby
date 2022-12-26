@@ -27,10 +27,11 @@ function RequestForm() {
   );
   const formResponses = useSelector((state) => state.formReducer.formResponses);
   const logicList = useSelector((state) => state.logicReducer.logicList);
+  const formId = window.location.pathname.split("/")[2];
 
   useEffect(() => {
-    dispatch({ type: LOAD_QUESTION });
-  }, [dispatch]);
+    dispatch({ type: LOAD_QUESTION, payload: formId });
+  }, [dispatch, formId]);
 
   useEffect(() => {
     console.log(formResponses);

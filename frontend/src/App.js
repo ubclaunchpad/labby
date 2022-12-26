@@ -13,11 +13,12 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<EditRequest />} />
+          <Route path="/" element={<TicketManagement />} />
+          <Route path="/edit-form/:formId" element={<EditRequest />} />
           <Route path="/billing" element={<BillingManagement />} />
           <Route path="/users" element={<EditRequest />} />
           <Route path="/edit-request" element={<FormLibrary />} />
-          <Route path="/request" element={<RequestForm />} />
+          <Route path="/request/:formId" element={<RequestForm />} />
           <Route path="/invoice" element={<Invoice />} />
           <Route path="/settings" element={<EditRequest />} />
           <Route path="/tickets" element={<TicketManagement />} />

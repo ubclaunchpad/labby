@@ -155,6 +155,7 @@ function LogicLibrary() {
                     condition_type: 2,
                     parameters: true,
                     result: true,
+                    form_id: selectedQuestion.form_id,
                   },
                 });
               });

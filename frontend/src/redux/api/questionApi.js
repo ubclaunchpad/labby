@@ -6,10 +6,15 @@ const axios = defaultAxios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-export const getQuestions = async () => {
+export const getQuestions = async (payload) => {
   try {
-    const questions = await axios.get("question/");
+    if (payload) {
+      const formId = payload;
+      const questions = await axios.get(`question/${formId}`);
+      return questions;
+    }
 
+    const questions = await axios.get("question/");
     return questions;
   } catch (err) {
     return console.error(err);
@@ -20,6 +25,7 @@ export const saveQuestions = async (payload) => {
   try {
     var data = JSON.stringify({
       question_id: payload.question_id,
+      form_id: payload.form_id,
       question_title: payload.question_title,
       question_type: payload.question_type,
       question_index: payload.question_index,

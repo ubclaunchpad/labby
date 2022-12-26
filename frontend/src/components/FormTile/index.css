@@ -5,6 +5,7 @@
     height: 250px;
     border-radius: 15px;
     width: 21vw;
+    cursor: pointer;
 }
 
 .formPageFill {
@@ -24,6 +25,7 @@
     border-radius: 15px;
     width: 21vw;
     border: 2px dashed #C3C3C3;
+    cursor: pointer;
 }
 
 .AddImage {
