@@ -1,6 +1,4 @@
-import e from "express";
 import con from "../config/Database.js";
-// import { QuoteHelper } from "./quoteHelper.js";
 
 export class Task {
   tasks = new Map();
@@ -71,7 +69,7 @@ export class Task {
     });
   }
 
-  loadTasks(state, result) {
+  loadTasksWithSearch(state, result) {
     con.query("CALL load_tasks_state(?)", state, (err, res) => {
       if (err) {
         console.log("error: ", err);

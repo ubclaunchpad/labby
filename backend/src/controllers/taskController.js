@@ -1,4 +1,5 @@
-import { Task } from "../models/quote.js";
+import { Task } from "../models/task.js";
+
 export default class TaskController {
   tasksMap = new Map();
   isTaskLoaded = false;
@@ -64,10 +65,11 @@ export default class TaskController {
     });
   }
 
-  loadTasks(state) {
+  loadTasksWithSearch(req) {
+    let state = req.body.state;
     return new Promise((resolve, reject) => {
       const TaskModel = new Task();
-      TaskModel.loadtasks(state, (err, result) => {
+      TaskModel.loadTasksWithSearch(state, (err, result) => {
         if (err) {
           reject({ error: err });
         }
