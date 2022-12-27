@@ -85,11 +85,12 @@ function DropdownEditor({ question }) {
               type: SAVE_QUESTION,
               payload: {
                 ...question,
+                form_id: question.fk_form_id,
                 question_title: text.target.value,
                 question_index: question.position_index,
               },
             });
-            dispatch({ type: LOAD_QUESTION });
+            dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
           }}
         />
         <img
@@ -101,6 +102,7 @@ function DropdownEditor({ question }) {
               if (questionObj.position_index >= question.position_index) {
                 questionObj.question_index = questionObj.position_index - 1;
                 questionObj.question_title = questionObj.question;
+                questionObj.form_id = questionObj.fk_form_id;
                 dispatch({ type: SAVE_QUESTION, payload: questionObj });
               }
             });
@@ -110,7 +112,7 @@ function DropdownEditor({ question }) {
                 question_id: question.question_id,
               },
             });
-            dispatch({ type: LOAD_QUESTION });
+            dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
           }}
         />
       </div>
@@ -142,6 +144,7 @@ function DropdownEditor({ question }) {
                             fk_question_id: question.question_id,
                             question_type: question.question_type,
                             answer: answerVal,
+                            form_id: question.fk_form_id,
                           },
                         });
                       } else {
@@ -149,6 +152,7 @@ function DropdownEditor({ question }) {
                           type: DELETE_ANSWER,
                           payload: {
                             answer_id: option.answer_id,
+                            form_id: question.fk_form_id,
                           },
                         });
                       }
@@ -197,12 +201,13 @@ function DropdownEditor({ question }) {
                 type: SAVE_QUESTION,
                 payload: {
                   ...question,
+                  form_id: question.fk_form_id,
                   question_title: question.question,
                   mandatory: e.target.checked,
                   question_index: question.position_index,
                 },
               });
-              dispatch({ type: LOAD_QUESTION });
+              dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
             }}
           />
           Required

@@ -1,8 +1,8 @@
 import { Router } from "express";
-import QuestionController from "../controllers/questionController.js";
+import FormController from "../controllers/formController.js";
 
 const router = Router();
-const questionController = new QuestionController();
+const formController = new FormController();
 
 router.post("/", (req, res) => {
   if (!req.body) {
@@ -11,8 +11,8 @@ router.post("/", (req, res) => {
     });
     return;
   }
-  questionController
-    .saveQuestion(req)
+  formController
+    .saveForm(req)
     .then((response) => {
       res.status(200).json(response);
     })
@@ -22,8 +22,8 @@ router.post("/", (req, res) => {
 });
 
 router.get("/", (_, res) => {
-  questionController
-    .loadQuestion()
+  formController
+    .loadForm()
     .then((response) => {
       res.status(200).json(response);
     })
@@ -32,20 +32,9 @@ router.get("/", (_, res) => {
     });
 });
 
-router.get("/:formId", (req, res) => {
-  questionController
-    .loadQuestionByForm(req.params.formId)
-    .then((response) => {
-      res.status(200).json(response);
-    })
-    .catch((err) => {
-      res.status(404).json(err);
-    });
-});
-
-router.delete("/:questionId", (req, res) => {
-  questionController
-    .deleteQuestion(req.params.questionId)
+router.delete("/:formId", (req, res) => {
+  formController
+    .deleteForm(req.params.formId)
     .then((response) => {
       res.status(200).json(response);
     })

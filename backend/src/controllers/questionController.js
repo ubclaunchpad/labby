@@ -7,6 +7,7 @@ export default class QuestionController {
 
       const question = {
         question_id: req.body.question_id,
+        form_id: req.body.form_id,
         question_title: req.body.question_title,
         question_type: req.body.question_type,
         question_index: req.body.question_index,
@@ -27,6 +28,19 @@ export default class QuestionController {
       const QuestionModel = new Question();
 
       QuestionModel.loadQuestion((err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+
+  loadQuestionByForm(formId) {
+    return new Promise((resolve, reject) => {
+      const QuestionModel = new Question();
+
+      QuestionModel.loadQuestionByForm(formId, (err, result) => {
         if (err) {
           reject({ error: err });
         }

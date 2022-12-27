@@ -1,9 +1,11 @@
 -- The following is a sample set of commands to populate the database with data
 use labby;
 
+-- Populate the form
+CALL save_form('SAMPLE-FORM-1', 'Sample Form');
 
 -- Populate the form title
-CALL save_question('RANDOM-ID-A','My Sample Form','heading', 0, false);
+CALL save_question('RANDOM-ID-A','SAMPLE-FORM-1','My Sample Form','heading', 0, false);
 
 -- Populate some sample questions
 CALL save_question('RANDOM-ID-B','Request Type','multi', 1, false);

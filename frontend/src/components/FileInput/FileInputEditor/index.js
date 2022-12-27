@@ -64,11 +64,12 @@ function FileInputEditor({ question }) {
               type: SAVE_QUESTION,
               payload: {
                 ...question,
+                form_id: question.fk_form_id,
                 question_title: text.target.value,
                 question_index: question.position_index,
               },
             });
-            dispatch({ type: LOAD_QUESTION });
+            dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
           }}
         />
         <img
@@ -80,6 +81,7 @@ function FileInputEditor({ question }) {
               if (questionObj.position_index >= question.position_index) {
                 questionObj.question_index = questionObj.position_index - 1;
                 questionObj.question_title = questionObj.question;
+                questionObj.form_id = questionObj.fk_form_id;
                 dispatch({ type: SAVE_QUESTION, payload: questionObj });
               }
             });
@@ -89,7 +91,7 @@ function FileInputEditor({ question }) {
                 question_id: question.question_id,
               },
             });
-            dispatch({ type: LOAD_QUESTION });
+            dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
           }}
         />
       </div>
@@ -133,12 +135,13 @@ function FileInputEditor({ question }) {
                 type: SAVE_QUESTION,
                 payload: {
                   ...question,
+                  form_id: question.fk_form_id,
                   question_title: question.question,
                   mandatory: e.target.checked,
                   question_index: question.position_index,
                 },
               });
-              dispatch({ type: LOAD_QUESTION });
+              dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
             }}
           />
           Required

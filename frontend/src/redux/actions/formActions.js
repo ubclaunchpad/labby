@@ -13,3 +13,8 @@ export const ADD_PHONE_RESPONSE = "ADD_PHONE_RESPONSE";
 export const REMOVE_PHONE_RESPONSE = "REMOVE_PHONE_RESPONSE";
 
 export const SUBMIT_FORM = "SUBMIT_FORM";
+
+export const SAVE_FORM = "SAVE_FORM";
+export const LOAD_FORMS = "LOAD_FORMS";
+export const SET_FORMS = "SET_FORMS";
+export const DELETE_FORM = "DELETE_FORM";

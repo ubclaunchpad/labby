@@ -13,6 +13,7 @@ function LogicView() {
   const logicView = useSelector((state) => state.uiReducer.logicView);
   const logicList = useSelector((state) => state.logicReducer.logicList);
   const answerList = useSelector((state) => state.questionReducer.answerList);
+  const formId = window.location.pathname.split("/")[2];
 
   if (logicView && logicList && logicList[selectedQuestion.question_id]) {
     return (
@@ -50,12 +51,12 @@ function LogicView() {
                     src={SideArrow}
                     alt="Side Arrow"
                   />
-                  <div className="LogicText">{answerObj.question}</div>
+                  {/* <div className="LogicText">{answerObj.question}</div>
                   <img
                     className="LogicArrow"
                     src={SideArrow}
                     alt="Side Arrow"
-                  />
+                  /> */}
                   <div className="LogicText">{answerObj.answer}</div>
                   <img
                     className="LogicArrow"
@@ -80,6 +81,7 @@ function LogicView() {
                         type: DELETE_LOGIC,
                         payload: {
                           logic_id: logic.condition_id,
+                          form_id: formId
                         },
                       });
                     }}

@@ -19,7 +19,7 @@ import {
   saveQuestions,
 } from "../api/questionApi";
 
-export function* fetchQuestion() {
+export function* fetchQuestion({ payload }) {
   console.log("fetching");
   yield put({ type: SET_LOADING, payload: true });
 
@@ -27,7 +27,7 @@ export function* fetchQuestion() {
   
   yield put({ type: SET_LOGIC, payload: logic.data });
 
-  const questions = yield call(getQuestions);
+  const questions = yield call(getQuestions, payload);
 
   yield put({ type: SET_QUESTION, payload: questions.data });
   yield put({ type: SET_ANSWER, payload: questions.data });
@@ -45,17 +45,17 @@ export function* deleteQuestion({ payload }) {
 
 export function* postAnswer({ payload }) {
   yield call(saveAnswer, payload);
-  yield fetchQuestion();
+  yield fetchQuestion({ payload: payload.form_id });
 }
 
 export function* deleteAnswer({ payload }) {
   yield call(removeAnswer, payload);
-  yield fetchQuestion();
+  yield fetchQuestion({ payload: payload.form_id });
 }
 
 export function* saveLogic({ payload }) {
   yield call(saveLogics, payload);
-  yield fetchQuestion();
+  yield fetchQuestion({ payload: payload.form_id });
 }
 
 export default function* questionSaga() {
