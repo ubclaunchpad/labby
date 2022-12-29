@@ -25,6 +25,23 @@ export class Task {
     );
   }
 
+  updateStatus(taskId, taskStatus, result) {
+    con.query(
+      "CALL update_task_status(?, ?)",
+      [taskId, taskStatus],
+      function (error, results) {
+        if (error) {
+          console.log("error: ", error);
+          result(error, null);
+        } else {
+          result(null, {
+            result: `Task of ${taskStatus.task_id} Saved Successfully for Task ID: ${taskStatus.task_state}`,
+          });
+        }
+      }
+    );
+  }
+
   insertSubtask(subtaskData, result) {
     con.query(
       "CALL save_subtask(?, ?, ?, ?)",

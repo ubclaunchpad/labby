@@ -14,3 +14,16 @@ export const getTickets = async () => {
     return console.error(err);
   }
 };
+
+export const updateTicketStatusApi = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      status: payload.status,
+    });
+
+    const tickets = await axios.post(`task/${payload.ticketId}`, data);
+    return tickets;
+  } catch (err) {
+    return console.error(err);
+  }
+};

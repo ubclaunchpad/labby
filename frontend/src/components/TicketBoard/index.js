@@ -2,7 +2,7 @@ import { Input } from "antd";
 import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { useDispatch, useSelector } from "react-redux";
-import { GET_TICKET_BOARD, UPDATE_TICKET_BOARD } from "../../redux/actions/ticketActions";
+import { GET_TICKET_BOARD, UPDATE_TICKET_BOARD, UPDATE_TICKET_STATUS } from "../../redux/actions/ticketActions";
 import "./index.css";
 import { useEffect } from "react";
 
@@ -117,6 +117,7 @@ export const TicketBoard = () => {
       },
     };
     dispatch({ type: UPDATE_TICKET_BOARD, payload: newData });
+    dispatch({ type: UPDATE_TICKET_STATUS, payload: { ticketId: draggableId, status: destColumn.id } });
   };
 
   return (

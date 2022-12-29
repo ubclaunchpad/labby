@@ -72,9 +72,9 @@ export const ticketBoardData = {
       taskIds: ["task-1", "task-2", "task-3"],
       //   taskIds: [],
     },
-    todo: {
-      id: "todo",
-      title: "Todo",
+    open: {
+      id: "open",
+      title: "Open",
       taskIds: ["task-4"],
       //   taskIds: [],
     },
@@ -91,5 +91,5 @@ export const ticketBoardData = {
       //   taskIds: [],
     },
   },
-  columnOrder: ["blocked", "todo", "progress", "completed"],
+  columnOrder: ["blocked", "open", "progress", "completed"],
 };

@@ -21,7 +21,7 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
           assignees: [],
           reminder: false,
         };
-        if (ticket.task_state === "closed") {
+        if (ticket.task_state === "completed") {
           doneList.push(ticket.task_id);
         }
         if (ticket.task_state === "open") {
@@ -42,9 +42,9 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
             title: "Blocked",
             taskIds: blockedList,
           },
-          todo: {
-            id: "todo",
-            title: "Todo",
+          open: {
+            id: "open",
+            title: "Open",
             taskIds: openList,
           },
           progress: {
