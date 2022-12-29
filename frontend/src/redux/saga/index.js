@@ -5,6 +5,7 @@ import surveySaga from './surveySaga';
 import billingSaga from './billingSaga';
 import costSaga from './costSaga';
 import formSaga from './formSaga';
+import ticketSaga from './ticketSaga';
 
 export default function* rootSaga() {
     yield all([
@@ -13,6 +14,7 @@ export default function* rootSaga() {
       fork(surveySaga),
       fork(billingSaga),
       fork(costSaga),
-      fork(formSaga)
+      fork(formSaga),
+      fork(ticketSaga)
     ]);
   }

@@ -1,13 +1,13 @@
-import { call, put, takeEvery, takeLatest, all } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import {LOAD_COST, SET_COST} from "../actions/costActions";
-import { getCosts, getCost} from "../api/costApi";
+import { getCosts} from "../api/costApi";
 
 export function* fetchCost({ payload }) {
   const costs = [];
     console.log("fetching");
     let organization = "UBC";
   
-    if (payload.formResponses.length != 0) {
+    if (payload.formResponses.length !== 0) {
       for (var i = 0; i < payload.formResponses.length; i++) {
         const org = payload.formResponses[i].question.fk_organization_id;
         if (org != null) {

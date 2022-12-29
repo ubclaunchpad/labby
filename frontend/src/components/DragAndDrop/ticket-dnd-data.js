@@ -66,9 +66,9 @@ export const ticketBoardData = {
     },
   },
   columns: {
-    "adopt-me": {
-      id: "adopt-me",
-      title: "Adopt me",
+    blocked: {
+      id: "blocked",
+      title: "Blocked",
       taskIds: ["task-1", "task-2", "task-3"],
       //   taskIds: [],
     },
@@ -78,8 +78,8 @@ export const ticketBoardData = {
       taskIds: ["task-4"],
       //   taskIds: [],
     },
-    "in-progress": {
-      id: "in-progress",
+    progress: {
+      id: "progress",
       title: "In Progress",
       taskIds: ["task-5", "task-6", "task-7", "task-8"],
       //   taskIds: [],
@@ -91,5 +91,5 @@ export const ticketBoardData = {
       //   taskIds: [],
     },
   },
-  columnOrder: ["adopt-me", "todo", "in-progress", "completed"],
+  columnOrder: ["blocked", "todo", "progress", "completed"],
 };

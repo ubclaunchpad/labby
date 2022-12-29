@@ -2,8 +2,9 @@ import { Input } from "antd";
 import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { useDispatch, useSelector } from "react-redux";
-import { UPDATE_TICKET_BOARD } from "../../redux/actions/ticketActions";
+import { GET_TICKET_BOARD, UPDATE_TICKET_BOARD } from "../../redux/actions/ticketActions";
 import "./index.css";
+import { useEffect } from "react";
 
 const Task = (props) => {
   return (
@@ -51,6 +52,10 @@ export const TicketBoard = () => {
   const ticketBoardDndData = useSelector(
     (state) => state.ticketReducer.ticketBoardDndData
   );
+
+  useEffect(() => {
+    dispatch({ type: GET_TICKET_BOARD });
+  }, [dispatch]);
 
   const ticketDragEndHandler = (result) => {
     const { destination, source, draggableId } = result;
