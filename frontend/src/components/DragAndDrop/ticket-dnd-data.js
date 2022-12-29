@@ -8,8 +8,18 @@ export const ticketBoardData = {
       code: "SOW123",
       title: "This is the ticket  title",
       assignees: [
-        { firstName: "Chad", lastName: "Robinson", role: "Smart lab person" },
-        { firstName: "Mitsuki", lastName: "Miyazumi", role: "Lab Assistant" },
+        {
+          id: "51",
+          firstName: "Chad",
+          lastName: "Robinson",
+          role: "Smart lab person",
+        },
+        {
+          id: "52",
+          firstName: "Mitsuki",
+          lastName: "Miyazumi",
+          role: "Lab Assistant",
+        },
       ],
       reminder: true,
       subtasks: [

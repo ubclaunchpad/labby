@@ -8,26 +8,28 @@ import { clsx } from "clsx";
 import { NotificationIcon } from "../Icons/NotifcationIcon";
 import { CheckBoxIcon } from "../Icons/CheckBoxIcon";
 import { AssigneeIcon } from "../Icons/AssigneeIcon";
+import { ticketsColors } from "../../constants";
 
 const Task = (props) => {
-  console.log("These are the props that are passed in --->", props);
+  // console.log("These are the props that are passed in --->", props);
   const getCompletedSubtasks = (subtasks = []) => {
-    console.log("there is a subtask ");
+    // console.log("there is a subtask ");
     const totalSubtasks = subtasks?.length;
     const completedSubtasks = subtasks
       .map((subtask) => subtask.completed)
       .filter(Boolean).length;
-    console.log(
-      "These are the total subtasks --->",
-      totalSubtasks,
-      completedSubtasks
-    );
+    // console.log(
+    //   "These are the total subtasks --->",
+    //   totalSubtasks,
+    //   completedSubtasks
+    // );
     return { totalSubtasks, completedSubtasks };
   };
   const subtasks = props?.task?.subtasks;
   const { totalSubtasks, completedSubtasks } = getCompletedSubtasks(subtasks);
   const assignees = props?.task?.assignees;
   const isReminder = props?.task.reminder;
+  const colors = ticketsColors;
   return (
     <Draggable draggableId={props.task.id} index={props.index}>
       {(provided, snapshot) => (
@@ -75,15 +77,23 @@ const Task = (props) => {
               )}
               <div className="task-card__assignees-container">
                 {assignees.map((assignee) => {
+                  const assigneeId = parseInt(assignee.id);
+                  const colorNumberMod =
+                    assigneeId % Object.keys(colors).length;
+                  console.log("THIS IS THE COLOR NUMBER MOD", assigneeId);
+                  const assigneeColor = colors[colorNumberMod];
+                  console.log("This is the assgineeColor", assigneeColor);
+                  console.log("This is the assignee -->", assignee);
                   const assigneeInitials = `${assignee.firstName[0].toUpperCase()}${assignee.lastName[0].toUpperCase()}`;
                   return (
                     <div className="task-card__assignees-container">
                       <AssigneeIcon
-                        shapeColor={"#E4E5EA"}
-                        textColor={"black"}
+                        shapeColor={assigneeColor}
+                        textColor={"white"}
                         className="task-card__assignee-container"
                         label={assigneeInitials}
                       />
+                      {/* <div className="task-card__assignee-initials">AT</div> */}
                     </div>
                   );
                 })}

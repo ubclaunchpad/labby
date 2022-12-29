@@ -174,11 +174,12 @@
 }
 .task-card__assignee-initials{
   font-size: 10px;
-  position: relative;
-  color: black;
+  position: absolute ;
+  bottom: 10px;
+  color: white;
 
-  transform: translate(-50%, -50%);
-  top: 25%;
-  left: 25%;
+  /* transform: translate(50%, -7%); */
+  top: 20.5%;
+  left: 25.5%;
 
 }
