@@ -30,6 +30,7 @@ const Task = (props) => {
     const completedSubtasks = subtasks
       .map((subtask) => subtask.completed)
       .filter(Boolean).length;
+
     return { totalSubtasks, completedSubtasks };
   };
   const subtasks = props?.task?.subtasks;
@@ -94,10 +95,7 @@ const Task = (props) => {
                   const assigneeColor = colors[colorNumberMod];
                   const assigneeInitials = `${assignee.firstName[0].toUpperCase()}${assignee.lastName[0].toUpperCase()}`;
                   return (
-                    <div
-                      key={assignee.id}
-                      className="task-card__assignees-container"
-                    >
+                    <div className="task-card__assignees-container">
                       <AssigneeIcon
                         shapeColor={assigneeColor}
                         textColor={"white"}

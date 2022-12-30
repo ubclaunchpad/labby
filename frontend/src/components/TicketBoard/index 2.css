@@ -1,0 +1,265 @@
+/* * {
+  border: 1px solid red;
+} */
+.ticketBoardContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.searchTicketSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 65%;
+  margin-bottom: 24px;
+}
+.ticketBoardSearch {
+  border: 0;
+  background-color: #ecedf3;
+  border-radius: 15px;
+  height: 45px;
+  padding-left: 40px;
+  padding-right: 16px;
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("../../assets/SearchIcon.svg");
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: calc(0% + 16px) center;
+}
+.ticketBoardDropdown:focus {
+  outline: none;
+}
+.ticketBoardDropdown {
+  border: 0;
+  background-color: #ecedf3;
+  border-radius: 15px;
+  height: 45px;
+  padding-left: 16px;
+  padding-right: 16px;
+  display: flex;
+  flex-direction: row;
+  flex-basis: 120px;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("../../assets/DropdownArrow.svg");
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 32px) center;
+}
+.ticketBoard {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.column {
+  background-color: #ecedf3;
+  margin: 8px;
+  border-radius: 8px;
+  min-height: 100px;
+  flex: 1;
+}
+.columnTitle {
+  color: #353535;
+  font-weight: bold;
+  text-align: left;
+  padding: 8px;
+}
+.taskList{
+    padding: 8px;
+}
+.task-card-container {
+  font-family: inherit;
+  font-size: 12px;
+  color: #6F6F6F;
+  display: flex; 
+  flex-direction: row; 
+    margin-bottom: 8px;
+    border-radius: 5px;
+    background-color: #fff;
+    min-height: 110px;
+}
+.task-card-color-tab {
+  font-family: inherit; 
+  background: #CBD848;
+  padding: 4px;
+  border-radius: 5px 0px 0px 5px;
+}
+.task-card-content{
+  display: flex; 
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;  
+  padding: 10px;
+
+
+}
+.task-card__header {
+  display: flex;
+  flex-direction: row; 
+  justify-content:space-between;
+}
+.task-card__code{
+  font-size: 16px;
+}
+.task-card__reminder--notify-true{
+  display: flex;
+  border-radius: 5px; 
+  background-color: #E08E89;
+  align-items: center;
+  justify-content: center;
+}
+.task-card__reminder--notify-false{
+  display: flex;
+  border-radius: 5px; 
+  background-color: none;
+  align-items: center;
+  justify-content: center;
+}
+.task-card__notificaton-container{
+  display:inline-block;
+  width: 30px; 
+  height: 30px; 
+}
+.notification-icon{
+  color: black;
+  margin: 3px;
+  padding-top: 1px;
+  }
+.task-card__body{
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row; 
+}
+
+.task-card__footer{
+  display: flex; 
+  flex-direction: row;
+  justify-content: space-between;
+}
+.task-card__subtasks-container{
+  display: flex; 
+  flex-direction: row;
+  align-items: center;
+  background: #E4E5EA; 
+  padding: 5px;
+  border-radius: 5px;
+}
+.task-card__subtask-checkbox{
+  display: inline-block; 
+  height: 14px;
+  margin-right: 5px;
+}
+
+.task-card__subtasks-completed-text{
+  margin-top: 1px;
+  display: inline-block;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.task-card__assignees-container{
+  display: flex; 
+  flex-direction: row;
+
+}
+
+.task-card__assignee-container{
+  /* padding: 5px; */
+  margin-left: 5px;
+}
+.task-card__assignee-initials{
+  font-size: 10px;
+  position: absolute ;
+  bottom: 10px;
+  color: white;
+
+  /* transform: translate(50%, -7%); */
+  top: 20.5%;
+  left: 25.5%;
+
+}
+
+.ticketDetailBackground {
+  background-color: rgb(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.ticketDetail {
+  background-color: #fff;
+  width: 50%;
+  height: 90%;
+  position: absolute;
+  left: 50%;
+  top: 5%;
+  transform: translate(-50%);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.ticketTitle {
+  display: flex;
+  align-items: center;
+}
+
+.ticketTitleId {
+  font-weight: bold;
+  font-size: 20px;
+  margin-right: 8px;
+}
+
+.ticketTags {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  background-color: green;
+  margin-top: 10px;
+}
+
+.ticketDescription {
+ display: flex;
+ flex-direction: column;
+ align-items: flex-start;
+ background-color: blue;
+ margin-top: 10px;
+ height: 120px;
+}
+
+.ticketInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  background-color: yellow;
+  margin-top: 10px;
+}
+
+.ticketColumn {
+  display: flex;
+  flex-direction: column;
+  background-color: red;
+  width: 50%;
+}
+
+.ticketSubtasks {
+  height: 50vh;
+  background-color: green;
+}
+
+.ticketAttachments {
+  height: 10vh;
+  margin-top: 1vh;
+  background-color: blue;
+}
+
+.ticketCosts {
+  height: 61vh;
+  background-color: pink;
+}

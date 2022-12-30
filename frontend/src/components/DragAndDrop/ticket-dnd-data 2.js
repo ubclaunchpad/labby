@@ -110,6 +110,6 @@ export const ticketBoardData = {
       //   taskIds: [],
     },
   },
-  columnOrder: ["open", "blocked", "progress", "completed"],
+  columnOrder: ["adopt-me", "todo", "in-progress", "completed"],
   colors: { 1: "#D4D145", 2: "#CF6973" },
 };
