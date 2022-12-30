@@ -16,12 +16,17 @@ import { AssigneeIcon } from "../Icons/AssigneeIcon";
 import { ticketsColors } from "../../constants";
 import { useEffect } from "react";
 
-export const getColorNum = (id) => {
-  let colorNum = 0;
-  for (let i = 0; i < id.length; i++) {
-    colorNum += id.charCodeAt(i);
+export const getColorNum = (id, colorArray) => {
+  if (colorArray) {
+    let colorNum = 0;
+    for (let i = 0; i < id.length; i++) {
+      colorNum += id.charCodeAt(i);
+    }
+    const mod = colorNum % Object.keys(colorArray).length;
+    return mod;
+  } else {
+    return 0;
   }
-  return colorNum;
 };
 
 const Task = (props) => {
@@ -37,6 +42,7 @@ const Task = (props) => {
   const assignees = props?.task?.assignees;
   const isReminder = props?.task.reminder;
   const colors = ticketsColors;
+  const tabColorNum = getColorNum(props?.task?.id, colors);
   const dispatch = useDispatch();
   return (
     <Draggable draggableId={props.task.id} index={props.index}>
@@ -50,7 +56,10 @@ const Task = (props) => {
             dispatch({ type: SET_ACTIVE_TICKET, payload: props.task });
           }}
         >
-          <div className="task-card-color-tab" />
+          <div
+            style={{ background: colors[tabColorNum] }}
+            className="task-card-color-tab"
+          />
           <div className="task-card-content">
             <div className="task-card__header">
               <div className="task-card__code">{props.task.code}</div>
@@ -88,9 +97,7 @@ const Task = (props) => {
               )}
               <div className="task-card__assignees-container">
                 {assignees.map((assignee) => {
-                  const assigneeId = getColorNum(assignee.id);
-                  const colorNumberMod =
-                    assigneeId % Object.keys(colors).length;
+                  const colorNumberMod = getColorNum(assignee.id, colors);
                   const assigneeColor = colors[colorNumberMod];
                   const assigneeInitials = `${assignee.firstName[0].toUpperCase()}${assignee.lastName[0].toUpperCase()}`;
                   return (

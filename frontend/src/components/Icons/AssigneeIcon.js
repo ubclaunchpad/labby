@@ -8,7 +8,6 @@ export const AssigneeIcon = ({
   width = 25,
   height = 25,
 }) => {
-  console.log(label);
   return (
     <div className={className}>
       <svg
