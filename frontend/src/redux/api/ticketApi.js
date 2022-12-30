@@ -15,6 +15,15 @@ export const getTickets = async () => {
   }
 };
 
+export const getSubTickets = async () => {
+  try {
+    const tickets = await axios.get("task/subtasks/");
+    return tickets;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const updateTicketStatusApi = async (payload) => {
   try {
     var data = JSON.stringify({

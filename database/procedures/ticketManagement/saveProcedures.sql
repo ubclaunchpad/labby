@@ -32,7 +32,9 @@ CREATE PROCEDURE `update_task_status` (
    IN `_task_id` VARCHAR(50),
    IN `_task_state` VARCHAR(50)
  
-) BEGIN UPDATE `tasks` SET `task_state`=`_task_state` WHERE `task_id`=`_task_id`;
+) BEGIN 
+UPDATE `tasks` SET `task_state`=`_task_state` WHERE `task_id`=`_task_id`;
+UPDATE `subtasks` SET `subtask_state`=`_task_state` WHERE `subtask_id`=`_task_id`;
   
 END $$
 

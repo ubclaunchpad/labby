@@ -10,5 +10,5 @@ export const appColor = {
     darkGray: '#909090'
 }
 
-export const backend = "https://labbybe.harinwu.com/"
-// export const backend = "http://localhost:8080/"
+// export const backend = "https://labbybe.harinwu.com/"
+export const backend = "http://localhost:8080/"

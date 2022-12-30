@@ -76,7 +76,7 @@ export class Task {
   }
 
   loadSubtasks(result) {
-    con.query("CALL load_subtasks", (err, res) => {
+    con.query("CALL load_tasks_subtasks", (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);

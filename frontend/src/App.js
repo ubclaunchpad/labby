@@ -9,6 +9,7 @@ import Invoice from "./screens/invoice/invoice";
 import FormLibrary from "./screens/form-library/form-library";
 import CostCenter from "./screens/cost-center/cost-center";
 import PDF from "./components/GenerateInvoice/pdf";
+import { PDFViewer } from "@react-pdf/renderer";
 
 function App() {
   return (
@@ -25,7 +26,14 @@ function App() {
           <Route path="/invoice" element={<Invoice />} />
           <Route path="/settings" element={<EditRequest />} />
           <Route path="/tickets" element={<TicketManagement />} />
-          {/* <Route path="/pdf" element={<PDF />} /> */}
+          <Route
+            path="/pdf"
+            element={
+              <PDFViewer style={{ width: "100vw", height: "100vh" }}>
+                <PDF />
+              </PDFViewer>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>

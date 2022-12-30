@@ -4,12 +4,13 @@ import {
   SET_TICKETS,
   UPDATE_TICKET_STATUS,
 } from "../actions/ticketActions";
-import { getTickets, updateTicketStatusApi } from "../api/ticketApi";
+import { getSubTickets, getTickets, updateTicketStatusApi } from "../api/ticketApi";
 
 export function* fetchTickets() {
   const ticketList = yield call(getTickets);
+  const subticketList = yield call(getSubTickets);
 
-  yield put({ type: SET_TICKETS, payload: ticketList.data });
+  yield put({ type: SET_TICKETS, payload: ticketList.data.concat(subticketList.data) });
 }
 
 export function* updateTicketStatus(action) {

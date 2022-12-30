@@ -55,6 +55,10 @@ CALL save_condition('CONDITION-B', 'RANDOM-ID-B', 'ANSWERID-C', 'multi','FALSE')
 -- Create SOW
 CALL save_task('SOW-1', 'Testing Billing', 'This SOW is exclusively for testing billing', 'open');
 
+-- Create Subtasks
+CALL save_subtask('SUB-1', 'Subtask Testing 1', 'open', 'SOW-1');
+CALL save_subtask('SUB-2', 'Subtask Testing 2', 'open', 'SOW-1');
+
 -- Create Billable Items
 CALL save_billable('BILLABLE-1', 'SOW-1', 'Testing Billable 1', 1, 10.0, '2015-01-01', '2015-01-01', false, '2015-01-01');
 CALL save_billable('BILLABLE-2', 'SOW-1', 'Testing Billable 2', 1, 15.0, '2015-01-01', '2015-01-01', false, '2015-01-01');
