@@ -7,6 +7,7 @@ import BillingManagement from "./screens/billing-management/billing-management";
 import TicketManagement from "./screens/ticket-management/ticket-management";
 import Invoice from "./screens/invoice/invoice";
 import FormLibrary from "./screens/form-library/form-library";
+import CostCenter from "./screens/cost-center/cost-center";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<TicketManagement />} />
           <Route path="/edit-form/:formId" element={<EditRequest />} />
           <Route path="/billing" element={<BillingManagement />} />
+          <Route path="/costcenter" element={<CostCenter />} />
           <Route path="/users" element={<EditRequest />} />
           <Route path="/edit-request" element={<FormLibrary />} />
           <Route path="/request/:formId" element={<RequestForm />} />

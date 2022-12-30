@@ -10,6 +10,7 @@ import orderRouter from "./src/routes/orderRoute.js";
 import surveyRouter from "./src/routes/surveyRoute.js"
 import formRouter from "./src/routes/formRoute.js"
 import taskRouter from "./src/routes/taskRoute.js"
+import organizationRouter from "./src/routes/organizationRoute.js"
 
 const app = express();
 const port = 8080;
@@ -31,6 +32,7 @@ app.use("/reorder", orderRouter);
 app.use("/survey", surveyRouter);
 app.use("/form", formRouter)
 app.use("/task", taskRouter);
+app.use("/organization", organizationRouter);
 
 app.listen(port, () => {
   console.log(`Labby backend listening on port ${port}`);

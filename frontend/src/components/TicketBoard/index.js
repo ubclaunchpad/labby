@@ -2,11 +2,17 @@ import { Input } from "antd";
 import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { useDispatch, useSelector } from "react-redux";
-import { GET_TICKET_BOARD, UPDATE_TICKET_BOARD, UPDATE_TICKET_STATUS } from "../../redux/actions/ticketActions";
+import {
+  GET_TICKET_BOARD,
+  SET_ACTIVE_TICKET,
+  UPDATE_TICKET_BOARD,
+  UPDATE_TICKET_STATUS,
+} from "../../redux/actions/ticketActions";
 import "./index.css";
 import { useEffect } from "react";
 
 const Task = (props) => {
+  const dispatch = useDispatch();
   return (
     <Draggable draggableId={props.task.id} index={props.index}>
       {(provided, snapshot) => (
@@ -15,6 +21,9 @@ const Task = (props) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
+          onClick={() => {
+            dispatch({ type: SET_ACTIVE_TICKET, payload: props.task });
+          }}
         >
           {props.task.code}
           <br />
@@ -51,6 +60,9 @@ export const TicketBoard = () => {
   const dispatch = useDispatch();
   const ticketBoardDndData = useSelector(
     (state) => state.ticketReducer.ticketBoardDndData
+  );
+  const currentTicket = useSelector(
+    (state) => state.ticketReducer.currentTicket
   );
 
   useEffect(() => {
@@ -117,7 +129,10 @@ export const TicketBoard = () => {
       },
     };
     dispatch({ type: UPDATE_TICKET_BOARD, payload: newData });
-    dispatch({ type: UPDATE_TICKET_STATUS, payload: { ticketId: draggableId, status: destColumn.id } });
+    dispatch({
+      type: UPDATE_TICKET_STATUS,
+      payload: { ticketId: draggableId, status: destColumn.id },
+    });
   };
 
   return (
@@ -150,6 +165,43 @@ export const TicketBoard = () => {
           })}
         </DragDropContext>
       </div>
+      {currentTicket ? (
+        <div
+          className="ticketDetailBackground"
+          onClick={() => {
+            dispatch({ type: SET_ACTIVE_TICKET, payload: null });
+          }}
+        >
+          <div className="ticketDetail">
+            <div className="ticketTitle">
+              <div className="ticketTitleId">{currentTicket.code}</div>
+              <div>{currentTicket.title}</div>
+            </div>
+            <div className="ticketTags">
+              Assignees
+            </div>
+            <div className="ticketDescription">
+              <div>Description</div>
+              <div>Type here...</div>
+            </div>
+            <div className="ticketInfo">
+              <div className="ticketColumn">
+                <div className="ticketSubtasks">
+                  Subtasks
+                </div>
+                <div className="ticketAttachments">
+                  Attachments
+                </div>
+              </div>
+              <div className="ticketColumn">
+                <div className="ticketCosts">
+                  Service & Costs
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };

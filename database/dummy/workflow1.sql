@@ -22,20 +22,20 @@ CALL save_answer('ANSWERID-B','Option1','multi', 'RANDOM-ID-B');
 CALL save_answer('ANSWERID-C','Option2','multi', 'RANDOM-ID-B');
 CALL save_answer('ANSWERID-D','Option3','multi', 'RANDOM-ID-B');
 
--- Populate Organization
-CALL save_organization('ORG-A','ORG1');
-CALL save_organization('ORG-B','ORG2');
-CALL save_organization('ORG-C','ORG3');
+-- Populate Organization / Cost Center
+CALL save_organization('ORG-ID-A','MAPcore', 'Julie Ho', 'julieho@demo.com', '123 Main St', 'External', '');
+CALL save_organization('ORG-ID-B','Dr David Huntsman', 'Andy Demo', 'andydemo@demo.com', '456 Main St', 'Internal', 'Pathology');
+CALL save_organization('ORG-ID-C','Hungrii Inc.', 'Harin Wu', 'harinwu99@gmail.com', '789 Main St', 'Industry', '');
 
 -- Populate Cost
-CALL save_cost('COSTID-B', 10.0, 'ANSWERID-B', 'ORG-A');
-CALL save_cost('COSTID-C', 10.0, 'ANSWERID-B', 'ORG-B');
-CALL save_cost('COSTID-D', 10.0, 'ANSWERID-B', 'ORG-C');
+CALL save_cost('COSTID-B', 10.0, 'ANSWERID-B', 'ORG-ID-A');
+CALL save_cost('COSTID-C', 10.0, 'ANSWERID-B', 'ORG-ID-B');
+CALL save_cost('COSTID-D', 10.0, 'ANSWERID-B', 'ORG-ID-C');
 
 -- Populate User
-CALL addUser('USERA', 'ORG-A', 'JackSparrow');
-CALL addUser('USERB', 'ORG-A', 'JackMa');
-CALL addUser('USERC', 'ORG-A', 'JackandJill');
+CALL addUser('USERA', 'ORG-ID-A', 'JackSparrow');
+CALL addUser('USERB', 'ORG-ID-A', 'JackMa');
+CALL addUser('USERC', 'ORG-ID-A', 'JackandJill');
 
 -- Populate Surveys
 CALL addSurvey('SURVEYA', 'USERA', 	2008-11-11);
