@@ -10,19 +10,21 @@ import { CheckBoxIcon } from "../Icons/CheckBoxIcon";
 import { AssigneeIcon } from "../Icons/AssigneeIcon";
 import { ticketsColors } from "../../constants";
 
+export const getColorNum = (id) => {
+  let colorNum = 0;
+  for (let i = 0; i < id.length; i++) {
+    colorNum += id.charCodeAt(i);
+  }
+  return colorNum;
+};
+
 const Task = (props) => {
-  // console.log("These are the props that are passed in --->", props);
   const getCompletedSubtasks = (subtasks = []) => {
-    // console.log("there is a subtask ");
     const totalSubtasks = subtasks?.length;
     const completedSubtasks = subtasks
       .map((subtask) => subtask.completed)
       .filter(Boolean).length;
-    // console.log(
-    //   "These are the total subtasks --->",
-    //   totalSubtasks,
-    //   completedSubtasks
-    // );
+
     return { totalSubtasks, completedSubtasks };
   };
   const subtasks = props?.task?.subtasks;
@@ -77,13 +79,10 @@ const Task = (props) => {
               )}
               <div className="task-card__assignees-container">
                 {assignees.map((assignee) => {
-                  const assigneeId = parseInt(assignee.id);
+                  const assigneeId = getColorNum(assignee.id);
                   const colorNumberMod =
                     assigneeId % Object.keys(colors).length;
-                  console.log("THIS IS THE COLOR NUMBER MOD", assigneeId);
                   const assigneeColor = colors[colorNumberMod];
-                  console.log("This is the assgineeColor", assigneeColor);
-                  console.log("This is the assignee -->", assignee);
                   const assigneeInitials = `${assignee.firstName[0].toUpperCase()}${assignee.lastName[0].toUpperCase()}`;
                   return (
                     <div className="task-card__assignees-container">
