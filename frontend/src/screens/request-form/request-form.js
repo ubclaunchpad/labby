@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./request-form.css";
 import { appColor } from "../../constants";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
+import {LOAD_COST} from "../../redux/actions/costActions";
 import MultiSelect from "../../components/MultiSelect";
 import SingleSelect from "../../components/SingleSelect";
 import TextAnswer from "../../components/TextAnswer";
@@ -17,6 +18,7 @@ import {
   CostEstimateFull,
 } from "../../components/CostEstimate";
 import { SUBMIT_FORM } from "../../redux/actions/formActions";
+import { TOGGLE_LOGIC } from "../../redux/actions/uiActions";
 
 function RequestForm() {
   const dispatch = useDispatch();
@@ -25,10 +27,20 @@ function RequestForm() {
   );
   const formResponses = useSelector((state) => state.formReducer.formResponses);
   const logicList = useSelector((state) => state.logicReducer.logicList);
+  const formId = window.location.pathname.split("/")[2];
 
   useEffect(() => {
-    dispatch({ type: LOAD_QUESTION });
-  }, [dispatch]);
+    dispatch({ type: LOAD_QUESTION, payload: formId });
+  }, [dispatch, formId]);
+
+  useEffect(() => {
+    console.log(formResponses);
+    dispatch(
+      {type: LOAD_COST, 
+      payload: {formResponses: formResponses },
+    });
+  }, [dispatch, formResponses]);
+
 
   const costEstimateView = useSelector(
     (state) => state.costEstimateReducer.costEstimateView
@@ -75,7 +87,7 @@ function RequestForm() {
     return (
       <div className="requestFormPage">
         <div className="requestFormContainer">
-          <div id="progressBar"></div>
+          <div id="progressBar" style={{zIndex: 2}}></div>
           <div className="formTitle" style={{ color: appColor.primaryBlack }}>
             {questionList[0].question}
           </div>
@@ -139,8 +151,16 @@ function RequestForm() {
                   }
                 });
                 if (filled) {
-                  dispatch({ type: SUBMIT_FORM, payload: formResponses });
-                  alert("Form Submitted");
+                  if (!costEstimateView) {
+                    dispatch({ type: SUBMIT_FORM, payload: formResponses });
+                    alert("Form Submitted");
+                  } else {
+                    dispatch({
+                      type: TOGGLE_LOGIC,
+                      payload: null
+                    });
+                    alert("Please Review Your Cost Estimate and Submit!");
+                  }
                 } else {
                   alert("Please fill out all mandatory fields");
                 }
@@ -157,7 +177,7 @@ function RequestForm() {
             {costEstimateView ? (
               <CostEstimateCollapsed />
             ) : (
-              <CostEstimateFull />
+              <CostEstimateFull/>
             )}
             </div>
       </div>

@@ -1,0 +1,23 @@
+.formPage {
+  height: 100vh;
+  display: flex;
+}
+.formPageContent {
+  padding-left: 50px;
+  padding-right: 50px;
+  width: 100%;
+  overflow-y: auto;
+}
+.formCells {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.formPageTitle {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: left;
+  padding-top: 22px;
+  padding-bottom: 5px;
+}

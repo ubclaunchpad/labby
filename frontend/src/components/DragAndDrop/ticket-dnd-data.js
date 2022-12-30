@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
-
 export const ticketBoardData = {
   // tasks:{},
   tasks: {
@@ -87,20 +85,20 @@ export const ticketBoardData = {
     },
   },
   columns: {
-    "adopt-me": {
-      id: "adopt-me",
-      title: "Adopt me",
+    blocked: {
+      id: "blocked",
+      title: "Blocked",
       taskIds: ["task-1", "task-2", "task-3"],
       //   taskIds: [],
     },
-    todo: {
-      id: "todo",
-      title: "Todo",
+    open: {
+      id: "open",
+      title: "Open",
       taskIds: ["task-4"],
       //   taskIds: [],
     },
-    "in-progress": {
-      id: "in-progress",
+    progress: {
+      id: "progress",
       title: "In Progress",
       taskIds: ["task-5", "task-6", "task-7", "task-8"],
       //   taskIds: [],

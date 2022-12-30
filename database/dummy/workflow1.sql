@@ -1,9 +1,11 @@
 -- The following is a sample set of commands to populate the database with data
 use labby;
 
+-- Populate the form
+CALL save_form('SAMPLE-FORM-1', 'Sample Form');
 
 -- Populate the form title
-CALL save_question('RANDOM-ID-A','My Sample Form','heading', 0, false);
+CALL save_question('RANDOM-ID-A','SAMPLE-FORM-1','My Sample Form','heading', 0, false);
 
 -- Populate some sample questions
 CALL save_question('RANDOM-ID-B','Request Type','multi', 1, false);
@@ -20,20 +22,20 @@ CALL save_answer('ANSWERID-B','Option1','multi', 'RANDOM-ID-B');
 CALL save_answer('ANSWERID-C','Option2','multi', 'RANDOM-ID-B');
 CALL save_answer('ANSWERID-D','Option3','multi', 'RANDOM-ID-B');
 
--- Populate Organization
-CALL save_organization('ORG-A','ORG1');
-CALL save_organization('ORG-B','ORG2');
-CALL save_organization('ORG-C','ORG3');
+-- Populate Organization / Cost Center
+CALL save_organization('ORG-ID-A','MAPcore', 'Julie Ho', 'julieho@demo.com', '123 Main St', 'External', '');
+CALL save_organization('ORG-ID-B','Dr David Huntsman', 'Andy Demo', 'andydemo@demo.com', '456 Main St', 'Internal', 'Pathology');
+CALL save_organization('ORG-ID-C','Hungrii Inc.', 'Harin Wu', 'harinwu99@gmail.com', '789 Main St', 'Industry', '');
 
 -- Populate Cost
-CALL save_cost('COSTID-B', 10.0, 'ANSWERID-B', 'ORG-A');
-CALL save_cost('COSTID-C', 10.0, 'ANSWERID-B', 'ORG-B');
-CALL save_cost('COSTID-D', 10.0, 'ANSWERID-B', 'ORG-C');
+CALL save_cost('COSTID-B', 10.0, 'ANSWERID-B', 'ORG-ID-A');
+CALL save_cost('COSTID-C', 10.0, 'ANSWERID-B', 'ORG-ID-B');
+CALL save_cost('COSTID-D', 10.0, 'ANSWERID-B', 'ORG-ID-C');
 
 -- Populate User
-CALL addUser('USERA', 'ORG-A', 'JackSparrow');
-CALL addUser('USERB', 'ORG-A', 'JackMa');
-CALL addUser('USERC', 'ORG-A', 'JackandJill');
+CALL addUser('USERA', 'ORG-ID-A', 'JackSparrow');
+CALL addUser('USERB', 'ORG-ID-A', 'JackMa');
+CALL addUser('USERC', 'ORG-ID-A', 'JackandJill');
 
 -- Populate Surveys
 CALL addSurvey('SURVEYA', 'USERA', 	2008-11-11);
@@ -47,3 +49,12 @@ CALL addAnswer('ANSWERA', 'SURVEYA', 'RANDOM-ID-B', 'ANSWERID-B', "Disease #1")
 -- Populate Condition
 CALL save_condition('CONDITION-A', 'RANDOM-ID-B', 'ANSWERID-B', 'multi','TRUE');
 CALL save_condition('CONDITION-B', 'RANDOM-ID-B', 'ANSWERID-C', 'multi','FALSE');
+
+
+---- BILLING ----
+-- Create SOW
+CALL save_task('SOW-1', 'Testing Billing', 'This SOW is exclusively for testing billing', 'open');
+
+-- Create Billable Items
+CALL save_billable('BILLABLE-1', 'SOW-1', 'Testing Billable 1', 1, 10.0, '2015-01-01', '2015-01-01', false, '2015-01-01');
+CALL save_billable('BILLABLE-2', 'SOW-1', 'Testing Billable 2', 1, 15.0, '2015-01-01', '2015-01-01', false, '2015-01-01');

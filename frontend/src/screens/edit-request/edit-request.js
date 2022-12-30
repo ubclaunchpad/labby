@@ -14,13 +14,14 @@ import LogicView from "../../components/LogicView";
 
 function EditRequest() {
   const dispatch = useDispatch();
+  const formId = window.location.pathname.split("/")[2];
   const questionList = useSelector(
     (state) => state.questionReducer.questionList
   );
 
   useEffect(() => {
-    dispatch({ type: LOAD_QUESTION });
-  }, [dispatch]);
+    dispatch({ type: LOAD_QUESTION, payload: formId });
+  }, [dispatch, formId]);
 
   const dragEndHandler = (result) => {
     const { destination, source, draggableId } = result;
@@ -49,6 +50,7 @@ function EditRequest() {
           questionObj.question_index = questionObj.position_index - 1;
           questionObj.position_index = questionObj.question_index;
           questionObj.question_title = questionObj.question;
+          questionObj.form_id = questionObj.fk_form_id;
           dispatch({ type: SAVE_QUESTION, payload: questionObj });
         }
       });
@@ -57,19 +59,22 @@ function EditRequest() {
           questionObj.question_index = questionObj.position_index + 1;
           questionObj.position_index = questionObj.question_index;
           questionObj.question_title = questionObj.question;
+          questionObj.form_id = questionObj.fk_form_id;
           dispatch({ type: SAVE_QUESTION, payload: questionObj });
         }
       });
       movedQuestion.question_index = destination.index + 1;
       movedQuestion.position_index = movedQuestion.question_index;
       movedQuestion.question_title = movedQuestion.question;
+      movedQuestion.form_id = movedQuestion.fk_form_id;
       dispatch({ type: SAVE_QUESTION, payload: movedQuestion });
-      dispatch({ type: LOAD_QUESTION });
+      dispatch({ type: LOAD_QUESTION, payload: formId });
       return;
     }
 
     const newQuestion = {
       question_id: uuidv4(),
+      form_id: formId,
       question_title: "Enter Question Title",
       question_type: draggableId,
       question_index: destination.index + 1,
@@ -83,11 +88,12 @@ function EditRequest() {
       if (question.position_index >= indexLimit) {
         question.question_index = question.position_index + 1;
         question.question_title = question.question;
+        question.form_id = question.fk_form_id;
         dispatch({ type: SAVE_QUESTION, payload: question });
       }
     });
 
-    dispatch({ type: LOAD_QUESTION });
+    dispatch({ type: LOAD_QUESTION, payload: formId });
   };
 
   return (
