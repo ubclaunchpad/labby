@@ -8,6 +8,7 @@ import TicketManagement from "./screens/ticket-management/ticket-management";
 import Invoice from "./screens/invoice/invoice";
 import FormLibrary from "./screens/form-library/form-library";
 import CostCenter from "./screens/cost-center/cost-center";
+import PDF from "./components/GenerateInvoice/pdf";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/invoice" element={<Invoice />} />
           <Route path="/settings" element={<EditRequest />} />
           <Route path="/tickets" element={<TicketManagement />} />
+          {/* <Route path="/pdf" element={<PDF />} /> */}
         </Routes>
       </BrowserRouter>
     </div>

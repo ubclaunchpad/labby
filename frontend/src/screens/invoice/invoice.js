@@ -5,6 +5,7 @@ import InvoiceTable from "../../components/InvoiceTable";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { LOAD_BILLABLE } from "../../redux/actions/billingActions";
+import GenerateInvoice from "../../components/GenerateInvoice";
 
 function Invoice() {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ function Invoice() {
         <div className="InvoiceTable">
           <InvoiceTable />
         </div>
+        <GenerateInvoice/>
       </div>
     </div>
   );
