@@ -10,6 +10,7 @@ import FormLibrary from "./screens/form-library/form-library";
 import CostCenter from "./screens/cost-center/cost-center";
 import PDF from "./components/GenerateInvoice/pdf";
 import { PDFViewer } from "@react-pdf/renderer";
+import UserManagement from "./screens/user-management/user-management";
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
           <Route path="/edit-request" element={<FormLibrary />} />
           <Route path="/request/:formId" element={<RequestForm />} />
           <Route path="/invoice" element={<Invoice />} />
-          <Route path="/settings" element={<EditRequest />} />
+          <Route path="/settings" element={<UserManagement />} />
           <Route path="/tickets" element={<TicketManagement />} />
           <Route
             path="/pdf"

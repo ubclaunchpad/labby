@@ -1,0 +1,17 @@
+.userManagementPage {
+  height: 100vh;
+  display: flex;
+}
+.userManagementContent{
+  padding-left: 50px;
+  padding-right: 50px;
+  overflow-y: auto;
+}
+.userManagementTitle {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: left;
+  padding-top: 22px;
+  padding-bottom: 5px;
+}
+

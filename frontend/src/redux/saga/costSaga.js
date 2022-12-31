@@ -4,7 +4,6 @@ import { getCosts} from "../api/costApi";
 
 export function* fetchCost({ payload }) {
   const costs = [];
-    console.log("fetching");
     let organization = "UBC";
   
     if (payload.formResponses.length !== 0) {

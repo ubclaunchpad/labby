@@ -33,14 +33,14 @@ CALL save_cost('COSTID-C', 10.0, 'ANSWERID-B', 'ORG-ID-B');
 CALL save_cost('COSTID-D', 10.0, 'ANSWERID-B', 'ORG-ID-C');
 
 -- Populate User
-CALL addUser('USERA', 'ORG-ID-A', 'JackSparrow');
-CALL addUser('USERB', 'ORG-ID-A', 'JackMa');
-CALL addUser('USERC', 'ORG-ID-A', 'JackandJill');
+CALL addUser('USER-A', 'ORG-ID-A', 'Harin Wu', 'harinwu99@gmail.com', true);
+CALL addUser('USER-B', 'ORG-ID-A', 'Elon Musk', 'elonmusk@gmail.com', false);
+CALL addUser('USER-C', 'ORG-ID-A', 'Jeff Bezos', 'jeffbezos@gmail.com', false);
 
 -- Populate Surveys
-CALL addSurvey('SURVEYA', 'USERA', 	2008-11-11);
-CALL addSurvey('SURVEYB', 'USERA', 	2008-11-11);
-CALL addSurvey('SURVEYC', 'USERA', 	2008-11-11);
+CALL addSurvey('SURVEYA', 'USER-A', 	2008-11-11);
+CALL addSurvey('SURVEYB', 'USER-A', 	2008-11-11);
+CALL addSurvey('SURVEYC', 'USER-A', 	2008-11-11);
 
 -- Popular Answers
 CALL addAnswer('ANSWERA', 'SURVEYA', 'RANDOM-ID-B', 'ANSWERID-B', "Disease #1")
