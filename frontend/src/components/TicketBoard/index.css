@@ -161,26 +161,23 @@
   font-weight: 600;
 }
 
+.task-card__assignees-container-parent{
+  display: flex; 
+  flex-direction: row;
+  width: 100%;
+  justify-content: flex-end;
+}
+
 .task-card__assignees-container{
   display: flex; 
   flex-direction: row;
-
 }
 
 .task-card__assignee-container{
-  /* padding: 5px; */
   margin-left: 5px;
-}
-.task-card__assignee-initials{
-  font-size: 10px;
-  position: absolute ;
-  bottom: 10px;
-  color: white;
-
-  /* transform: translate(50%, -7%); */
-  top: 20.5%;
-  left: 25.5%;
-
+  position: relative;
+  width: 25px;
+  height: 25px;
 }
 
 .ticketDetailBackground {

@@ -95,7 +95,7 @@ const Task = (props) => {
                   <div className="task-card__subtasks-completed-text">{`${completedSubtasks} / ${totalSubtasks} `}</div>
                 </div>
               )}
-              <div className="task-card__assignees-container">
+              <div className="task-card__assignees-container-parent">
                 {assignees.map((assignee) => {
                   const colorNumberMod = getColorNum(assignee.id, colors);
                   const assigneeColor = colors[colorNumberMod];
@@ -111,7 +111,6 @@ const Task = (props) => {
                         className="task-card__assignee-container"
                         label={assigneeInitials}
                       />
-                      {/* <div className="task-card__assignee-initials">AT</div> */}
                     </div>
                   );
                 })}

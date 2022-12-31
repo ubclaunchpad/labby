@@ -43,7 +43,18 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
             id: ticket.task_id,
             code: ticket.task_id,
             title: ticket.task_title,
-            assignees: [],
+            assignees: [{
+              id: "51",
+              firstName: "Chad",
+              lastName: "Robinson",
+              role: "Smart lab person",
+            },
+            {
+              id: "52",
+              firstName: "Mitsuki",
+              lastName: "Miyazumi",
+              role: "Lab Assistant",
+            }], // TODO: add assignees
             reminder: false,
           };
           if (ticket.task_state === "completed") {
