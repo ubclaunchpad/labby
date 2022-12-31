@@ -5,7 +5,6 @@ import {
   View,
   StyleSheet,
   Image,
-  PDFViewer,
 } from "@react-pdf/renderer";
 import UBC from "../../assets/UBC.png";
 
@@ -35,7 +34,6 @@ function PDF() {
   });
 
   return (
-    // <PDFViewer style={{ width: "100vw", height: "100vh" }}>
       <Document>
         <Page size="A4" style={styles.page}>
           <View style={styles.rowSection}>
@@ -87,7 +85,6 @@ function PDF() {
           </View>
         </Page>
       </Document>
-    // </PDFViewer>
   );
 }
 

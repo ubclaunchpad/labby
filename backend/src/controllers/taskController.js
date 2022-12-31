@@ -32,19 +32,21 @@ export default class TaskController {
 
   updateTask(req) {
     return new Promise((resolve, reject) => {
-      if (
-        !req.body.status
-      ) {
+      if (!req.body.status) {
         return reject({ error: "Error with request body." });
       }
       const TaskModel = new Task();
-      TaskModel.updateStatus(req.params.taskId, req.body.status, (err, result) => {
-        if (err) {
-          reject({ error: err });
+      TaskModel.updateStatus(
+        req.params.taskId,
+        req.body.status,
+        (err, result) => {
+          if (err) {
+            reject({ error: err });
+          }
+          this.isTaskLoaded = false;
+          resolve(result);
         }
-        this.isTaskLoaded = false;
-        resolve(result);
-      });
+      );
     });
   }
 
@@ -97,23 +99,25 @@ export default class TaskController {
   }
 
   loadAllSubtasks() {
-    const TaskModel = new Task();
-    TaskModel.loadSubtasks((err, result) => {
-      if (err) {
-        reject({ error: err });
-      }
-      let subtaskArr;
-      for (let subtask in result) {
-        let task_id = subtask.fk_task_id;
-        if (!this.tasksMap.has(task_id)) {
-          subtaskArr = [subtask];
-        } else {
-          subtaskArr = this.tasksMap.get(task_id);
-          subtaskArr.push(subtask);
+    return new Promise((resolve, reject) => {
+      const TaskModel = new Task();
+      TaskModel.loadSubtasks((err, result) => {
+        if (err) {
+          reject({ error: err });
         }
-        this.tasksMap.set(task_id, subtaskArr);
-      }
-      resolve(result);
+        let subtaskArr;
+        for (let subtask in result) {
+          let task_id = subtask.fk_task_id;
+          if (!this.tasksMap.has(task_id)) {
+            subtaskArr = [subtask];
+          } else {
+            subtaskArr = this.tasksMap.get(task_id);
+            subtaskArr.push(subtask);
+          }
+          this.tasksMap.set(task_id, subtaskArr);
+        }
+        resolve(result);
+      });
     });
   }
 
