@@ -4,7 +4,6 @@ DROP TABLE IF EXISTS `billable`;
 DROP PROCEDURE IF EXISTS `createBillable`;
 
 DELIMITER $$
-USE `labby`$$
 
 CREATE PROCEDURE `createBillable` ()
 BEGIN

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./request-form.css";
 import { appColor } from "../../constants";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
-import {LOAD_COST} from "../../redux/actions/costActions";
+import { LOAD_COST } from "../../redux/actions/costActions";
 import MultiSelect from "../../components/MultiSelect";
 import SingleSelect from "../../components/SingleSelect";
 import TextAnswer from "../../components/TextAnswer";
@@ -18,34 +18,27 @@ import {
   CostEstimateFull,
 } from "../../components/CostEstimate";
 import { SUBMIT_FORM } from "../../redux/actions/formActions";
-import { TOGGLE_LOGIC } from "../../redux/actions/uiActions";
+import { TOGGLE_COST_ESTIMATE } from "../../redux/actions/uiActions";
 
 function RequestForm() {
   const dispatch = useDispatch();
-  const questionList = useSelector(
-    (state) => state.questionReducer.questionList
-  );
+  const formId = window.location.pathname.split("/")[2];
+  const questions = useSelector((state) => state.questionReducer.questionList);
   const formResponses = useSelector((state) => state.formReducer.formResponses);
   const logicList = useSelector((state) => state.logicReducer.logicList);
-  const formId = window.location.pathname.split("/")[2];
+  const hideCost = useSelector((state) => state.costEstimateReducer.hideCost);
 
+  // Load Form Questions
   useEffect(() => {
     dispatch({ type: LOAD_QUESTION, payload: formId });
   }, [dispatch, formId]);
 
+  // Load Cost Estimate
   useEffect(() => {
-    console.log(formResponses);
-    dispatch(
-      {type: LOAD_COST, 
-      payload: {formResponses: formResponses },
-    });
+    dispatch({ type: LOAD_COST, payload: { formResponses: formResponses } });
   }, [dispatch, formResponses]);
 
-
-  const costEstimateView = useSelector(
-    (state) => state.costEstimateReducer.costEstimateView
-  );
-
+  // Helper Function to Render Each Question
   function renderQuestion(question) {
     switch (question.question_type) {
       case "multi":
@@ -71,6 +64,34 @@ function RequestForm() {
     }
   }
 
+  // Basic Form Validation and Submit
+  function submitForm() {
+    var filled = true;
+    questions.forEach((question) => {
+      if (
+        question.mandatory &&
+        formResponses.filter(
+          (response) => response.question.question_id === question.question_id
+        ).length === 0
+      ) {
+        filled = false;
+        return;
+      }
+    });
+    if (filled) {
+      if (hideCost) {
+        dispatch({ type: TOGGLE_COST_ESTIMATE });
+        alert("Please Review Your Cost Estimate and Submit!");
+      } else {
+        dispatch({ type: SUBMIT_FORM, payload: formResponses });
+        alert("Form Submitted");
+      }
+    } else {
+      alert("Please fill out all mandatory fields");
+    }
+  }
+
+  // Add Listener For Form Progress Bar
   const progressBar = document.getElementById("progressBar");
   const requestFormContainer = document.querySelector(".requestFormContainer");
   if (requestFormContainer) {
@@ -78,20 +99,20 @@ function RequestForm() {
       let maxPageHeight =
         requestFormContainer.scrollHeight - window.innerHeight;
       progressBar.style.width = `${
-        (requestFormContainer.scrollTop/ maxPageHeight) * 100
+        (requestFormContainer.scrollTop / maxPageHeight) * 100
       }%`;
     });
   }
 
-  if (questionList.length !== 0 && logicList.length !== 0) {
+  if (questions.length !== 0 && logicList.length !== 0) {
     return (
       <div className="requestFormPage">
         <div className="requestFormContainer">
-          <div id="progressBar" style={{zIndex: 2}}></div>
+          <div id="progressBar" style={{ zIndex: 2 }} />
           <div className="formTitle" style={{ color: appColor.primaryBlack }}>
-            {questionList[0].question}
+            {questions[0].question}
           </div>
-          {questionList.slice(1).map((question) => {
+          {questions.slice(1).map((question) => {
             const logicNeeded = logicList[question.question_id] ?? [];
             var show = true;
             logicNeeded.forEach((logic) => {
@@ -135,56 +156,18 @@ function RequestForm() {
                 e.target.style.backgroundColor = appColor.primaryLight;
                 e.target.style.color = appColor.white;
               }}
-              onClick={() => {
-                var filled = true;
-                questionList.forEach((question) => {
-                  if (question.mandatory) {
-                    if (
-                      formResponses.filter(
-                        (response) =>
-                          response.question.question_id === question.question_id
-                      ).length === 0
-                    ) {
-                      filled = false;
-                      return;
-                    }
-                  }
-                });
-                if (filled) {
-                  if (!costEstimateView) {
-                    dispatch({ type: SUBMIT_FORM, payload: formResponses });
-                    alert("Form Submitted");
-                  } else {
-                    dispatch({
-                      type: TOGGLE_LOGIC,
-                      payload: null
-                    });
-                    alert("Please Review Your Cost Estimate and Submit!");
-                  }
-                } else {
-                  alert("Please fill out all mandatory fields");
-                }
-              }}
+              onClick={submitForm}
             >
               Submit
             </button>
           </div>
         </div>
-        <div
-            className="CostEstimate"
-            style={{ color: appColor.white }}
-          >
-            {costEstimateView ? (
-              <CostEstimateCollapsed />
-            ) : (
-              <CostEstimateFull/>
-            )}
-            </div>
+        {hideCost ? <CostEstimateCollapsed /> : <CostEstimateFull />}
       </div>
     );
-  } else {
-    return null;
   }
+
+  return null;
 }
 
 export default RequestForm;

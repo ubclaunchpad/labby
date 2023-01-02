@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { TOGGLE_LOGIC } from "../../redux/actions/uiActions";
+import { TOGGLE_COST_ESTIMATE } from "../../redux/actions/uiActions";
 import "./index.css";
 import { appColor } from "../../constants";
 import MoneyGray from "../../assets/MoneyGray.png";
@@ -13,10 +13,7 @@ export const CostEstimateCollapsed = () => {
       className="CostEstimateCollapsedContainer"
       style={{ backgroundColor: appColor.lightGray }}
       onClick={() => {
-        dispatch({
-          type: TOGGLE_LOGIC,
-          payload: null,
-        });
+        dispatch({ type: TOGGLE_COST_ESTIMATE });
       }}
     >
       <img className="Ellipse" src={Ellipse} alt="Ellipse" />
@@ -40,10 +37,7 @@ export const CostEstimateFull = () => {
         src={X}
         alt="Delete"
         onClick={() => {
-          dispatch({
-            type: TOGGLE_LOGIC,
-            payload: null,
-          });
+          dispatch({ type: TOGGLE_COST_ESTIMATE });
         }}
       />
       <div className="CostEstimateTitle">Cost Estimate</div>
@@ -56,20 +50,20 @@ export const CostEstimateFull = () => {
 
       <div className="CostEstimates">
         {formResponses.map((response) => {
-          console.log(response)
+          console.log(response);
           const cost = costEstimateMap.get(response.question.answer);
           if (cost != null) {
             let quantity = response.quantity ?? 1;
-            costSum += (cost * quantity);
+            costSum += cost * quantity;
             return (
-              <div class="CostBox" key={response.question.answer.answer_id}>
-                <div class="CostLeft"> {response.question.answer} </div>
-                <div class="CostCenter"> {`${quantity}`} </div>
-                <div class="CostRight"> ${cost * quantity} </div>
+              <div className="CostBox" key={response.question.answer}>
+                <div className="CostLeft"> {response.question.answer} </div>
+                <div className="CostCenter"> {`${quantity}`} </div>
+                <div className="CostRight"> ${cost * quantity} </div>
               </div>
             );
           }
-          return null
+          return null;
         })}
       </div>
 

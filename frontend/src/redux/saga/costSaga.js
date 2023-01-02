@@ -4,7 +4,7 @@ import { getCosts} from "../api/costApi";
 
 export function* fetchCost({ payload }) {
   const costs = [];
-    let organization = "UBC";
+    let organization = "MAPcore";
   
     if (payload.formResponses.length !== 0) {
       for (var i = 0; i < payload.formResponses.length; i++) {

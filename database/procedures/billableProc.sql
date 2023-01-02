@@ -15,7 +15,8 @@ CREATE PROCEDURE `save_billable` (
     IN `_completedTime` DATETIME,
     IN `_billed` BOOLEAN,
     IN `_billedTime` DATETIME
-) BEGIN INSERT INTO `billable` (
+) BEGIN 
+INSERT INTO `billable` (
     `billable_id`,
     `fk_sow_id`,
     `name`,
