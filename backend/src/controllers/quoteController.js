@@ -2,15 +2,15 @@ import { Quote } from "../models/quote.js";
 export default class QuoteController {
   saveCost(req) {
     return new Promise((resolve, reject) => {
-      if (!req.body.answer_id || !req.body.organization || !req.body.cost) {
+      if (!req.body.answer_id || !req.body.org_type || !req.body.cost) {
         return reject({ error: "Error with request body." });
       }
       const QuoteModel = new Quote();
       const costData = {
         answer_id: req.body.answer_id,
-        organization: req.body.organization,
+        org_type: req.body.org_type,
         cost: req.body.cost,
-        cost_id: Math.floor(Math.random() * 100),
+        cost_id: req.body.cost_id,
       };
       QuoteModel.insertCost(costData, (err, result) => {
         if (err) {
@@ -38,13 +38,13 @@ export default class QuoteController {
     return new Promise((resolve, _) => {
       const QuoteModel = new Quote();
       const responses = req.body.responses;
-      const organization = req.body.organization;
+      const org_type = req.body.org_type;
       let totalCost = 0;
       let promises = [];
 
       responses.forEach(async (answer_id) => {
         let costPromise = new Promise((resolve) => {
-          QuoteModel.getCost(organization, answer_id).then((cost) => {
+          QuoteModel.getCost(org_type, answer_id).then((cost) => {
             resolve(cost);
           });
         });

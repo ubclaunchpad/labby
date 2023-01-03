@@ -66,8 +66,7 @@ const CostCenterTable = () => {
   const [count, setCount] = useState(3);
 
   const handleDelete = (key) => {
-    const newData = dataSource.filter((item) => item.key !== key);
-    dispatch({ type: DELETE_SERVICE, payload: newData });
+    dispatch({ type: DELETE_SERVICE, payload: key });
   };
   const handleAdd = () => {
     const newData = {

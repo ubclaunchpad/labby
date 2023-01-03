@@ -97,14 +97,6 @@ export class Task {
     });
   }
 
-  async getTask() {
-    let helper = new QuoteHelper();
-
-    let result = await helper.getAnswerCost(organization, answerId);
-
-    return result;
-  }
-
   deleteTask(taskId, result) {
     con.query("CALL delete_task(?)", taskId, function (error, results) {
       if (error) {

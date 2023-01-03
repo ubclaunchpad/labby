@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   ADD_SERVICE,
   DELETE_SERVICE,
-  SAVE_CELL_DATA,
+  LOAD_ALL_COST,
+  UPDATE_COST,
 } from "../../redux/actions/costActions";
 import { Table, Form, Popconfirm, Input } from "antd";
 import { appColor } from "../../constants";
@@ -16,13 +17,13 @@ const CostTable = () => {
       title: "Service",
       dataIndex: "service",
       key: "service",
-      editable: true,
+      editable: false,
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      editable: true,
+      editable: false,
       width: "60%",
     },
     {
@@ -44,7 +45,7 @@ const CostTable = () => {
       editable: true,
     },
     {
-      title: "operation",
+      title: "",
       dataIndex: "operation",
       render: (_, record) =>
         dataSource.length >= 1 ? (
@@ -63,11 +64,14 @@ const CostTable = () => {
     (state) => state.costReducer.costTableServices
   );
 
+  useEffect(() => {
+    dispatch({ type: LOAD_ALL_COST });
+  }, [dispatch]);
+
   const [count, setCount] = useState(3);
 
   const handleDelete = (key) => {
-    const newData = dataSource.filter((item) => item.key !== key);
-    dispatch({ type: DELETE_SERVICE, payload: newData });
+    dispatch({ type: DELETE_SERVICE, payload: key });
   };
   const handleAdd = () => {
     const newData = {
@@ -82,14 +86,13 @@ const CostTable = () => {
     setCount(count + 1);
   };
   const handleSave = (row) => {
-    const newData = [...dataSource];
-    const index = newData.findIndex((item) => row.key === item.key);
-    const item = newData[index];
-    newData.splice(index, 1, {
-      ...item,
-      ...row,
-    });
-    dispatch({ type: SAVE_CELL_DATA, payload: newData });
+    const newData = {
+      answer_id: row.key,
+      org_type: row.dataIndex.charAt(0).toUpperCase() + row.dataIndex.slice(1),
+      cost: row[row.dataIndex].slice(1),
+      cost_id: row.idMap[row.dataIndex],
+    };
+    dispatch({ type: UPDATE_COST, payload: newData });
   };
 
   const EditableContext = React.createContext(null);
@@ -133,6 +136,7 @@ const CostTable = () => {
         handleSave({
           ...record,
           ...values,
+          dataIndex,
         });
       } catch (errInfo) {
         console.log(`Saving table data failed: ${errInfo}`);

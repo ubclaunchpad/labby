@@ -82,7 +82,7 @@ END $$
 CREATE PROCEDURE `load_costs` ()
 
 BEGIN
-    SELECT question, answer, organization_name, cost
+    SELECT question, answer, questions_cost.fk_answer_id, organization_name, cost, questions_cost.cost_id, questions_cost.price_category
     FROM
         questions
     
@@ -93,13 +93,15 @@ BEGIN
         ON questions_answer.answer_id = questions_cost.fk_answer_id
 
     LEFT JOIN organizations
-        ON organizations.organization_id = questions_cost.fk_organization_id
+        ON organizations.organization_type = questions_cost.price_category
+
+    WHERE cost IS NOT NULL
     ORDER BY 
         position_index;
   
 END $$
 
-CREATE PROCEDURE `load_organization_costs` (IN org VARCHAR(50))
+CREATE PROCEDURE `load_organization_costs` (IN org_type VARCHAR(50))
 BEGIN
 SELECT question, answer, fk_answer_id, cost
     FROM
@@ -110,7 +112,7 @@ SELECT question, answer, fk_answer_id, cost
 
     LEFT JOIN questions_cost
         ON questions_answer.answer_id = questions_cost.fk_answer_id
-        WHERE questions_cost.fk_organization_id = org
+        WHERE questions_cost.price_category = org_type
 
     ORDER BY 
         position_index;

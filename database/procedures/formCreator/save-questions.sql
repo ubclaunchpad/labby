@@ -96,22 +96,20 @@ CREATE PROCEDURE `save_cost` (
    IN `_cost_id` VARCHAR(50),
    IN `_cost` DOUBLE,
    IN `_fk_answer_id` VARCHAR(50),
-   IN `_fk_organization_id` VARCHAR(50)
+   IN `_price_category` VARCHAR(50)
  
 ) BEGIN REPLACE INTO `questions_cost` (
    `cost_id`,
    `cost`,
    `fk_answer_id`,
-   `fk_organization_id`
-  
+   `price_category`
 )
 VALUES
    (
    `_cost_id`, 
    `_cost`,
   `_fk_answer_id`,
-  `_fk_organization_id`
- 
+  `_price_category`
    );
 
 END $$
