@@ -1,7 +1,6 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  ADD_SERVICE,
   DELETE_SERVICE,
   LOAD_ALL_COST,
   UPDATE_COST,
@@ -10,6 +9,8 @@ import { Table, Form, Popconfirm, Input } from "antd";
 import { appColor } from "../../constants";
 import "antd/dist/antd.min.css";
 import "./index.css";
+import { LOAD_QUESTION } from "../../redux/actions/questionActions";
+import uuid from "react-uuid";
 
 const CostTable = () => {
   const columns = [
@@ -18,13 +19,14 @@ const CostTable = () => {
       dataIndex: "service",
       key: "service",
       editable: false,
+      width: "100%",
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
       editable: false,
-      width: "60%",
+      width: "100%",
     },
     {
       title: "Internal",
@@ -63,27 +65,43 @@ const CostTable = () => {
   const dataSource = useSelector(
     (state) => state.costReducer.costTableServices
   );
+  const serviceOptions = useSelector(
+    (state) => state.questionReducer.answerList
+  );
+  const [newService, setNewService] = useState(null);
 
   useEffect(() => {
     dispatch({ type: LOAD_ALL_COST });
+    dispatch({ type: LOAD_QUESTION });
   }, [dispatch]);
-
-  const [count, setCount] = useState(3);
 
   const handleDelete = (key) => {
     dispatch({ type: DELETE_SERVICE, payload: key });
   };
   const handleAdd = () => {
-    const newData = {
-      key: count + 1,
-      service: `New Service ${count}`,
-      description: "Click here to edit... ",
-      internal: "$",
-      external: "$",
-      industry: "$",
-    };
-    dispatch({ type: ADD_SERVICE, payload: newData });
-    setCount(count + 1);
+    if (newService !== null) {
+      const newDataInternal = {
+        answer_id: newService.answer_id,
+        org_type: "Internal",
+        cost: 0,
+        cost_id: uuid(),
+      };
+      const newDataExternal = {
+        answer_id: newService.answer_id,
+        org_type: "External",
+        cost: 0,
+        cost_id: uuid(),
+      };
+      const newDataIndustry = {
+        answer_id: newService.answer_id,
+        org_type: "Industry",
+        cost: 0,
+        cost_id: uuid(),
+      };
+      dispatch({ type: UPDATE_COST, payload: newDataInternal });
+      dispatch({ type: UPDATE_COST, payload: newDataExternal });
+      dispatch({ type: UPDATE_COST, payload: newDataIndustry });
+    }
   };
   const handleSave = (row) => {
     const newData = {
@@ -196,15 +214,24 @@ const CostTable = () => {
       <div className="addService">
         <select
           className="ServiceQuestionSelect"
-          value="Select your service question here..."
-          onChange={() => {}}
+          defaultValue={"Select your service question here..."}
+          onChange={(event) => {
+            const selected = JSON.parse(event.target.value);
+            setNewService(selected);
+          }}
         >
-          <option value="Select your service question here..." disabled>
-            Select your service question here...
-          </option>
-          <option value="sectioning">Sectioning</option>
-          <option value="macrodisection">Macrodisection</option>
-          <option value="scrolling">Scrolling</option>
+          {newService === null && (
+            <option value="Select your service question here..." disabled>
+              Select your service question here...
+            </option>
+          )}
+          {Object.values(serviceOptions)
+            .flat()
+            .map((question) => (
+              <option key={question.answer_id} value={JSON.stringify(question)}>
+                {question.question}-{question.answer}
+              </option>
+            ))}
         </select>
         <button
           className="BillingAddButton"

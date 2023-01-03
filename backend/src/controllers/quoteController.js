@@ -2,7 +2,7 @@ import { Quote } from "../models/quote.js";
 export default class QuoteController {
   saveCost(req) {
     return new Promise((resolve, reject) => {
-      if (!req.body.answer_id || !req.body.org_type || !req.body.cost) {
+      if (!req.body.answer_id || !req.body.org_type) {
         return reject({ error: "Error with request body." });
       }
       const QuoteModel = new Quote();

@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { ADD_SERVICE, SET_ALL_COST } from "../actions/costActions";
+import { SET_ALL_COST } from "../actions/costActions";
 
 const defaultCostDataSourceData = [
   {
@@ -84,10 +84,6 @@ const costTableServices = (state = defaultCostDataSourceData, action) => {
         }
       });
       return Array.from(pricingMap.values());
-    }
-    case ADD_SERVICE: {
-      state.push(action.payload);
-      return [...state];
     }
     default:
       return state;
