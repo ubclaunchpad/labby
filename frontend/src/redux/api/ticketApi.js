@@ -30,7 +30,20 @@ export const updateTicketStatusApi = async (payload) => {
       status: payload.status,
     });
 
-    const tickets = await axios.post(`task/${payload.ticketId}`, data);
+    const tickets = await axios.post(`task/status/${payload.ticketId}`, data);
+    return tickets;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const updateTicketDescriptionApi = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      description: payload.description,
+    });
+
+    const tickets = await axios.post(`task/description/${payload.ticketId}`, data);
     return tickets;
   } catch (err) {
     return console.error(err);

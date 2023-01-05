@@ -23,6 +23,7 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
             id: ticket.subtask_id,
             code: ticket.subtask_id,
             title: ticket.subtask_title,
+            description: ticket.subtask_description,
             assignees: [],
             reminder: false,
           };
@@ -43,6 +44,7 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
             id: ticket.task_id,
             code: ticket.task_id,
             title: ticket.task_title,
+            description: ticket.task_description,
             assignees: [],
             reminder: false,
           };

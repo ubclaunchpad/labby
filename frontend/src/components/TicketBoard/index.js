@@ -6,6 +6,7 @@ import {
   GET_TICKET_BOARD,
   SET_ACTIVE_TICKET,
   UPDATE_TICKET_BOARD,
+  UPDATE_TICKET_DESCRIPTION,
   UPDATE_TICKET_STATUS,
 } from "../../redux/actions/ticketActions";
 import "./index.css";
@@ -22,6 +23,7 @@ const Task = (props) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           onClick={() => {
+            console.log(props.task)
             dispatch({ type: SET_ACTIVE_TICKET, payload: props.task });
           }}
         >
@@ -172,31 +174,42 @@ export const TicketBoard = () => {
             dispatch({ type: SET_ACTIVE_TICKET, payload: null });
           }}
         >
-          <div className="ticketDetail">
+          <div
+            className="ticketDetail"
+            onClick={(event) => {
+              event.stopPropagation();
+            }}
+          >
             <div className="ticketTitle">
               <div className="ticketTitleId">{currentTicket.code}</div>
               <div>{currentTicket.title}</div>
             </div>
-            <div className="ticketTags">
-              Assignees
-            </div>
+            <div className="ticketTags">Assignees</div>
             <div className="ticketDescription">
-              <div>Description</div>
-              <div>Type here...</div>
+              <div className="ticketSectionTitle">Description</div>
+              <Input.TextArea
+                placeholder="Type here..."
+                rows={5}
+                className="ticketDescriptionInput"
+                defaultValue={currentTicket.description}
+                onBlur={(e) => {
+                  dispatch({
+                    type: UPDATE_TICKET_DESCRIPTION,
+                    payload: {
+                      ticketId: currentTicket.code,
+                      description: e.target.value,
+                    },
+                  });
+                }}
+              />
             </div>
             <div className="ticketInfo">
               <div className="ticketColumn">
-                <div className="ticketSubtasks">
-                  Subtasks
-                </div>
-                <div className="ticketAttachments">
-                  Attachments
-                </div>
+                <div className="ticketSubtasks">Subtasks</div>
+                <div className="ticketAttachments">Attachments</div>
               </div>
               <div className="ticketColumn">
-                <div className="ticketCosts">
-                  Service & Costs
-                </div>
+                <div className="ticketCosts">Service & Costs</div>
               </div>
             </div>
           </div>
