@@ -1,3 +1,0 @@
-export const SET_BILLABLE = "SET_BILLABLE";
-
-export const LOAD_BILLABLE = "LOAD_BILLABLE";
