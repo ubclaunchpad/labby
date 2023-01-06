@@ -12,11 +12,10 @@ BEGIN
 CREATE TABLE `questions_cost` (
 	cost_id VARCHAR(50) NOT NULL,
 	fk_answer_id VARCHAR(50) NOT NULL,
-	fk_organization_id VARCHAR(50),
+	price_category VARCHAR(50),
 	cost DOUBLE,
 	PRIMARY KEY (`cost_id`),
-	FOREIGN KEY (fk_answer_id) REFERENCES questions_answer(answer_id) ON DELETE CASCADE,
-	FOREIGN KEY (fk_organization_id) REFERENCES organizations(organization_id) ON DELETE CASCADE  
+	FOREIGN KEY (fk_answer_id) REFERENCES questions_answer(answer_id) ON DELETE CASCADE
 );
  
 END$$

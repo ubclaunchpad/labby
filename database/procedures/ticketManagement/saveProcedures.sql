@@ -38,10 +38,20 @@ UPDATE `subtasks` SET `subtask_state`=`_task_state` WHERE `subtask_id`=`_task_id
   
 END $$
 
+CREATE PROCEDURE `update_task_description` (
+   IN `_task_id` VARCHAR(50),
+   IN `_task_description` VARCHAR(250)
+ 
+) BEGIN 
+UPDATE `tasks` SET `task_description`=`_task_description` WHERE `task_id`=`_task_id`;
+UPDATE `subtasks` SET `subtask_description`=`_task_description` WHERE `subtask_id`=`_task_id`;
+  
+END $$
 
 CREATE PROCEDURE `save_subtask` (
    IN `_subtask_id` VARCHAR(50),
    IN `_subtask_title` VARCHAR(100),
+   IN `_subtask_description` VARCHAR(250),
    IN `_subtask_state` VARCHAR(50),
    IN `_fk_task_id` VARCHAR(50)
 
@@ -49,6 +59,7 @@ CREATE PROCEDURE `save_subtask` (
 ) BEGIN INSERT INTO `subtasks` (
    `subtask_id`,
    `subtask_title`,
+   `subtask_description`,
    `subtask_state`,
    `fk_task_id`
 )
@@ -56,6 +67,7 @@ VALUES
    (
    `_subtask_id`,
    `_subtask_title`,
+   `_subtask_description`,
    `_subtask_state`,
    `_fk_task_id`
    );

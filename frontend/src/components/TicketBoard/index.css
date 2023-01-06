@@ -212,6 +212,17 @@
   margin-right: 8px;
 }
 
+.ticketSectionTitle {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.ticketDescriptionInput {
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 5px;
+}
+
 .ticketTags {
   display: flex;
   align-items: center;
@@ -224,7 +235,6 @@
  display: flex;
  flex-direction: column;
  align-items: flex-start;
- background-color: blue;
  margin-top: 10px;
  height: 120px;
 }

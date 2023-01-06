@@ -9,7 +9,7 @@ export class Quote {
                 costData.cost_id,
                 costData.cost,
                 costData.answer_id,
-                costData.organization,
+                costData.org_type,
             ],
             function (error, results) {
                 if (error) {
@@ -35,10 +35,10 @@ export class Quote {
         });
       }
 
-    async getCost(organization, answerId) {
+    async getCost(org_type, answerId) {
         let helper = new QuoteHelper();
 
-        let result = await helper.getAnswerCost(organization, answerId);
+        let result = await helper.getAnswerCost(org_type, answerId);
 
         return result;
     }

@@ -30,7 +30,7 @@ export default class TaskController {
     });
   }
 
-  updateTask(req) {
+  updateTaskStatus(req) {
     return new Promise((resolve, reject) => {
       if (!req.body.status) {
         return reject({ error: "Error with request body." });
@@ -39,6 +39,26 @@ export default class TaskController {
       TaskModel.updateStatus(
         req.params.taskId,
         req.body.status,
+        (err, result) => {
+          if (err) {
+            reject({ error: err });
+          }
+          this.isTaskLoaded = false;
+          resolve(result);
+        }
+      );
+    });
+  }
+
+  updateTaskDescription(req) {
+    return new Promise((resolve, reject) => {
+      if (!req.body.description) {
+        return reject({ error: "Error with request body." });
+      }
+      const TaskModel = new Task();
+      TaskModel.updateDescription(
+        req.params.taskId,
+        req.body.description,
         (err, result) => {
           if (err) {
             reject({ error: err });
@@ -59,6 +79,7 @@ export default class TaskController {
       const subtaskData = {
         subtask_id: Math.floor(Math.random() * 100),
         task_title: req.body.task_title,
+        task_description: req.body.task_description,
         task_state: req.body.task_state,
         task_id: req.body.task_id,
       };
@@ -67,6 +88,19 @@ export default class TaskController {
           reject({ error: err });
         }
         this.isTaskLoaded = false;
+        resolve(result);
+      });
+    });
+  }
+
+  loadAssignee() {
+    // added
+    return new Promise((resolve, reject) => {
+      const TaskModel = new Task();
+      TaskModel.loadAssignee((err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
         resolve(result);
       });
     });
@@ -137,8 +171,6 @@ export default class TaskController {
       return [];
     }
   }
-
-  populateTaskMap(result) {} // why is this an empty function?
 
   deleteTask(id) {
     return new Promise((resolve, reject) => {

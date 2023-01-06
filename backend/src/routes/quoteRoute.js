@@ -5,7 +5,7 @@ const router = Router();
 const quoteController = new QuoteController();
 
 router.post("/", (req, res) => {
-    if (!req || req == undefined || req.body.length == undefined || !req.body) {
+    if (!req || req == undefined || !req.body) {
         res.status(400).send({
             message: "Content can not be empty!",
         });

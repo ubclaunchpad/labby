@@ -17,13 +17,22 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
       let inProgressList = [];
       let doneList = [];
       let blockedList = [];
-      action.payload.forEach((ticket) => {
+      let assigneeMap = {}
+      // Map Assignees
+      action.payload.assigneeList.forEach((assignee) => {
+        let assigneeList = assigneeMap[assignee.task_id] ?? [];
+        assigneeList.push(assignee);
+        assigneeMap[assignee.task_id] = assigneeList;
+      });
+
+      action.payload.ticketList.forEach((ticket) => {
         if (ticket.subtask_id) {
           ticketMap[ticket.subtask_id] = {
             id: ticket.subtask_id,
             code: ticket.subtask_id,
             title: ticket.subtask_title,
-            assignees: [],
+            description: ticket.subtask_description,
+            assignees: assigneeMap[ticket.subtask_id] ?? [],
             reminder: false,
           };
           if (ticket.subtask_state === "completed") {
@@ -43,18 +52,8 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
             id: ticket.task_id,
             code: ticket.task_id,
             title: ticket.task_title,
-            assignees: [{
-              id: "51",
-              firstName: "Chad",
-              lastName: "Robinson",
-              role: "Smart lab person",
-            },
-            {
-              id: "52",
-              firstName: "Mitsuki",
-              lastName: "Miyazumi",
-              role: "Lab Assistant",
-            }], // TODO: add assignees
+            description: ticket.task_description,
+            assignees: assigneeMap[ticket.task_id] ?? [],
             reminder: false,
           };
           if (ticket.task_state === "completed") {

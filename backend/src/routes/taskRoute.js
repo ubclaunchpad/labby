@@ -21,9 +21,20 @@ router.post("/", (req, res) => {
     });
 });
 
-router.post("/:taskId", (req, res) => {
+router.post("/status/:taskId", (req, res) => {
   taskController
-    .updateTask(req)
+    .updateTaskStatus(req)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
+
+router.post("/description/:taskId", (req, res) => {
+  taskController
+    .updateTaskDescription(req)
     .then((response) => {
       res.status(200).json(response);
     })
@@ -52,6 +63,17 @@ router.post("/subtask", (req, res) => {
 router.get("/", (_, res) => {
   taskController
     .loadTasks()
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
+
+router.get("/assignee", (_, res) => {
+  taskController
+    .loadAssignee()
     .then((response) => {
       res.status(200).json(response);
     })

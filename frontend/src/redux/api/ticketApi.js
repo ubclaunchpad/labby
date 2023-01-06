@@ -6,6 +6,15 @@ const axios = defaultAxios.create({
   headers: { "Content-Type": "application/json" },
 });
 
+export const getAssignees = async () => {
+  try {
+    const assigneeList = await axios.get("task/assignee");
+    return assigneeList;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const getTickets = async () => {
   try {
     const tickets = await axios.get("task/");
@@ -30,7 +39,20 @@ export const updateTicketStatusApi = async (payload) => {
       status: payload.status,
     });
 
-    const tickets = await axios.post(`task/${payload.ticketId}`, data);
+    const tickets = await axios.post(`task/status/${payload.ticketId}`, data);
+    return tickets;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const updateTicketDescriptionApi = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      description: payload.description,
+    });
+
+    const tickets = await axios.post(`task/description/${payload.ticketId}`, data);
     return tickets;
   } catch (err) {
     return console.error(err);

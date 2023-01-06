@@ -35,8 +35,7 @@ CREATE PROCEDURE `delete_cost`  (
     IN id VARCHAR(50)
 )
 BEGIN
-    DELETE FROM questions_cost WHERE cost_id = id;
-
+    DELETE FROM questions_cost WHERE fk_answer_id = id;
 END $$
 
 CREATE PROCEDURE `delete_organization`  (
@@ -44,7 +43,6 @@ CREATE PROCEDURE `delete_organization`  (
 )
 BEGIN
     DELETE FROM organizations WHERE organization_id = id;
-
 END $$
 
 CREATE PROCEDURE `delete_condition`  (
@@ -52,7 +50,6 @@ CREATE PROCEDURE `delete_condition`  (
 )
 BEGIN
     DELETE FROM conditions WHERE condition_id = id;
-
 END $$
 
 DELIMITER ; 

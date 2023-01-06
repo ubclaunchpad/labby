@@ -13,6 +13,9 @@ function MultiSelect({ question }) {
   const dispatch = useDispatch();
   const [options, setOptions] = useState([]);
   const answerList = useSelector((state) => state.questionReducer.answerList);
+  const costEstimateMap = useSelector(
+    (state) => state.costEstimateReducer.costEstimateList
+  );
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [quantityMap, setQuantityMap] = useState({});
 
@@ -99,7 +102,7 @@ function MultiSelect({ question }) {
                   />
                   <div className="new-question-input">{option.answer}</div>
                 </div>
-                {selectedAnswers.includes(option.answer_id) ? (
+                {(selectedAnswers.includes(option.answer_id) && costEstimateMap.has(option.answer)) ? (
                   <div className="quantityBox">
                     <input
                       className="quantityInput"

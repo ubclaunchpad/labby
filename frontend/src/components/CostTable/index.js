@@ -1,14 +1,16 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  ADD_SERVICE,
   DELETE_SERVICE,
-  SAVE_CELL_DATA,
+  LOAD_ALL_COST,
+  UPDATE_COST,
 } from "../../redux/actions/costActions";
 import { Table, Form, Popconfirm, Input } from "antd";
 import { appColor } from "../../constants";
 import "antd/dist/antd.min.css";
 import "./index.css";
+import { LOAD_QUESTION } from "../../redux/actions/questionActions";
+import uuid from "react-uuid";
 
 const CostTable = () => {
   const columns = [
@@ -16,14 +18,15 @@ const CostTable = () => {
       title: "Service",
       dataIndex: "service",
       key: "service",
-      editable: true,
+      editable: false,
+      width: "100%",
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      editable: true,
-      width: "60%",
+      editable: false,
+      width: "100%",
     },
     {
       title: "Internal",
@@ -44,7 +47,7 @@ const CostTable = () => {
       editable: true,
     },
     {
-      title: "operation",
+      title: "",
       dataIndex: "operation",
       render: (_, record) =>
         dataSource.length >= 1 ? (
@@ -62,34 +65,52 @@ const CostTable = () => {
   const dataSource = useSelector(
     (state) => state.costReducer.costTableServices
   );
+  const serviceOptions = useSelector(
+    (state) => state.questionReducer.answerList
+  );
+  const [newService, setNewService] = useState(null);
 
-  const [count, setCount] = useState(3);
+  useEffect(() => {
+    dispatch({ type: LOAD_ALL_COST });
+    dispatch({ type: LOAD_QUESTION });
+  }, [dispatch]);
 
   const handleDelete = (key) => {
-    const newData = dataSource.filter((item) => item.key !== key);
-    dispatch({ type: DELETE_SERVICE, payload: newData });
+    dispatch({ type: DELETE_SERVICE, payload: key });
   };
   const handleAdd = () => {
-    const newData = {
-      key: count + 1,
-      service: `New Service ${count}`,
-      description: "Click here to edit... ",
-      internal: "$",
-      external: "$",
-      industry: "$",
-    };
-    dispatch({ type: ADD_SERVICE, payload: newData });
-    setCount(count + 1);
+    if (newService !== null) {
+      const newDataInternal = {
+        answer_id: newService.answer_id,
+        org_type: "Internal",
+        cost: 0,
+        cost_id: uuid(),
+      };
+      const newDataExternal = {
+        answer_id: newService.answer_id,
+        org_type: "External",
+        cost: 0,
+        cost_id: uuid(),
+      };
+      const newDataIndustry = {
+        answer_id: newService.answer_id,
+        org_type: "Industry",
+        cost: 0,
+        cost_id: uuid(),
+      };
+      dispatch({ type: UPDATE_COST, payload: newDataInternal });
+      dispatch({ type: UPDATE_COST, payload: newDataExternal });
+      dispatch({ type: UPDATE_COST, payload: newDataIndustry });
+    }
   };
   const handleSave = (row) => {
-    const newData = [...dataSource];
-    const index = newData.findIndex((item) => row.key === item.key);
-    const item = newData[index];
-    newData.splice(index, 1, {
-      ...item,
-      ...row,
-    });
-    dispatch({ type: SAVE_CELL_DATA, payload: newData });
+    const newData = {
+      answer_id: row.key,
+      org_type: row.dataIndex.charAt(0).toUpperCase() + row.dataIndex.slice(1),
+      cost: row[row.dataIndex].slice(1),
+      cost_id: row.idMap[row.dataIndex],
+    };
+    dispatch({ type: UPDATE_COST, payload: newData });
   };
 
   const EditableContext = React.createContext(null);
@@ -133,6 +154,7 @@ const CostTable = () => {
         handleSave({
           ...record,
           ...values,
+          dataIndex,
         });
       } catch (errInfo) {
         console.log(`Saving table data failed: ${errInfo}`);
@@ -192,15 +214,24 @@ const CostTable = () => {
       <div className="addService">
         <select
           className="ServiceQuestionSelect"
-          value="Select your service question here..."
-          onChange={() => {}}
+          defaultValue={"Select your service question here..."}
+          onChange={(event) => {
+            const selected = JSON.parse(event.target.value);
+            setNewService(selected);
+          }}
         >
-          <option value="Select your service question here..." disabled>
-            Select your service question here...
-          </option>
-          <option value="sectioning">Sectioning</option>
-          <option value="macrodisection">Macrodisection</option>
-          <option value="scrolling">Scrolling</option>
+          {newService === null && (
+            <option value="Select your service question here..." disabled>
+              Select your service question here...
+            </option>
+          )}
+          {Object.values(serviceOptions)
+            .flat()
+            .map((question) => (
+              <option key={question.answer_id} value={JSON.stringify(question)}>
+                {question.question}-{question.answer}
+              </option>
+            ))}
         </select>
         <button
           className="BillingAddButton"

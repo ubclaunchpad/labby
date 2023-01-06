@@ -29,13 +29,30 @@ export class Task {
     con.query(
       "CALL update_task_status(?, ?)",
       [taskId, taskStatus],
-      function (error, results) {
+      function (error, _) {
         if (error) {
           console.log("error: ", error);
           result(error, null);
         } else {
           result(null, {
-            result: `Task of ${taskStatus.task_id} Saved Successfully for Task ID: ${taskStatus.task_state}`,
+            result: `Task of ${taskId} Saved Successfully for Task ID: ${taskStatus}`,
+          });
+        }
+      }
+    );
+  }
+
+  updateDescription(taskId, taskDescription, result) {
+    con.query(
+      "CALL update_task_description(?, ?)",
+      [taskId, taskDescription],
+      function (error, _) {
+        if (error) {
+          console.log("error: ", error);
+          result(error, null);
+        } else {
+          result(null, {
+            result: `Task of ${taskId} Saved Successfully for Task ID: ${taskDescription}`,
           });
         }
       }
@@ -44,10 +61,11 @@ export class Task {
 
   insertSubtask(subtaskData, result) {
     con.query(
-      "CALL save_subtask(?, ?, ?, ?)",
+      "CALL save_subtask(?, ?, ?, ?, ?)",
       [
         subtaskData.subtask_id,
         subtaskData.task_title,
+        subtaskData.task_description,
         subtaskData.task_state,
         subtaskData.task_id,
       ],
@@ -62,6 +80,17 @@ export class Task {
         }
       }
     );
+  }
+
+  loadAssignee(result) {
+    con.query("CALL load_all_assignees", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res[0]);
+      }
+    });
   }
 
   loadTasks(result) {
@@ -95,14 +124,6 @@ export class Task {
         result(null, res[0]);
       }
     });
-  }
-
-  async getTask() {
-    let helper = new QuoteHelper();
-
-    let result = await helper.getAnswerCost(organization, answerId);
-
-    return result;
   }
 
   deleteTask(taskId, result) {
