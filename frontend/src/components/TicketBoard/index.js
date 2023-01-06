@@ -3,8 +3,10 @@ import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  ASSIGN_USER,
   GET_TICKET_BOARD,
   SET_ACTIVE_TICKET,
+  UNASSIGN_USER,
   UPDATE_TICKET_BOARD,
   UPDATE_TICKET_DESCRIPTION,
   UPDATE_TICKET_STATUS,
@@ -296,6 +298,12 @@ export const TicketBoard = () => {
                   <div
                     key={assignee.user_id}
                     className="task-card__assignees-container"
+                    onClick={() => {
+                      dispatch({
+                        type: UNASSIGN_USER,
+                        payload: { assignment_id: assignee.assignment_id },
+                      });
+                    }}
                   >
                     <AssigneeIcon
                       shapeColor={assigneeColor}
@@ -319,27 +327,37 @@ export const TicketBoard = () => {
                   <div className="assigneeAddModal">
                     <div className="ticketSectionTitle">Add Members</div>
                     <div className="newMemberView">
-                    {employeeList.map((assignee) => {
-                      const colorNumberMod = getColorNum(
-                        assignee.user_id,
-                        ticketsColors
-                      );
-                      const assigneeColor = ticketsColors[colorNumberMod];
-                      const assigneeInitials = `${assignee.username[0].toUpperCase()}`;
-                      return (
-                        <div
-                          key={assignee.user_id}
-                          className="task-card__assignees-container"
-                        >
-                          <AssigneeIcon
-                            shapeColor={assigneeColor}
-                            textColor={"white"}
-                            className="task-card__assignee-container"
-                            label={assigneeInitials}
-                          />
-                        </div>
-                      );
-                    })}
+                      {employeeList.map((assignee) => {
+                        const colorNumberMod = getColorNum(
+                          assignee.user_id,
+                          ticketsColors
+                        );
+                        const assigneeColor = ticketsColors[colorNumberMod];
+                        const assigneeInitials = `${assignee.username[0].toUpperCase()}`;
+                        return (
+                          <div
+                            key={assignee.user_id}
+                            className="task-card__assignees-container"
+                            onClick={() => {
+                              dispatch({
+                                type: ASSIGN_USER,
+                                payload: {
+                                  assignment_id: assignee.user_id + currentTicket.code,
+                                  user_id: assignee.user_id,
+                                  task_id: currentTicket.code,
+                                },
+                              });
+                            }}
+                          >
+                            <AssigneeIcon
+                              shapeColor={assigneeColor}
+                              textColor={"white"}
+                              className="task-card__assignee-container"
+                              label={assigneeInitials}
+                            />
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 ) : null}
