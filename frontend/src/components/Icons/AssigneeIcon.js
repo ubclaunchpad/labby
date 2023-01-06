@@ -69,7 +69,7 @@ export const AssigneeIcon = ({
           position: "absolute",
           width: 25,
           textAlign: "center",
-          top: "25%",
+          top: "20%",
           left: 0,
           fontSize: 10,
           color: textColor,
