@@ -58,3 +58,27 @@ export const updateTicketDescriptionApi = async (payload) => {
     return console.error(err);
   }
 };
+
+export const assignUserApi = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      assignment_id: payload.assignment_id,
+      user_id: payload.user_id,
+      task_id: payload.task_id,
+    });
+
+    const assignment = await axios.post(`assignment/`, data);
+    return assignment;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const unassignUserApi = async (payload) => {
+  try {
+    const assignment = await axios.delete(`assignment/${payload.assignment_id}`);
+    return assignment;
+  } catch (err) {
+    return console.error(err);
+  }
+};

@@ -35,6 +35,17 @@ export class User {
     });
   }
 
+  getEmployee(result) {
+    con.query(`CALL loadEmployee()`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res[0]);
+      }
+    });
+  }
+
   deleteUser(id, result) {
     con.query(`CALL deleteUser(?)`, [id], (err, res) => {
       if (err) {

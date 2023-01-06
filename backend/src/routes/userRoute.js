@@ -15,6 +15,17 @@ router.get("/", (_, res) => {
     });
 });
 
+router.get("/employee", (_, res) => {
+  userController
+    .getEmployee()
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
+
 router.delete("/:userId", (req, res) => {
   userController
     .deleteUser(req.params.userId)

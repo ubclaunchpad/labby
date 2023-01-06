@@ -3,6 +3,7 @@ USE `labby`;
 DROP procedure IF EXISTS `save_assignment`;
 DROP procedure IF EXISTS `load_assignees`;
 DROP procedure IF EXISTS `load_all_assignees`;
+DROP procedure IF EXISTS `delete_assignment`;
 
 DELIMITER $$
 
@@ -21,7 +22,15 @@ VALUES
     `_assignment_id`,
     `_fk_user_id`,
     `_task_id`
-   );
+   ) ON DUPLICATE KEY UPDATE
+    assignment.fk_user_id=_fk_user_id,
+    assignment.task_id=_task_id;
+END $$
+
+CREATE PROCEDURE `delete_assignment` (
+    IN `_assignment_id` VARCHAR(50)
+) BEGIN
+DELETE FROM assignment WHERE assignment_id=_assignment_id;
 END $$
 
 CREATE PROCEDURE `load_assignees` (

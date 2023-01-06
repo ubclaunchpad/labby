@@ -15,6 +15,15 @@ export const getUserlist = async () => {
   }
 };
 
+export const getEmployeeList = async () => {
+  try {
+    const userList = await axios.get("user/employee");
+    return userList;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const saveUserApi = async (payload) => {
   try {
     var data = JSON.stringify({

@@ -15,6 +15,19 @@ export default class UserController {
     });
   }
 
+  getEmployee() {
+    return new Promise((resolve, reject) => {
+      const UserModel = new User();
+
+      UserModel.getEmployee((err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+
   deleteUser(id) {
     return new Promise((resolve, reject) => {
       const UserModel = new User();

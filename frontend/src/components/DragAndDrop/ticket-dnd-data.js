@@ -1,12 +1,17 @@
 export const ticketBoardData = {
-  // tasks:{},
   tasks: {
     "task-1": {
       id: "task-1",
       code: "SOW123",
       title: "This is the ticket  title",
       assignees: [],
-      reminder: false,
+      reminder: true,
+      subtasks: [
+        { id: "123", completed: true, name: "subtask 1" },
+        { id: "456", completed: false, name: "subtask 2" },
+        { id: "789", completed: true, name: "subtask 3" },
+        { id: "10", completed: true, name: "subtask 3" },
+      ],
     },
     "task-2": {
       id: "task-2",
@@ -70,26 +75,23 @@ export const ticketBoardData = {
       id: "blocked",
       title: "Blocked",
       taskIds: ["task-1", "task-2", "task-3"],
-      //   taskIds: [],
     },
     open: {
       id: "open",
       title: "Open",
       taskIds: ["task-4"],
-      //   taskIds: [],
     },
     progress: {
       id: "progress",
       title: "In Progress",
       taskIds: ["task-5", "task-6", "task-7", "task-8"],
-      //   taskIds: [],
     },
     completed: {
       id: "completed",
       title: "Completed",
       taskIds: ["task-9"],
-      //   taskIds: [],
     },
   },
-  columnOrder: ["blocked", "open", "progress", "completed"],
+  columnOrder: ["open", "blocked", "progress", "completed"],
+  colors: { 1: "#D4D145", 2: "#CF6973" },
 };

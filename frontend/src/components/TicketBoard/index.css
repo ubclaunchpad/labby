@@ -1,6 +1,3 @@
-/* * {
-  border: 1px solid red;
-} */
 .ticketBoardContainer {
   display: flex;
   flex-direction: column;
@@ -71,13 +68,134 @@
 .taskList{
     padding: 8px;
 }
-.task{
+.task-card-container {
+  font-family: inherit;
+  font-size: 12px;
+  color: #6F6F6F;
+  display: flex; 
+  flex-direction: row; 
     margin-bottom: 8px;
-    padding: 8px;
     border-radius: 5px;
     background-color: #fff;
-    min-height: 100px;
-    cursor: pointer;
+    min-height: 110px;
+}
+.task-card-color-tab {
+  font-family: inherit; 
+  padding: 4px;
+  border-radius: 5px 0px 0px 5px;
+}
+.task-card-content{
+  display: flex; 
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;  
+  padding: 10px;
+}
+.task-card__header {
+  display: flex;
+  flex-direction: row; 
+  justify-content:space-between;
+}
+.task-card__code{
+  font-size: 16px;
+}
+.task-card__reminder--notify-true{
+  display: flex;
+  border-radius: 5px; 
+  background-color: #E08E89;
+  align-items: center;
+  justify-content: center;
+}
+.task-card__reminder--notify-false{
+  display: flex;
+  border-radius: 5px; 
+  background-color: none;
+  align-items: center;
+  justify-content: center;
+}
+.task-card__notificaton-container{
+  display:inline-block;
+  width: 30px; 
+  height: 30px; 
+}
+.notification-icon{
+  color: black;
+  margin: 3px;
+  padding-top: 1px;
+  }
+.task-card__body{
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row; 
+}
+
+.task-card__footer{
+  display: flex; 
+  flex-direction: row;
+  justify-content: space-between;
+}
+.task-card__subtasks-container{
+  display: flex; 
+  flex-direction: row;
+  align-items: center;
+  background: #E4E5EA; 
+  padding: 5px;
+  border-radius: 5px;
+}
+.task-card__subtask-checkbox{
+  display: inline-block; 
+  height: 14px;
+  margin-right: 5px;
+}
+
+.task-card__subtasks-completed-text{
+  margin-top: 1px;
+  display: inline-block;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.task-card__assignees-container-parent{
+  display: flex; 
+  flex-direction: row;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.task-card__assignees-container{
+  display: flex; 
+  flex-direction: row;
+}
+
+.task-card__assignee-container{
+  margin-left: 5px;
+  position: relative;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.assigneeAddModal {
+  background-color: #EEEEEE;
+  border-radius: 10px;
+  width: 96%;
+  height: 10%;
+  position: absolute;
+  left: 2%;
+  top: 12%;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+  flex-direction: column;
+}
+
+.newMemberView {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .ticketDetailBackground {
@@ -126,8 +244,7 @@
 .ticketTags {
   display: flex;
   align-items: center;
-  height: 50px;
-  background-color: green;
+  height: 30px;
   margin-top: 10px;
 }
 

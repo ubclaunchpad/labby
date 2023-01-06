@@ -3,33 +3,127 @@ import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  ASSIGN_USER,
   GET_TICKET_BOARD,
   SET_ACTIVE_TICKET,
+  UNASSIGN_USER,
   UPDATE_TICKET_BOARD,
   UPDATE_TICKET_DESCRIPTION,
   UPDATE_TICKET_STATUS,
 } from "../../redux/actions/ticketActions";
 import "./index.css";
-import { useEffect } from "react";
+import { clsx } from "clsx";
+// import { NotificationIcon } from "../Icons/NotifcationIcon";
+import { CheckBoxIcon } from "../Icons/CheckBoxIcon";
+import { AssigneeIcon } from "../Icons/AssigneeIcon";
+import { ticketsColors } from "../../constants";
+import { useEffect, useState } from "react";
+import { LOAD_EMPLOYEE } from "../../redux/actions/userActions";
+
+export const getColorNum = (id, colorArray) => {
+  if (colorArray) {
+    let colorNum = 0;
+    for (let i = 0; i < id.length; i++) {
+      colorNum += id.charCodeAt(i);
+    }
+    const mod = colorNum % Object.keys(colorArray).length;
+    return mod;
+  } else {
+    return 0;
+  }
+};
 
 const Task = (props) => {
+  const getCompletedSubtasks = (subtasks = []) => {
+    const totalSubtasks = subtasks?.length;
+    const completedSubtasks = subtasks
+      .map((subtask) => subtask.completed)
+      .filter(Boolean).length;
+    return { totalSubtasks, completedSubtasks };
+  };
+  const subtasks = props?.task?.subtasks;
+  const { totalSubtasks, completedSubtasks } = getCompletedSubtasks(subtasks);
+  const assignees = props?.task?.assignees;
+  const isReminder = props?.task.reminder;
+  const tabColorNum = getColorNum(props?.task?.id, ticketsColors);
   const dispatch = useDispatch();
   return (
     <Draggable draggableId={props.task.id} index={props.index}>
       {(provided, snapshot) => (
         <div
-          className="task"
+          className="task-card-container"
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           onClick={() => {
-            console.log(props.task)
+            console.log(props.task);
             dispatch({ type: SET_ACTIVE_TICKET, payload: props.task });
           }}
         >
-          {props.task.code}
-          <br />
-          {props.task.title}
+          <div
+            style={{ background: ticketsColors[tabColorNum] }}
+            className="task-card-color-tab"
+          />
+          <div className="task-card-content">
+            <div className="task-card__header">
+              <div className="task-card__code">{props.task.code}</div>
+              <div
+                className={clsx(
+                  isReminder && "task-card__reminder--notify-true",
+                  !isReminder && "task-card__reminder--notify-false"
+                )}
+              >
+                {/* <div className="task-card__notificaton-container">
+                  <NotificationIcon
+                    color={isReminder ? "#FFFFFF" : "#000000"}
+                    className="notification-icon"
+                    width={25}
+                    height={20}
+                  />
+                </div> */}
+              </div>
+            </div>
+            <div className="task-card__body">
+              <div className="task-card__title">{props.task.title}</div>
+            </div>
+            <div className="task-card__footer">
+              {completedSubtasks > 0 && (
+                <div className="task-card__subtasks-container">
+                  <CheckBoxIcon
+                    className={"task-card__subtask-checkbox"}
+                    checkColor={"#E4E5EA"}
+                    boxColor={"#FFFFFF"}
+                    width={14}
+                    height={14}
+                  />
+                  <div className="task-card__subtasks-completed-text">{`${completedSubtasks} / ${totalSubtasks} `}</div>
+                </div>
+              )}
+              <div className="task-card__assignees-container-parent">
+                {assignees.map((assignee) => {
+                  const colorNumberMod = getColorNum(
+                    assignee.user_id,
+                    ticketsColors
+                  );
+                  const assigneeColor = ticketsColors[colorNumberMod];
+                  const assigneeInitials = `${assignee.username[0].toUpperCase()}`;
+                  return (
+                    <div
+                      key={assignee.user_id}
+                      className="task-card__assignees-container"
+                    >
+                      <AssigneeIcon
+                        shapeColor={assigneeColor}
+                        textColor={"white"}
+                        className="task-card__assignee-container"
+                        label={assigneeInitials}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </Draggable>
@@ -66,8 +160,11 @@ export const TicketBoard = () => {
   const currentTicket = useSelector(
     (state) => state.ticketReducer.currentTicket
   );
+  const employeeList = useSelector((state) => state.userReducer.employeeList);
+  const [assigneeAddModal, setAssigneeAddModal] = useState(false);
 
   useEffect(() => {
+    dispatch({ type: LOAD_EMPLOYEE });
     dispatch({ type: GET_TICKET_BOARD });
   }, [dispatch]);
 
@@ -109,7 +206,7 @@ export const TicketBoard = () => {
       dispatch({ type: UPDATE_TICKET_BOARD, payload: newData });
       return;
     }
-    //move  tasks between columns
+    //move tasks between columns
     const newSourceTaskIds = Array.from(sourceColumn.taskIds);
     newSourceTaskIds.splice(source.index, 1);
     const newSourceColumn = {
@@ -171,12 +268,17 @@ export const TicketBoard = () => {
         <div
           className="ticketDetailBackground"
           onClick={() => {
-            dispatch({ type: SET_ACTIVE_TICKET, payload: null });
+            if (assigneeAddModal) {
+              setAssigneeAddModal(false);
+            } else {
+              dispatch({ type: SET_ACTIVE_TICKET, payload: null });
+            }
           }}
         >
           <div
             className="ticketDetail"
             onClick={(event) => {
+              setAssigneeAddModal(false);
               event.stopPropagation();
             }}
           >
@@ -184,7 +286,83 @@ export const TicketBoard = () => {
               <div className="ticketTitleId">{currentTicket.code}</div>
               <div>{currentTicket.title}</div>
             </div>
-            <div className="ticketTags">Assignees</div>
+            <div className="ticketTags">
+              {currentTicket.assignees.map((assignee) => {
+                const colorNumberMod = getColorNum(
+                  assignee.user_id,
+                  ticketsColors
+                );
+                const assigneeColor = ticketsColors[colorNumberMod];
+                const assigneeInitials = `${assignee.username[0].toUpperCase()}`;
+                return (
+                  <div
+                    key={assignee.user_id}
+                    className="task-card__assignees-container"
+                    onClick={() => {
+                      dispatch({
+                        type: UNASSIGN_USER,
+                        payload: { assignment_id: assignee.assignment_id },
+                      });
+                    }}
+                  >
+                    <AssigneeIcon
+                      shapeColor={assigneeColor}
+                      textColor={"white"}
+                      className="task-card__assignee-container"
+                      label={assigneeInitials}
+                    />
+                  </div>
+                );
+              })}
+              <div
+                key={"newAssignee"}
+                className="task-card__assignees-container"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setAssigneeAddModal(true);
+                }}
+              >
+                <AssigneeIcon className="task-card__assignee-container" empty />
+                {assigneeAddModal ? (
+                  <div className="assigneeAddModal">
+                    <div className="ticketSectionTitle">Add Members</div>
+                    <div className="newMemberView">
+                      {employeeList.map((assignee) => {
+                        const colorNumberMod = getColorNum(
+                          assignee.user_id,
+                          ticketsColors
+                        );
+                        const assigneeColor = ticketsColors[colorNumberMod];
+                        const assigneeInitials = `${assignee.username[0].toUpperCase()}`;
+                        return (
+                          <div
+                            key={assignee.user_id}
+                            className="task-card__assignees-container"
+                            onClick={() => {
+                              dispatch({
+                                type: ASSIGN_USER,
+                                payload: {
+                                  assignment_id: assignee.user_id + currentTicket.code,
+                                  user_id: assignee.user_id,
+                                  task_id: currentTicket.code,
+                                },
+                              });
+                            }}
+                          >
+                            <AssigneeIcon
+                              shapeColor={assigneeColor}
+                              textColor={"white"}
+                              className="task-card__assignee-container"
+                              label={assigneeInitials}
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+            </div>
             <div className="ticketDescription">
               <div className="ticketSectionTitle">Description</div>
               <Input.TextArea
