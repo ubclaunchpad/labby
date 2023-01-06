@@ -11,7 +11,7 @@ import {
 } from "../../redux/actions/ticketActions";
 import "./index.css";
 import { clsx } from "clsx";
-import { NotificationIcon } from "../Icons/NotifcationIcon";
+// import { NotificationIcon } from "../Icons/NotifcationIcon";
 import { CheckBoxIcon } from "../Icons/CheckBoxIcon";
 import { AssigneeIcon } from "../Icons/AssigneeIcon";
 import { ticketsColors } from "../../constants";
@@ -71,14 +71,14 @@ const Task = (props) => {
                   !isReminder && "task-card__reminder--notify-false"
                 )}
               >
-                <div className="task-card__notificaton-container">
+                {/* <div className="task-card__notificaton-container">
                   <NotificationIcon
                     color={isReminder ? "#FFFFFF" : "#000000"}
                     className="notification-icon"
                     width={25}
                     height={20}
                   />
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="task-card__body">
@@ -99,12 +99,12 @@ const Task = (props) => {
               )}
               <div className="task-card__assignees-container-parent">
                 {assignees.map((assignee) => {
-                  const colorNumberMod = getColorNum(assignee.id, colors);
+                  const colorNumberMod = getColorNum(assignee.user_id, colors);
                   const assigneeColor = colors[colorNumberMod];
-                  const assigneeInitials = `${assignee.firstName[0].toUpperCase()}${assignee.lastName[0].toUpperCase()}`;
+                  const assigneeInitials = `${assignee.username[0].toUpperCase()}`;
                   return (
                     <div
-                      key={assignee.id}
+                      key={assignee.user_id}
                       className="task-card__assignees-container"
                     >
                       <AssigneeIcon

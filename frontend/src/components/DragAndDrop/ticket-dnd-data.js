@@ -5,20 +5,7 @@ export const ticketBoardData = {
       id: "task-1",
       code: "SOW123",
       title: "This is the ticket  title",
-      assignees: [
-        {
-          id: "51",
-          firstName: "Chad",
-          lastName: "Robinson",
-          role: "Smart lab person",
-        },
-        {
-          id: "52",
-          firstName: "Mitsuki",
-          lastName: "Miyazumi",
-          role: "Lab Assistant",
-        },
-      ],
+      assignees: [],
       reminder: true,
       subtasks: [
         { id: "123", completed: true, name: "subtask 1" },
