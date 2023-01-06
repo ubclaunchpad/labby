@@ -3,6 +3,7 @@ USE `labby`;
 DROP PROCEDURE IF EXISTS `addUser`;
 DROP PROCEDURE IF EXISTS `deleteUser`;
 DROP PROCEDURE IF EXISTS `loadUser`;
+DROP PROCEDURE IF EXISTS `loadEmployee`;
 
 DELIMITER $$
 
@@ -45,6 +46,11 @@ END $$
 CREATE PROCEDURE `loadUser`  ()
 BEGIN
     SELECT * FROM users;
+END $$
+
+CREATE PROCEDURE `loadEmployee`  ()
+BEGIN
+    SELECT * FROM users WHERE employee = 1;
 END $$
 
 DELIMITER ;

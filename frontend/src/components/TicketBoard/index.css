@@ -1,6 +1,3 @@
-/* * {
-  border: 1px solid red;
-} */
 .ticketBoardContainer {
   display: flex;
   flex-direction: column;
@@ -93,8 +90,6 @@
   flex-wrap: wrap;
   width: 100%;  
   padding: 10px;
-
-
 }
 .task-card__header {
   display: flex;
@@ -178,6 +173,29 @@
   position: relative;
   width: 25px;
   height: 25px;
+  cursor: pointer;
+}
+
+.assigneeAddModal {
+  background-color: #EEEEEE;
+  border-radius: 10px;
+  width: 96%;
+  height: 10%;
+  position: absolute;
+  left: 2%;
+  top: 12%;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+  flex-direction: column;
+}
+
+.newMemberView {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .ticketDetailBackground {
@@ -226,8 +244,7 @@
 .ticketTags {
   display: flex;
   align-items: center;
-  height: 50px;
-  background-color: green;
+  height: 30px;
   margin-top: 10px;
 }
 
