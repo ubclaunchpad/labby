@@ -5,13 +5,26 @@ import {
   UPDATE_TICKET_DESCRIPTION,
   UPDATE_TICKET_STATUS,
 } from "../actions/ticketActions";
-import { getSubTickets, getTickets, updateTicketDescriptionApi, updateTicketStatusApi } from "../api/ticketApi";
+import {
+  getAssignees,
+  getSubTickets,
+  getTickets,
+  updateTicketDescriptionApi,
+  updateTicketStatusApi,
+} from "../api/ticketApi";
 
 export function* fetchTickets() {
+  const assigneeList = yield call(getAssignees);
   const ticketList = yield call(getTickets);
   const subticketList = yield call(getSubTickets);
 
-  yield put({ type: SET_TICKETS, payload: ticketList.data.concat(subticketList.data) });
+  yield put({
+    type: SET_TICKETS,
+    payload: {
+      ticketList: ticketList.data.concat(subticketList.data),
+      assigneeList: assigneeList.data,
+    },
+  });
 }
 
 export function* updateTicketStatus(action) {

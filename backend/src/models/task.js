@@ -82,6 +82,17 @@ export class Task {
     );
   }
 
+  loadAssignee(result) {
+    con.query("CALL load_all_assignees", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res[0]);
+      }
+    });
+  }
+
   loadTasks(result) {
     con.query("CALL load_tasks", (err, res) => {
       if (err) {

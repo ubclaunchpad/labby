@@ -6,6 +6,15 @@ const axios = defaultAxios.create({
   headers: { "Content-Type": "application/json" },
 });
 
+export const getAssignees = async () => {
+  try {
+    const assigneeList = await axios.get("task/assignee");
+    return assigneeList;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const getTickets = async () => {
   try {
     const tickets = await axios.get("task/");

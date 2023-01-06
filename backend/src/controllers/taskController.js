@@ -93,6 +93,19 @@ export default class TaskController {
     });
   }
 
+  loadAssignee() {
+    // added
+    return new Promise((resolve, reject) => {
+      const TaskModel = new Task();
+      TaskModel.loadAssignee((err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+
   loadTasks() {
     // added
     return new Promise((resolve, reject) => {

@@ -2,6 +2,7 @@ USE `labby`;
 
 DROP procedure IF EXISTS `save_assignment`;
 DROP procedure IF EXISTS `load_assignees`;
+DROP procedure IF EXISTS `load_all_assignees`;
 
 DELIMITER $$
 
@@ -31,6 +32,13 @@ BEGIN
     SELECT * FROM assignment 
     LEFT JOIN users ON assignment.fk_user_id = users.user_id
     WHERE assignment.task_id = `_task_id`;
+END $$
+
+CREATE PROCEDURE `load_all_assignees` ()
+
+BEGIN
+    SELECT * FROM assignment 
+    LEFT JOIN users ON assignment.fk_user_id = users.user_id;
 END $$
   
 DELIMITER ;
