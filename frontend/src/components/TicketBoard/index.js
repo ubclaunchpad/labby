@@ -342,7 +342,8 @@ export const TicketBoard = () => {
                               dispatch({
                                 type: ASSIGN_USER,
                                 payload: {
-                                  assignment_id: assignee.user_id + currentTicket.code,
+                                  assignment_id:
+                                    assignee.user_id + currentTicket.code,
                                   user_id: assignee.user_id,
                                   task_id: currentTicket.code,
                                 },
@@ -383,11 +384,29 @@ export const TicketBoard = () => {
             </div>
             <div className="ticketInfo">
               <div className="ticketColumn">
-                <div className="ticketSubtasks">Subtasks</div>
-                <div className="ticketAttachments">Attachments</div>
+                <div className="ticketSubtasks">
+                  <div className="contentList">
+                    <div className="ticketSectionTitle">Subtasks</div>
+                  </div>
+                  <div className="additionBar">
+                    <div className="ticketSectionTitle">Add Subtask</div>
+                  </div>
+                </div>
+                <div className="ticketAttachments">
+                  <div className="contentList">
+                    <div className="ticketSectionTitle">Attachments</div>
+                  </div>
+                </div>
               </div>
               <div className="ticketColumn">
-                <div className="ticketCosts">Service & Costs</div>
+                <div className="ticketCosts">
+                  <div className="contentList">
+                    <div className="ticketSectionTitle">Service & Costs</div>
+                  </div>
+                  <div className="additionBar">
+                    <div className="ticketSectionTitle">Add Service</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
