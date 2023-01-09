@@ -14,9 +14,9 @@ export const backend = "https://labbybe.harinwu.com/";
 // export const backend = "http://localhost:8080/"
 
 export const ticketsColors = {
-  1: "#5976E1",
-  2: "#4E3340",
-  3: "#CF6973",
-  4: "#D4D145",
-  5: "#ECCC4C",
+  0: "#5976E1",
+  1: "#4E3340",
+  2: "#CF6973",
+  3: "#D4D145",
+  4: "#ECCC4C",
 };

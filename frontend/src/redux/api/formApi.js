@@ -30,6 +30,23 @@ export const saveFormsApi = async (payload) => {
   }
 };
 
+export const createTicketApi = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      task_id: payload.task_id,
+      task_title: payload.task_title,
+      task_description: payload.task_description,
+      task_state: payload.task_state,
+    });
+
+    const task = await axios.post("task/", data);
+
+    return task;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const deleteFormApi = async (payload) => {
   try {
     const form = await axios.delete(`form/${payload.form_id}`);
