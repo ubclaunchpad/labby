@@ -8,7 +8,7 @@ import TicketManagement from "./screens/ticket-management/ticket-management";
 import Invoice from "./screens/invoice/invoice";
 import FormLibrary from "./screens/form-library/form-library";
 import CostCenter from "./screens/cost-center/cost-center";
-import PDF from "./components/GenerateInvoice/pdf";
+import {PDF} from "./components/GenerateInvoice/pdf";
 import { PDFViewer } from "@react-pdf/renderer";
 import UserManagement from "./screens/user-management/user-management";
 
