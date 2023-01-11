@@ -12,8 +12,10 @@ import UBC from "../../assets/UBC.png";
 const todaysDate = new Date();
 const defaultProps = {
   invoiceNumber: Math.floor(1e8 + Math.random() * 9e8), // TODO: Ensure uniqueness
-  invoiceDate: `${todaysDate.getDate()}-${todaysDate.getMonth()+1}-${todaysDate.getFullYear()}`,
-  clientName: "Client's Name",  
+  invoiceDate: `${todaysDate.getDate()}-${
+    todaysDate.getMonth() + 1
+  }-${todaysDate.getFullYear()}`,
+  clientName: "Client's Name",
   clientEmail: "Client's Email",
   PI: "P.I. Name",
   projectTitle: "Title",
@@ -32,6 +34,7 @@ export const PDF = function ({
   billingContact = defaultProps.billingContact,
   billingAddress = defaultProps.billingAddress,
   billingEmail = defaultProps.billingEmail,
+  billingData,
 }) {
   const styles = StyleSheet.create({
     page: {
@@ -56,6 +59,14 @@ export const PDF = function ({
       fontSize: "12px",
     },
   });
+
+  // TODO: Fix bug preventing access to redux state from here
+  // For now pass data from invoice page as prop
+  // const billingData =  useSelector(
+  //   (state) => state.billingReducer.billingList
+  // );
+
+  console.log("Billing data2:" + billingData);
 
   return (
     <Document>
@@ -97,11 +108,16 @@ export const PDF = function ({
             <Text style={styles.infoText}>Unit Price</Text>
             <Text style={styles.infoText}>Total (CAD)</Text>
           </View>
+          <View style={styles.tableRow}>
+            <Text style={styles.infoText}> {billingData}</Text>
+          </View>
         </View>
         <View style={styles.section}>
           <Text style={styles.infoText}>Bill To:</Text>
           <Text style={styles.infoText}>Contact: {billingContact}</Text>
-          <Text style={styles.infoText}>Address/Department: {billingAddress}</Text>
+          <Text style={styles.infoText}>
+            Address/Department: {billingAddress}
+          </Text>
           <Text style={styles.infoText}>Worktag/Email: {billingEmail}</Text>
         </View>
       </Page>
