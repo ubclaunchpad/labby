@@ -137,4 +137,16 @@ router.delete("subtask/:subtaskId", (req, res) => {
     });
 });
 
+//load subtasks for taskId
+router.get("subtasks/:taskId", (req, res) => {
+  taskController
+    .loadSubtasksByTaskId(req.params.taskId)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
+
 export default router;
