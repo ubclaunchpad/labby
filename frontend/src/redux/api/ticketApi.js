@@ -24,8 +24,14 @@ export const getTickets = async () => {
   }
 };
 
-export const getSubTickets = async () => {
+export const getSubTickets = async (payload) => {
   try {
+    if (payload) {
+      const ticketId = payload;
+      const tickets = await axios.get(`task/subtasks/${ticketId}`);
+      return tickets;
+    }
+
     const tickets = await axios.get("task/subtasks/");
     return tickets;
   } catch (err) {

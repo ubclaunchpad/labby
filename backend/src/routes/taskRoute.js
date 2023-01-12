@@ -137,7 +137,7 @@ router.delete("subtask/:subtaskId", (req, res) => {
     });
 });
 
-//load subtasks for taskId
+//load subtasks for given taskId
 router.get("subtasks/:taskId", (req, res) => {
   taskController
     .loadSubtasksByTaskId(req.params.taskId)

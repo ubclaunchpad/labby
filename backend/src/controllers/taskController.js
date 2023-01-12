@@ -197,4 +197,21 @@ export default class TaskController {
       });
     });
   }
+  
+  loadSubtasksbyTaskId(taskId) {
+  return new Promise((resolve, reject) => {
+    const TaskModel = new Task();
+
+    TaskModel.loadSubtasksByTaskId(taskId, (err, result) => {
+      if (err) {
+        reject({ error: err });
+      }
+      resolve(result);
+    });
+  });
 }
+
+
+}
+
+

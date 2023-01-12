@@ -151,4 +151,16 @@ export class Task {
       }
     });
   }
+
+    //retrieve subtasks by taskID
+    loadSubtasksByTaskId(taskId, result) {
+      con.query("CALL load_subtasks_by_taskId(?)", [taskId], (err, res) => {
+        if (err) {
+          console.log("error: ", err);
+          result(err, null);
+        } else {
+          result(null, res[0]);
+        }
+      });
+    }
 }
