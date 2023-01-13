@@ -16,7 +16,7 @@ CREATE TABLE `tasks` (
     task_description VARCHAR (250),
 	task_state VARCHAR(50),
 	PRIMARY KEY (`task_id`),
-	FOREIGN KEY (`fk_form_id`) REFERENCES `forms`(`form_id`)
+	FOREIGN KEY (`fk_form_id`) REFERENCES forms(`form_id`)
 );
 END$$
 

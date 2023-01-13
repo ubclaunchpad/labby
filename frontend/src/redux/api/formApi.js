@@ -34,6 +34,7 @@ export const createTicketApi = async (payload) => {
   try {
     var data = JSON.stringify({
       task_id: payload.task_id,
+      fk_form_id: payload.fk_form_id,
       task_title: payload.task_title,
       task_description: payload.task_description,
       task_state: payload.task_state,
@@ -43,6 +44,7 @@ export const createTicketApi = async (payload) => {
 
     return task;
   } catch (err) {
+    console.log(data);
     return console.error(err);
   }
 };

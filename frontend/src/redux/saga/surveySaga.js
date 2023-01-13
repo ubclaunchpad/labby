@@ -1,3 +1,4 @@
+import shadows from "@mui/material/styles/shadows";
 import uuid from "react-uuid";
 import { all, call, takeLatest } from "redux-saga/effects";
 import { SUBMIT_FORM } from "../actions/formActions";
@@ -9,6 +10,7 @@ export function* submitResponseSaga({ payload }) {
   yield call(saveSurvey, { survey_id: survey_id });
   yield call(createTicketApi, {
     task_id: survey_id,
+    fk_form_id: payload[0].question.fk_form_id,
     task_title: "Harin's Request",
     task_description: "Harin's Service Request (Replace this with description)",
     task_state: "open",

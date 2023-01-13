@@ -18,6 +18,8 @@ import { CheckBoxIcon } from "../Icons/CheckBoxIcon";
 import { AssigneeIcon } from "../Icons/AssigneeIcon";
 import { ticketsColors } from "../../constants";
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { appColor } from "../../constants";
 import { LOAD_EMPLOYEE } from "../../redux/actions/userActions";
 
 export const getColorNum = (id, colorArray) => {
@@ -285,6 +287,17 @@ export const TicketBoard = () => {
             <div className="ticketTitle">
               <div className="ticketTitleId">{currentTicket.code}</div>
               <div>{currentTicket.title}</div>
+              <NavLink to={`/completerequest/${currentTicket.code}`}>
+                <button
+                  className="FormPreviewButton"
+                  style={{
+                    backgroundColor: appColor.primaryLight,
+                    color: appColor.white,
+                  }}
+                >
+                  Preview
+                </button>
+              </NavLink>
             </div>
             <div className="ticketTags">
               {currentTicket.assignees.map((assignee) => {

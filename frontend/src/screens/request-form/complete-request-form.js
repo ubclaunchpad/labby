@@ -84,7 +84,6 @@ function RequestForm() {
         alert("Please Review Your Cost Estimate and Submit!");
       } else {
         dispatch({ type: SUBMIT_FORM, payload: formResponses });
-        console.log(formResponses);
         alert("Form Submitted");
       }
     } else {

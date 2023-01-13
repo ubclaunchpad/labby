@@ -5,9 +5,10 @@ export class Task {
   loadedSubtask = false;
   insertTask(taskData, result) {
     con.query(
-      "CALL save_task(?, ?, ?, ?)",
+      "CALL save_task(?, ?, ?, ?, ?)",
       [
         taskData.task_id,
+        taskData.fk_form_id,
         taskData.task_title,
         taskData.task_description,
         taskData.task_state,
