@@ -29,6 +29,7 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
         if (ticket.subtask_id) {
           ticketMap[ticket.subtask_id] = {
             id: ticket.subtask_id,
+            form_id: ticket.fk_form_id,
             code: ticket.subtask_id,
             title: ticket.subtask_title,
             description: ticket.subtask_description,
@@ -51,6 +52,7 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
           ticketMap[ticket.task_id] = {
             id: ticket.task_id,
             code: ticket.task_id,
+            form_id: ticket.fk_form_id,
             title: ticket.task_title,
             description: ticket.task_description,
             assignees: assigneeMap[ticket.task_id] ?? [],

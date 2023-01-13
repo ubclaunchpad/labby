@@ -162,6 +162,7 @@ export const TicketBoard = () => {
   const currentTicket = useSelector(
     (state) => state.ticketReducer.currentTicket
   );
+  console.log(currentTicket);
   const employeeList = useSelector((state) => state.userReducer.employeeList);
   const [assigneeAddModal, setAssigneeAddModal] = useState(false);
 
@@ -287,7 +288,7 @@ export const TicketBoard = () => {
             <div className="ticketTitle">
               <div className="ticketTitleId">{currentTicket.code}</div>
               <div>{currentTicket.title}</div>
-              <NavLink to={`/completerequest/${currentTicket.code}`}>
+              <NavLink to={`/completerequest/${currentTicket.form_id}`}>
                 <button
                   className="FormPreviewButton"
                   style={{
