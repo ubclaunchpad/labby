@@ -3,6 +3,8 @@ USE `labby`;
 DROP procedure IF EXISTS `save_task`;
 DROP procedure IF EXISTS `save_subtask`;
 DROP procedure IF EXISTS `update_task_status`;
+DROP procedure IF EXISTS `update_task_description`;
+DROP procedure IF EXISTS `update_subtask_status`;
 
 DELIMITER $$
 
@@ -73,5 +75,15 @@ VALUES
    );
   
 END $$
+
+CREATE PROCEDURE `update_subtask_status` (
+   IN `_subtask_id` VARCHAR(50),
+   IN `_subtask_state` VARCHAR(50)
+ 
+) BEGIN 
+UPDATE `subtasks` SET `subtask_state`=`_subtask_state` WHERE `subtask_id`=`_subtask_id`;
+  
+END $$
+
   
 DELIMITER ;

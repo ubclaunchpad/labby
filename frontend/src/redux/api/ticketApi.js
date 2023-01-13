@@ -52,6 +52,19 @@ export const updateTicketStatusApi = async (payload) => {
   }
 };
 
+export const updateSubticketStatusApi = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      status: payload.status,
+    });
+
+    const tickets = await axios.post(`task/subtask/status/${payload.ticketId}`, data);
+    return tickets;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const updateTicketDescriptionApi = async (payload) => {
   try {
     var data = JSON.stringify({
