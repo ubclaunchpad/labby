@@ -26,7 +26,7 @@ router.post("/:organizationId/:costCentreId", (req, res) => {
     costCentreController
     .assignCostCentre(req.params.organizationId, req.params.costCentreId)
     .then((response) => {
-        res.status(200).json(repsonse);
+        res.status(200).json(response);
     })
     .catch((err) => {
         res.status(404).json(err);

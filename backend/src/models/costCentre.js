@@ -1,10 +1,9 @@
-import e from "express";
 import con from "../config/Database.js";
 
 export class CostCentre {
     insertCostCentre(newCostCentre, result) {
         con.query(
-            "CALL save_cost_centre(?)", 
+            "CALL save_cost_centre(?)",  // stored procedure doesn't exist yet
             [
                 newCostCentre.costCentre_id, 
             ], 
@@ -23,7 +22,7 @@ export class CostCentre {
 
     assignCostCentre(organizationId, costCentreId, result) {
         con.query(
-            "CALL assign_organization_cost_centre(?, ?)", // this stored procedure will add the costCentreId to the organization's table
+            "CALL assign_organization_cost_centre(?, ?)", // stored procedure should add costCentreId to the organization's table
             [
                 organizationId, 
                 costCentreId,
@@ -31,7 +30,7 @@ export class CostCentre {
             function(error, results) {
                 if (error) {
                     console.log("error: ", error);
-                    result(error, null);
+                    results(error, null);
                 } else {
                     result(null, {
                         result: `Organization ${organizationId} Sucessfully Assigned to Cost Centre ${costCentreId}`,

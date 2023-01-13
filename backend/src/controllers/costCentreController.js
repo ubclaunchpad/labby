@@ -3,7 +3,7 @@ import { CostCentre, CostCentre} from "../models/costCentre.js";
 export default class CostCentre {
     saveCostCentre(req) {
         return new Promise((resolve, reject) => {
-            const CostCentreMode = new CostCentre();
+            const CostCentreModel = new CostCentre();
 
             const costCentre = {
                 costCentre_id: req.body.costCentre_id, // add any others here
