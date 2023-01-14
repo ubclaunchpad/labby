@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 import { LOAD_EMPLOYEE } from "../../redux/actions/userActions";
 import uuid from "react-uuid";
 import X from "../../assets/X.png";
+import FileDownload from "../FileDownload";
 
 export const getColorNum = (id, colorArray) => {
   if (colorArray) {
@@ -246,6 +247,13 @@ export const TicketBoard = () => {
     });
   };
 
+  // confirm with Martin that this is how it is to be done
+  const surveyAnswers = useSelector((state) => state.survey_id);
+  let surveyQuestionIds = [];
+  for (const answer in surveyAnswers) {
+    surveyQuestionIds.push(answer.question);
+  }
+
   return (
     <div className="ticketBoardContainer">
       <div className="searchTicketSection">
@@ -407,6 +415,14 @@ export const TicketBoard = () => {
                 <div className="ticketAttachments">
                   <div className="contentList">
                     <div className="ticketSectionTitle">Attachments</div>
+                    {surveyQuestionIds.map((question) => {
+                      return <FileDownload question={question} />;
+                    })}
+                    // use redux to return all answers // retrieve question_id
+                    from each answer // use survey-id (from Martin) to retrieve
+                    all question/response IDs // iterate over question IDs to
+                    retrieve objects from S3 bucket // for each object from the
+                    S3 bucket, render a FileDownload component
                   </div>
                 </div>
               </div>
@@ -416,7 +432,7 @@ export const TicketBoard = () => {
                     <div className="ticketSectionTitle">Service & Costs</div>
                     {currentTicketServiceCosts.map((serviceCost) => {
                       return (
-                        <div className="serviceCostRow" key={serviceCost.billable_id}>
+                          className="serviceCostRow"
                           <input
                             className="serviceNameInput"
                             defaultValue={serviceCost.name}
