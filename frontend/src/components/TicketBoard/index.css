@@ -223,12 +223,17 @@
 .ticketTitle {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .ticketTitleId {
   font-weight: bold;
   font-size: 20px;
   margin-right: 8px;
+}
+
+.ticketPreview {
+  margin-left: auto;
 }
 
 .ticketSectionTitle {

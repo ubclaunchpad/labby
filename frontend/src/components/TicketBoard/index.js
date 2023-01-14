@@ -288,17 +288,19 @@ export const TicketBoard = () => {
             <div className="ticketTitle">
               <div className="ticketTitleId">{currentTicket.code}</div>
               <div>{currentTicket.title}</div>
-              <NavLink to={`/completerequest/${currentTicket.form_id}`}>
-                <button
-                  className="FormPreviewButton"
-                  style={{
-                    backgroundColor: appColor.primaryLight,
-                    color: appColor.white,
-                  }}
-                >
-                  Preview
-                </button>
-              </NavLink>
+              <div className="ticketPreview">
+                <NavLink to={`/completerequest/${currentTicket.form_id}`}>
+                  <button
+                    className="FormPreviewButton"
+                    style={{
+                      backgroundColor: appColor.primaryLight,
+                      color: appColor.white,
+                    }}
+                  >
+                    Preview
+                  </button>
+                </NavLink>
+              </div>
             </div>
             <div className="ticketTags">
               {currentTicket.assignees.map((assignee) => {
