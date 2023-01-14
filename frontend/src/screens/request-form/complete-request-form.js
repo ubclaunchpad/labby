@@ -141,26 +141,6 @@ function RequestForm() {
               </div>
             );
           })}
-          <div className="FormSubmit">
-            <button
-              className="FormSubmitButton"
-              style={{
-                backgroundColor: appColor.primaryLight,
-                color: appColor.white,
-              }}
-              onMouseOver={(e) => {
-                e.target.style.backgroundColor = appColor.primary;
-                e.target.style.color = appColor.white;
-              }}
-              onMouseOut={(e) => {
-                e.target.style.backgroundColor = appColor.primaryLight;
-                e.target.style.color = appColor.white;
-              }}
-              onClick={submitForm}
-            >
-              Submit
-            </button>
-          </div>
         </div>
         {hideCost ? <CostEstimateCollapsed /> : <CostEstimateFull />}
       </div>

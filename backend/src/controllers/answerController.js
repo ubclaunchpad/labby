@@ -21,6 +21,19 @@ export default class AnswerController {
     });
   }
 
+  getAnswer(id) {
+    return new Promise((resolve, reject) => {
+      const AnswerModel = new Answer();
+
+      AnswerModel.readAnswer(id, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+
   deleteAnswer(id) {
     return new Promise((resolve, reject) => {
       const AnswerModel = new Answer();
@@ -33,4 +46,6 @@ export default class AnswerController {
       });
     });
   }
+
+
 }
