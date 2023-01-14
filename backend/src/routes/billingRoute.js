@@ -17,7 +17,7 @@ router.get("/", (_, res) => {
 
 router.post("/", (req, res) => {
     billingController
-      .saveBillable(req.body)
+      .saveBillable(req)
       .then((response) => {
         res.status(200).json(response);
       })

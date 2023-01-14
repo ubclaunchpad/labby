@@ -45,7 +45,7 @@ VALUES
    ) ON DUPLICATE KEY UPDATE
     billable.billable_id=_billable_id,
     billable.fk_sow_id=_fk_sow_id,
-    billable.name=_username,
+    billable.name=_name,
     billable.quantity=_quantity,
     billable.cost=_cost,
     billable.createdDate=_createdDate,
