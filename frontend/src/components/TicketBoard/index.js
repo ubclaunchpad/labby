@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { appColor } from "../../constants";
 import { LOAD_EMPLOYEE } from "../../redux/actions/userActions";
+import { LOAD_ANSWER_BY_SURVEY } from "../../redux/actions/questionActions";
 
 export const getColorNum = (id, colorArray) => {
   if (colorArray) {
@@ -58,7 +59,6 @@ const Task = (props) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           onClick={() => {
-            console.log(props.task);
             dispatch({ type: SET_ACTIVE_TICKET, payload: props.task });
           }}
         >
@@ -162,7 +162,6 @@ export const TicketBoard = () => {
   const currentTicket = useSelector(
     (state) => state.ticketReducer.currentTicket
   );
-  console.log(currentTicket);
   const employeeList = useSelector((state) => state.userReducer.employeeList);
   const [assigneeAddModal, setAssigneeAddModal] = useState(false);
 
@@ -296,10 +295,12 @@ export const TicketBoard = () => {
                       backgroundColor: appColor.primaryLight,
                       color: appColor.white,
                     }}
-                  >
+                    onClick={() => {
+                      dispatch({ type: LOAD_ANSWER_BY_SURVEY, payload: { survey_id: currentTicket.id } });
+                    }}>
                     Preview
                   </button>
-                </NavLink>
+                </NavLink>                  
               </div>
             </div>
             <div className="ticketTags">

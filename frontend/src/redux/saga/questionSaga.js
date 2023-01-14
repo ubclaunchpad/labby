@@ -9,6 +9,7 @@ import {
   SET_ANSWER,
   SET_LOADING,
   SET_QUESTION,
+  LOAD_ANSWER_BY_SURVEY,
 } from "../actions/questionActions";
 import { getLogics, saveLogics } from "../api/logicApi";
 import {
@@ -17,10 +18,10 @@ import {
   removeQuestion,
   saveAnswer,
   saveQuestions,
+  getAnswersBySurvey,
 } from "../api/questionApi";
 
 export function* fetchQuestion({ payload }) {
-  console.log("fetching");
   yield put({ type: SET_LOADING, payload: true });
 
   const logic = yield call(getLogics);
@@ -33,6 +34,11 @@ export function* fetchQuestion({ payload }) {
   yield put({ type: SET_ANSWER, payload: questions.data });
   yield put({ type: SET_LOADING, payload: false });
   yield put({ type: SET_LOADING, payload: questions.data });
+}
+
+export function* loadAnswerBySurvey({ payload }) {
+  const answers = yield call(getAnswersBySurvey, payload);
+  console.log(answers);
 }
 
 export function* saveQuestion({ payload }) {
@@ -65,4 +71,5 @@ export default function* questionSaga() {
   yield takeLatest(SAVE_ANSWER, postAnswer);
   yield takeLatest(DELETE_ANSWER, deleteAnswer);
   yield takeLatest(SAVE_LOGIC, saveLogic);
+  yield takeLatest(LOAD_ANSWER_BY_SURVEY, loadAnswerBySurvey);
 }

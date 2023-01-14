@@ -2,7 +2,7 @@ import defaultAxios from "axios";
 import { backend } from "../../constants";
 
 const axios = defaultAxios.create({
-  baseURL: backend,
+  baseURL: "http://localhost:8080/",
   headers: { "Content-Type": "application/json" },
 });
 
@@ -76,3 +76,13 @@ export const removeAnswer = async (payload) => {
     return console.error(err);
   }
 };
+
+export const getAnswersBySurvey = async (payload) => {
+  try {
+    const answers = await axios.get(`answer/${payload.survey_id}`);
+
+    return answers;
+  } catch (err) {
+    return console.error(err);
+  }
+}
