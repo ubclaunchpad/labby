@@ -1,8 +1,12 @@
 import { call, put, select, takeLatest } from "redux-saga/effects";
 import {
   ASSIGN_USER,
+  GET_SERVICE_COST,
   GET_TICKET_BOARD,
+  POST_SERVICE_COST,
+  REMOVE_SERVICE_COST,
   SET_ACTIVE_TICKET,
+  SET_SERVICE_COST,
   SET_TICKETS,
   UNASSIGN_USER,
   UPDATE_TICKET_DESCRIPTION,
@@ -10,9 +14,12 @@ import {
 } from "../actions/ticketActions";
 import {
   assignUserApi,
+  deleteServiceCost,
   getAssignees,
+  getServiceCostApi,
   getSubTickets,
   getTickets,
+  postServiceCostApi,
   unassignUserApi,
   updateTicketDescriptionApi,
   updateTicketStatusApi,
@@ -66,10 +73,31 @@ export function* unassignUser(action) {
   yield call(fetchTickets);
 }
 
+export function* getServiceCost(action) {
+  const serviceCosts = yield call(getServiceCostApi, action.payload);
+  yield put({
+    type: SET_SERVICE_COST,
+    payload: serviceCosts.data,
+  });
+}
+
+export function* postServiceCost(action) {
+  yield call(postServiceCostApi, action.payload);
+  yield call(getServiceCost, { payload: action.payload.sow_id });
+}
+
+export function* removeServiceCost(action) {
+  yield call(deleteServiceCost, action.payload);
+  yield call(getServiceCost, { payload: action.payload.sow_id });
+}
+
 export default function* ticketSaga() {
   yield takeLatest(GET_TICKET_BOARD, fetchTickets);
   yield takeLatest(UPDATE_TICKET_STATUS, updateTicketStatus);
   yield takeLatest(UPDATE_TICKET_DESCRIPTION, updateTicketDescription);
   yield takeLatest(ASSIGN_USER, assignUser);
   yield takeLatest(UNASSIGN_USER, unassignUser);
+  yield takeLatest(POST_SERVICE_COST, postServiceCost);
+  yield takeLatest(REMOVE_SERVICE_COST, removeServiceCost);
+  yield takeLatest(GET_SERVICE_COST, getServiceCost);
 }

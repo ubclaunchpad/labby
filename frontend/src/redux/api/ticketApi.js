@@ -59,6 +59,47 @@ export const updateTicketDescriptionApi = async (payload) => {
   }
 };
 
+export const getServiceCostApi = async (payload) => {
+  try {
+    const billable = await axios.get(`billing/${payload.sow_id}`);
+    return billable;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+
+export const postServiceCostApi = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      billable_id: payload.billable_id,
+      sow_id: payload.sow_id,
+      name: payload.name,
+      quantity: payload.quantity,
+      cost: payload.cost,
+      createdDate: payload.createdDate,
+      completedTime: payload.completedTime,
+      billed: payload.billed,
+      billedTime: payload.billedTime,
+      createdBy: payload.createdBy,
+    });
+
+    const billable = await axios.post(`billing/`, data);
+    return billable;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const deleteServiceCost = async (payload) => {
+  try {
+    const billable = await axios.delete(`billing/${payload.billable_id}`);
+    return billable;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const assignUserApi = async (payload) => {
   try {
     var data = JSON.stringify({

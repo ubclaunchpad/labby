@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import { ticketBoardData } from "../../components/DragAndDrop/ticket-dnd-data";
 import {
   SET_ACTIVE_TICKET,
+  SET_SERVICE_COST,
   SET_TICKETS,
   UPDATE_TICKET_BOARD,
 } from "../actions/ticketActions";
@@ -113,4 +114,14 @@ const currentTicket = (state = null, action) => {
   }
 };
 
-export default combineReducers({ ticketBoardDndData, currentTicket });
+const currentTicketServiceCosts = (state = [], action) => {
+  switch (action.type) {
+    case SET_SERVICE_COST: {
+      return action.payload;
+    }
+    default:
+      return state;
+  }
+};
+
+export default combineReducers({ ticketBoardDndData, currentTicket, currentTicketServiceCosts });

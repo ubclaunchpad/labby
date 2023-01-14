@@ -14,6 +14,19 @@ export default class BillingController {
     });
   }
 
+  loadBillableBySowId(sowID) {
+    return new Promise((resolve, reject) => {
+      const BillableModel = new Billable();
+
+      BillableModel.loadBillableBySowId(sowID, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+
   deleteBillable(billableId) {
     return new Promise((resolve, reject) => {
       const BillableModel = new Billable();

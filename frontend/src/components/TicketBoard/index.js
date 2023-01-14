@@ -4,7 +4,10 @@ import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { useDispatch, useSelector } from "react-redux";
 import {
   ASSIGN_USER,
+  GET_SERVICE_COST,
   GET_TICKET_BOARD,
+  POST_SERVICE_COST,
+  REMOVE_SERVICE_COST,
   SET_ACTIVE_TICKET,
   UNASSIGN_USER,
   UPDATE_TICKET_BOARD,
@@ -19,6 +22,8 @@ import { AssigneeIcon } from "../Icons/AssigneeIcon";
 import { ticketsColors } from "../../constants";
 import { useEffect, useState } from "react";
 import { LOAD_EMPLOYEE } from "../../redux/actions/userActions";
+import uuid from "react-uuid";
+import X from "../../assets/X.png";
 
 export const getColorNum = (id, colorArray) => {
   if (colorArray) {
@@ -161,12 +166,19 @@ export const TicketBoard = () => {
     (state) => state.ticketReducer.currentTicket
   );
   const employeeList = useSelector((state) => state.userReducer.employeeList);
+  const currentTicketServiceCosts = useSelector(
+    (state) => state.ticketReducer.currentTicketServiceCosts
+  );
   const [assigneeAddModal, setAssigneeAddModal] = useState(false);
 
   useEffect(() => {
     dispatch({ type: LOAD_EMPLOYEE });
     dispatch({ type: GET_TICKET_BOARD });
-  }, [dispatch]);
+    dispatch({
+      type: GET_SERVICE_COST,
+      payload: { sow_id: currentTicket?.id },
+    });
+  }, [dispatch, currentTicket]);
 
   const ticketDragEndHandler = (result) => {
     const { destination, source, draggableId } = result;
@@ -402,9 +414,101 @@ export const TicketBoard = () => {
                 <div className="ticketCosts">
                   <div className="contentList">
                     <div className="ticketSectionTitle">Service & Costs</div>
+                    {currentTicketServiceCosts.map((serviceCost) => {
+                      return (
+                        <div className="serviceCostRow" key={serviceCost.billable_id}>
+                          <input
+                            className="serviceNameInput"
+                            defaultValue={serviceCost.name}
+                            onBlur={(text) => {
+                              console.log(serviceCost);
+                              dispatch({
+                                type: POST_SERVICE_COST,
+                                payload: {
+                                  ...serviceCost,
+                                  sow_id: serviceCost.fk_sow_id,
+                                  name: text.target.value,
+                                },
+                              });
+                            }}
+                          />
+                          <div className="inputContainer">
+                            <div className="serviceCostQuantity">#</div>
+                            <input
+                              className="serviceCostInput"
+                              defaultValue={serviceCost.quantity}
+                              onBlur={(text) => {
+                                dispatch({
+                                  type: POST_SERVICE_COST,
+                                  payload: {
+                                    ...serviceCost,
+                                    sow_id: serviceCost.fk_sow_id,
+                                    quantity: text.target.value,
+                                  },
+                                });
+                              }}
+                            />
+                          </div>
+                          <div className="inputContainer">
+                            <div className="serviceCostCost">$</div>
+                            <input
+                              className="serviceCostInput"
+                              defaultValue={serviceCost.cost}
+                              onBlur={(text) => {
+                                dispatch({
+                                  type: POST_SERVICE_COST,
+                                  payload: {
+                                    ...serviceCost,
+                                    sow_id: serviceCost.fk_sow_id,
+                                    cost: text.target.value,
+                                  },
+                                });
+                              }}
+                            />
+                          </div>
+                          <div className="deleteItem">
+                            <img
+                              className="download-icon-delete"
+                              src={X}
+                              alt="Delete Service"
+                              onClick={() => {
+                                dispatch({
+                                  type: REMOVE_SERVICE_COST,
+                                  payload: {
+                                    billable_id: serviceCost.billable_id,
+                                    sow_id: serviceCost.fk_sow_id,
+                                  },
+                                });
+                              }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                   <div className="additionBar">
-                    <div className="ticketSectionTitle">Add Service</div>
+                    <div
+                      className="ticketSectionTitle"
+                      onClick={() => {
+                        dispatch({
+                          type: POST_SERVICE_COST,
+                          payload: {
+                            billable_id: uuid(),
+                            sow_id: currentTicket.code,
+                            name: "New Service",
+                            quantity: 1,
+                            cost: 0,
+                            createdDate: new Date(),
+                            completedTime: null,
+                            billed: false,
+                            billedTime: null,
+                            createdBy: "USER-A",
+                          },
+                        });
+                      }}
+                    >
+                      Add Service
+                    </div>
                   </div>
                 </div>
               </div>
