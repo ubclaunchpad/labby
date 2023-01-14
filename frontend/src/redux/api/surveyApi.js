@@ -10,7 +10,7 @@ export const saveSurvey = async (payload) => {
   try {
     var data = JSON.stringify({
       survey_id: payload.survey_id,
-      fk_user_id: "LABBY",
+      fk_user_id: "LABBY", // TODO change to actual user id
       date_created: new Date(),
     });
 

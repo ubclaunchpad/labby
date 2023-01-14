@@ -9,13 +9,13 @@ export default class TaskController {
       if (
         !req.body.task_title ||
         !req.body.task_state ||
-        !req.body.description
+        !req.body.task_description
       ) {
         return reject({ error: "Error with request body." });
       }
       const TaskModel = new Task();
       const taskData = {
-        task_id: Math.floor(Math.random() * 100),
+        task_id: req.body.task_id,
         task_title: req.body.task_title,
         task_description: req.body.task_description,
         task_state: req.body.task_state,

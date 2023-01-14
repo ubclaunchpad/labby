@@ -47,7 +47,7 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
           if (ticket.subtask_state === "blocked") {
             blockedList.push(ticket.subtask_id);
           }
-        } else {
+        } else if (ticket.subtask_id !== null) { // NULL means duplicate from subtask join, undefined means main task ticket
           ticketMap[ticket.task_id] = {
             id: ticket.task_id,
             code: ticket.task_id,
