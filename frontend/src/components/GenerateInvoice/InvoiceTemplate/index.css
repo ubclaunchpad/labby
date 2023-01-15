@@ -1,0 +1,76 @@
+/* *{
+    border: 1px solid red;
+} */
+#invoice-template {
+  color: #000;
+  margin: 18px auto;
+  width: 75%;
+  border: 1px solid #000;
+}
+#invoice-header {
+  font-size: 0.625rem;
+  letter-spacing: 2px;
+  font-weight: 400;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  width: 100%;
+}
+.invoice-header-columns {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 18px;
+  padding-right: 18px;
+  text-align: left;
+  width: 100%;
+  color: #717885;
+}
+.ubc-logo {
+  text-align: right;
+  align-self: center;
+}
+.page {
+  margin-left: 60px;
+  margin-right: 60px;
+}
+.monospace {
+  font-family: monospace;
+  font-size: 1.15rem;
+  text-align: left;
+}
+.header-table {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-top: 1px solid #666;
+  border-bottom: 1px solid #666;
+}
+.header-table-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-right: 1px solid #666;
+  width: 50%;
+}
+.header-table-section:last-child {
+  border-right: none;
+}
+.header-item {
+  padding: 20px;
+}
+.header-item-half {
+  padding: 20px 0 10px 10px;
+  border-bottom: 1px solid #666;
+}
+.header-item-half:last-child{
+    border-bottom: none;
+}
+.header-table-title{
+    text-align: left;
+    font-size: 0.8rem
+}
+.header-table-content{
+    text-align: left;
+    font-size: 0.95rem;
+    margin-left: 24px;
+}

@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { LOAD_BILLABLE } from "../../redux/actions/billingActions";
 import GenerateInvoice from "../../components/GenerateInvoice";
 import GeneratePdf from "../../components/GeneratePdf";
+import InvoiceTemplate from "../../components/GenerateInvoice/InvoiceTemplate";
 
 function Invoice() {
   const dispatch = useDispatch();
@@ -30,6 +31,8 @@ function Invoice() {
         </div>
         <GenerateInvoice />
         <GeneratePdf htmlElementRef={invoiceTableRef} />
+
+        <InvoiceTemplate/>
       </div>
     </div>
   );
