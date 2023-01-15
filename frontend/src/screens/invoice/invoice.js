@@ -12,6 +12,7 @@ import InvoiceTemplate from "../../components/GenerateInvoice/InvoiceTemplate";
 function Invoice() {
   const dispatch = useDispatch();
   const invoiceTableRef = useRef(null);
+  const invoiceTemplateRef = useRef(null);
 
   useEffect(() => {
     dispatch({ type: LOAD_BILLABLE });
@@ -32,7 +33,10 @@ function Invoice() {
         <GenerateInvoice />
         <GeneratePdf htmlElementRef={invoiceTableRef} />
 
-        <InvoiceTemplate/>
+        <div ref={invoiceTemplateRef}>
+          <InvoiceTemplate />
+        </div>
+        <GeneratePdf htmlElementRef={invoiceTemplateRef} />
       </div>
     </div>
   );

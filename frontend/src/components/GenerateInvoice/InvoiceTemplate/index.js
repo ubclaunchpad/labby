@@ -23,7 +23,7 @@ const InvoiceTemplate = () => {
             <img src={UBC} width="30%" alt="ubc logo" />
           </div>
         </div>
-        <h1>Unofficial Invoice</h1>
+        <h1 className="invoice-title">Unofficial Invoice</h1>
         <div className="page">
           <div>
             <p className="monospace">Invoice #:</p>

@@ -3,12 +3,11 @@
 } */
 #invoice-template {
   color: #000;
-  margin: 18px auto;
-  width: 75%;
+  margin: 10px auto; 
   border: 1px solid #000;
 }
 #invoice-header {
-  font-size: 0.625rem;
+  font-size: 12px;
   letter-spacing: 2px;
   font-weight: 400;
   margin-top: 12px;
@@ -28,20 +27,23 @@
   text-align: right;
   align-self: center;
 }
+.invoice-title {
+  text-align: center;
+}
 .page {
-  margin-left: 60px;
-  margin-right: 60px;
+  margin-left: 24px;
+  margin-right: 24px;
 }
 .monospace {
   font-family: monospace;
-  font-size: 1.15rem;
+  font-size: 20px;
   text-align: left;
 }
 .header-table {
   display: flex;
   justify-content: space-between;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   border-top: 1px solid #666;
   border-bottom: 1px solid #666;
 }
@@ -56,21 +58,21 @@
   border-right: none;
 }
 .header-item {
-  padding: 20px;
+  padding: 10px;
 }
 .header-item-half {
-  padding: 20px 0 10px 10px;
+  padding: 10px 0 5px 5px;
   border-bottom: 1px solid #666;
 }
-.header-item-half:last-child{
-    border-bottom: none;
+.header-item-half:last-child {
+  border-bottom: none;
 }
-.header-table-title{
-    text-align: left;
-    font-size: 0.8rem
+.header-table-title {
+  text-align: left;
+  font-size: 12px;
 }
-.header-table-content{
-    text-align: left;
-    font-size: 0.95rem;
-    margin-left: 24px;
+.header-table-content {
+  text-align: left;
+  font-size: 14px;
+  margin-left: 7px;
 }
