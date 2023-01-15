@@ -12,6 +12,20 @@ const InvoiceTemplate = () => {
     todaysDate.getMonth() + 1
   }-${todaysDate.getFullYear()}`;
 
+  const [inputValue, setInputValue] = useState({
+    note: "",
+    date: "",
+    signer: "",
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInputValue({
+      ...inputValue,
+      [name]: value,
+    });
+    console.log(inputValue);
+  };
+
   return (
     <div id="invoice-template">
       <div id="invoice-header">
@@ -31,7 +45,9 @@ const InvoiceTemplate = () => {
         <h1 className="invoice-title">Unofficial Invoice</h1>
         <div className="page">
           <div>
-            <p className="monospace">Invoice #:</p>
+            <p className="monospace">
+              Invoice #: {Math.floor(1e8 + Math.random() * 9e8)}
+            </p>
           </div>
 
           <div className="header-table">
@@ -68,6 +84,47 @@ const InvoiceTemplate = () => {
           {/* <InvoiceTable/> */}
 
           <InvoiceDetails billingData={billingData} />
+
+          <div>
+            <div className="signer-form">
+              <label htmlFor="notes">Notes:</label>
+              <input
+                type="text"
+                id="notes"
+                className="border-bottom"
+                name="note"
+                value={inputValue.note}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="signer">
+              <div className="signer-form signer-item">
+                <label htmlFor="date">Date:</label>
+                <input
+                  //   type="datetime-local"
+                  type="text"
+                  id="date"
+                  className="border-bottom"
+                  name="date"
+                  value={inputValue.date}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="signer-form signer-item">
+                <label htmlFor="signature">Signed by:</label>
+                <input
+                  type="text"
+                  id="signature"
+                  className="border"
+                  name="signer"
+                  value={inputValue.signer}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -76,8 +133,8 @@ const InvoiceTemplate = () => {
 
 function InvoiceDetails({ billingData }) {
   let subtotal = 0;
-  for (let item of billingData){
-    subtotal += item.cost
+  for (let item of billingData) {
+    subtotal += item.cost;
   }
   return (
     <>
@@ -91,7 +148,7 @@ function InvoiceDetails({ billingData }) {
               <td>Total(CAD)</td>
             </tr>
 
-            {billingData.map((invoiceItem, index) => { 
+            {billingData.map((invoiceItem, index) => {
               return (
                 <tr className="item">
                   <td>
@@ -116,11 +173,11 @@ function InvoiceDetails({ billingData }) {
             </tr>
             <tr className="item">
               <td>Total Tax:</td>
-              <td>${0.12*subtotal}</td>
+              <td>${0.12 * subtotal}</td>
             </tr>
             <tr className="item">
               <td>Total Due:</td>
-              <td className="last">${subtotal+0.12*subtotal}</td>
+              <td className="last">${subtotal + 0.12 * subtotal}</td>
             </tr>
             <tr className="item total">
               <td>Amount Paid:</td>

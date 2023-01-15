@@ -40,7 +40,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 36px;
   border-top: 1px solid #666;
   border-bottom: 1px solid #666;
 }
@@ -94,10 +94,44 @@ table .item,
 table .heading {
   text-align: left;
 }
-.summary-table table{
-    width: 50%;
-    margin: 24px 0 0 auto;
+.summary-table table {
+  width: 50%;
+  margin: 36px 0 0 auto;
 }
 .summary-table td:first-child {
-    width: 50%;
-  }
+  width: 50%;
+}
+
+.signer {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 20px 0 20px 0;
+}
+input {
+  color: #627bf6;
+  font-family: monospace;
+  text-align: left;
+  margin-top: 24px;
+  height: 40px;
+  width: 100%;
+  box-sizing: border-box;
+}
+input#signature {
+  text-align: center;
+  height: 80px;
+}
+.signer-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 24px;
+}
+.signer-item {
+  flex-grow: 1;
+}
+.border-bottom {
+  border: 1px solid #000000;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
