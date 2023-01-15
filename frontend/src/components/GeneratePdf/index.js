@@ -3,7 +3,7 @@ import html2pdf from "../../../node_modules/html2pdf.js/dist/html2pdf.min";
 import "./index.css";
 
 // Generate a PDF of any component in the app
-// Utilize useRef to get the underlying component of any React component
+// Utilize useRef to get the underlying html element of any React component
 const GeneratePdf = ({ htmlElementRef }) => {
   const generatePdfHandler = () => {
     let paperOptions = {
