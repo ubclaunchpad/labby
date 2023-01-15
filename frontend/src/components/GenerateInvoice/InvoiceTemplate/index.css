@@ -108,7 +108,7 @@ table .heading {
   gap: 24px;
   margin: 20px 0 20px 0;
 }
-input {
+.signer-form input {
   color: #627bf6;
   font-family: monospace;
   text-align: left;
@@ -117,7 +117,7 @@ input {
   width: 100%;
   box-sizing: border-box;
 }
-input#signature {
+.signer-form input#signature {
   text-align: center;
   height: 80px;
 }
