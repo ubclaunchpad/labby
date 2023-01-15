@@ -2,13 +2,15 @@ import { appColor } from "../../constants";
 import Header from "../../components/Header";
 import "./invoice.css";
 import InvoiceTable from "../../components/InvoiceTable";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { LOAD_BILLABLE } from "../../redux/actions/billingActions";
 import GenerateInvoice from "../../components/GenerateInvoice";
+import GeneratePdf from "../../components/GeneratePdf";
 
 function Invoice() {
   const dispatch = useDispatch();
+  const invoiceTableRef = useRef(null);
 
   useEffect(() => {
     dispatch({ type: LOAD_BILLABLE });
@@ -23,10 +25,11 @@ function Invoice() {
         <div className="InvoiceTitle" style={{ color: appColor.gray }}>
           Invoice Dashboard
         </div>
-        <div className="InvoiceTable">
+        <div className="InvoiceTable" ref={invoiceTableRef}>
           <InvoiceTable />
         </div>
-        <GenerateInvoice/>
+        <GenerateInvoice />
+        <GeneratePdf htmlElementRef={invoiceTableRef} />
       </div>
     </div>
   );
