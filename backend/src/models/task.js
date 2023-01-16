@@ -42,6 +42,25 @@ export class Task {
     );
   }
 
+  //edit subtask status
+  updateSubtaskStatus(subtaskId, subtaskStatus, result) {
+    con.query(
+      "CALL update_task_status(?, ?)",
+      [subtaskId, subtaskStatus],
+      function (error, _) {
+        if (error) {
+          console.log("error: ", error);
+          result(error, null);
+        } else {
+          result(null, {
+            result: `subtask of ${subtaskId} Saved Successfully for subask ID: ${subtaskStatus}`,
+          });
+        }
+      }
+    );
+  }
+  
+
   updateDescription(taskId, taskDescription, result) {
     con.query(
       "CALL update_task_description(?, ?)",
@@ -64,9 +83,9 @@ export class Task {
       "CALL save_subtask(?, ?, ?, ?, ?)",
       [
         subtaskData.subtask_id,
-        subtaskData.task_title,
-        subtaskData.task_description,
-        subtaskData.task_state,
+        subtaskData.subtask_title,
+        subtaskData.subtask_description,
+        subtaskData.subtask_state,
         subtaskData.task_id,
       ],
       function (error, results) {
@@ -106,6 +125,18 @@ export class Task {
 
   loadSubtasks(result) {
     con.query("CALL load_tasks_subtasks", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res[0]);
+      }
+    });
+  }
+
+  //retrieve subtasks by taskID
+  loadSubtasksByTaskId(taskId, result) {
+    con.query("CALL load_subtasks_by_taskId(?)", [taskId], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);

@@ -33,6 +33,15 @@ export const getSubTickets = async () => {
   }
 };
 
+export const getSubTicketsById = async (payload) => {
+  try {
+      const tickets = await axios.get(`task/subtasks/${payload.ticketId}`);
+      return tickets;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const updateTicketStatusApi = async (payload) => {
   try {
     var data = JSON.stringify({
@@ -40,6 +49,19 @@ export const updateTicketStatusApi = async (payload) => {
     });
 
     const tickets = await axios.post(`task/status/${payload.ticketId}`, data);
+    return tickets;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const updateSubticketStatusApi = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      status: payload.status,
+    });
+
+    const tickets = await axios.post(`task/subtask/status/${payload.ticketId}`, data);
     return tickets;
   } catch (err) {
     return console.error(err);
