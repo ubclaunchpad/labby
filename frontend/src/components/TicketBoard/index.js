@@ -3,8 +3,10 @@ import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  ADD_SUBTASKS,
   ASSIGN_USER,
   GET_SERVICE_COST,
+  GET_SUBTASKS,
   GET_TICKET_BOARD,
   POST_SERVICE_COST,
   REMOVE_SERVICE_COST,
@@ -169,15 +171,25 @@ export const TicketBoard = () => {
   const currentTicketServiceCosts = useSelector(
     (state) => state.ticketReducer.currentTicketServiceCosts
   );
+  const currentTicketSubtasks = useSelector(
+    (state) => state.ticketReducer.currentTicketSubtasks
+  );
+
   const [assigneeAddModal, setAssigneeAddModal] = useState(false);
 
   useEffect(() => {
     dispatch({ type: LOAD_EMPLOYEE });
     dispatch({ type: GET_TICKET_BOARD });
-    dispatch({
-      type: GET_SERVICE_COST,
-      payload: { sow_id: currentTicket?.id },
-    });
+    if (currentTicket?.id) {
+      dispatch({
+        type: GET_SERVICE_COST,
+        payload: { sow_id: currentTicket?.id },
+      });
+      dispatch({
+        type: GET_SUBTASKS,
+        payload: currentTicket?.id,
+      });
+    }
   }, [dispatch, currentTicket]);
 
   const ticketDragEndHandler = (result) => {
@@ -399,9 +411,35 @@ export const TicketBoard = () => {
                 <div className="ticketSubtasks">
                   <div className="contentList">
                     <div className="ticketSectionTitle">Subtasks</div>
+                    <div className="contentListRows">
+                    {currentTicketSubtasks.map((subtasks) => {
+                      return (
+                        <div
+                          className="serviceCostRow"
+                          key={subtasks.subtask_id}
+                        >
+                          <div className="inputContainer">
+                            <div className="serviceCostQuantity">
+                              {subtasks.subtask_title}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                    </div>
                   </div>
                   <div className="additionBar">
-                    <div className="ticketSectionTitle">Add Subtask</div>
+                    <div
+                      className="ticketSectionTitle"
+                      onClick={() => {
+                        dispatch({
+                          type: ADD_SUBTASKS,
+                          payload: { task_id: currentTicket.code },
+                        });
+                      }}
+                    >
+                      Add Subtask
+                    </div>
                   </div>
                 </div>
                 <div className="ticketAttachments">
@@ -414,9 +452,13 @@ export const TicketBoard = () => {
                 <div className="ticketCosts">
                   <div className="contentList">
                     <div className="ticketSectionTitle">Service & Costs</div>
+                    <div className="contentListRows">
                     {currentTicketServiceCosts.map((serviceCost) => {
                       return (
-                        <div className="serviceCostRow" key={serviceCost.billable_id}>
+                        <div
+                          className="serviceCostRow"
+                          key={serviceCost.billable_id}
+                        >
                           <input
                             className="serviceNameInput"
                             defaultValue={serviceCost.name}
@@ -485,6 +527,7 @@ export const TicketBoard = () => {
                         </div>
                       );
                     })}
+                    </div>
                   </div>
                   <div className="additionBar">
                     <div

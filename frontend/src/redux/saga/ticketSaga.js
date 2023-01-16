@@ -1,12 +1,15 @@
 import { call, put, select, takeLatest } from "redux-saga/effects";
 import {
+  ADD_SUBTASKS,
   ASSIGN_USER,
   GET_SERVICE_COST,
+  GET_SUBTASKS,
   GET_TICKET_BOARD,
   POST_SERVICE_COST,
   REMOVE_SERVICE_COST,
   SET_ACTIVE_TICKET,
   SET_SERVICE_COST,
+  SET_SUBTASKS,
   SET_TICKETS,
   UNASSIGN_USER,
   UPDATE_TICKET_DESCRIPTION,
@@ -23,6 +26,8 @@ import {
   unassignUserApi,
   updateTicketDescriptionApi,
   updateTicketStatusApi,
+  getSubTicketsById,
+  createSubtask,
 } from "../api/ticketApi";
 
 export function* fetchTickets() {
@@ -91,6 +96,19 @@ export function* removeServiceCost(action) {
   yield call(getServiceCost, { payload: action.payload.sow_id });
 }
 
+export function* getSubtasks(action) {
+  const subtasks = yield call(getSubTicketsById, action.payload);
+  yield put({
+    type: SET_SUBTASKS,
+    payload: subtasks.data,
+  });
+}
+
+export function* addSubtask(action) {
+  yield call(createSubtask, action.payload);
+  yield call(getSubtasks, { payload: action.payload.ticket_id });
+}
+
 export default function* ticketSaga() {
   yield takeLatest(GET_TICKET_BOARD, fetchTickets);
   yield takeLatest(UPDATE_TICKET_STATUS, updateTicketStatus);
@@ -100,4 +118,6 @@ export default function* ticketSaga() {
   yield takeLatest(POST_SERVICE_COST, postServiceCost);
   yield takeLatest(REMOVE_SERVICE_COST, removeServiceCost);
   yield takeLatest(GET_SERVICE_COST, getServiceCost);
+  yield takeLatest(ADD_SUBTASKS, addSubtask);
+  yield takeLatest(GET_SUBTASKS, getSubtasks);
 }

@@ -1,4 +1,5 @@
 import defaultAxios from "axios";
+import uuid from "react-uuid";
 import { backend } from "../../constants";
 
 const axios = defaultAxios.create({
@@ -35,8 +36,25 @@ export const getSubTickets = async () => {
 
 export const getSubTicketsById = async (payload) => {
   try {
-      const tickets = await axios.get(`task/subtasks/${payload.ticketId}`);
-      return tickets;
+    const tickets = await axios.get(`task/subtasks/${payload}`);
+    return tickets;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const createSubtask = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      subtask_id: uuid(),
+      subtask_title: `Subtask ${uuid().substring(0, 5)}`,
+      subtask_description: `Subtask for ${payload.task_id}`,
+      subtask_state: "open",
+      task_id: payload.task_id,
+    });
+
+    const subtask = await axios.post(`task/addsubtask/${payload.task_id}`, data);
+    return subtask;
   } catch (err) {
     return console.error(err);
   }
@@ -61,7 +79,10 @@ export const updateSubticketStatusApi = async (payload) => {
       status: payload.status,
     });
 
-    const tickets = await axios.post(`task/subtask/status/${payload.ticketId}`, data);
+    const tickets = await axios.post(
+      `task/subtask/status/${payload.ticketId}`,
+      data
+    );
     return tickets;
   } catch (err) {
     return console.error(err);
@@ -74,7 +95,10 @@ export const updateTicketDescriptionApi = async (payload) => {
       description: payload.description,
     });
 
-    const tickets = await axios.post(`task/description/${payload.ticketId}`, data);
+    const tickets = await axios.post(
+      `task/description/${payload.ticketId}`,
+      data
+    );
     return tickets;
   } catch (err) {
     return console.error(err);
@@ -89,7 +113,6 @@ export const getServiceCostApi = async (payload) => {
     return console.error(err);
   }
 };
-
 
 export const postServiceCostApi = async (payload) => {
   try {
@@ -139,7 +162,9 @@ export const assignUserApi = async (payload) => {
 
 export const unassignUserApi = async (payload) => {
   try {
-    const assignment = await axios.delete(`assignment/${payload.assignment_id}`);
+    const assignment = await axios.delete(
+      `assignment/${payload.assignment_id}`
+    );
     return assignment;
   } catch (err) {
     return console.error(err);

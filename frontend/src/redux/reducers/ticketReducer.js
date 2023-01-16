@@ -3,6 +3,7 @@ import { ticketBoardData } from "../../components/DragAndDrop/ticket-dnd-data";
 import {
   SET_ACTIVE_TICKET,
   SET_SERVICE_COST,
+  SET_SUBTASKS,
   SET_TICKETS,
   UPDATE_TICKET_BOARD,
 } from "../actions/ticketActions";
@@ -18,7 +19,7 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
       let inProgressList = [];
       let doneList = [];
       let blockedList = [];
-      let assigneeMap = {}
+      let assigneeMap = {};
       // Map Assignees
       action.payload.assigneeList.forEach((assignee) => {
         let assigneeList = assigneeMap[assignee.task_id] ?? [];
@@ -48,7 +49,8 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
           if (ticket.subtask_state === "blocked") {
             blockedList.push(ticket.subtask_id);
           }
-        } else if (ticket.subtask_id !== null) { // NULL means duplicate from subtask join, undefined means main task ticket
+        } else if (ticket.subtask_id !== null) {
+          // NULL means duplicate from subtask join, undefined means main task ticket
           ticketMap[ticket.task_id] = {
             id: ticket.task_id,
             code: ticket.task_id,
@@ -124,4 +126,19 @@ const currentTicketServiceCosts = (state = [], action) => {
   }
 };
 
-export default combineReducers({ ticketBoardDndData, currentTicket, currentTicketServiceCosts });
+const currentTicketSubtasks = (state = [], action) => {
+  switch (action.type) {
+    case SET_SUBTASKS: {
+      return action.payload;
+    }
+    default:
+      return state;
+  }
+};
+
+export default combineReducers({
+  ticketBoardDndData,
+  currentTicket,
+  currentTicketServiceCosts,
+  currentTicketSubtasks,
+});

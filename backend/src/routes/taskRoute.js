@@ -68,6 +68,7 @@ router.post("/addsubtask/:taskId", (req, res) => {
     });
     return;
   }
+
   taskController
     .saveSubtaskByTask(req)
     .then((response) => {
@@ -134,7 +135,7 @@ router.get("/subtasks", (_, res) => {
     });
 });
 
-router.get("subtask/:subtaskId", (_, res) => {
+router.get("/subtask/:subtaskId", (_, res) => {
   taskController
     .loadSubtasks(req.params.subtaskId)
     .then((response) => {
@@ -146,9 +147,9 @@ router.get("subtask/:subtaskId", (_, res) => {
 });
 
 //load subtasks for given taskId
-router.get("subtasks/:taskId", (req, res) => {
+router.get("/subtasks/:taskId", (req, res) => {
   taskController
-    .loadSubtasksByTaskId(req.params.taskId)
+    .loadSubtasksWithID(req.params.taskId)
     .then((response) => {
       res.status(200).json(response);
     })
@@ -168,7 +169,7 @@ router.delete("/:taskId", (req, res) => {
     });
 });
 
-router.delete("subtask/:subtaskId", (req, res) => {
+router.delete("/subtask/:subtaskId", (req, res) => {
   questionController
     .deleteSubtask(req.params.subtaskId)
     .then((response) => {

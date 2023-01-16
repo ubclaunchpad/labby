@@ -308,6 +308,12 @@
   flex-direction: column;
 }
 
+.contentListRows {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
 .additionBar {
   background-color: #B4B4B4;
   height: 40px;

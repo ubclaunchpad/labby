@@ -216,7 +216,7 @@ export default class TaskController {
     }
   }
 
-  loadSubtasksbyTaskId(taskId) {
+  loadSubtasksWithID(taskId) {
     return new Promise((resolve, reject) => {
       const TaskModel = new Task();
   
