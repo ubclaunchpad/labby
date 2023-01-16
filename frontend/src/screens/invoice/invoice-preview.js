@@ -1,19 +1,19 @@
 import { appColor } from "../../constants";
 import Header from "../../components/Header";
 import "./invoice.css";
-import InvoiceTable from "../../components/InvoiceTable";
-import { useEffect, useRef } from "react";
+import { useRef,useEffect } from "react";
+import GeneratePdf from "../../components/GeneratePdf";
+import InvoiceTemplate from "../../components/GenerateInvoice/InvoiceTemplate";
 import { useDispatch } from "react-redux";
 import { LOAD_BILLABLE } from "../../redux/actions/billingActions";
-import GenerateInvoice from "../../components/GenerateInvoice";
 
-function Invoice() {
+function InvoicePreview() {
   const dispatch = useDispatch();
-  const invoiceTableRef = useRef(null);
-
   useEffect(() => {
     dispatch({ type: LOAD_BILLABLE });
   }, [dispatch]);
+
+  const invoiceTemplatePreviewRef = useRef(null);
 
   return (
     <div className="invoicePage">
@@ -22,15 +22,18 @@ function Invoice() {
       </div>
       <div className="invoicePageContent">
         <div className="InvoiceTitle" style={{ color: appColor.gray }}>
-          Invoice Dashboard
+          Invoice Preview
         </div>
-        <div className="InvoiceTable" ref={invoiceTableRef}>
-          <InvoiceTable />
+
+        <div className="InvoicePreview">
+          <div ref={invoiceTemplatePreviewRef}>
+            <InvoiceTemplate />
+          </div>
         </div>
-        <GenerateInvoice />
+        <GeneratePdf htmlElementRef={invoiceTemplatePreviewRef} />
       </div>
     </div>
   );
 }
 
-export default Invoice;
+export default InvoicePreview;
