@@ -101,7 +101,7 @@ export default class TaskController {
       }
       const TaskModel = new Task();
       const subtaskData = {
-        subtask_id: Math.floor(Math.random() * 100),
+        subtask_id: req.body.subtask_id,
         subtask_title: req.body.subtask_title,
         subtask_description: req.body.subtask_description,
         subtask_state: req.body.subtask_state,
@@ -136,7 +136,6 @@ export default class TaskController {
       );
     });
   }
-
 
   loadAssignee() {
     // added
@@ -230,7 +229,6 @@ export default class TaskController {
     });
   }
   
-
   deleteTask(id) {
     return new Promise((resolve, reject) => {
       const TaskModel = new Task();
@@ -257,5 +255,3 @@ export default class TaskController {
     });
   }
 }
-
-

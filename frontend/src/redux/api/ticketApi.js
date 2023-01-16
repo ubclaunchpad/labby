@@ -35,7 +35,6 @@ export const getSubTickets = async () => {
 
 export const getSubTicketsById = async (payload) => {
   try {
-
       const tickets = await axios.get(`task/subtasks/${payload.ticketId}`);
       return tickets;
   } catch (err) {

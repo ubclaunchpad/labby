@@ -10,7 +10,7 @@ DELIMITER $$
 CREATE PROCEDURE `load_tasks` ()
 
 BEGIN
-    SELECT*FROM tasks;
+    SELECT * FROM tasks;
   
 END $$
 
@@ -36,12 +36,9 @@ END $$
 
 CREATE PROCEDURE `load_subtasks_by_taskId` (IN `task_id` VARCHAR(50))
 BEGIN
-SELECT *FROM subtasks
+SELECT * FROM subtasks
             WHERE subtasks.fk_task_id = `task_id`;
 
 END $$
   
 DELIMITER ;	
-
-
-
