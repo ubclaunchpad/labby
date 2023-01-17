@@ -9,7 +9,7 @@ CREATE PROCEDURE `createUsers` ()
 BEGIN
 CREATE TABLE `users` (
 	user_id VARCHAR(50) NOT NULL,
-	fk_organization_id VARCHAR (50),
+	fk_organization_id VARCHAR(50),
 	username VARCHAR(255),
 	email VARCHAR(255),
 	employee BOOLEAN,
