@@ -28,9 +28,9 @@ CALL save_organization('ORG-ID-B','Dr David Huntsman', 'Andy Demo', 'andydemo@de
 CALL save_organization('ORG-ID-C','Hungrii Inc.', 'Harin Wu', 'harinwu99@gmail.com', '789 Main St', 'Industry', '');
 
 -- Populate Cost
-CALL save_cost('COSTID-B', 10.0, 'MAPCORE-105', 'Internal');
-CALL save_cost('COSTID-C', 10.0, 'MAPCORE-105', 'External');
-CALL save_cost('COSTID-D', 10.0, 'MAPCORE-105', 'Industry');
+CALL save_cost('COSTID-B', 10.0, 'MAPCORE-105', 'Internal', true);
+CALL save_cost('COSTID-C', 10.0, 'MAPCORE-105', 'External', true);
+CALL save_cost('COSTID-D', 10.0, 'MAPCORE-105', 'Industry', true);
 
 -- Populate User
 CALL addUser('USER-A', 'ORG-ID-A', 'Harin Wu', 'harinwu99@gmail.com', true);

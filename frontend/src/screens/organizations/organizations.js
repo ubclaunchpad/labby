@@ -1,10 +1,10 @@
 import { appColor } from "../../constants";
 import Header from "../../components/Header";
-import "./cost-center.css";
+import "./organizations.css";
 import CostCenterTable from "../../components/CostCenterTable";
 import AdministrationHeader from "../../components/AdministrationHeader";
 
-function CostCenter() {
+function Organizations() {
   return (
     <div className="costCenterPage">
       <div className="headerComponent">
@@ -15,9 +15,9 @@ function CostCenter() {
           className="costCenterTitle"
           style={{ color: appColor.gray }}
         >
-          Cost Center
+          Organizations
         </div>
-        <AdministrationHeader currentPage={"Cost Center"}/>
+        <AdministrationHeader currentPage={"Organizations"}/>
         <div className="costCenterTable">
           <CostCenterTable />
         </div>
@@ -26,4 +26,4 @@ function CostCenter() {
   );
 }
 
-export default CostCenter;
+export default Organizations;
