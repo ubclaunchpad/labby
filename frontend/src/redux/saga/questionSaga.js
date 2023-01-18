@@ -39,7 +39,7 @@ export function* fetchQuestion({ payload }) {
 
 export function* loadAnswerBySurvey({ payload }) {
   const answers = yield call(getAnswersBySurvey, payload);
-  console.log("Answers", answers);
+  yield put({ type: SET_ANSWER_BY_SURVEY, payload: answers.data[0] });
 }
 
 export function* saveQuestion({ payload }) {
