@@ -56,7 +56,7 @@ const Task = (props) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           onClick={() => {
-            console.log(props.task);
+            // console.log(props.task);
             dispatch({ type: SET_ACTIVE_TICKET, payload: props.task });
           }}
         >
@@ -157,11 +157,14 @@ export const TicketBoard = () => {
   const ticketBoardDndData = useSelector(
     (state) => state.ticketReducer.ticketBoardDndData
   );
+  // console.log("This is the ticketboard DND data ---> ", ticketBoardDndData);
   const currentTicket = useSelector(
     (state) => state.ticketReducer.currentTicket
   );
   const employeeList = useSelector((state) => state.userReducer.employeeList);
   const [assigneeAddModal, setAssigneeAddModal] = useState(false);
+  const allTasks = ticketBoardDndData.tasks;
+  const [filteredTasks, setFilteredTasks] = useState(allTasks);
 
   useEffect(() => {
     dispatch({ type: LOAD_EMPLOYEE });
@@ -234,10 +237,46 @@ export const TicketBoard = () => {
     });
   };
 
+  // Want to get the old data and filter out the tasks that are not there from the searchbar?
+  // So what my search will do is filter 3 ways and try and extract something to provide to the tasks ???
+  // So what I will need is a react state to keep track of the tasks.
+  // State will update on search or whenever the app renders itself once again.
+
+  function onSearchHandler(searchTerm) {
+    console.log("All tasks --->", allTasks);
+    const filteredTasksArray = Object.entries(allTasks).filter(
+      ([key, value]) => {
+        const lowerCaseSearchTerm = searchTerm.toLowerCase();
+        console.log("This is the key", key, value);
+        const matchedId = value?.id
+          ?.toLowerCase()
+          .includes(lowerCaseSearchTerm);
+        const matchedDescription = value?.description
+          ?.toLowerCase()
+          .includes(lowerCaseSearchTerm);
+        const matchedTitle = value?.title
+          ?.toLowerCase()
+          .includes(lowerCaseSearchTerm);
+        // console.log(matchedId, matchedDescription, matchedTitle);
+        return matchedId || matchedDescription || matchedTitle;
+      }
+    );
+    console.log(filteredTasksArray);
+    const filteredTaskObject = Object.fromEntries(filteredTasksArray);
+    console.log("THIS IS THE FILTERED TASK OBJECT --->", filteredTaskObject);
+    setFilteredTasks(filteredTaskObject);
+  }
+
   return (
     <div className="ticketBoardContainer">
       <div className="searchTicketSection">
-        <Input placeholder="Search..." className="ticketBoardSearch" />
+        <Input
+          placeholder="Search..."
+          className="ticketBoardSearch"
+          onChange={(e) => {
+            onSearchHandler(e.target.value);
+          }}
+        />
         <select
           className="ticketBoardDropdown"
           value="Filter..."
