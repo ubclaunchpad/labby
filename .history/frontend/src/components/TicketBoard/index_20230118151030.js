@@ -295,7 +295,9 @@ export const TicketBoard = () => {
                       backgroundColor: appColor.primaryLight,
                       color: appColor.white,
                     }}
-                    >
+                    onClick={() => {
+                      dispatch({ type: LOAD_ANSWER_BY_SURVEY, payload: { survey_id: currentTicket.id } });
+                    }}>
                     Preview
                   </button>
                 </NavLink>                  

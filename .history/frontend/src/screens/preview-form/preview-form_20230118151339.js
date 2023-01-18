@@ -4,18 +4,18 @@ import { appColor } from "../../constants";
 import Header from "../../components/Header";
 import "./preview-form.css";
 import PreviewTable from "../../components/PreviewTable";
-import { useEffect, useRef} from "react";
-import { useDispatch } from "react-redux";
-import { LOAD_ANSWER_BY_SURVEY } from "../../redux/actions/questionActions";
+import { useEffect, useRef, useDispatch} from "react";
+ 
+import { LOAD_BILLABLE } from "../../redux/actions/billingActions";
+import GenerateInvoice from "../../components/GenerateInvoice";
 
 function PreviewForm() {
-
+  const dispatch = useDispatch();
   const invoiceTableRef = useRef(null);
   const surveyId = window.location.pathname.split("/")[2];
-  console.log(surveyId);
-  
-  const dispatch = useDispatch();
+
   useEffect(() => {
+    dispatch({ type: LOAD_BILLABLE });
     dispatch({ type: LOAD_ANSWER_BY_SURVEY, payload: { survey_id: surveyId } });
   }, [dispatch]);
 

@@ -8,7 +8,6 @@ import "antd/dist/antd.min.css";
 import "./index.css";
 
 const PreviewTable = () => {
-  const dispatch = useDispatch();
   const columns = [
     {
       title: "Question",

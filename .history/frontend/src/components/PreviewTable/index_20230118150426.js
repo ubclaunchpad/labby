@@ -6,6 +6,7 @@ import {
 import { Table, Form, Input } from "antd";
 import "antd/dist/antd.min.css";
 import "./index.css";
+import { SET_ANSWER_BY_SURVEY } from "../../redux/actions/questionActions";
 
 const PreviewTable = () => {
   const dispatch = useDispatch();
