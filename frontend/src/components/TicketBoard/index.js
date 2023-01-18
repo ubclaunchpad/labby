@@ -408,66 +408,72 @@ export const TicketBoard = () => {
                 }}
               />
             </div>
+
             <div className="ticketInfo">
-              <div className="ticketColumn">
+              <div className="ticketColumn subtasksColumn">
+
                 <div className="ticketSubtasks">
-                  <div className="contentList">
-                    <div className="ticketSectionTitle">Subtasks</div>
-                    <div className="subtaskSection">
-                    <div className="contentListRows">
-                    {currentTicketSubtasks.map((subtasks) => {
-                      return (
-                        <div
-                          className="subtaskCostRow"
-                          key={subtasks.subtask_id}
-                        >
-                        <div className="subtaskInputContainer">
-                          <img className="Rectangle" src={Rectangle} alt="Rectangle" 
-                            />
-                            <div className="serviceCostQuantity">
-                              {subtasks.subtask_title}
+                  <div className="ticketSubtasksContainer">
+                    <div className="contentList">
+                      <div className="ticketSectionTitle">Subtasks</div>
+                      <div className="subtaskCostRows">
+                        {currentTicketSubtasks.map((subtasks) => {
+                          return (
+                            <div
+                              className="subtaskCostRow"
+                              key={subtasks.subtask_id}
+                            >
+                              <div className="subtaskInputContainer">
+                                <img
+                                  className="Rectangle"
+                                  src={Rectangle}
+                                  alt="Rectangle"
+                                />
+                                <div className="serviceCostQuantity">
+                                  {subtasks.subtask_title}
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                      );
-                    })}
+                          );
+                        })}
+                      </div>
                     </div>
-                    </div>
-                  </div>
-                  <div className="additionBar">
-                  <img className="Add" src={Add} alt="Add" 
-                      onClick={() => {
-                        dispatch({
-                          type: ADD_SUBTASKS,
-                          payload: { task_id: currentTicket.code },
-                        });
-                      }}
+
+                    <div className="additionBar">
+                      <img
+                        className="Add"
+                        src={Add}
+                        alt="Add"
+                        onClick={() => {
+                          dispatch({
+                            type: ADD_SUBTASKS,
+                            payload: { task_id: currentTicket.code },
+                          });
+                        }}
                       />
-                    <div
-                      className="ticketSectionTitle"
-                    >
-                      Add Subtask
+                      <div className="ticketSectionTitle">Add Subtask</div>
                     </div>
-                  </div>
+                  </div> 
                 </div>
+
                 <div className="ticketAttachments">
-                  <div className="contentList">
-                    <div className="ticketSectionTitle">Attachments</div>
-                  </div>
+                  <div className="ticketSectionTitle">Attachments</div>
                 </div>
+
               </div>
-              <div className="ticketColumn">
+
+              <div className="ticketColumn servicesColumn">
                 <div className="ticketCosts">
                   <div className="contentList">
                     <div className="ticketSectionTitle">Service & Costs</div>
-                      <div className="serviceListRows">
+                    <div className="serviceListRows">
                       {currentTicketServiceCosts.map((serviceCost) => {
                         return (
-                            <div
-                              className="serviceCostRow"
-                              key={serviceCost.billable_id}
-                            >
-                              <div className="inputContainer">
+                          <div
+                            className="serviceCostRow"
+                            key={serviceCost.billable_id}
+                          >
+                            <div className="inputContainer">
                               <input
                                 className="serviceNameInput"
                                 defaultValue={serviceCost.name}
@@ -483,43 +489,43 @@ export const TicketBoard = () => {
                                   });
                                 }}
                               />
-                              </div>
-                              <div className="inputContainer">
-                                <div className="serviceCostQuantity">#</div>
-                                <input
-                                  className="serviceCostInput"
-                                  defaultValue={serviceCost.quantity}
-                                  onBlur={(text) => {
-                                    dispatch({
-                                      type: POST_SERVICE_COST,
-                                      payload: {
-                                        ...serviceCost,
-                                        sow_id: serviceCost.fk_sow_id,
-                                        quantity: text.target.value,
-                                      },
-                                    });
-                                  }}
-                                />
-                              </div>
-                              <div className="inputContainer">
-                                <div className="serviceCostCost">$</div>
-                                <input
-                                  className="serviceCostInput"
-                                  defaultValue={serviceCost.cost}
-                                  onBlur={(text) => {
-                                    dispatch({
-                                      type: POST_SERVICE_COST,
-                                      payload: {
-                                        ...serviceCost,
-                                        sow_id: serviceCost.fk_sow_id,
-                                        cost: text.target.value,
-                                      },
-                                    });
-                                  }}
-                                />
-                              </div>
+                            </div>
+                            <div className="inputContainer">
+                              <div className="serviceCostQuantity">#</div>
+                              <input
+                                className="serviceCostInput"
+                                defaultValue={serviceCost.quantity}
+                                onBlur={(text) => {
+                                  dispatch({
+                                    type: POST_SERVICE_COST,
+                                    payload: {
+                                      ...serviceCost,
+                                      sow_id: serviceCost.fk_sow_id,
+                                      quantity: text.target.value,
+                                    },
+                                  });
+                                }}
+                              />
+                            </div>
+                            <div className="inputContainer">
+                              <div className="serviceCostCost">$</div>
+                              <input
+                                className="serviceCostInput"
+                                defaultValue={serviceCost.cost}
+                                onBlur={(text) => {
+                                  dispatch({
+                                    type: POST_SERVICE_COST,
+                                    payload: {
+                                      ...serviceCost,
+                                      sow_id: serviceCost.fk_sow_id,
+                                      cost: text.target.value,
+                                    },
+                                  });
+                                }}
+                              />
+                            </div>
 
-                              <div className="deleteServiceItem">
+                            <div className="deleteServiceItem">
                               <img
                                 className="download-icon-delete"
                                 src={X}
@@ -535,13 +541,16 @@ export const TicketBoard = () => {
                                 }}
                               />
                             </div>
-                            </div>
+                          </div>
                         );
                       })}
-                      </div>
+                    </div>
                   </div>
                   <div className="additionBar">
-                    <img className="Add" src={Add} alt="Add" 
+                    <img
+                      className="Add"
+                      src={Add}
+                      alt="Add"
                       onClick={() => {
                         dispatch({
                           type: POST_SERVICE_COST,
@@ -558,17 +567,17 @@ export const TicketBoard = () => {
                             createdBy: "USER-A",
                           },
                         });
-                      }} />
-                    <div
-                      className="ticketSectionTitle"
-                    >
-                      Add Service 
-                    </div>
+                      }}
+                    />
+                    <div className="ticketSectionTitle">Add Service</div>
                   </div>
                 </div>
               </div>
+
             </div>
+
           </div>
+
         </div>
       ) : null}
     </div>

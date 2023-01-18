@@ -35,7 +35,7 @@
   background-color: #ecedf3;
   border-radius: 15px;
   height: 45px;
-  padding-left: 16px; 
+  padding-left: 16px;
   padding-right: 16px;
   display: flex;
   flex-direction: row;
@@ -65,91 +65,91 @@
   text-align: left;
   padding: 8px;
 }
-.taskList{
-    padding: 8px;
+.taskList {
+  padding: 8px;
 }
 .task-card-container {
   font-family: inherit;
   font-size: 12px;
-  color: #6F6F6F;
-  display: flex; 
-  flex-direction: row; 
-    margin-bottom: 8px;
-    border-radius: 5px;
-    background-color: #fff;
-    min-height: 110px;
+  color: #6f6f6f;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  background-color: #fff;
+  min-height: 110px;
 }
 .task-card-color-tab {
-  font-family: inherit; 
+  font-family: inherit;
   padding: 4px;
   border-radius: 5px 0px 0px 5px;
 }
-.task-card-content{
-  display: flex; 
+.task-card-content {
+  display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  width: 100%;  
+  width: 100%;
   padding: 10px;
 }
 .task-card__header {
   display: flex;
-  flex-direction: row; 
-  justify-content:space-between;
+  flex-direction: row;
+  justify-content: space-between;
 }
-.task-card__code{
+.task-card__code {
   font-size: 16px;
   text-align: left;
 }
-.task-card__reminder--notify-true{
+.task-card__reminder--notify-true {
   display: flex;
-  border-radius: 5px; 
-  background-color: #E08E89;
+  border-radius: 5px;
+  background-color: #e08e89;
   align-items: center;
   justify-content: center;
 }
-.task-card__reminder--notify-false{
+.task-card__reminder--notify-false {
   display: flex;
-  border-radius: 5px; 
+  border-radius: 5px;
   background-color: none;
   align-items: center;
   justify-content: center;
 }
-.task-card__notificaton-container{
-  display:inline-block;
-  width: 30px; 
-  height: 30px; 
+.task-card__notificaton-container {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
 }
-.notification-icon{
+.notification-icon {
   color: black;
   margin: 3px;
   padding-top: 1px;
-  }
-.task-card__body{
+}
+.task-card__body {
   display: flex;
   flex-grow: 1;
-  flex-direction: row; 
+  flex-direction: row;
 }
 
-.task-card__footer{
-  display: flex; 
+.task-card__footer {
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-.task-card__subtasks-container{
-  display: flex; 
+.task-card__subtasks-container {
+  display: flex;
   flex-direction: row;
   align-items: center;
-  background: #E4E5EA; 
+  background: #e4e5ea;
   padding: 5px;
   border-radius: 5px;
 }
-.task-card__subtask-checkbox{
-  display: inline-block; 
+.task-card__subtask-checkbox {
+  display: inline-block;
   height: 14px;
   margin-right: 5px;
 }
 
-.task-card__subtasks-completed-text{
+.task-card__subtasks-completed-text {
   margin-top: 1px;
   display: inline-block;
   color: white;
@@ -157,19 +157,19 @@
   font-weight: 600;
 }
 
-.task-card__assignees-container-parent{
-  display: flex; 
+.task-card__assignees-container-parent {
+  display: flex;
   flex-direction: row;
   width: 100%;
   justify-content: flex-end;
 }
 
-.task-card__assignees-container{
-  display: flex; 
+.task-card__assignees-container {
+  display: flex;
   flex-direction: row;
 }
 
-.task-card__assignee-container{
+.task-card__assignee-container {
   margin-left: 5px;
   position: relative;
   width: 25px;
@@ -178,7 +178,7 @@
 }
 
 .assigneeAddModal {
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
   border-radius: 10px;
   width: 96%;
   height: 10%;
@@ -210,25 +210,33 @@
 
 .ticketDetail {
   background-color: #fff;
-  width: 50%;
+  width: 60%;
   height: 90%;
   position: absolute;
   left: 50%;
   top: 5%;
   transform: translate(-50%);
   border-radius: 8px;
-  padding: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .ticketTitle {
   display: flex;
   align-items: center;
+  text-transform: capitalize;
 }
 
 .ticketTitleId {
   font-weight: bold;
   font-size: 20px;
   margin-right: 8px;
+  text-transform: uppercase;
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ticketSectionTitle {
@@ -251,41 +259,60 @@
 }
 
 .ticketDescription {
- display: flex;
- flex-direction: column;
- align-items: flex-start;
- margin-top: 10px;
- height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  height: 120px;
 }
 
 .ticketInfo {
+  flex-grow: 1;
+  max-height: 65%;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: stretch;
   margin-top: 10px;
-  justify-content: space-between;
+  gap: 18px;
 }
 
 .ticketColumn {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  width: 49%;
   justify-content: space-between;
+}
+
+.ticketInfo .subtasksColumn {
+  flex-grow: 3;
+}
+.ticketInfo .servicesColumn {
+  flex-grow: 7;
 }
 
 .ticketSubtasks {
-  height: 47vh;
-  background-color: #D9D9D9;
-  border-radius: 10px;
+  background-color: #d9d9d9;
+  flex-grow: 1;
+  border-top-right-radius: 5%;
+  border-top-left-radius: 5%;
+  max-height: 70%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
+.ticketSubtasksContainer {
+  flex: 1;
+  max-height: 100%;
+  border-radius: 10px;
+}
+
 .ticketAttachments {
-  height: 12vh;
-  margin-top: 2vh;
-  background-color: #D9D9D9;
+  margin-top: 12px;
+  padding: 15px;
+  height: 17%;
+  background-color: #d9d9d9;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -293,29 +320,23 @@
 }
 
 .ticketCosts {
-  height: 61vh;
-  background-color: #D9D9D9;
+  background-color: #d9d9d9;
   border-radius: 10px;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .contentList {
-  display: flex;
   height: 100%;
+  display: flex;
   padding: 15px;
   flex-direction: column;
 }
 
-.contentListRows {
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-}
-
 .additionBar {
-  background-color: #B4B4B4;
+  background-color: #b4b4b4;
   height: 40px;
   width: 100%;
   padding-left: 15px;
@@ -331,21 +352,26 @@
   margin-right: 15px;
 }
 
+.subtaskCostRows {
+  height: 100%;
+  overflow-y: auto;
+}
+
 .subtaskCostRow {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 10px;
   flex: 1;
-  background-color: #B4B4B4;
+  background-color: #b4b4b4;
   border-radius: 10px;
-  height: 10vh;
 }
 
 .subtaskInputContainer {
   display: flex;
   flex-direction: row;
   height: 4em;
+  /* height: 50px; */
   align-items: center;
   padding-left: 15px;
 }
@@ -361,7 +387,7 @@
 
 .serviceNameInput {
   height: 30px;
-  width: 200px;
+  /* width: 200px; */
 }
 
 .serviceCostInput {
@@ -405,14 +431,8 @@
 
 .serviceCostInput,
 .serviceNameInput {
-border: none;
-background-color: #cdcccc;
-}
-
-.subtaskSection {
-  overflow-y: auto;
-  padding-right: 10px;
-  background-color: #D9D9D9;
+  border: none;
+  background-color: #cdcccc;
 }
 
 .Rectangle {
