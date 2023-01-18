@@ -345,7 +345,7 @@
 .subtaskInputContainer {
   display: flex;
   flex-direction: row;
-  height: 70px;
+  height: 4em;
   align-items: center;
   padding-left: 15px;
 }
@@ -381,7 +381,8 @@
 
 .serviceListRows {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  /* width: 100%; */
   flex-direction: column;
 }
 
@@ -407,3 +408,22 @@
 border: none;
 background-color: #cdcccc;
 }
+
+.subtaskSection {
+  overflow-y: auto;
+  padding-right: 10px;
+  background-color: #D9D9D9;
+}
+
+.Rectangle {
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+/* how to change colour? */
+/* .subtaskSection::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+} */

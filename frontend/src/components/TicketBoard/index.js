@@ -27,6 +27,7 @@ import { LOAD_EMPLOYEE } from "../../redux/actions/userActions";
 import uuid from "react-uuid";
 import X from "../../assets/X.png";
 import Add from "../../assets/AddBlack.png";
+import Rectangle from "../../assets/Rectangle.png";
 
 export const getColorNum = (id, colorArray) => {
   if (colorArray) {
@@ -412,6 +413,7 @@ export const TicketBoard = () => {
                 <div className="ticketSubtasks">
                   <div className="contentList">
                     <div className="ticketSectionTitle">Subtasks</div>
+                    <div className="subtaskSection">
                     <div className="contentListRows">
                     {currentTicketSubtasks.map((subtasks) => {
                       return (
@@ -419,16 +421,17 @@ export const TicketBoard = () => {
                           className="subtaskCostRow"
                           key={subtasks.subtask_id}
                         >
-                          <div className="subtaskInputContainer">
+                        <div className="subtaskInputContainer">
+                          <img className="Rectangle" src={Rectangle} alt="Rectangle" 
+                            />
                             <div className="serviceCostQuantity">
                               {subtasks.subtask_title}
                             </div>
-                            
-
                           </div>
                         </div>
                       );
                     })}
+                    </div>
                     </div>
                   </div>
                   <div className="additionBar">
