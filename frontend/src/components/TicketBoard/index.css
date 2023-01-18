@@ -35,7 +35,7 @@
   background-color: #ecedf3;
   border-radius: 15px;
   height: 45px;
-  padding-left: 16px;
+  padding-left: 16px; 
   padding-right: 16px;
   display: flex;
   flex-direction: row;
@@ -324,12 +324,38 @@
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
+.Add {
+  height: 15px;
+  width: 15px;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+.subtaskCostRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 10px;
+  flex: 1;
+  background-color: #B4B4B4;
+  border-radius: 10px;
+  height: 10vh;
+}
+
+.subtaskInputContainer {
+  display: flex;
+  flex-direction: row;
+  height: 70px;
+  align-items: center;
+  padding-left: 15px;
+}
 
 .serviceCostRow {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 15px;
+  margin: 1em;
   flex: 1;
 }
 
@@ -346,4 +372,38 @@
 .inputContainer {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: #cdcccc;
+  padding: 10px;
+  flex: 2;
+}
+
+.serviceListRows {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.deleteServiceItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  cursor: pointer;
+  align-items: center;
+  background-color: #cdcccc;
+  margin-left: 2em;
+  border-radius: 10px;
+  flex: 1;
+}
+
+.serviceCostQuantity,
+.serviceCostCost {
+  padding-right: 3px;
+}
+
+.serviceCostInput,
+.serviceNameInput {
+border: none;
+background-color: #cdcccc;
 }
