@@ -2,7 +2,7 @@ import defaultAxios from "axios";
 import { backend } from "../../constants";
 
 const axios = defaultAxios.create({
-  baseURL: "http://localhost:8080/",
+  baseURL: "http://localhost:8080/", //change back to constants backend
   headers: { "Content-Type": "application/json" },
 });
 

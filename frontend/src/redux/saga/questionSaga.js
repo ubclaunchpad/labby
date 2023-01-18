@@ -10,6 +10,7 @@ import {
   SET_LOADING,
   SET_QUESTION,
   LOAD_ANSWER_BY_SURVEY,
+  SET_ANSWER_BY_SURVEY,
 } from "../actions/questionActions";
 import { getLogics, saveLogics } from "../api/logicApi";
 import {
@@ -38,7 +39,7 @@ export function* fetchQuestion({ payload }) {
 
 export function* loadAnswerBySurvey({ payload }) {
   const answers = yield call(getAnswersBySurvey, payload);
-  console.log(answers);
+  console.log("Answers", answers);
 }
 
 export function* saveQuestion({ payload }) {
