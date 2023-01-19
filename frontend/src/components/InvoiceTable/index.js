@@ -158,6 +158,7 @@ const InvoiceTable = () => {
         className="table"
         pagination={false}
         components={components}
+        rowKey={(record) => record.billable_id}
         rowClassName={() => "editable-row"}
         bordered
         dataSource={dataSource}

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import "./index.css";
 import UBC from "../../../assets/UBC.png";
-import InvoiceTable from "../../InvoiceTable";
+// import InvoiceTable from "../../InvoiceTable";
 
 const InvoiceTemplate = () => {
   const billingData = useSelector((state) => state.billingReducer.billingList);

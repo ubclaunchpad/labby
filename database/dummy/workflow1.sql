@@ -27,6 +27,15 @@ CALL save_organization('ORG-ID-A','MAPcore', 'Julie Ho', 'julieho@demo.com', '12
 CALL save_organization('ORG-ID-B','Dr David Huntsman', 'Andy Demo', 'andydemo@demo.com', '456 Main St', 'Internal', 'Pathology');
 CALL save_organization('ORG-ID-C','Hungrii Inc.', 'Harin Wu', 'harinwu99@gmail.com', '789 Main St', 'Industry', '');
 
+-- Populate Projects
+CALL save_project('PROJECTID-A', 'Project A', 'This is project A');
+CALL save_project('PROJECTID-B', 'Project B', 'This is project B');
+CALL save_project('PROJECTID-C', 'Project C', 'This is project C');
+
+-- Assign Projects to Organizations
+CALL save_organization_projects('ORG-PROJ-1', 'PROJECTID-A', 'ORG-ID-A');
+CALL save_organization_projects('ORG-PROJ-2', 'PROJECTID-B', 'ORG-ID-A');
+
 -- Populate Cost
 CALL save_cost('COSTID-B', 10.0, 'MAPCORE-105', 'Internal', true);
 CALL save_cost('COSTID-C', 10.0, 'MAPCORE-105', 'External', true);

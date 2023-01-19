@@ -33,6 +33,10 @@ function EditRequest() {
     if (droppedOutside || droppedOnSamePlace) {
       return;
     }
+    if (questionList.length === 0) {
+      alert("Please Enter a Form Title First")
+      return;
+    }
     console.log(`
         Element dropped 
         Dragged Element ID:${draggableId}. 

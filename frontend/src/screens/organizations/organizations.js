@@ -1,8 +1,8 @@
 import { appColor } from "../../constants";
 import Header from "../../components/Header";
 import "./organizations.css";
-import CostCenterTable from "../../components/CostCenterTable";
 import AdministrationHeader from "../../components/AdministrationHeader";
+import OrganizationTable from "../../components/OrganizationTable";
 
 function Organizations() {
   return (
@@ -19,7 +19,7 @@ function Organizations() {
         </div>
         <AdministrationHeader currentPage={"Organizations"}/>
         <div className="costCenterTable">
-          <CostCenterTable />
+          <OrganizationTable />
         </div>
       </div>
     </div>

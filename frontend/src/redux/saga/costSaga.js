@@ -4,7 +4,7 @@ import { deleteCosts, getCosts, postCosts, updateQuantifiableApi } from "../api/
 
 export function* fetchCost({ payload }) {
   const costs = [];
-  let organization = "Internal";
+  let organization = "Hungrii Inc.";
 
   if (payload.formResponses.length !== 0) {
     for (var i = 0; i < payload.formResponses.length; i++) {

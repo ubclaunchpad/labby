@@ -9,6 +9,7 @@ import costEstimateReducer from "./costEstimateReducer";
 import ticketReducer from "./ticketReducer";
 import billingReducer from "./billingReducer";
 import userReducer from "./userReducer";
+import projectReducer from "./projectReducer";
 
 const rootReducer = combineReducers({
   questionReducer,
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   ticketReducer,
   billingReducer,
   userReducer,
+  projectReducer,
 });
 
 export default rootReducer;
