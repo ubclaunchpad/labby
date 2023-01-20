@@ -35,6 +35,7 @@ export const createTicketApi = async (payload) => {
     var data = JSON.stringify({
       task_id: payload.task_id,
       fk_form_id: payload.fk_form_id,
+      fk_project_id: payload.fk_project_id,
       task_title: payload.task_title,
       task_description: payload.task_description,
       task_state: payload.task_state,

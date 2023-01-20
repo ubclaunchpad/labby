@@ -83,7 +83,14 @@ function RequestForm() {
         dispatch({ type: TOGGLE_COST_ESTIMATE });
         alert("Please Review Your Cost Estimate and Submit!");
       } else {
-        dispatch({ type: SUBMIT_FORM, payload: formResponses });
+        dispatch({
+          type: SUBMIT_FORM,
+          payload: {
+            formResponses,
+            // TODO: Fine project id from formResponses
+            projectId: "PROJECTID-A", 
+          },
+        });
         console.log(formResponses);
         alert("Form Submitted");
       }

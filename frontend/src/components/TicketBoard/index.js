@@ -191,6 +191,7 @@ export const TicketBoard = () => {
         payload: currentTicket?.id,
       });
     }
+    console.log(currentTicket)
   }, [dispatch, currentTicket]);
 
   const ticketDragEndHandler = (result) => {
@@ -483,6 +484,7 @@ export const TicketBoard = () => {
                                 payload: {
                                   ...serviceCost,
                                   sow_id: serviceCost.fk_sow_id,
+                                  project_id: serviceCost.fk_project_id,
                                   name: text.target.value,
                                 },
                               });
@@ -499,6 +501,7 @@ export const TicketBoard = () => {
                                   payload: {
                                     ...serviceCost,
                                     sow_id: serviceCost.fk_sow_id,
+                                    project_id: serviceCost.fk_project_id,
                                     quantity: text.target.value,
                                   },
                                 });
@@ -516,6 +519,7 @@ export const TicketBoard = () => {
                                   payload: {
                                     ...serviceCost,
                                     sow_id: serviceCost.fk_sow_id,
+                                    project_id: serviceCost.fk_project_id,
                                     cost: text.target.value,
                                   },
                                 });
@@ -552,6 +556,7 @@ export const TicketBoard = () => {
                           payload: {
                             billable_id: uuid(),
                             sow_id: currentTicket.code,
+                            project_id: currentTicket.projectId,
                             name: "New Service",
                             quantity: 1,
                             cost: 0,

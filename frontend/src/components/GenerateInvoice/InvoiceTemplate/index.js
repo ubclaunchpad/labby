@@ -4,7 +4,7 @@ import "./index.css";
 import UBC from "../../../assets/UBC.png";
 // import InvoiceTable from "../../InvoiceTable";
 
-const InvoiceTemplate = () => {
+const InvoiceTemplate = ({ customer }) => {
   const billingData = useSelector((state) => state.billingReducer.billingList);
 
   const todaysDate = new Date();
@@ -54,7 +54,8 @@ const InvoiceTemplate = () => {
             <div className="header-table-section header-item">
               <p className="header-table-title">Billed to: </p>
               <p className="header-table-content">
-                Client Name: <br />
+                Client Name: {customer}
+                <br />
                 Client Address: <br />
                 Contact: <br />
                 Department: <br />

@@ -9,7 +9,8 @@ export function* submitResponseSaga({ payload }) {
   yield call(saveSurvey, { survey_id: survey_id });
   yield call(createTicketApi, {
     task_id: survey_id,
-    fk_form_id: payload[0].question.fk_form_id,
+    fk_form_id: payload.formResponses[0].question.fk_form_id,
+    fk_project_id: payload.projectId,
     task_title: "Harin's Request",
     task_description: "Harin's Service Request (Replace this with description)",
     task_state: "open",

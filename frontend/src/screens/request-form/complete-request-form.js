@@ -17,8 +17,6 @@ import {
   CostEstimateCollapsed,
   CostEstimateFull,
 } from "../../components/CostEstimate";
-import { SUBMIT_FORM } from "../../redux/actions/formActions";
-import { TOGGLE_COST_ESTIMATE } from "../../redux/actions/uiActions";
 
 function RequestForm() {
   const dispatch = useDispatch();

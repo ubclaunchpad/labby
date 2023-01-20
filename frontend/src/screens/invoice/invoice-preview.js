@@ -1,7 +1,7 @@
 import { appColor } from "../../constants";
 import Header from "../../components/Header";
 import "./invoice.css";
-import { useRef,useEffect } from "react";
+import { useRef, useEffect } from "react";
 import GeneratePdf from "../../components/GeneratePdf";
 import InvoiceTemplate from "../../components/GenerateInvoice/InvoiceTemplate";
 import { useDispatch } from "react-redux";
@@ -13,7 +13,11 @@ function InvoicePreview() {
     dispatch({ type: LOAD_BILLABLE });
   }, [dispatch]);
 
-  const invoiceTemplatePreviewRef = useRef(null);
+  const customerList = ["Harin", "Elon"];
+  const customerRefList = {
+    "Harin": useRef(null), 
+    "Elon": useRef(null),
+  };
 
   return (
     <div className="invoicePage">
@@ -26,11 +30,15 @@ function InvoicePreview() {
         </div>
 
         <div className="InvoicePreview">
-          <div ref={invoiceTemplatePreviewRef}>
-            <InvoiceTemplate />
+          <div>
+            {customerList.map((customer) => (
+              <div ref={customerRefList[customer]}>
+                <InvoiceTemplate customer={customer} />
+              </div>
+            ))}
           </div>
         </div>
-        <GeneratePdf htmlElementRef={invoiceTemplatePreviewRef} />
+        <GeneratePdf htmlElementRef={customerRefList} />
       </div>
     </div>
   );
