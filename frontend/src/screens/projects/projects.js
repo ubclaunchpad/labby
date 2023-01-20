@@ -1,8 +1,8 @@
 import { appColor } from "../../constants";
 import Header from "../../components/Header";
 import "./projects.css";
-import CostCenterTable from "../../components/CostCenterTable";
 import AdministrationHeader from "../../components/AdministrationHeader";
+import ProjectTable from "../../components/ProjectTable";
 
 function Projects() {
   return (
@@ -19,7 +19,7 @@ function Projects() {
         </div>
         <AdministrationHeader currentPage={"Projects"}/>
         <div className="costCenterTable">
-          <CostCenterTable />
+          <ProjectTable />
         </div>
       </div>
     </div>

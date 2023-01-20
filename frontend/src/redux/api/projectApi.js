@@ -25,3 +25,29 @@ export const getProjectAssignmentApi = async () => {
     return console.error(err);
   }
 };
+
+export const postProjectApi = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      project_id: payload.project_id,
+      project_name: payload.project_name,
+      project_description: payload.project_description,
+    });
+
+    const project = await axios.post("project/", data);
+
+    return project;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const deleteProjectApi = async (payload) => {
+  try {
+    const project = await axios.delete(`project/${payload}`);
+
+    return project;
+  } catch (err) {
+    return console.error(err);
+  }
+};
