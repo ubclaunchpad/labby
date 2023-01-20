@@ -21,6 +21,17 @@ router.post("/", (req, res) => {
     });
 });
 
+router.get("/:surveyId", (req, res) => {
+  answerController
+    .getAnswer(req.params.surveyId)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+})
+
 
 router.delete("/:answerId", (req, res) => {
   answerController

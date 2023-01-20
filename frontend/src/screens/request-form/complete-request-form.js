@@ -64,47 +64,6 @@ function RequestForm() {
     }
   }
 
-  // Basic Form Validation and Submit
-  function submitForm() {
-    var filled = true;
-    questions.forEach((question) => {
-      if (
-        question.mandatory &&
-        formResponses.filter(
-          (response) => response.question.question_id === question.question_id
-        ).length === 0
-      ) {
-        filled = false;
-        return;
-      }
-    });
-    if (filled) {
-      if (hideCost) {
-        dispatch({ type: TOGGLE_COST_ESTIMATE });
-        alert("Please Review Your Cost Estimate and Submit!");
-      } else {
-        dispatch({ type: SUBMIT_FORM, payload: formResponses });
-        console.log(formResponses);
-        alert("Form Submitted");
-      }
-    } else {
-      alert("Please fill out all mandatory fields");
-    }
-  }
-
-  // Add Listener For Form Progress Bar
-  const progressBar = document.getElementById("progressBar");
-  const requestFormContainer = document.querySelector(".requestFormContainer");
-  if (requestFormContainer) {
-    requestFormContainer.addEventListener("scroll", () => {
-      let maxPageHeight =
-        requestFormContainer.scrollHeight - window.innerHeight;
-      progressBar.style.width = `${
-        (requestFormContainer.scrollTop / maxPageHeight) * 100
-      }%`;
-    });
-  }
-
   if (questions.length !== 0 && logicList.length !== 0) {
     return (
       <div className="requestFormPage">
@@ -142,26 +101,6 @@ function RequestForm() {
               </div>
             );
           })}
-          <div className="FormSubmit">
-            <button
-              className="FormSubmitButton"
-              style={{
-                backgroundColor: appColor.primaryLight,
-                color: appColor.white,
-              }}
-              onMouseOver={(e) => {
-                e.target.style.backgroundColor = appColor.primary;
-                e.target.style.color = appColor.white;
-              }}
-              onMouseOut={(e) => {
-                e.target.style.backgroundColor = appColor.primaryLight;
-                e.target.style.color = appColor.white;
-              }}
-              onClick={submitForm}
-            >
-              Submit
-            </button>
-          </div>
         </div>
         {hideCost ? <CostEstimateCollapsed /> : <CostEstimateFull />}
       </div>

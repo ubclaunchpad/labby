@@ -45,8 +45,30 @@ BEGIN
     DELETE FROM surveys WHERE survey_id = id;
 END $$
 
+CREATE PROCEDURE `load_answers_by_survey` (IN `_survey_id` VARCHAR(50))
+
+BEGIN
+	SELECT questions.*, questions_answer.answer FROM answers 
+
+		LEFT JOIN questions
+			ON answers.fk_question_id = questions.question_id
+			
+		LEFT JOIN questions_answer
+			ON answers.fk_questions_answer_id = questions_answer.answer_id
+
+		WHERE fk_survey_id = `_survey_id`
+		
+		ORDER BY
+			position_index
+  
+END $$
+
 
 DELIMITER ;
+
+
+
+
 
 
 

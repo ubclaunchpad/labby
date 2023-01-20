@@ -23,6 +23,8 @@ import { CheckBoxIcon } from "../Icons/CheckBoxIcon";
 import { AssigneeIcon } from "../Icons/AssigneeIcon";
 import { ticketsColors } from "../../constants";
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { appColor } from "../../constants";
 import { LOAD_EMPLOYEE } from "../../redux/actions/userActions";
 import uuid from "react-uuid";
 import X from "../../assets/X.png";
@@ -63,7 +65,6 @@ const Task = (props) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           onClick={() => {
-            console.log(props.task);
             dispatch({ type: SET_ACTIVE_TICKET, payload: props.task });
           }}
         >
@@ -309,6 +310,19 @@ export const TicketBoard = () => {
             <div className="ticketTitle">
               <div className="ticketTitleId">{currentTicket.code}</div>
               <div>{currentTicket.title}</div>
+              <div className="ticketPreview">
+                <NavLink to={`/preview/${currentTicket.id}`}>
+                  <button
+                    className="FormPreviewButton"
+                    style={{
+                      backgroundColor: appColor.primaryLight,
+                      color: appColor.white,
+                    }}
+                    >
+                    Preview
+                  </button>
+                </NavLink>                  
+              </div>
             </div>
             <div className="ticketTags">
               {currentTicket.assignees.map((assignee) => {
