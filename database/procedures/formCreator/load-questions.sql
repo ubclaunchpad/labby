@@ -82,7 +82,7 @@ END $$
 CREATE PROCEDURE `load_costs` ()
 
 BEGIN
-    SELECT question, answer, questions_cost.fk_answer_id, organization_name, cost, questions_cost.cost_id, questions_cost.price_category
+    SELECT question, answer, questions_cost.fk_answer_id, organization_name, cost, questions_cost.*
     FROM
         questions
     

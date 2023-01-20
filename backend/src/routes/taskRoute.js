@@ -60,6 +60,37 @@ router.post("/subtask", (req, res) => {
     });
 });
 
+//add subtask given task_id
+router.post("/addsubtask/:taskId", (req, res) => {
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!",
+    });
+    return;
+  }
+
+  taskController
+    .saveSubtaskByTask(req)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
+
+//edit subtask status
+router.post("/subtask/status/:subtaskId", (req, res) => {
+  taskController
+    .updateSubtaskStatus(req)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
+
 router.get("/", (_, res) => {
   taskController
     .loadTasks()
@@ -104,9 +135,21 @@ router.get("/subtasks", (_, res) => {
     });
 });
 
-router.get("subtask/:subtaskId", (_, res) => {
+router.get("/subtask/:subtaskId", (_, res) => {
   taskController
     .loadSubtasks(req.params.subtaskId)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
+
+//load subtasks for given taskId
+router.get("/subtasks/:taskId", (req, res) => {
+  taskController
+    .loadSubtasksWithID(req.params.taskId)
     .then((response) => {
       res.status(200).json(response);
     })
@@ -126,7 +169,7 @@ router.delete("/:taskId", (req, res) => {
     });
 });
 
-router.delete("subtask/:subtaskId", (req, res) => {
+router.delete("/subtask/:subtaskId", (req, res) => {
   questionController
     .deleteSubtask(req.params.subtaskId)
     .then((response) => {

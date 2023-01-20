@@ -4,6 +4,7 @@ import { Table, Form, Popconfirm, Input } from "antd";
 import "antd/dist/antd.min.css";
 import "./index.css";
 import { DELETE_USER, LOAD_USERLIST, POST_USER } from "../../redux/actions/userActions";
+import X from "../../assets/X.png";
 
 const UserManagementTable = () => {
   const columns = [
@@ -26,12 +27,6 @@ const UserManagementTable = () => {
       editable: true,
     },
     {
-      title: "Projects",
-      dataIndex: "projects",
-      key: "projects",
-      editable: true,
-    },
-    {
       title: "MAPcore Employee",
       dataIndex: "employee",
       key: "employee",
@@ -43,12 +38,15 @@ const UserManagementTable = () => {
       render: (_, record) =>
         dataSource.length >= 1 ? (
           <Popconfirm
-            title="Sure to delete?"
+            title="Confirm Deletion?"
+            okType="danger"
+            okText="Delete"
             onConfirm={() => handleDelete(record.user_id)}
           >
-            <p>Delete</p>
+            <img className="GlobalEditorDelete" src={X} alt="Delete" />
           </Popconfirm>
         ) : null,
+        width: "1%",
     },
   ];
 

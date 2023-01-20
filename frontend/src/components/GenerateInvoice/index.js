@@ -1,21 +1,10 @@
-import "./index.css";
-import "../index.css";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import PDF from "./pdf";
+import { NavLink } from "react-router-dom";
 
 function GenerateInvoice() {
   return (
-    <div className="GenerateInvoiceButton">
-      <PDFDownloadLink
-        className="GenerateText"
-        document={<PDF />}
-        onClick={() => {
-          console.log("Generating Invoice");
-        }}
-      >
-        Generate Invoice
-      </PDFDownloadLink>
-    </div>
+    <NavLink to="/pdf">
+      <div className="GeneratePdfButton">Generate Invoice</div>
+    </NavLink>
   );
 }
 

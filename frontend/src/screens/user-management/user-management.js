@@ -2,6 +2,7 @@ import { appColor } from "../../constants";
 import Header from "../../components/Header";
 import "./user-management.css";
 import UserManagementTable from "../../components/UserManagementTable";
+import AdministrationHeader from "../../components/AdministrationHeader";
 
 function UserManagement() {
   return (
@@ -16,6 +17,7 @@ function UserManagement() {
         >
           User Management
         </div>
+        <AdministrationHeader currentPage={"Users"}/>
         <div className="userManagementTable">
           <UserManagementTable />
         </div>

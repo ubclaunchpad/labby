@@ -2,6 +2,7 @@ import { appColor } from "../../constants";
 import Header from "../../components/Header";
 import "./cost-center.css";
 import CostCenterTable from "../../components/CostCenterTable";
+import AdministrationHeader from "../../components/AdministrationHeader";
 
 function CostCenter() {
   return (
@@ -16,6 +17,7 @@ function CostCenter() {
         >
           Cost Center
         </div>
+        <AdministrationHeader currentPage={"Cost Center"}/>
         <div className="costCenterTable">
           <CostCenterTable />
         </div>

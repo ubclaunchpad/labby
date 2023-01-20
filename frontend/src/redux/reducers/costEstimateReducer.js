@@ -25,7 +25,7 @@ const costEstimateList = (state = defaultCostEstimateList, action) => {
 
       action.payload[1].map((cost) => {
         if (cost.organization_name === org) {
-          costEstimateMap.set(cost.answer, cost.cost);
+          costEstimateMap.set(cost.fk_answer_id, cost.cost);
         }
         return costEstimateMap;
       });

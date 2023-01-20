@@ -2,6 +2,7 @@ import { appColor } from "../../constants";
 import CostTable from "../../components/CostTable";
 import Header from "../../components/Header";
 import "./billing-management.css";
+import AdministrationHeader from "../../components/AdministrationHeader";
 
 function BillingManagement() {
   return (
@@ -16,6 +17,7 @@ function BillingManagement() {
         >
           Pricing
         </div>
+        <AdministrationHeader currentPage={"Pricing"} />
         <div className="BillingManagementTable">
           <CostTable />
         </div>

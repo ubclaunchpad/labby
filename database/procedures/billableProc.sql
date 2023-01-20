@@ -2,6 +2,7 @@ USE `labby`;
 
 DROP procedure IF EXISTS `save_billable`;
 DROP procedure IF EXISTS `load_billable`;
+DROP procedure IF EXISTS `load_billable_by_sow`;
 DROP procedure IF EXISTS `delete_billable`;
 
 DELIMITER $$
@@ -45,7 +46,7 @@ VALUES
    ) ON DUPLICATE KEY UPDATE
     billable.billable_id=_billable_id,
     billable.fk_sow_id=_fk_sow_id,
-    billable.name=_username,
+    billable.name=_name,
     billable.quantity=_quantity,
     billable.cost=_cost,
     billable.createdDate=_createdDate,
@@ -60,6 +61,14 @@ CREATE PROCEDURE `load_billable` ()
 
 BEGIN
     SELECT * FROM billable;
+END $$
+
+CREATE PROCEDURE `load_billable_by_sow` (
+    IN `_sow_id` VARCHAR(100)
+)
+
+BEGIN
+    SELECT * FROM billable WHERE fk_sow_id = _sow_id;
 END $$
 
 CREATE PROCEDURE `delete_billable`  (

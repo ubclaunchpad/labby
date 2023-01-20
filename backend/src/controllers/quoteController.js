@@ -11,6 +11,7 @@ export default class QuoteController {
         org_type: req.body.org_type,
         cost: req.body.cost,
         cost_id: req.body.cost_id,
+        quantifiable: req.body.quantifiable,
       };
       QuoteModel.insertCost(costData, (err, result) => {
         if (err) {
@@ -26,6 +27,25 @@ export default class QuoteController {
       const QuoteModel = new Quote();
 
       QuoteModel.loadQuote((err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+
+  updateQuantifiable(req) {
+    return new Promise((resolve, reject) => {
+      if (!req.body.answer_id) {
+        return reject({ error: "Error with request body." });
+      }
+      const QuoteModel = new Quote();
+      const costData = {
+        answer_id: req.body.answer_id,
+        quantifiable: req.body.quantifiable,
+      };
+      QuoteModel.updateQuantifiable(costData, (err, result) => {
         if (err) {
           reject({ error: err });
         }
@@ -52,7 +72,7 @@ export default class QuoteController {
       });
 
       Promise.all(promises).then((values) => {
-        totalCost += (values[0] ?? 0);
+        totalCost += values[0] ?? 0;
         resolve(totalCost);
       });
     });

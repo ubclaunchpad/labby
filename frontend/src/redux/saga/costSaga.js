@@ -1,10 +1,10 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { DELETE_SERVICE, LOAD_ALL_COST, LOAD_COST, SET_ALL_COST, SET_COST, UPDATE_COST } from "../actions/costActions";
-import { deleteCosts, getCosts, postCosts } from "../api/costApi";
+import { DELETE_SERVICE, LOAD_ALL_COST, LOAD_COST, SET_ALL_COST, SET_COST, UPDATE_COST, UPDATE_QUANTIFIABLE } from "../actions/costActions";
+import { deleteCosts, getCosts, postCosts, updateQuantifiableApi } from "../api/costApi";
 
 export function* fetchCost({ payload }) {
   const costs = [];
-  let organization = "Internal";
+  let organization = "Hungrii Inc.";
 
   if (payload.formResponses.length !== 0) {
     for (var i = 0; i < payload.formResponses.length; i++) {
@@ -38,9 +38,15 @@ export function* updateCost({ payload }) {
   yield fetchAllCost();
 }
 
+export function* updateQuantifiable({ payload }) {
+  yield call(updateQuantifiableApi, payload);
+  yield fetchAllCost();
+}
+
 export default function* costSaga() {
   yield takeEvery(LOAD_COST, fetchCost);
   yield takeEvery(LOAD_ALL_COST, fetchAllCost)
   yield takeEvery(DELETE_SERVICE, deleteServiceCost)
   yield takeEvery(UPDATE_COST, updateCost)
+  yield takeEvery(UPDATE_QUANTIFIABLE, updateQuantifiable)
 }

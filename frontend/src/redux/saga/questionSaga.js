@@ -23,6 +23,7 @@ import {
 } from "../api/questionApi";
 
 export function* fetchQuestion({ payload }) {
+  console.log("Fetching Questions");
   yield put({ type: SET_LOADING, payload: true });
 
   const logic = yield call(getLogics);

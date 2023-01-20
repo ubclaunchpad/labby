@@ -73,15 +73,15 @@ export default class TaskController {
 
   saveSubtask(req) {
     return new Promise((resolve, reject) => {
-      if (!req.body.task_title || !req.body.task_state || !req.body.task_id) {
+      if (!req.body.subtask_title || !req.body.subtask_state || !req.body.task_id) {
         return reject({ error: "Error with request body." });
       }
       const TaskModel = new Task();
       const subtaskData = {
         subtask_id: Math.floor(Math.random() * 100),
-        task_title: req.body.task_title,
-        task_description: req.body.task_description,
-        task_state: req.body.task_state,
+        subtask_title: req.body.subtask_title,
+        subtask_description: req.body.subtask_description,
+        subtask_state: req.body.subtask_state,
         task_id: req.body.task_id,
       };
       TaskModel.insertSubtask(subtaskData, (err, result) => {
@@ -91,6 +91,50 @@ export default class TaskController {
         this.isTaskLoaded = false;
         resolve(result);
       });
+    });
+  }
+
+  //add subtask given taskID
+  saveSubtaskByTask(req) {
+    return new Promise((resolve, reject) => {
+      if (!req.body.subtask_title || !req.body.subtask_state || !req.params.taskId) {
+        return reject({ error: "Error with request body." });
+      }
+      const TaskModel = new Task();
+      const subtaskData = {
+        subtask_id: req.body.subtask_id,
+        subtask_title: req.body.subtask_title,
+        subtask_description: req.body.subtask_description,
+        subtask_state: req.body.subtask_state,
+        task_id: req.params.taskId,
+      };
+      TaskModel.insertSubtask(subtaskData, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        this.isTaskLoaded = false;
+        resolve(result);
+      });
+    });
+  }
+
+  updateSubtaskStatus(req) {
+    return new Promise((resolve, reject) => {
+      if (!req.body.status) {
+        return reject({ error: "Error with request body." });
+      }
+      const TaskModel = new Task();
+      TaskModel.updateSubtaskStatus(
+        req.params.subtaskId,
+        req.body.status,
+        (err, result) => {
+          if (err) {
+            reject({ error: err });
+          }
+          this.isTaskLoaded = false;
+          resolve(result);
+        }
+      );
     });
   }
 
@@ -173,6 +217,19 @@ export default class TaskController {
     }
   }
 
+  loadSubtasksWithID(taskId) {
+    return new Promise((resolve, reject) => {
+      const TaskModel = new Task();
+  
+      TaskModel.loadSubtasksByTaskId(taskId, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+  
   deleteTask(id) {
     return new Promise((resolve, reject) => {
       const TaskModel = new Task();

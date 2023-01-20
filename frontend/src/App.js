@@ -9,9 +9,10 @@ import TicketManagement from "./screens/ticket-management/ticket-management";
 import Invoice from "./screens/invoice/invoice";
 import FormLibrary from "./screens/form-library/form-library";
 import CostCenter from "./screens/cost-center/cost-center";
-import PDF from "./components/GenerateInvoice/pdf";
-import { PDFViewer } from "@react-pdf/renderer";
 import UserManagement from "./screens/user-management/user-management";
+import InvoicePreview from "./screens/invoice/invoice-preview";
+import Organizations from "./screens/organizations/organizations";
+import Projects from "./screens/projects/projects";
 
 function App() {
   return (
@@ -22,21 +23,16 @@ function App() {
           <Route path="/edit-form/:formId" element={<EditRequest />} />
           <Route path="/billing" element={<BillingManagement />} />
           <Route path="/costcenter" element={<CostCenter />} />
-          <Route path="/users" element={<EditRequest />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/organizations" element={<Organizations />} />
+          <Route path="/users" element={<UserManagement />} />
           <Route path="/edit-request" element={<FormLibrary />} />
           <Route path="/request/:formId" element={<RequestForm />} />
           <Route path="/preview/:surveyId" element={<PreviewForm />} />
           <Route path="/invoice" element={<Invoice />} />
           <Route path="/settings" element={<UserManagement />} />
           <Route path="/tickets" element={<TicketManagement />} />
-          <Route
-            path="/pdf"
-            element={
-              <PDFViewer style={{ width: "100vw", height: "100vh" }}>
-                <PDF />
-              </PDFViewer>
-            }
-          />
+          <Route path="/pdf" element={<InvoicePreview />} />
         </Routes>
       </BrowserRouter>
     </div>
