@@ -56,7 +56,7 @@ router.post("/", (req, res) => {
     return;
   }
   costCentreController
-    .saveCostCentre(req)
+    .saveCostcenter(req)
     .then((response) => {
       res.status(200).json(response);
     })

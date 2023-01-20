@@ -94,7 +94,7 @@ export class CostCentre {
     );
   }
   deleteCostCentre(id, result) {
-    con.query(`CALL delete_cost_centre(?)`, [id], (err, res) => {
+    con.query(`CALL delete_cost_center(?)`, [id], (err, res) => {
       // have to delete the cost centre from the organization too
       if (err) {
         console.log("error: ", err);
