@@ -26,7 +26,6 @@ import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { appColor } from "../../constants";
 import { LOAD_EMPLOYEE } from "../../redux/actions/userActions";
-import { LOAD_ANSWER_BY_SURVEY } from "../../redux/actions/questionActions";
 import uuid from "react-uuid";
 import X from "../../assets/X.png";
 

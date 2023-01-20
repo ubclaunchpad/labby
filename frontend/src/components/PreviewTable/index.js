@@ -1,14 +1,10 @@
-import React, { useState, useRef, useContext, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  SAVE_CELL_DATA,
-} from "../../redux/actions/costActions";
-import { Table, Form, Input } from "antd";
+import React from "react";
+import { useSelector } from "react-redux";
+import { Table } from "antd";
 import "antd/dist/antd.min.css";
 import "./index.css";
 
 const PreviewTable = () => {
-  const dispatch = useDispatch();
   const columns = [
     {
       title: "Question",
@@ -55,6 +51,7 @@ const PreviewTable = () => {
         className="table"
         pagination={false}
         bordered
+        rowKey={(record) => record.question}
         dataSource={dataSource}
         columns={renderedColumns}
       />

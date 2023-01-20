@@ -17,7 +17,7 @@ function PreviewForm() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({ type: LOAD_ANSWER_BY_SURVEY, payload: { survey_id: surveyId } });
-  }, [dispatch]);
+  }, [dispatch, surveyId]);
 
   return (
     <div className="invoicePage">
