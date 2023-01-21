@@ -191,7 +191,6 @@ export const TicketBoard = () => {
         payload: currentTicket?.id,
       });
     }
-    console.log(currentTicket)
   }, [dispatch, currentTicket]);
 
   const ticketDragEndHandler = (result) => {
@@ -556,7 +555,7 @@ export const TicketBoard = () => {
                           payload: {
                             billable_id: uuid(),
                             sow_id: currentTicket.code,
-                            project_id: currentTicket.projectId,
+                            project_id: currentTicket.project_id,
                             name: "New Service",
                             quantity: 1,
                             cost: 0,

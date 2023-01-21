@@ -17,6 +17,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { DraggableElement } from "../BuilderLibrary/ComponentLibrary";
+import ProjectSelectorEditor from "../ProjectSelector/ProjectSelectorEditor";
 
 const QuestionContainer = styled.div`
   border: ${(props) =>
@@ -53,6 +54,8 @@ function renderQuestion(question) {
       return <FileDownloadEditor question={question} />;
     case "contact":
       return <ContactInfoEditor question={question} />;
+    case "project":
+      return <ProjectSelectorEditor question={question} />;
     default:
       return null;
   }

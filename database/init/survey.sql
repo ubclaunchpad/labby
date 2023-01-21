@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS `surveys`;
 DROP PROCEDURE IF EXISTS `createSurveys`;
 DROP PROCEDURE IF EXISTS `addSurvey`;
 DROP PROCEDURE IF EXIStS `deleteSurvey`;
+DROP PROCEDURE IF EXISTS `load_answers_by_survey`;
 
 DELIMITER $$
 
@@ -48,29 +49,12 @@ END $$
 CREATE PROCEDURE `load_answers_by_survey` (IN `_survey_id` VARCHAR(50))
 
 BEGIN
-	SELECT questions.*, questions_answer.answer FROM answers 
-
-		LEFT JOIN questions
-			ON answers.fk_question_id = questions.question_id
-			
-		LEFT JOIN questions_answer
-			ON answers.fk_questions_answer_id = questions_answer.answer_id
-
-		WHERE fk_survey_id = `_survey_id`
-		
-		ORDER BY
-			position_index
-  
+SELECT questions.*, questions_answer.answer, answers.answer as answerid FROM answers 
+LEFT JOIN questions ON answers.fk_question_id = questions.question_id
+LEFT JOIN questions_answer ON answers.fk_questions_answer_id = questions_answer.answer_id
+WHERE fk_survey_id = `_survey_id`
+ORDER BY position_index;
 END $$
 
 
 DELIMITER ;
-
-
-
-
-
-
-
-
-

@@ -22,7 +22,7 @@ function Invoice() {
       </div>
       <div className="invoicePageContent">
         <div className="InvoiceTitle" style={{ color: appColor.gray }}>
-          Billing & Invoice
+          Billing & Invoicing
         </div>
         <div className="InvoiceTable" ref={invoiceTableRef}>
           <InvoiceTable />

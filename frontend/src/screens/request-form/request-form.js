@@ -19,6 +19,7 @@ import {
 } from "../../components/CostEstimate";
 import { SUBMIT_FORM } from "../../redux/actions/formActions";
 import { TOGGLE_COST_ESTIMATE } from "../../redux/actions/uiActions";
+import ProjectSelector from "../../components/ProjectSelector";
 
 function RequestForm() {
   const dispatch = useDispatch();
@@ -59,6 +60,8 @@ function RequestForm() {
         return <FileDownload question={question} />;
       case "contact":
         return <ContactInfo question={question} />;
+      case "project":
+        return <ProjectSelector question={question} />;
       default:
         return null;
     }
@@ -83,12 +86,13 @@ function RequestForm() {
         dispatch({ type: TOGGLE_COST_ESTIMATE });
         alert("Please Review Your Cost Estimate and Submit!");
       } else {
+        const projectItem = formResponses.filter((response) => response.question.project_id !== undefined);
+        const projectId = projectItem[0].response ?? "PROJECTID-A";
         dispatch({
           type: SUBMIT_FORM,
           payload: {
             formResponses,
-            // TODO: Fine project id from formResponses
-            projectId: "PROJECTID-A", 
+            projectId: projectId, 
           },
         });
         console.log(formResponses);

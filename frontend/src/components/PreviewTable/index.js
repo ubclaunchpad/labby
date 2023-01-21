@@ -9,20 +9,38 @@ const PreviewTable = () => {
     {
       title: "Question",
       dataIndex: "question",
-      key: "fk_sow_id",
+      key: "question",
       editable: false,
+      render: (_, record) =>
+        dataSource.length >= 1 ? (
+          <div>
+            {record.question ?? "Which Project?"}
+          </div>
+        ) : null,
     },
     {
       title: "Question Type",
       dataIndex: "question_type",
-      key: "name",
+      key: "question_type",
       editable: false,
+      render: (_, record) =>
+        dataSource.length >= 1 ? (
+          <div>
+            {record.question_type ?? "project"}
+          </div>
+        ) : null,
     },
     {
       title: "Answer",
       dataIndex: "answer",
-      key: "completedTime",
+      key: "answer",
       editable: false,
+      render: (_, record) =>
+        dataSource.length >= 1 ? (
+          <div>
+            {record.answer ?? record.answerid ?? "No Project ID"}
+          </div>
+        ) : null,
     }
   ];
 

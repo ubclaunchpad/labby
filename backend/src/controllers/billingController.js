@@ -46,6 +46,7 @@ export default class BillingController {
       const billableData = {
         billable_id: req.body.billable_id,
         sow_id: req.body.sow_id,
+        project_id: req.body.project_id,
         name: req.body.name,
         quantity: req.body.quantity,
         cost: req.body.cost,
