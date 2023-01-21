@@ -211,10 +211,10 @@
 .ticketDetail {
   background-color: #fff;
   width: 60%;
-  height: 90%;
+  height: 96%;
   position: absolute;
   left: 50%;
-  top: 5%;
+  top: 2%;
   transform: translate(-50%);
   border-radius: 8px;
   padding: 20px;
@@ -273,7 +273,7 @@
 
 .ticketInfo {
   flex-grow: 1;
-  max-height: 65%;
+  max-height: 66%;
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -314,13 +314,21 @@
 
 .ticketAttachments {
   margin-top: 12px;
-  padding: 15px;
-  height: 17%;
+  padding: 5px 15px;
+  height: 20%;
   background-color: #d9d9d9;
   border-radius: 10px;
+}
+.attachmentsWrapper{
+  padding: 3px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  gap: 10px;
+}
+.addAttachment{
+  padding: 12px 14px;
+  padding-right: 0;
+  border: 2px dashed grey;
+  border-radius: 5px;
 }
 
 .ticketCosts {
@@ -329,7 +337,7 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   flex-grow: 1;
-  max-height: 95%;
+  max-height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -467,13 +467,53 @@ export const TicketBoard = () => {
                       />
                       <div className="ticketSectionTitle">Add Subtask</div>
                     </div>
-                  </div> 
+                  </div>
                 </div>
 
                 <div className="ticketAttachments">
                   <div className="ticketSectionTitle">Attachments</div>
+                  <div className="attachmentsWrapper">
+                    <div className="addAttachment">
+                      <img
+                        className="Add"
+                        src={Add}
+                        alt="Add"
+                        onClick={() => {
+                          dispatch({
+                            type: ADD_SUBTASKS,
+                            payload: { task_id: currentTicket.code },
+                          });
+                        }}
+                      />
+                    </div>
+                    <div className="addAttachment">
+                      <img
+                        className="Add"
+                        src={Add}
+                        alt="Add"
+                        onClick={() => {
+                          dispatch({
+                            type: ADD_SUBTASKS,
+                            payload: { task_id: currentTicket.code },
+                          });
+                        }}
+                      />
+                    </div>
+                    <div className="addAttachment">
+                      <img
+                        className="Add"
+                        src={Add}
+                        alt="Add"
+                        onClick={() => {
+                          dispatch({
+                            type: ADD_SUBTASKS,
+                            payload: { task_id: currentTicket.code },
+                          });
+                        }}
+                      />
+                    </div>
+                  </div>
                 </div>
-
               </div>
 
               <div className="ticketColumn servicesColumn">
