@@ -51,3 +51,68 @@ export const deleteUserApi = async (payload) => {
     return console.error(err);
   }
 };
+
+export const getOrganizationApi = async () => {
+  try {
+    const organizationList = await axios.get("organization/");
+    return organizationList;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const postOrganizationApi = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      organization_id: payload.organization_id,
+      organization_name: payload.organization_name,
+      organization_contact: payload.organization_contact,
+      organization_email: payload.organization_email,
+      organization_address: payload.organization_address,
+      organization_type: payload.organization_type,
+      internal_department: payload.internal_department,
+    });
+
+    const organization = await axios.post("organization/", data);
+
+    return organization;
+  } catch (err) {
+    return console.error(err);
+  }
+}
+
+export const deleteOrganizationApi = async (payload) => {
+  try {
+    const org = await axios.delete(`organization/${payload}`);
+
+    return org;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const clearAssignmentApi = async (payload) => {
+  try {
+    const assignment = await axios.delete(`project/assignment/${payload}`);
+
+    return assignment;
+  } catch (err) {
+    return console.error(err);
+  }
+}
+
+export const addAssignmentApi = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      project_id: payload.project_id,
+      organization_id: payload.organization_id,
+      assignment_id: payload.assignment_id,
+    });
+
+    const assignment = await axios.post("project/assignment/", data);
+
+    return assignment;
+  } catch (err) {
+    return console.error(err);
+  }
+}

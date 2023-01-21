@@ -9,7 +9,8 @@ DELIMITER $$
 
 CREATE PROCEDURE `save_billable` (
     IN `_billable_id` VARCHAR(50),
-    IN `_fk_sow_id` VARCHAR(100),
+    IN `_fk_sow_id` VARCHAR(50),
+    IN `_fk_project_id` VARCHAR(50),
     IN `_name` VARCHAR(50),
     IN `_quantity` DOUBLE,
     IN `_cost` DOUBLE,
@@ -22,6 +23,7 @@ CREATE PROCEDURE `save_billable` (
 INSERT INTO `billable` (
     `billable_id`,
     `fk_sow_id`,
+    `fk_project_id`,
     `name`,
     `quantity`,
     `cost`,
@@ -35,6 +37,7 @@ VALUES
    (
     `_billable_id`,
     `_fk_sow_id`,
+    `_fk_project_id`,
     `_name`,
     `_quantity`,
     `_cost`,
@@ -46,6 +49,7 @@ VALUES
    ) ON DUPLICATE KEY UPDATE
     billable.billable_id=_billable_id,
     billable.fk_sow_id=_fk_sow_id,
+    billable.fk_project_id=_fk_project_id,
     billable.name=_name,
     billable.quantity=_quantity,
     billable.cost=_cost,

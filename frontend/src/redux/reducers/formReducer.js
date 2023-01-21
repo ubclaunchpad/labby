@@ -13,6 +13,7 @@ import {
   REMOVE_PHONE_RESPONSE,
   REMOVE_SINGLE_RESPONSE,
   SET_FORMS,
+  REMOVE_PROJECT_RESPONSE,
 } from "../actions/formActions";
 
 const defaultQuestionlist = {
@@ -50,7 +51,8 @@ const formResponses = (state = defaultAnswerList, action) => {
     case ADD_RESPONSE: {
       state = state.filter(
         (response) =>
-          response.question.question_id !== action.payload.question.question_id ||
+          response.question.question_id !==
+            action.payload.question.question_id ||
           response.response !== action.payload.response
       );
       state.push(action.payload);
@@ -59,7 +61,8 @@ const formResponses = (state = defaultAnswerList, action) => {
     case REMOVE_RESPONSE: {
       state = state.filter(
         (response) =>
-          response.question.question_id !== action.payload.question.question_id ||
+          response.question.question_id !==
+            action.payload.question.question_id ||
           response.response !== action.payload.response
       );
       return [...state];
@@ -71,10 +74,15 @@ const formResponses = (state = defaultAnswerList, action) => {
       );
       return [...state];
     }
+    case REMOVE_PROJECT_RESPONSE: {
+      state = state.filter((response) => response.question.project_id === undefined);
+      return [...state];
+    }
     case ADD_FULLNAME_RESPONSE: {
       state = state.filter(
         (response) =>
-          response.question.question_id !== action.payload.question.question_id ||
+          response.question.question_id !==
+            action.payload.question.question_id ||
           response.response.split("_")[0] !== "FULLNAME"
       );
       state.push(action.payload);
@@ -83,7 +91,8 @@ const formResponses = (state = defaultAnswerList, action) => {
     case REMOVE_FULLNAME_RESPONSE: {
       state = state.filter(
         (response) =>
-          response.question.question_id !== action.payload.question.question_id ||
+          response.question.question_id !==
+            action.payload.question.question_id ||
           response.response.split("_")[0] !== "FULLNAME"
       );
       return [...state];
@@ -91,7 +100,8 @@ const formResponses = (state = defaultAnswerList, action) => {
     case ADD_INSTITUTION_RESPONSE: {
       state = state.filter(
         (response) =>
-          response.question.question_id !== action.payload.question.question_id ||
+          response.question.question_id !==
+            action.payload.question.question_id ||
           response.response.split("_")[0] !== "INSTITUTION"
       );
       state.push(action.payload);
@@ -100,7 +110,8 @@ const formResponses = (state = defaultAnswerList, action) => {
     case REMOVE_INSTITUTION_RESPONSE: {
       state = state.filter(
         (response) =>
-          response.question.question_id !== action.payload.question.question_id ||
+          response.question.question_id !==
+            action.payload.question.question_id ||
           response.response.split("_")[0] !== "INSTITUTION"
       );
       return [...state];
@@ -108,7 +119,8 @@ const formResponses = (state = defaultAnswerList, action) => {
     case ADD_EMAIL_RESPONSE: {
       state = state.filter(
         (response) =>
-          response.question.question_id !== action.payload.question.question_id ||
+          response.question.question_id !==
+            action.payload.question.question_id ||
           response.response.split("_")[0] !== "EMAIL"
       );
       state.push(action.payload);
@@ -117,7 +129,8 @@ const formResponses = (state = defaultAnswerList, action) => {
     case REMOVE_EMAIL_RESPONSE: {
       state = state.filter(
         (response) =>
-          response.question.question_id !== action.payload.question.question_id ||
+          response.question.question_id !==
+            action.payload.question.question_id ||
           response.response.split("_")[0] !== "EMAIL"
       );
       return [...state];
@@ -125,7 +138,8 @@ const formResponses = (state = defaultAnswerList, action) => {
     case ADD_PHONE_RESPONSE: {
       state = state.filter(
         (response) =>
-          response.question.question_id !== action.payload.question.question_id ||
+          response.question.question_id !==
+            action.payload.question.question_id ||
           response.response.split("_")[0] !== "PHONE"
       );
       state.push(action.payload);
@@ -134,7 +148,8 @@ const formResponses = (state = defaultAnswerList, action) => {
     case REMOVE_PHONE_RESPONSE: {
       state = state.filter(
         (response) =>
-          response.question.question_id !== action.payload.question.question_id ||
+          response.question.question_id !==
+            action.payload.question.question_id ||
           response.response.split("_")[0] !== "PHONE"
       );
       return [...state];
@@ -154,6 +169,6 @@ const formList = (state = defaultFormList, action) => {
       return state;
     }
   }
-}
+};
 
 export default combineReducers({ formQuestions, formResponses, formList });

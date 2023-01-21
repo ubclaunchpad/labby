@@ -239,6 +239,10 @@
   text-overflow: ellipsis;
 }
 
+.ticketPreview {
+  margin-left: auto;
+}
+
 .ticketSectionTitle {
   font-weight: 600;
   font-size: 14px;

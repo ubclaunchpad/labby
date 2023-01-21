@@ -10,12 +10,16 @@ DELIMITER $$
 
 CREATE PROCEDURE `save_task` (
    IN `_task_id` VARCHAR(50),
+   IN `_fk_form_id` VARCHAR(50),
+   IN `_fk_project_id` VARCHAR(50),
    IN `_task_title` VARCHAR(100),
    IN `_task_description` VARCHAR(250),
    IN `_task_state` VARCHAR(50)
  
 ) BEGIN INSERT INTO `tasks` (
    `task_id`,
+   `fk_form_id`,
+   `fk_project_id`,
    `task_title`,
    `task_description`,
    `task_state`
@@ -23,6 +27,8 @@ CREATE PROCEDURE `save_task` (
 VALUES
    (
    `_task_id`,
+   `_fk_form_id`,
+   `_fk_project_id`,
    `_task_title`,
    `_task_description`,
    `_task_state`

@@ -4,7 +4,6 @@ DROP procedure IF EXISTS `save_form`;
 DROP procedure IF EXISTS `save_question`;
 DROP procedure IF EXISTS `save_answer`;
 DROP procedure IF EXISTS `save_cost`;
-DROP procedure IF EXISTS `save_organization`;
 DROP procedure IF EXISTS `save_condition`;
  
 DELIMITER $$
@@ -114,25 +113,6 @@ VALUES
    `_quantifiable`
    );
 
-END $$
-
-CREATE PROCEDURE `save_organization` (
-   IN `_organization_id` VARCHAR(50),
-   IN `_organization_name` VARCHAR(50)
- 
-) BEGIN INSERT INTO `organizations` (
-   `organization_id`,
-   `organization_name`
-)
-VALUES
-   (
-   `_organization_id`,
-   `_organization_name`
-   )
-ON DUPLICATE KEY UPDATE 
-   organizations.organization_id=`_organization_id`, 
-   organizations.organization_name=`_organization_name`;
-  
 END $$
 
 CREATE PROCEDURE `save_condition` (

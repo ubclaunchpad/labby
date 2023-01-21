@@ -6,6 +6,7 @@ import {
 import { Table, Form, Input } from "antd";
 import "antd/dist/antd.min.css";
 import "./index.css";
+import { SET_INVOICE_LIST } from "../../redux/actions/billingActions";
 
 const InvoiceTable = () => {
   const columns = [
@@ -23,8 +24,8 @@ const InvoiceTable = () => {
     },
     {
       title: "Completion Date",
-      dataIndex: "completedTime",
-      key: "completedTime",
+      dataIndex: "createdDate",
+      key: "createdDate",
       editable: false,
     },
     {
@@ -45,7 +46,11 @@ const InvoiceTable = () => {
   const dataSource = useSelector(
     (state) => state.billingReducer.billingList
   );
-  console.log(dataSource)
+
+  useEffect(() => {
+    dispatch({ type: SET_INVOICE_LIST, payload: dataSource });
+  }, [dispatch, dataSource]);
+
   const handleSave = (row) => {
     const newData = [...dataSource];
     const index = newData.findIndex((item) => row.key === item.key);
@@ -158,6 +163,7 @@ const InvoiceTable = () => {
         className="table"
         pagination={false}
         components={components}
+        rowKey={(record) => record.billable_id}
         rowClassName={() => "editable-row"}
         bordered
         dataSource={dataSource}

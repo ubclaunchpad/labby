@@ -1,6 +1,26 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { DELETE_USER, LOAD_EMPLOYEE, LOAD_USERLIST, POST_USER, SET_EMPLOYEE, SET_USERLIST } from "../actions/userActions";
-import { deleteUserApi, getEmployeeList, getUserlist, saveUserApi } from "../api/userApi";
+import {
+  DELETE_ORGANIZATION,
+  DELETE_USER,
+  GET_ORGANIZATION,
+  LOAD_EMPLOYEE,
+  LOAD_USERLIST,
+  POST_ORGANIZATION,
+  POST_USER,
+  SET_EMPLOYEE,
+  SET_ORGANIZATION,
+  SET_USERLIST,
+} from "../actions/userActions";
+import { getProjectAssignmentApi } from "../api/projectApi";
+import {
+  deleteOrganizationApi,
+  deleteUserApi,
+  getEmployeeList,
+  getOrganizationApi,
+  getUserlist,
+  postOrganizationApi,
+  saveUserApi,
+} from "../api/userApi";
 
 export function* loadUserlistSaga() {
   const userList = yield call(getUserlist);
@@ -22,10 +42,34 @@ export function* postUserSaga({ payload }) {
   yield loadUserlistSaga();
 }
 
+export function* loadOrganizationSaga() {
+  const organizationList = yield call(getOrganizationApi);
+  const projectAssignmentList = yield call(getProjectAssignmentApi);
+  yield put({
+    type: SET_ORGANIZATION,
+    payload: {
+      organizationList: organizationList.data,
+      projectAssignmentList: projectAssignmentList.data,
+    },
+  });
+}
+
+export function* postOrganizationSaga({ payload }) {
+  yield call(postOrganizationApi, payload);
+  yield loadOrganizationSaga();
+}
+
+export function* deleteOrganizationSaga({ payload }) {
+  yield call(deleteOrganizationApi, payload);
+  yield loadOrganizationSaga();
+}
+
 export default function* userSaga() {
   yield takeLatest(LOAD_USERLIST, loadUserlistSaga);
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(POST_USER, postUserSaga);
-  yield takeLatest(LOAD_EMPLOYEE, loadEmployeeSaga)
+  yield takeLatest(LOAD_EMPLOYEE, loadEmployeeSaga);
+  yield takeLatest(GET_ORGANIZATION, loadOrganizationSaga);
+  yield takeLatest(POST_ORGANIZATION, postOrganizationSaga);
+  yield takeLatest(DELETE_ORGANIZATION, deleteOrganizationSaga);
 }
-

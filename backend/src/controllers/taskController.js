@@ -16,6 +16,8 @@ export default class TaskController {
       const TaskModel = new Task();
       const taskData = {
         task_id: req.body.task_id,
+        fk_form_id: req.body.fk_form_id,
+        fk_project_id: req.body.fk_project_id,
         task_title: req.body.task_title,
         task_description: req.body.task_description,
         task_state: req.body.task_state,

@@ -21,14 +21,12 @@ const costEstimateMap = new Map();
 const costEstimateList = (state = defaultCostEstimateList, action) => {
   switch (action.type) {
     case SET_COST: {
-      console.log(action.payload[0]);
       const org = action.payload[0];
 
       action.payload[1].map((cost) => {
         if (cost.organization_name === org) {
-          costEstimateMap.set(cost.answer, cost.cost);
+          costEstimateMap.set(cost.fk_answer_id, cost.cost);
         }
-        console.log(costEstimateMap);
         return costEstimateMap;
       });
       return costEstimateMap;

@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import "./index.css";
 import UBC from "../../../assets/UBC.png";
-import InvoiceTable from "../../InvoiceTable";
+// import InvoiceTable from "../../InvoiceTable";
 
-const InvoiceTemplate = () => {
-  const billingData = useSelector((state) => state.billingReducer.billingList);
+const InvoiceTemplate = ({ customer, costcenterMap }) => {
+  const invoiceList = useSelector((state) => state.billingReducer.invoiceList);
+
 
   const todaysDate = new Date();
   const invoiceDate = `${todaysDate.getDate()}-${
@@ -54,11 +55,12 @@ const InvoiceTemplate = () => {
             <div className="header-table-section header-item">
               <p className="header-table-title">Billed to: </p>
               <p className="header-table-content">
-                Client Name: <br />
-                Client Address: <br />
-                Contact: <br />
-                Department: <br />
-                Worktag/Email: <br />
+                Client Name: {customer.cost_center_name}
+                <br />
+                Client Address: {customer.cost_center_address}<br />
+                Contact: {customer.cost_center_contact}<br />
+                Department: {customer.cost_center_type}<br />
+                Worktag/Email: {customer.cost_center_email}<br />
               </p>
             </div>
             <div className="header-table-section">
@@ -67,14 +69,13 @@ const InvoiceTemplate = () => {
                 <p className="header-table-content">
                   Name: Julie Ho <br />
                   Date: {invoiceDate} <br />
-                  Demo Details <br />
                 </p>
               </div>
               <div className="header-item-half">
                 <p className="header-table-title">Project Details: </p>
                 <p className="header-table-content">
-                  Project Title: <br />
-                  Principal Investigator: <br />
+                  Project ID: {customer.fk_project_id}<br />
+                  Principal Investigator: {customer.cost_center_contact}<br />
                 </p>
               </div>
             </div>
@@ -83,7 +84,9 @@ const InvoiceTemplate = () => {
           {/* Update InvoiceTable component to have relevant columns and we can use it here directly */}
           {/* <InvoiceTable/> */}
 
-          <InvoiceDetails billingData={billingData} />
+          <InvoiceDetails billingData={invoiceList.filter((billable) => {
+            return costcenterMap[billable.fk_project_id] === customer.cost_center_id
+          })} />
 
           <div>
             <div className="signer-form">
@@ -150,7 +153,7 @@ function InvoiceDetails({ billingData }) {
 
             {billingData.map((invoiceItem, index) => {
               return (
-                <tr className="item">
+                <tr className="item" key={invoiceItem.billable_id}>
                   <td>
                     {index + 1}. {invoiceItem.name}
                   </td>

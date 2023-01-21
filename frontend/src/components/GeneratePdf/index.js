@@ -6,21 +6,20 @@ import "./index.css";
 // Utilize useRef to get the underlying html element of any React component
 const GeneratePdf = ({ htmlElementRef }) => {
   const generatePdfHandler = () => {
-    let paperOptions = {
+    htmlElementRef.current.forEach((element) => {
+      let paperOptions = {
         margin: 5,
-        filename: "document.pdf"
-    }
+        filename: "document.pdf",
+      };
 
-    const htmlElementToConvert = htmlElementRef.current 
-    console.log(htmlElementToConvert);
+      const htmlElementToConvert = element;
+      console.log(htmlElementToConvert);
 
-    html2pdf().set(paperOptions).from(htmlElementToConvert).save();
+      html2pdf().set(paperOptions).from(htmlElementToConvert).save();
+    });
   };
   return (
-    <div
-      className="GeneratePdfButton"
-      onClick={generatePdfHandler}
-    >
+    <div className="GeneratePdfButton" onClick={generatePdfHandler}>
       Generate PDF
     </div>
   );
