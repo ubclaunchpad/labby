@@ -519,87 +519,96 @@ export const TicketBoard = () => {
               <div className="ticketColumn servicesColumn">
                 <div className="ticketCosts">
                   <div className="contentList">
-                    <div className="ticketSectionTitle">Service & Costs</div>
-                    <div className="serviceListRows">
+                      <div className="ticketSectionTitle">Service & Costs</div>
                       <table className="serviceTable">
-                        <tbody>
-                          <tr className="heading">
-                            <td>Service</td>
-                            <td>Quantity</td>
-                            <td>Cost</td>
-                          </tr>
-
-                          {currentTicketServiceCosts.map((serviceCost) => {
-                            return (
-                              <tr className="item" key={serviceCost.billable_id}>
-                                <td width="50%"><input
-                                    className="serviceNameInput"
-                                    defaultValue={serviceCost.name}
-                                    onBlur={(text) => {
-                                      console.log(serviceCost);
-                                      dispatch({
-                                        type: POST_SERVICE_COST,
-                                        payload: {
-                                          ...serviceCost,
-                                          sow_id: serviceCost.fk_sow_id,
-                                          name: text.target.value,
-                                        },
-                                      });
-                                    }}
-                                  />
-                                </td>
-                                <td width="20%">
-                                  <input
-                                    className="serviceCostInput"
-                                    defaultValue={serviceCost.quantity}
-                                    onBlur={(text) => {
-                                      dispatch({
-                                        type: POST_SERVICE_COST,
-                                        payload: {
-                                          ...serviceCost,
-                                          sow_id: serviceCost.fk_sow_id,
-                                          quantity: text.target.value,
-                                        },
-                                      });
-                                    }}
-                                  />
-                                </td>
-                                <td width="20%">
-                                  <input
-                                    className="serviceCostInput"
-                                    defaultValue={"$ " + serviceCost.cost}
-                                    onBlur={(text) => {
-                                      dispatch({
-                                        type: POST_SERVICE_COST,
-                                        payload: {
-                                          ...serviceCost,
-                                          sow_id: serviceCost.fk_sow_id,
-                                          cost: text.target.value,
-                                        },
-                                      });
-                                    }}
-                                  />
-                                </td>
-                                <td><img
-                                    className="download-icon-delete"
-                                    src={X}
-                                    alt="Delete Service"
-                                    onClick={() => {
-                                      dispatch({
-                                        type: REMOVE_SERVICE_COST,
-                                        payload: {
-                                          billable_id: serviceCost.billable_id,
-                                          sow_id: serviceCost.fk_sow_id,
-                                        },
-                                      });
-                                    }}
-                                  /></td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
-                    </div>
+                          <thead>
+                            <tr className="heading">
+                              <td>Service</td>
+                              <td>Quantity</td>
+                              <td>Cost</td>
+                              <td></td>
+                            </tr>
+                          </thead>
+                        </table>
+                      <div className="serviceListRows">
+                        <table className="serviceTable">                         
+                          <tbody className="serviceTableRows">
+                            {currentTicketServiceCosts.map((serviceCost) => {
+                              return (
+                                <tr className="serviceTableRow" key={serviceCost.billable_id}>
+                                  {/* <td width="50%"> */}
+                                  <td>
+                                    <input
+                                      className="serviceNameInput"
+                                      defaultValue={serviceCost.name}
+                                      onBlur={(text) => {
+                                        console.log(serviceCost);
+                                        dispatch({
+                                          type: POST_SERVICE_COST,
+                                          payload: {
+                                            ...serviceCost,
+                                            sow_id: serviceCost.fk_sow_id,
+                                            name: text.target.value,
+                                          },
+                                        });
+                                      }}
+                                    />
+                                  </td>
+                                  {/* <td width="20%"> */}
+                                  <td>
+                                    <input
+                                      className="serviceCostInput"
+                                      defaultValue={serviceCost.quantity}
+                                      onBlur={(text) => {
+                                        dispatch({
+                                          type: POST_SERVICE_COST,
+                                          payload: {
+                                            ...serviceCost,
+                                            sow_id: serviceCost.fk_sow_id,
+                                            quantity: text.target.value,
+                                          },
+                                        });
+                                      }}
+                                    />
+                                  </td>
+                                  {/* <td width="20%"> */}
+                                  <td>
+                                    <input
+                                      className="serviceCostInput"
+                                      defaultValue={"$ " + serviceCost.cost}
+                                      onBlur={(text) => {
+                                        dispatch({
+                                          type: POST_SERVICE_COST,
+                                          payload: {
+                                            ...serviceCost,
+                                            sow_id: serviceCost.fk_sow_id,
+                                            cost: text.target.value,
+                                          },
+                                        });
+                                      }}
+                                    />
+                                  </td>
+                                  <td><img
+                                      className="download-icon-delete"
+                                      src={X}
+                                      alt="Delete Service"
+                                      onClick={() => {
+                                        dispatch({
+                                          type: REMOVE_SERVICE_COST,
+                                          payload: {
+                                            billable_id: serviceCost.billable_id,
+                                            sow_id: serviceCost.fk_sow_id,
+                                          },
+                                        });
+                                      }}
+                                    /></td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                     
                   </div>
                   <div className="additionBar">
                     <img

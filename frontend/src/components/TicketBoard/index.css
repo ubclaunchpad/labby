@@ -210,7 +210,7 @@
 
 .ticketDetail {
   background-color: #fff;
-  width: 60%;
+  width: 70%;
   height: 96%;
   position: absolute;
   left: 50%;
@@ -289,12 +289,12 @@
 }
 
 .ticketInfo .subtasksColumn {
-  flex-grow: 3;
+  flex: 3;
+  min-width: 25%;
 }
 .ticketInfo .servicesColumn {
-  flex-grow: 7;
-  flex-flow: column wrap;
-  overflow: hidden;
+  flex: 7;
+  min-width: 65%;
 }
 
 .ticketSubtasks {
@@ -335,9 +335,7 @@
 
 .ticketCosts {
   background-color: #d9d9d9;
-  /* border-radius: 10px; */
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-radius: 10px;
   flex-grow: 1;
   max-height: 100%;
   display: flex;
@@ -351,6 +349,9 @@
   padding: 15px;
   flex-direction: column;
 }
+.ticketCosts .contentList{
+  height: calc(100% - 50px);
+}
 
 .additionBar {
   background-color: #b4b4b4;
@@ -361,6 +362,7 @@
   align-items: center;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  flex-shrink: 0;
 }
 .Add {
   height: 15px;
@@ -393,38 +395,23 @@
 }
 
 .serviceNameInput {
-  height: 3.5vh;
   width: 85%;
-  padding-left: 5%;
   border-radius: 5px;
   border: none;
   background-color: #b4b4b4;
 }
 
 .serviceCostInput {
-  height: 3.5vh;
   width: 80%;
-  padding: 10% 5%;
   border-radius: 5px;
   border: none;
   background-color: #b4b4b4;
-  border-spacing: 5%;
-}
-
-.serviceCostRow .inputContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  background-color: #cdcccc;
-  padding: 5px;
-  flex: 2;
-}
+  padding-left: 64px;
+} 
 
 .serviceListRows {
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
+  max-height: 95%; 
+  overflow-y: scroll;
 }
 
 .serviceCostRow .deleteServiceItem {
@@ -458,12 +445,23 @@
 }
 
 .serviceTable td {
-  padding-bottom: 2%;
+  padding: 10px;
   text-overflow: ellipsis;
 }
 
 .serviceTable {
   width: 100%;
-  overflow: auto;
+}
 
+.serviceTableRow{
+  background-color: #b4b4b4;
+  border-bottom: 5px solid #d9d9d9;
+}
+.serviceTableRow td:first-child{
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+.serviceTableRow td:last-child{
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
