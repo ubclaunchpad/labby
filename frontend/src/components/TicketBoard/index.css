@@ -459,4 +459,6 @@
 
 .serviceTable {
   width: 100%;
+  table-layout: fixed;
+  width: 100%;
 }
