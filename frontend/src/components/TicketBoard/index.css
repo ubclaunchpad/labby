@@ -385,30 +385,28 @@
 .subtaskInputContainer {
   display: flex;
   flex-direction: row;
-  height: 4em;
-  /* height: 50px; */
+  height: 7vh;
   align-items: center;
   padding-left: 15px;
 }
 
-.serviceCostRow {
-  display: flex;
-  flex-direction: row;
-  /* justify-content: space-between; */
-  margin-top: 15px;
-  /* margin: 1em; */
-  flex: 1;
-  max-width: 100px;
-}
-
 .serviceNameInput {
-  height: 30px;
-  /* width: 200px; */
+  height: 3.5vh;
+  width: 85%;
+  padding-left: 5%;
+  border-radius: 5px;
+  border: none;
+  background-color: #b4b4b4;
 }
 
 .serviceCostInput {
-  height: 30px;
-  width: 50px;
+  height: 3.5vh;
+  width: 80%;
+  padding: 10% 5%;
+  border-radius: 5px;
+  border: none;
+  background-color: #b4b4b4;
+  border-spacing: 5%;
 }
 
 .serviceCostRow .inputContainer {
@@ -422,9 +420,8 @@
 }
 
 .serviceListRows {
+  height: 100%;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
 }
 
 .serviceCostRow .deleteServiceItem {
@@ -439,17 +436,6 @@
   flex: 1;
 }
 
-.serviceCostQuantity,
-.serviceCostCost {
-  padding-right: 3px;
-}
-
-.serviceCostInput,
-.serviceNameInput {
-  border: none;
-  background-color: #cdcccc;
-}
-
 .Rectangle {
   height: 25px;
   width: 25px;
@@ -457,8 +443,20 @@
   margin-right: 15px;
 }
 
-/* how to change colour? */
-/* .subtaskSection::-webkit-scrollbar-thumb {
-  background-color: darkgrey;
-  outline: 1px solid slategrey;
-} */
+.download-icon-delete {
+  cursor: pointer;
+}
+
+.serviceTable .heading td {
+  font-weight: 600;
+  color: #a4a3a3;
+  padding: 10px;
+}
+
+.serviceTable td {
+  padding-bottom: 2%;
+}
+
+.serviceTable {
+  width: 100%;
+}

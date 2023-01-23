@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import { Input} from "antd";
 import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { useDispatch, useSelector } from "react-redux";
@@ -521,83 +521,84 @@ export const TicketBoard = () => {
                   <div className="contentList">
                     <div className="ticketSectionTitle">Service & Costs</div>
                     <div className="serviceListRows">
-                      {currentTicketServiceCosts.map((serviceCost) => {
-                        return (
-                          <div
-                            className="serviceCostRow"
-                            key={serviceCost.billable_id}
-                          >
-                            <div className="inputContainer">
-                              <input
-                                className="serviceNameInput"
-                                defaultValue={serviceCost.name}
-                                onBlur={(text) => {
-                                  console.log(serviceCost);
-                                  dispatch({
-                                    type: POST_SERVICE_COST,
-                                    payload: {
-                                      ...serviceCost,
-                                      sow_id: serviceCost.fk_sow_id,
-                                      name: text.target.value,
-                                    },
-                                  });
-                                }}
-                              />
-                            </div>
-                            <div className="inputContainer">
-                              <div className="serviceCostQuantity">#</div>
-                              <input
-                                className="serviceCostInput"
-                                defaultValue={serviceCost.quantity}
-                                onBlur={(text) => {
-                                  dispatch({
-                                    type: POST_SERVICE_COST,
-                                    payload: {
-                                      ...serviceCost,
-                                      sow_id: serviceCost.fk_sow_id,
-                                      quantity: text.target.value,
-                                    },
-                                  });
-                                }}
-                              />
-                            </div>
-                            <div className="inputContainer">
-                              <div className="serviceCostCost">$</div>
-                              <input
-                                className="serviceCostInput"
-                                defaultValue={serviceCost.cost}
-                                onBlur={(text) => {
-                                  dispatch({
-                                    type: POST_SERVICE_COST,
-                                    payload: {
-                                      ...serviceCost,
-                                      sow_id: serviceCost.fk_sow_id,
-                                      cost: text.target.value,
-                                    },
-                                  });
-                                }}
-                              />
-                            </div>
+                      <table className="serviceTable">
+                        <tbody>
+                          <tr className="heading">
+                            <td>Service</td>
+                            <td>Quantity</td>
+                            <td>Cost</td>
+                          </tr>
 
-                            <div className="deleteServiceItem">
-                              <img
-                                className="download-icon-delete"
-                                src={X}
-                                alt="Delete Service"
-                                onClick={() => {
-                                  dispatch({
-                                    type: REMOVE_SERVICE_COST,
-                                    payload: {
-                                      billable_id: serviceCost.billable_id,
-                                      sow_id: serviceCost.fk_sow_id,
-                                    },
-                                  });
-                                }}
-                              />
-                            </div>
-                          </div>
-                        );
-                      })}
+                          {currentTicketServiceCosts.map((serviceCost) => {
+                            return (
+                              <tr className="item" key={serviceCost.billable_id}>
+                                <td width="50%"><input
+                                    className="serviceNameInput"
+                                    defaultValue={serviceCost.name}
+                                    onBlur={(text) => {
+                                      console.log(serviceCost);
+                                      dispatch({
+                                        type: POST_SERVICE_COST,
+                                        payload: {
+                                          ...serviceCost,
+                                          sow_id: serviceCost.fk_sow_id,
+                                          name: text.target.value,
+                                        },
+                                      });
+                                    }}
+                                  />
+                                </td>
+                                <td width="20%">
+                                  <input
+                                    className="serviceCostInput"
+                                    defaultValue={serviceCost.quantity}
+                                    onBlur={(text) => {
+                                      dispatch({
+                                        type: POST_SERVICE_COST,
+                                        payload: {
+                                          ...serviceCost,
+                                          sow_id: serviceCost.fk_sow_id,
+                                          quantity: text.target.value,
+                                        },
+                                      });
+                                    }}
+                                  />
+                                </td>
+                                <td width="20%">
+                                  <input
+                                    className="serviceCostInput"
+                                    defaultValue={"$ " + serviceCost.cost}
+                                    onBlur={(text) => {
+                                      dispatch({
+                                        type: POST_SERVICE_COST,
+                                        payload: {
+                                          ...serviceCost,
+                                          sow_id: serviceCost.fk_sow_id,
+                                          cost: text.target.value,
+                                        },
+                                      });
+                                    }}
+                                  />
+                                </td>
+                                <td><img
+                                    className="download-icon-delete"
+                                    src={X}
+                                    alt="Delete Service"
+                                    onClick={() => {
+                                      dispatch({
+                                        type: REMOVE_SERVICE_COST,
+                                        payload: {
+                                          billable_id: serviceCost.billable_id,
+                                          sow_id: serviceCost.fk_sow_id,
+                                        },
+                                      });
+                                    }}
+                                  /></td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                   <div className="additionBar">
