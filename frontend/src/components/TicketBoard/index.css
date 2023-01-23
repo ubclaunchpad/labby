@@ -293,6 +293,8 @@
 }
 .ticketInfo .servicesColumn {
   flex-grow: 7;
+  flex-flow: column wrap;
+  overflow: hidden;
 }
 
 .ticketSubtasks {
@@ -422,6 +424,7 @@
 .serviceListRows {
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .serviceCostRow .deleteServiceItem {
@@ -451,14 +454,16 @@
   font-weight: 600;
   color: #a4a3a3;
   padding: 10px;
+  text-overflow: ellipsis;
 }
 
 .serviceTable td {
   padding-bottom: 2%;
+  text-overflow: ellipsis;
 }
 
 .serviceTable {
   width: 100%;
-  table-layout: fixed;
-  width: 100%;
+  overflow: auto;
+
 }
