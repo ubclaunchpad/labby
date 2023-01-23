@@ -588,7 +588,10 @@ export const TicketBoard = () => {
                                       }}
                                     />
                                   </td>
-                                  <td><img
+
+                                  <td>
+                                    <div className="delete>">
+                                      <img
                                       className="download-icon-delete"
                                       src={X}
                                       alt="Delete Service"
@@ -601,7 +604,9 @@ export const TicketBoard = () => {
                                           },
                                         });
                                       }}
-                                    /></td>
+                                    />
+                                    </div>
+                                    </td>
                                 </tr>
                               );
                             })}
