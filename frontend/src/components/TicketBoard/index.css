@@ -384,6 +384,7 @@
   flex: 1;
   background-color: #b4b4b4;
   border-radius: 10px;
+  margin-right: 7px;
 }
 
 .subtaskInputContainer {
@@ -398,20 +399,19 @@
   width: 85%;
   border-radius: 5px;
   border: none;
-  background-color: #b4b4b4;
+  background-color: #D2D2D2;
 }
 
 .serviceCostInput {
-  width: 80%;
   border-radius: 5px;
   border: none;
-  background-color: #b4b4b4;
-  padding-left: 64px;
+  background-color: #D2D2D2;
+  text-align: center;
 } 
 
 .serviceListRows {
   max-height: 95%; 
-  overflow-y: scroll;
+  overflow-y: overlay;
 }
 
 .serviceCostRow .deleteServiceItem {
@@ -440,8 +440,14 @@
 .serviceTable .heading td {
   font-weight: 600;
   color: #a4a3a3;
-  padding: 10px;
+  padding: 10px 0px;
   text-overflow: ellipsis;
+  text-align: center;
+}
+
+.serviceTable .heading td:last-child{
+  padding-left: 12px;
+  border: 12px solid #d9d9d9;
 }
 
 .serviceTable td {
@@ -454,7 +460,7 @@
 }
 
 .serviceTableRow{
-  background-color: #b4b4b4;
+  background-color: #D2D2D2;
   border-bottom: 5px solid #d9d9d9;
 }
 .serviceTableRow td:first-child{
@@ -472,4 +478,13 @@
   padding-left: 12px;
   border: 12px solid #d9d9d9;
   border-radius: 80px;
+}
+
+::-webkit-scrollbar {
+  background: transparent;
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: #b4b4b4;
+  border-radius: 8px;
 }

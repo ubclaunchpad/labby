@@ -536,7 +536,6 @@ export const TicketBoard = () => {
                             {currentTicketServiceCosts.map((serviceCost) => {
                               return (
                                 <tr className="serviceTableRow" key={serviceCost.billable_id}>
-                                  {/* <td width="50%"> */}
                                   <td>
                                     <input
                                       className="serviceNameInput"
@@ -554,7 +553,6 @@ export const TicketBoard = () => {
                                       }}
                                     />
                                   </td>
-                                  {/* <td width="20%"> */}
                                   <td>
                                     <input
                                       className="serviceCostInput"
@@ -571,7 +569,6 @@ export const TicketBoard = () => {
                                       }}
                                     />
                                   </td>
-                                  {/* <td width="20%"> */}
                                   <td>
                                     <input
                                       className="serviceCostInput"
