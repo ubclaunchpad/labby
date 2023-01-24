@@ -13,6 +13,8 @@ import taskRouter from "./src/routes/taskRoute.js";
 import organizationRouter from "./src/routes/organizationRoute.js";
 import assignmentRouter from "./src/routes/assignmentRoute.js";
 import userRouter from "./src/routes/userRoute.js";
+import projectRouter from "./src/routes/projectRoute.js";
+import costCentreRouter from "./src/routes/costCentreRoute.js";
 
 const app = express();
 const port = 8080;
@@ -37,6 +39,8 @@ app.use("/task", taskRouter);
 app.use("/organization", organizationRouter);
 app.use("/assignment", assignmentRouter);
 app.use("/user", userRouter);
+app.use("/project", projectRouter);
+app.use("/costcenter", costCentreRouter);
 
 app.listen(port, () => {
   console.log(`Labby backend listening on port ${port}`);

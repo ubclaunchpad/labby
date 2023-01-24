@@ -50,8 +50,7 @@ export const CostEstimateFull = () => {
 
       <div className="CostEstimates">
         {formResponses.map((response) => {
-          console.log(response);
-          const cost = costEstimateMap.get(response.question.answer);
+          const cost = costEstimateMap.get(response.question.answer_id);
           if (cost != null) {
             let quantity = response.quantity ?? 1;
             costSum += cost * quantity;

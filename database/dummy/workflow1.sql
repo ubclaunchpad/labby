@@ -27,10 +27,28 @@ CALL save_organization('ORG-ID-A','MAPcore', 'Julie Ho', 'julieho@demo.com', '12
 CALL save_organization('ORG-ID-B','Dr David Huntsman', 'Andy Demo', 'andydemo@demo.com', '456 Main St', 'Internal', 'Pathology');
 CALL save_organization('ORG-ID-C','Hungrii Inc.', 'Harin Wu', 'harinwu99@gmail.com', '789 Main St', 'Industry', '');
 
+-- Populate Projects
+CALL save_project('PROJECTID-A', 'Project A', 'This is project A');
+CALL save_project('PROJECTID-B', 'Project B', 'This is project B');
+CALL save_project('PROJECTID-C', 'Project C', 'This is project C');
+
+-- Assign Projects to Organizations
+CALL save_organization_projects('ORG-PROJ-1', 'PROJECTID-A', 'ORG-ID-A');
+CALL save_organization_projects('ORG-PROJ-2', 'PROJECTID-B', 'ORG-ID-A');
+
+-- Populate Cost Centers
+CALL save_cost_center('COST-CENTER-ID-A', 'Cost Center A', 'Harin Wu', 'harinwu99@gmail.com', '123 Main St', 'External');
+CALL save_cost_center('COST-CENTER-ID-B', 'Cost Center B', 'Harin Wu', 'harinwu99@gmail.com', '123 Main St', 'Internal');
+CALL save_cost_center('COST-CENTER-ID-C', 'Cost Center C', 'Harin Wu', 'harinwu99@gmail.com', '123 Main St', 'Industry');
+
+-- Assign Projects to Cost Centers
+CALL save_project_cost_centers('COST-CENTER-PROJ-1', 'COST-CENTER-ID-A', 'PROJECTID-A');
+CALL save_project_cost_centers('COST-CENTER-PROJ-2', 'COST-CENTER-ID-A', 'PROJECTID-B');
+
 -- Populate Cost
-CALL save_cost('COSTID-B', 10.0, 'MAPCORE-105', 'Internal');
-CALL save_cost('COSTID-C', 10.0, 'MAPCORE-105', 'External');
-CALL save_cost('COSTID-D', 10.0, 'MAPCORE-105', 'Industry');
+CALL save_cost('COSTID-B', 10.0, 'MAPCORE-105', 'Internal', true);
+CALL save_cost('COSTID-C', 10.0, 'MAPCORE-105', 'External', true);
+CALL save_cost('COSTID-D', 10.0, 'MAPCORE-105', 'Industry', true);
 
 -- Populate User
 CALL addUser('USER-A', 'ORG-ID-A', 'Harin Wu', 'harinwu99@gmail.com', true);
@@ -53,7 +71,7 @@ CALL save_condition('CONDITION-B', 'RANDOM-ID-B', 'ANSWERID-C', 'multi','FALSE')
 
 ---- BILLING ----
 -- Create SOW
-CALL save_task('SOW-1', 'Testing Billing', 'This SOW is exclusively for testing billing', 'open');
+CALL save_task('SOW-1', 'SAMPLE-FORM-1', 'PROJECTID-A', 'Testing Billing', 'This SOW is exclusively for testing billing', 'open');
 
 -- Create Subtasks
 CALL save_subtask('SUB-1', 'Subtask Testing 1', 'Subtask 1 Description', 'open', 'SOW-1');
@@ -65,5 +83,5 @@ CALL save_assignment('ASN-2', 'USER-A', 'SUB-1');
 CALL save_assignment('ASN-3', 'USER-B', 'SUB-1');
 
 -- Create Billable Items
-CALL save_billable('BILLABLE-1', 'SOW-1', 'Testing Billable 1', 1, 10.0, '2015-01-01', '2015-01-01', false, '2015-01-01', 'USER-A');
-CALL save_billable('BILLABLE-2', 'SOW-1', 'Testing Billable 2', 1, 15.0, '2015-01-01', '2015-01-01', false, '2015-01-01', 'USER-A');
+CALL save_billable('BILLABLE-1', 'SOW-1', 'PROJECTID-A', 'Testing Billable 1', 1, 10.0, '2015-01-01', '2015-01-01', false, '2015-01-01', 'USER-A');
+CALL save_billable('BILLABLE-2', 'SOW-1', 'PROJECTID-A', 'Testing Billable 2', 1, 15.0, '2015-01-01', '2015-01-01', false, '2015-01-01', 'USER-A');

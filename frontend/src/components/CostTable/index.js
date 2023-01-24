@@ -4,13 +4,15 @@ import {
   DELETE_SERVICE,
   LOAD_ALL_COST,
   UPDATE_COST,
+  UPDATE_QUANTIFIABLE,
 } from "../../redux/actions/costActions";
-import { Table, Form, Popconfirm, Input } from "antd";
+import { Table, Form, Popconfirm, Input, Checkbox } from "antd";
 import { appColor } from "../../constants";
 import "antd/dist/antd.min.css";
 import "./index.css";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
 import uuid from "react-uuid";
+import X from "../../assets/X.png";
 
 const CostTable = () => {
   const columns = [
@@ -19,32 +21,56 @@ const CostTable = () => {
       dataIndex: "service",
       key: "service",
       editable: false,
-      width: "100%",
+      width: "35%",
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
       editable: false,
-      width: "100%",
+      width: "29%",
     },
     {
-      title: "Internal",
+      title: "Internal Cost",
       dataIndex: "internal",
       key: "internal",
       editable: true,
+      width: "10%",
     },
     {
-      title: "External",
+      title: "External Cost",
       dataIndex: "external",
       key: "external",
       editable: true,
+      width: "10%",
     },
     {
-      title: "Industry",
+      title: "Industry Cost",
       dataIndex: "industry",
       key: "industry",
       editable: true,
+      width: "10%",
+    },
+    {
+      title: "Quantifiable",
+      dataIndex: "quantifiable",
+      key: "quantifiable",
+      render: (_, record) =>
+        dataSource.length >= 1 ? (
+          <Checkbox
+            checked={record.quantifiable}
+            onClick={(e) => {
+              dispatch({
+                type: UPDATE_QUANTIFIABLE,
+                payload: {
+                  answer_id: record.key,
+                  quantifiable: e.currentTarget.checked,
+                },
+              });
+            }}
+          />
+        ) : null,
+      width: "5%",
     },
     {
       title: "",
@@ -52,12 +78,15 @@ const CostTable = () => {
       render: (_, record) =>
         dataSource.length >= 1 ? (
           <Popconfirm
-            title="Sure to delete?"
+            title="Confirm Deletion?"
+            okType="danger"
+            okText="Delete"
             onConfirm={() => handleDelete(record.key)}
           >
-            <p>Delete</p>
+            <img className="GlobalEditorDelete" src={X} alt="Delete" />
           </Popconfirm>
         ) : null,
+      width: "1%",
     },
   ];
 
@@ -85,18 +114,21 @@ const CostTable = () => {
         org_type: "Internal",
         cost: 0,
         cost_id: uuid(),
+        quantifiable: false,
       };
       const newDataExternal = {
         answer_id: newService.answer_id,
         org_type: "External",
         cost: 0,
         cost_id: uuid(),
+        quantifiable: false,
       };
       const newDataIndustry = {
         answer_id: newService.answer_id,
         org_type: "Industry",
         cost: 0,
         cost_id: uuid(),
+        quantifiable: false,
       };
       dispatch({ type: UPDATE_COST, payload: newDataInternal });
       dispatch({ type: UPDATE_COST, payload: newDataExternal });
@@ -109,6 +141,7 @@ const CostTable = () => {
       org_type: row.dataIndex.charAt(0).toUpperCase() + row.dataIndex.slice(1),
       cost: row[row.dataIndex].slice(1),
       cost_id: row.idMap[row.dataIndex],
+      quantifiable: row.quantifiable,
     };
     dispatch({ type: UPDATE_COST, payload: newData });
   };

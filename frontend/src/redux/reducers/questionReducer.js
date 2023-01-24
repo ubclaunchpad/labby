@@ -3,10 +3,12 @@ import {
   REPLACE_QUESTION,
   SET_ANSWER,
   SET_QUESTION,
+  SET_ANSWER_BY_SURVEY,
 } from "../actions/questionActions";
 
 const defaultQuestionList = [];
 const defaultAnswerList = {};
+const AnswerSurveyList = [];
 
 const questionList = (state = defaultQuestionList, action) => {
   switch (action.type) {
@@ -57,7 +59,26 @@ const answerList = (state = defaultAnswerList, action) => {
   }
 };
 
+const answerSurveyList = (state = AnswerSurveyList, action) => {
+  switch (action.type) {
+    case SET_ANSWER_BY_SURVEY: {
+      var finalAnswers = [];
+      action.payload.forEach((answer) => {
+        finalAnswers.push(answer);
+      });
+      console.log("Asnwer", finalAnswers);
+      return finalAnswers;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 export default combineReducers({
   questionList,
   answerList,
+  answerSurveyList,
 });
+
+

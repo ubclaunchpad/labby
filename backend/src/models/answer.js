@@ -33,4 +33,15 @@ export class Answer {
       }
     });
   }
+
+  readAnswer(surveyId, result) {
+    con.query(`CALL load_answers_by_survey(?)`, [surveyId], (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res);
+      }
+    });
+  }
 }

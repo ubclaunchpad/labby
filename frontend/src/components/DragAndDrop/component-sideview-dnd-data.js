@@ -96,17 +96,26 @@ export const ContactInfoCard = () => {
   );
 };
 
+export const ProjectSelectorCard = () => {
+  return (
+    <DraggableCard>
+      <img className="iconImage" src={ContactIcon} alt="Contact Information" />
+      Project Selector
+    </DraggableCard>
+  );
+};
+
 export const componentsSideViewData = {
   components: {
-    "multi": {
+    multi: {
       id: "multi",
       component: MultipleChoiceCard,
     },
-    "single": {
+    single: {
       id: "single",
       component: SingleSelectionCard,
     },
-    "text": {
+    text: {
       id: "text",
       component: TextAnswerCard,
     },
@@ -118,33 +127,32 @@ export const componentsSideViewData = {
       id: "heading",
       component: HeadingCard,
     },
-    "textline": {
+    textline: {
       id: "textline",
       component: TextLineCard,
     },
-    "upload": {
+    upload: {
       id: "upload",
       component: FileUploadCard,
     },
-    "download": {
+    download: {
       id: "download",
       component: FileDownloadCard,
     },
-    "contact": {
+    contact: {
       id: "contact",
       component: ContactInfoCard,
+    },
+    project: {
+      id: "project",
+      component: ProjectSelectorCard,
     },
   },
   sections: {
     "question-elements": {
       id: "question-elements",
       title: "Question Elements",
-      componentIds: [
-        "multi",
-        "single",
-        "text",
-        "dropdown",
-      ],
+      componentIds: ["multi", "single", "text", "dropdown"],
     },
     "layout-elements": {
       id: "layout-elements",
@@ -159,7 +167,7 @@ export const componentsSideViewData = {
     "billing-elements": {
       id: "billing-elements",
       title: "Billing Elements",
-      componentIds: ["contact"],
+      componentIds: ["contact", "project"],
     },
   },
   //For reordering the sections
@@ -175,5 +183,5 @@ export const QuestionData = {
   droppedComponents: [
     { originId: "heading", id: uuidv4(), component: HeadingCard },
   ],
-  "droppedComponentsOrder": []
+  droppedComponentsOrder: [],
 };

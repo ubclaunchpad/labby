@@ -1,0 +1,21 @@
+.invoicePage {
+  height: 100vh;
+  display: flex;
+}
+.invoicePageContent{
+  padding-left: 50px;
+  padding-right: 50px;
+  width: 100%;
+  overflow-y: auto;
+}
+.InvoiceTitle {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: left;
+  padding-top: 22px;
+  padding-bottom: 5px;
+}
+.InvoicePreview{
+  margin: 0 auto;
+  width: 75%;
+}

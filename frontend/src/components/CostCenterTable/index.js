@@ -1,94 +1,95 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  ADD_SERVICE,
-  DELETE_SERVICE,
-  SAVE_CELL_DATA,
-} from "../../redux/actions/costActions";
 import { Table, Form, Popconfirm, Input } from "antd";
 import { appColor } from "../../constants";
 import "antd/dist/antd.min.css";
 import "./index.css";
+import X from "../../assets/X.png";
+import uuid from "react-uuid";
+import {
+  DELETE_COSTCENTER,
+  GET_COSTCENTER,
+  POST_COSTCENTER,
+} from "../../redux/actions/billingActions";
 
 const CostCenterTable = () => {
   const columns = [
     {
-      title: "Service",
-      dataIndex: "service",
-      key: "service",
+      title: "Cost Center",
+      dataIndex: "cost_center_name",
+      key: "cost_center_name",
       editable: true,
+      width: "20%",
     },
     {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
+      title: "Principal Contact",
+      dataIndex: "cost_center_contact",
+      key: "cost_center_contact",
       editable: true,
-      width: "60%",
+      width: "10%",
     },
     {
-      title: "Internal",
-      dataIndex: "internal",
-      key: "internal",
+      title: "Contact Address",
+      dataIndex: "cost_center_address",
+      key: "cost_center_address",
       editable: true,
+      width: "20%",
     },
     {
-      title: "External",
-      dataIndex: "external",
-      key: "external",
+      title: "Contact Email",
+      dataIndex: "cost_center_email",
+      key: "cost_center_email",
       editable: true,
+      width: "20%",
     },
     {
-      title: "Industry",
-      dataIndex: "industry",
-      key: "industry",
+      title: "Type",
+      dataIndex: "cost_center_type",
+      key: "cost_center_type",
       editable: true,
+      width: "9%",
     },
     {
-      title: "operation",
+      title: "",
       dataIndex: "operation",
       render: (_, record) =>
         dataSource.length >= 1 ? (
           <Popconfirm
             title="Sure to delete?"
-            onConfirm={() => handleDelete(record.key)}
+            onConfirm={() => handleDelete(record.cost_center_id)}
           >
-            <p>Delete</p>
+            <img className="GlobalEditorDelete" src={X} alt="Delete" />
           </Popconfirm>
         ) : null,
+      width: "1%",
     },
   ];
 
   const dispatch = useDispatch();
   const dataSource = useSelector(
-    (state) => state.costReducer.costTableServices
+    (state) => state.costCenterReducer.costcenterList
   );
 
-  const [count, setCount] = useState(3);
+  useEffect(() => {
+    dispatch({ type: GET_COSTCENTER });
+  }, [dispatch]);
 
   const handleDelete = (key) => {
-    dispatch({ type: DELETE_SERVICE, payload: key });
+    dispatch({ type: DELETE_COSTCENTER, payload: key });
   };
   const handleAdd = () => {
     const newData = {
-      key: count + 1,
-      service: `New Service ${count}`,
-      description: "Click here to edit... ",
-      internal: "$",
-      external: "$",
-      industry: "$",
+      cost_center_id: uuid(),
+      cost_center_name: "New Cost Center",
+      cost_center_contact: "",
+      cost_center_email: "",
+      cost_center_address: "",
+      cost_center_type: "Industry",
     };
-    dispatch({ type: ADD_SERVICE, payload: newData });
-    setCount(count + 1);
+    dispatch({ type: POST_COSTCENTER, payload: newData });
   };
   const handleSave = (row) => {
-    const newData = [...dataSource];
-    const index = newData.findIndex((item) => row.key === item.key);
-    const item = newData[index];
-    newData.splice(index, 1, {
-      ...item,
-      ...row,
-    });
-    dispatch({ type: SAVE_CELL_DATA, payload: newData });
+    dispatch({ type: POST_COSTCENTER, payload: row });
   };
 
   const EditableContext = React.createContext(null);
@@ -189,18 +190,6 @@ const CostCenterTable = () => {
   return (
     <div>
       <div className="addService">
-        <select
-          className="ServiceQuestionSelect"
-          value="Select your service question here..."
-          onChange={() => {}}
-        >
-          <option value="Select your service question here..." disabled>
-            Select your service question here...
-          </option>
-          <option value="sectioning">Sectioning</option>
-          <option value="macrodisection">Macrodisection</option>
-          <option value="scrolling">Scrolling</option>
-        </select>
         <button
           className="BillingAddButton"
           style={{
@@ -224,6 +213,7 @@ const CostCenterTable = () => {
         className="table"
         pagination={false}
         components={components}
+        rowKey={(record) => record.cost_center_id}
         rowClassName={() => "editable-row"}
         bordered
         dataSource={dataSource}

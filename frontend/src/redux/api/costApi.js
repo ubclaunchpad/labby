@@ -39,3 +39,17 @@ export const postCosts = async (payload) => {
     return console.error(err);
   }
 };
+
+export const updateQuantifiableApi = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      answer_id: payload.answer_id,
+      quantifiable: payload.quantifiable,
+    });
+
+    const costs = await axios.post(`quote/updateQuantifiable/`, data);
+    return costs;
+  } catch (err) {
+    return console.error(err);
+  }
+}
