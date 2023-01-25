@@ -29,6 +29,7 @@ import { LOAD_EMPLOYEE } from "../../redux/actions/userActions";
 import uuid from "react-uuid";
 import X from "../../assets/X.png";
 import FileDownload from "../FileDownload";
+import { LOAD_ANSWER_BY_SURVEY } from "../../redux/actions/questionActions";
 
 export const getColorNum = (id, colorArray) => {
   if (colorArray) {
@@ -260,13 +261,6 @@ export const TicketBoard = () => {
     });
   };
 
-  // confirm with Martin that this is how it is to be done
-  const surveyAnswers = useSelector((state) => state.survey_id);
-  let surveyQuestionIds = [];
-  for (const answer in surveyAnswers) {
-    surveyQuestionIds.push(answer.question);
-  }
-
   return (
     <div className="ticketBoardContainer">
       <div className="searchTicketSection">
@@ -467,14 +461,39 @@ export const TicketBoard = () => {
                 <div className="ticketAttachments">
                   <div className="contentList">
                     <div className="ticketSectionTitle">Attachments</div>
-                    {surveyQuestionIds.map((question) => {
-                      return <FileDownload question={question} />;
-                    })}
-                    // use redux to return all answers // retrieve question_id
-                    from each answer // use survey-id (from Martin) to retrieve
-                    all question/response IDs // iterate over question IDs to
-                    retrieve objects from S3 bucket // for each object from the
-                    S3 bucket, render a FileDownload component
+                    <div className="attachmentsContainer">
+                      {/* {dispatch({
+                        type: LOAD_ANSWER_BY_SURVEY,
+                        payload: { survey_id: currentTicket.id },
+                      }).map((answer) => {
+                        return <FileDownload question={answer.question} />;
+                      })} */}
+
+                      {/* <button
+                        onClick={() => {
+                          const a = dispatch({
+                            type: LOAD_ANSWER_BY_SURVEY,
+                            payload: { survey_id: currentTicket.id },
+                          });
+                          console.log(a);
+                        }}
+                      >
+                        fuck u
+                      </button> */}
+
+                      <button
+                        onClick={() => {
+                          dispatch({
+                            type: LOAD_ANSWER_BY_SURVEY,
+                            payload: { survey_id: currentTicket.id },
+                          }).keys.forEach((obj) => {
+                            console.log(obj);
+                          });
+                        }}
+                      >
+                        asdf
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
