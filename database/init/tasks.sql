@@ -17,8 +17,8 @@ CREATE TABLE `tasks` (
     task_description VARCHAR (250),
 	task_state VARCHAR(50),
 	PRIMARY KEY (`task_id`),
-	FOREIGN KEY (`fk_form_id`) REFERENCES forms(`form_id`),
-	FOREIGN KEY (`fk_project_id`) REFERENCES projects(`project_id`)
+	FOREIGN KEY (`fk_form_id`) REFERENCES forms(`form_id`) ON DELETE CASCADE,
+	FOREIGN KEY (`fk_project_id`) REFERENCES projects(`project_id`) ON DELETE CASCADE
 );
 END$$
 
