@@ -56,7 +56,6 @@ const Task = (props) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           onClick={() => {
-            // console.log(props.task);
             dispatch({ type: SET_ACTIVE_TICKET, payload: props.task });
           }}
         >
@@ -142,7 +141,7 @@ const TicketBoardColumn = (props) => {
             {...provided.droppableProps}
           >
             {props.tasks.map((task, index) => {
-              return <Task key={task.id} task={task} index={index} />;
+              return <Task key={task?.id} task={task} index={index} />;
             })}
             {provided.placeholder}
           </div>
@@ -157,7 +156,6 @@ export const TicketBoard = () => {
   const ticketBoardDndData = useSelector(
     (state) => state.ticketReducer.ticketBoardDndData
   );
-  // console.log("This is the ticketboard DND data ---> ", ticketBoardDndData);
   const currentTicket = useSelector(
     (state) => state.ticketReducer.currentTicket
   );
@@ -237,34 +235,29 @@ export const TicketBoard = () => {
     });
   };
 
-  // Want to get the old data and filter out the tasks that are not there from the searchbar?
-  // So what my search will do is filter 3 ways and try and extract something to provide to the tasks ???
-  // So what I will need is a react state to keep track of the tasks.
-  // State will update on search or whenever the app renders itself once again.
-
   function onSearchHandler(searchTerm) {
-    console.log("All tasks --->", allTasks);
-    const filteredTasksArray = Object.entries(allTasks).filter(
-      ([key, value]) => {
-        const lowerCaseSearchTerm = searchTerm.toLowerCase();
-        console.log("This is the key", key, value);
-        const matchedId = value?.id
-          ?.toLowerCase()
-          .includes(lowerCaseSearchTerm);
-        const matchedDescription = value?.description
-          ?.toLowerCase()
-          .includes(lowerCaseSearchTerm);
-        const matchedTitle = value?.title
-          ?.toLowerCase()
-          .includes(lowerCaseSearchTerm);
-        // console.log(matchedId, matchedDescription, matchedTitle);
-        return matchedId || matchedDescription || matchedTitle;
-      }
-    );
-    console.log(filteredTasksArray);
-    const filteredTaskObject = Object.fromEntries(filteredTasksArray);
-    console.log("THIS IS THE FILTERED TASK OBJECT --->", filteredTaskObject);
-    setFilteredTasks(filteredTaskObject);
+    if (searchTerm === "") {
+      setFilteredTasks(allTasks);
+      return;
+    } else {
+      const filteredTasksArray = Object.entries(allTasks).filter(
+        ([key, value]) => {
+          const lowerCaseSearchTerm = searchTerm.toLowerCase();
+          const matchedId = value?.id
+            ?.toLowerCase()
+            .includes(lowerCaseSearchTerm);
+          const matchedDescription = value?.description
+            ?.toLowerCase()
+            .includes(lowerCaseSearchTerm);
+          const matchedTitle = value?.title
+            ?.toLowerCase()
+            .includes(lowerCaseSearchTerm);
+          return matchedId || matchedDescription || matchedTitle;
+        }
+      );
+      const filteredTaskObject = Object.fromEntries(filteredTasksArray);
+      setFilteredTasks(filteredTaskObject);
+    }
   }
 
   return (
@@ -294,9 +287,11 @@ export const TicketBoard = () => {
         <DragDropContext onDragEnd={ticketDragEndHandler}>
           {ticketBoardDndData.columnOrder.map((columnId) => {
             const column = ticketBoardDndData.columns[columnId];
-            const tasks = column.taskIds.map(
-              (taskId) => ticketBoardDndData.tasks[taskId]
-            );
+            const tasks = column.taskIds
+              .map((taskId) => {
+                return filteredTasks?.[taskId];
+              })
+              .filter(Boolean);
             return (
               <TicketBoardColumn key={columnId} column={column} tasks={tasks} />
             );
