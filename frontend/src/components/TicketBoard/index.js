@@ -152,7 +152,7 @@ const TicketBoardColumn = (props) => {
             {...provided.droppableProps}
           >
             {props.tasks.map((task, index) => {
-              return <Task key={task.id} task={task} index={index} />;
+              return <Task key={task?.id} task={task} index={index} />;
             })}
             {provided.placeholder}
           </div>
@@ -179,6 +179,8 @@ export const TicketBoard = () => {
   );
 
   const [assigneeAddModal, setAssigneeAddModal] = useState(false);
+  const allTasks = ticketBoardDndData.tasks;
+  const [filteredTasks, setFilteredTasks] = useState(allTasks);
 
   useEffect(() => {
     dispatch({ type: LOAD_EMPLOYEE });
@@ -261,10 +263,41 @@ export const TicketBoard = () => {
     });
   };
 
+  function onSearchHandler(searchTerm) {
+    if (searchTerm === "") {
+      setFilteredTasks(allTasks);
+      return;
+    } else {
+      const filteredTasksArray = Object.entries(allTasks).filter(
+        ([key, value]) => {
+          const lowerCaseSearchTerm = searchTerm.toLowerCase();
+          const matchedId = value?.id
+            ?.toLowerCase()
+            .includes(lowerCaseSearchTerm);
+          const matchedDescription = value?.description
+            ?.toLowerCase()
+            .includes(lowerCaseSearchTerm);
+          const matchedTitle = value?.title
+            ?.toLowerCase()
+            .includes(lowerCaseSearchTerm);
+          return matchedId || matchedDescription || matchedTitle;
+        }
+      );
+      const filteredTaskObject = Object.fromEntries(filteredTasksArray);
+      setFilteredTasks(filteredTaskObject);
+    }
+  }
+
   return (
     <div className="ticketBoardContainer">
       <div className="searchTicketSection">
-        <Input placeholder="Search..." className="ticketBoardSearch" />
+        <Input
+          placeholder="Search..."
+          className="ticketBoardSearch"
+          onChange={(e) => {
+            onSearchHandler(e.target.value);
+          }}
+        />
         <select
           className="ticketBoardDropdown"
           value="Filter..."
@@ -282,9 +315,11 @@ export const TicketBoard = () => {
         <DragDropContext onDragEnd={ticketDragEndHandler}>
           {ticketBoardDndData.columnOrder.map((columnId) => {
             const column = ticketBoardDndData.columns[columnId];
-            const tasks = column.taskIds.map(
-              (taskId) => ticketBoardDndData.tasks[taskId]
-            );
+            const tasks = column.taskIds
+              .map((taskId) => {
+                return filteredTasks?.[taskId];
+              })
+              .filter(Boolean);
             return (
               <TicketBoardColumn key={columnId} column={column} tasks={tasks} />
             );
