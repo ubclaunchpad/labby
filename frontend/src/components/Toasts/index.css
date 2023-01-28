@@ -1,0 +1,15 @@
+
+
+.toastify__toast{
+    background-color: black; 
+}
+
+.toast-notification{
+    /* text-align: left; */
+
+}
+
+.Toastify__close-button{
+    padding-right: 5px !important; 
+    padding-top: 5px !important;
+}
