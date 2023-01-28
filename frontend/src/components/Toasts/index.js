@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { toast } from "react-toastify";
 
 import "./index.css";

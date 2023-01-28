@@ -1,4 +1,4 @@
-import { Input} from "antd";
+import { Input } from "antd";
 import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { useDispatch, useSelector } from "react-redux";
@@ -181,6 +181,7 @@ export const TicketBoard = () => {
   const [assigneeAddModal, setAssigneeAddModal] = useState(false);
   const allTasks = ticketBoardDndData.tasks;
   const [filteredTasks, setFilteredTasks] = useState(allTasks);
+  const [filtering, setFiltering] = useState(false);
 
   useEffect(() => {
     dispatch({ type: LOAD_EMPLOYEE });
@@ -295,6 +296,11 @@ export const TicketBoard = () => {
           placeholder="Search..."
           className="ticketBoardSearch"
           onChange={(e) => {
+            if (e.target.value !== "") {
+              setFiltering(true);
+            } else {
+              setFiltering(false);
+            }
             onSearchHandler(e.target.value);
           }}
         />
@@ -315,11 +321,17 @@ export const TicketBoard = () => {
         <DragDropContext onDragEnd={ticketDragEndHandler}>
           {ticketBoardDndData.columnOrder.map((columnId) => {
             const column = ticketBoardDndData.columns[columnId];
-            const tasks = column.taskIds
-              .map((taskId) => {
-                return filteredTasks?.[taskId];
-              })
-              .filter(Boolean);
+
+            var tasks = column.taskIds.map(
+              (taskId) => ticketBoardDndData.tasks[taskId]
+            );
+            if (filtering) {
+              tasks = column.taskIds
+                .map((taskId) => {
+                  return filteredTasks?.[taskId];
+                })
+                .filter(Boolean);
+            }
             return (
               <TicketBoardColumn key={columnId} column={column} tasks={tasks} />
             );
@@ -355,10 +367,10 @@ export const TicketBoard = () => {
                       backgroundColor: appColor.primaryLight,
                       color: appColor.white,
                     }}
-                    >
+                  >
                     Preview
                   </button>
-                </NavLink>                  
+                </NavLink>
               </div>
             </div>
             <div className="ticketTags">
@@ -460,7 +472,6 @@ export const TicketBoard = () => {
 
             <div className="ticketInfo">
               <div className="ticketColumn subtasksColumn">
-
                 <div className="ticketSubtasks">
                   <div className="ticketSubtasksContainer">
                     <div className="contentList">
@@ -554,76 +565,79 @@ export const TicketBoard = () => {
               <div className="ticketColumn servicesColumn">
                 <div className="ticketCosts">
                   <div className="contentList">
-                      <div className="ticketSectionTitle">Service & Costs</div>
+                    <div className="ticketSectionTitle">Service & Costs</div>
+                    <table className="serviceTable">
+                      <thead>
+                        <tr className="heading">
+                          <td>Service</td>
+                          <td>Quantity</td>
+                          <td>Cost</td>
+                          <td></td>
+                        </tr>
+                      </thead>
+                    </table>
+                    <div className="serviceListRows">
                       <table className="serviceTable">
-                          <thead>
-                            <tr className="heading">
-                              <td>Service</td>
-                              <td>Quantity</td>
-                              <td>Cost</td>
-                              <td></td>
-                            </tr>
-                          </thead>
-                        </table>
-                      <div className="serviceListRows">
-                        <table className="serviceTable">                         
-                          <tbody className="serviceTableRows">
-                            {currentTicketServiceCosts.map((serviceCost) => {
-                              return (
-                                <tr className="serviceTableRow" key={serviceCost.billable_id}>
-                                  <td>
-                                    <input
-                                      className="serviceNameInput"
-                                      defaultValue={serviceCost.name}
-                                      onBlur={(text) => {
-                                        console.log(serviceCost);
-                                        dispatch({
-                                          type: POST_SERVICE_COST,
-                                          payload: {
-                                            ...serviceCost,
-                                            sow_id: serviceCost.fk_sow_id,
-                                            name: text.target.value,
-                                          },
-                                        });
-                                      }}
-                                    />
-                                  </td>
-                                  <td>
-                                    <input
-                                      className="serviceCostInput"
-                                      defaultValue={serviceCost.quantity}
-                                      onBlur={(text) => {
-                                        dispatch({
-                                          type: POST_SERVICE_COST,
-                                          payload: {
-                                            ...serviceCost,
-                                            sow_id: serviceCost.fk_sow_id,
-                                            quantity: text.target.value,
-                                          },
-                                        });
-                                      }}
-                                    />
-                                  </td>
-                                  <td>
-                                    <input
-                                      className="serviceCostInput"
-                                      defaultValue={"$ " + serviceCost.cost}
-                                      onBlur={(text) => {
-                                        dispatch({
-                                          type: POST_SERVICE_COST,
-                                          payload: {
-                                            ...serviceCost,
-                                            sow_id: serviceCost.fk_sow_id,
-                                            cost: text.target.value,
-                                          },
-                                        });
-                                      }}
-                                    />
-                                  </td>
+                        <tbody className="serviceTableRows">
+                          {currentTicketServiceCosts.map((serviceCost) => {
+                            return (
+                              <tr
+                                className="serviceTableRow"
+                                key={serviceCost.billable_id}
+                              >
+                                <td>
+                                  <input
+                                    className="serviceNameInput"
+                                    defaultValue={serviceCost.name}
+                                    onBlur={(text) => {
+                                      console.log(serviceCost);
+                                      dispatch({
+                                        type: POST_SERVICE_COST,
+                                        payload: {
+                                          ...serviceCost,
+                                          sow_id: serviceCost.fk_sow_id,
+                                          name: text.target.value,
+                                        },
+                                      });
+                                    }}
+                                  />
+                                </td>
+                                <td>
+                                  <input
+                                    className="serviceCostInput"
+                                    defaultValue={serviceCost.quantity}
+                                    onBlur={(text) => {
+                                      dispatch({
+                                        type: POST_SERVICE_COST,
+                                        payload: {
+                                          ...serviceCost,
+                                          sow_id: serviceCost.fk_sow_id,
+                                          quantity: text.target.value,
+                                        },
+                                      });
+                                    }}
+                                  />
+                                </td>
+                                <td>
+                                  <input
+                                    className="serviceCostInput"
+                                    defaultValue={"$ " + serviceCost.cost}
+                                    onBlur={(text) => {
+                                      dispatch({
+                                        type: POST_SERVICE_COST,
+                                        payload: {
+                                          ...serviceCost,
+                                          sow_id: serviceCost.fk_sow_id,
+                                          cost: text.target.value,
+                                        },
+                                      });
+                                    }}
+                                  />
+                                </td>
 
-                                  <td>
-                                    <div className="delete>">
-                                      <img
+                                <td>
+                                  <div className="delete>">
+                                    <img
                                       className="download-icon-delete"
                                       src={X}
                                       alt="Delete Service"
@@ -631,21 +645,21 @@ export const TicketBoard = () => {
                                         dispatch({
                                           type: REMOVE_SERVICE_COST,
                                           payload: {
-                                            billable_id: serviceCost.billable_id,
+                                            billable_id:
+                                              serviceCost.billable_id,
                                             sow_id: serviceCost.fk_sow_id,
                                           },
                                         });
                                       }}
                                     />
-                                    </div>
-                                    </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
-                      </div>
-                     
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                   <div className="additionBar">
                     <img
@@ -675,11 +689,8 @@ export const TicketBoard = () => {
                   </div>
                 </div>
               </div>
-
             </div>
-
           </div>
-
         </div>
       ) : null}
     </div>
