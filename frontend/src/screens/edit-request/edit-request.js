@@ -104,18 +104,6 @@ function EditRequest() {
 
   return (
     <div className="EditRequestPage">
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={true}
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={false}
-        pauseOnHover
-        theme="light"
-      />
       <div className="headerComponent">{Header()}</div>
       <DragDropContext onDragEnd={dragEndHandler}>
         <div style={{ flex: 6 }}>
