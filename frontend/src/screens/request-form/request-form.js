@@ -70,7 +70,7 @@ function RequestForm() {
   }
 
   // Basic Form Validation and Submit
-  function submitForm() {
+  function submitForm() { 
     var filled = true;
     questions.forEach((question) => {
       if (
