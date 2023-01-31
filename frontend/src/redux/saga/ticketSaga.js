@@ -14,6 +14,7 @@ import {
   UNASSIGN_USER,
   UPDATE_TICKET_DESCRIPTION,
   UPDATE_TICKET_STATUS,
+  FILTER_TICKETS
 } from "../actions/ticketActions";
 import {
   assignUserApi,
@@ -104,11 +105,34 @@ export function* getSubtasks(action) {
   });
 }
 
+
 export function* addSubtask(action) {
   yield call(createSubtask, action.payload);
   yield call(getSubtasks, { payload: action.payload.ticket_id });
 }
 
+// Need to know why there is an infinite loop and how to connect the saga to call the API properly. 
+export function* filterTickets(action) {
+  console.log("HIT THE SAGA FUNCTION")
+  const ticketList = yield call(getTickets);
+  const subticketList = yield call(getSubTickets);
+  const allTickets = ticketList.data.concat(subticketList.data);
+  console.log("THESE ARE ALL TICKETS --> ", allTickets)
+  const filteredTickets = allTickets.filter((ticket) => {
+    console.log('These are the ticket status -->', ticket.task_state);
+    return ticket.task_state === action.payload;
+  });
+  console.log(filteredTickets)
+  yield put({
+    type: FILTER_TICKETS,
+    payload: {
+      ticketList: filteredTickets,
+    },
+  });
+
+  console.log("These are the new tickets -->",yield call(getTickets));
+
+}
 export default function* ticketSaga() {
   yield takeLatest(GET_TICKET_BOARD, fetchTickets);
   yield takeLatest(UPDATE_TICKET_STATUS, updateTicketStatus);
@@ -120,4 +144,5 @@ export default function* ticketSaga() {
   yield takeLatest(GET_SERVICE_COST, getServiceCost);
   yield takeLatest(ADD_SUBTASKS, addSubtask);
   yield takeLatest(GET_SUBTASKS, getSubtasks);
+  yield takeLatest(FILTER_TICKETS, filterTickets);
 }

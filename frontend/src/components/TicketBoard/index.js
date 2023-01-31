@@ -15,6 +15,7 @@ import {
   UPDATE_TICKET_BOARD,
   UPDATE_TICKET_DESCRIPTION,
   UPDATE_TICKET_STATUS,
+  FILTER_TICKETS
 } from "../../redux/actions/ticketActions";
 import "./index.css";
 import { clsx } from "clsx";
@@ -177,6 +178,12 @@ export const TicketBoard = () => {
   );
 
   const [assigneeAddModal, setAssigneeAddModal] = useState(false);
+  const [filter, setFilter] = useState("Filter..."); 
+  const filters = ticketBoardDndData.filters; 
+  console.log(filters)
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
   useEffect(() => {
     dispatch({ type: LOAD_EMPLOYEE });
@@ -265,15 +272,18 @@ export const TicketBoard = () => {
         <Input placeholder="Search..." className="ticketBoardSearch" />
         <select
           className="ticketBoardDropdown"
-          value="Filter..."
-          onChange={() => {}}
+          value= {filter}
+          onChange={(e) => {
+            console.log(e.target.value);
+            dispatch ({type: FILTER_TICKETS, payload: e.target.value})
+            setFilter(e.target.value)}}
+
         >
-          <option value="Filter..." disabled>
-            Filter
-          </option>
-          <option value="sectioning">Sectioning</option>
-          <option value="macrodisection">Macrodisection</option>
-          <option value="scrolling">Scrolling</option>
+          <option value="Filter...">Filter</option>
+          {filters.map((filter)=>
+            
+            <option value = {filter}>{capitalizeFirstLetter(filter)}</option>
+          )}
         </select>
       </div>
       <div className="ticketBoard">
