@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { TOGGLE_COST_ESTIMATE } from "../../redux/actions/uiActions";
+import { COST_BILLABLE } from "../../redux/actions/costActions";
 import "./index.css";
 import { appColor } from "../../constants";
 import MoneyGray from "../../assets/MoneyGray.png";
@@ -28,6 +29,10 @@ export const CostEstimateFull = () => {
     (state) => state.costEstimateReducer.costEstimateList
   );
   const formResponses = useSelector((state) => state.formReducer.formResponses);
+  const costEstimateBillablesMap = useSelector(
+    (state) => state.costEstimateReducer.costEstimateBillables
+  );
+ 
   let costSum = 0;
 
   return (
@@ -49,11 +54,21 @@ export const CostEstimateFull = () => {
       </span>
 
       <div className="CostEstimates">
+        { console.log(costEstimateBillablesMap)}
         {formResponses.map((response) => {
           const cost = costEstimateMap.get(response.question.answer_id);
           if (cost != null) {
             let quantity = response.quantity ?? 1;
             costSum += cost * quantity;
+            dispatch({
+              type: COST_BILLABLE,
+              payload: {
+                answer_id: response.question.answer_id,
+                service: response.question.answer,
+                quantity: quantity,
+                cost: cost * quantity
+              }
+            });
             return (
               <div className="CostBox" key={response.question.answer}>
                 <div className="CostLeft"> {response.question.answer} </div>
