@@ -20,6 +20,8 @@ import {
 import { SUBMIT_FORM } from "../../redux/actions/formActions";
 import { TOGGLE_COST_ESTIMATE } from "../../redux/actions/uiActions";
 import ProjectSelector from "../../components/ProjectSelector";
+import { ToastContainer } from "react-toastify";
+import { SuccessToast, WarningToast } from "../../components/Toasts";
 
 function RequestForm() {
   const dispatch = useDispatch();
@@ -84,22 +86,24 @@ function RequestForm() {
     if (filled) {
       if (hideCost) {
         dispatch({ type: TOGGLE_COST_ESTIMATE });
-        alert("Please Review Your Cost Estimate and Submit!");
+        WarningToast("Please Review Your Cost Estimate and Submit!");
       } else {
-        const projectItem = formResponses.filter((response) => response.question.project_id !== undefined);
+        const projectItem = formResponses.filter(
+          (response) => response.question.project_id !== undefined
+        );
         const projectId = projectItem[0].response ?? "PROJECTID-A";
         dispatch({
           type: SUBMIT_FORM,
           payload: {
             formResponses,
-            projectId: projectId, 
+            projectId: projectId,
           },
         });
         console.log(formResponses);
-        alert("Form Submitted");
+        SuccessToast("Form Submitted!");
       }
     } else {
-      alert("Please fill out all mandatory fields");
+      WarningToast("Please fill out all mandatory fields");
     }
   }
 
@@ -119,6 +123,18 @@ function RequestForm() {
   if (questions.length !== 0 && logicList.length !== 0) {
     return (
       <div className="requestFormPage">
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={true}
+          newestOnTop={true}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable={false}
+          pauseOnHover
+          theme="light"
+        />
         <div className="requestFormContainer">
           <div id="progressBar" style={{ zIndex: 2 }} />
           <div className="formTitle" style={{ color: appColor.primaryBlack }}>

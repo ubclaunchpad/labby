@@ -11,6 +11,8 @@ import FormBuilder from "../../components/FormBuilder";
 import Header from "../../components/Header";
 import "./edit-request.css";
 import LogicView from "../../components/LogicView";
+import { ToastContainer } from "react-toastify";
+import { WarningToast } from "../../components/Toasts";
 
 function EditRequest() {
   const dispatch = useDispatch();
@@ -34,7 +36,7 @@ function EditRequest() {
       return;
     }
     if (questionList.length === 0) {
-      alert("Please Enter a Form Title First")
+      WarningToast("Please Enter a Form Title First");
       return;
     }
     console.log(`

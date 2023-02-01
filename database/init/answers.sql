@@ -19,7 +19,7 @@ CREATE TABLE `answers` (
 
 	PRIMARY KEY (`answer_id`),
 	FOREIGN KEY (fk_survey_id) REFERENCES surveys(survey_id) ON DELETE CASCADE,
-	FOREIGN KEY (fk_question_id) REFERENCES questions(question_id),
+	FOREIGN KEY (fk_question_id) REFERENCES questions(question_id) ON DELETE CASCADE,
 	FOREIGN KEY (fk_questions_answer_id) REFERENCES questions_answer(answer_id)
 );
 END$$

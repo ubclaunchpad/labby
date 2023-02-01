@@ -13,6 +13,8 @@ import FileDownloadEditor from "../FileDownload/FileDownloadEditor";
 import TextLineEditor from "../TextLine/TextLineEditor";
 import { clsx } from "clsx";
 import { NavLink } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import styled from "styled-components";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
@@ -162,6 +164,18 @@ function FormBuilder() {
           )}
         </StrictModeDroppable>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={true}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }
