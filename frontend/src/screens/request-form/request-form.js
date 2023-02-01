@@ -107,7 +107,6 @@ function RequestForm() {
               quantity: quantity,
               cost: cost * quantity
              });
-          
           }
           return null;
         })}
