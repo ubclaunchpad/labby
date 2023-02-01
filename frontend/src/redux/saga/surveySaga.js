@@ -1,8 +1,9 @@
 import uuid from "react-uuid";
-import { all, call, takeLatest } from "redux-saga/effects";
+import { all, call, takeLatest, put } from "redux-saga/effects";
 import { SUBMIT_FORM } from "../actions/formActions";
 import { createTicketApi } from "../api/formApi";
 import { saveResponse, saveSurvey } from "../api/surveyApi";
+import {POST_SERVICE_COST} from "../../redux/actions/ticketActions";
 
 export function* submitResponseSaga({ payload }) {
   const survey_id = uuid();
@@ -17,8 +18,28 @@ export function* submitResponseSaga({ payload }) {
     task_description: "Harin's Service Request (Replace this with description)",
     task_state: "open",
   });
+
+
   yield all(
-    payload.formResponses.map((response) => {
+    payload.billables.map((billable) => {
+      return put({ type: POST_SERVICE_COST, payload: {
+        billable_id: uuid(),
+        sow_id: survey_id,
+        project_id: payload.projectId,
+        name: billable.service,
+        quantity: billable.quantity,
+        cost: billable.cost,
+        createdDate: new Date(),
+        completedTime: null,
+        billed: false,
+        billedTime: null,
+        createdBy: "USER-A"
+      } });
+    })
+  );
+
+  yield all(
+    payload.formResponses.map((response) => { 
       const isChoice =
         response.question.type === "multi" ||
         response.question.type === "single";

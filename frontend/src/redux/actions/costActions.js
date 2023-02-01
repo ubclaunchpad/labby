@@ -5,7 +5,6 @@ export const SAVE_CELL_DATA = "SAVE_CELL_DATA";
 export const LOAD_COST = "LOAD_COST";
 export const LOAD_ALL_COST = "LOAD_ALL_COST";
 export const SET_COST = "SET_COST";
-export const COST_BILLABLE = "COST_BILLABLE";
 export const SET_ALL_COST = "SET_ALL_COST";
 export const UPDATE_COST = "UPDATE_COST";
 export const UPDATE_QUANTIFIABLE = "UPDATE QUANTIFIABLE";

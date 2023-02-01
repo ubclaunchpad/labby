@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { TOGGLE_COST_ESTIMATE } from "../actions/uiActions";
-import { SET_COST, COST_BILLABLE } from "../actions/costActions";
+import { SET_COST} from "../actions/costActions";
 
 const defaultCostEstimate = false;
 
@@ -17,7 +17,6 @@ const hideCost = (state = defaultCostEstimate, action) => {
 
 const defaultCostEstimateList = [];
 const costEstimateMap = new Map();
-var costEstimateBillableMap = new Map();
 
 const costEstimateList = (state = defaultCostEstimateList, action) => {
   switch (action.type) {
@@ -38,29 +37,7 @@ const costEstimateList = (state = defaultCostEstimateList, action) => {
   }
 };
 
-const costEstimateBillables = (state = defaultCostEstimateList, action) => {
-  switch (action.type) {
-    case COST_BILLABLE: {
-
-      if (action.payload.answer_id != null) {
-        costEstimateBillableMap.set(action.payload.answer_id,
-          {
-            service: action.payload.service,
-            quantity: action.payload.quantity,
-            cost: action.payload.cost
-          })
-      }
-
-      return costEstimateBillableMap;
-    }
-    default: {
-      return state;
-    }
-  }
-};
-
 export default combineReducers({
   hideCost,
   costEstimateList,
-  costEstimateBillables
 });

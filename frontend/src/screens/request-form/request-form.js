@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./request-form.css";
 import { appColor } from "../../constants";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
-import { LOAD_COST } from "../../redux/actions/costActions";
+import { LOAD_COST} from "../../redux/actions/costActions";
 import MultiSelect from "../../components/MultiSelect";
 import SingleSelect from "../../components/SingleSelect";
 import TextAnswer from "../../components/TextAnswer";
@@ -30,6 +30,10 @@ function RequestForm() {
   const formResponses = useSelector((state) => state.formReducer.formResponses);
   const logicList = useSelector((state) => state.logicReducer.logicList);
   const hideCost = useSelector((state) => state.costEstimateReducer.hideCost);
+
+  const costEstimateMap = useSelector(
+    (state) => state.costEstimateReducer.costEstimateList
+  );
 
   // Load Form Questions
   useEffect(() => {
@@ -71,6 +75,7 @@ function RequestForm() {
 
   // Basic Form Validation and Submit
   function submitForm() { 
+
     var filled = true;
     questions.forEach((question) => {
       if (
@@ -92,14 +97,28 @@ function RequestForm() {
           (response) => response.question.project_id !== undefined
         );
         const projectId = projectItem[0].response ?? "PROJECTID-A";
+        const billableList = [];
+        {formResponses.map((response) => {
+          const cost = costEstimateMap.get(response.question.answer_id);
+          if (cost != null) {
+            let quantity = response.quantity ?? 1;
+            billableList.push({ 
+              service: response.question.answer,
+              quantity: quantity,
+              cost: cost * quantity
+             });
+          
+          }
+          return null;
+        })}
         dispatch({
           type: SUBMIT_FORM,
           payload: {
             formResponses,
             projectId: projectId,
+            billables: billableList
           },
         });
-        console.log(formResponses);
         SuccessToast("Form Submitted!");
       }
     } else {
