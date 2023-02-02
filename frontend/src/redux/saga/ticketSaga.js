@@ -146,7 +146,7 @@ export function* getAttachments(action) {
         ResponseContentType: "application/pdf",
       };
       // TODO: Need to change where it only uploads to bucket upon form submission
-      S3.getObject(objParams, function (err, data) {
+      return S3.getObject(objParams, function (err, data) {
         if (err) {
           console.log("Issue in S3.getObject()");
           console.log(`Error Code: ${err.code}`);

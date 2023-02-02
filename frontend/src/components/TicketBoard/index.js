@@ -180,17 +180,18 @@ export const TicketBoard = () => {
   const currentTicketSubtasks = useSelector(
     (state) => state.ticketReducer.currentTicketSubtasks
   );
-  // const currentTicketAttachments = useSelector(
-  //   (state) => state.ticketReducer.currentTicketAttachments
-  // );
+  const currentTicketAttachments = useSelector(
+    (state) => state.ticketReducer.currentTicketAttachments
+  );
 
   const [assigneeAddModal, setAssigneeAddModal] = useState(false);
   const allTasks = ticketBoardDndData.tasks;
   const [filteredTasks, setFilteredTasks] = useState(allTasks);
   const [filtering, setFiltering] = useState(false);
 
+  console.log(currentTicketAttachments);
+
   useEffect(() => {
-    // console.log(currentTicketAttachments);
     dispatch({ type: LOAD_EMPLOYEE });
     dispatch({ type: GET_TICKET_BOARD });
     if (currentTicket?.id) {
@@ -202,10 +203,10 @@ export const TicketBoard = () => {
         type: GET_SUBTASKS,
         payload: currentTicket?.id,
       });
-      // dispatch({
-      //   type: GET_ATTACHMENTS,
-      //   payload: { survey_id: currentTicket.id },
-      // });
+      dispatch({
+        type: GET_ATTACHMENTS,
+        payload: { survey_id: currentTicket.id },
+      });
     }
   }, [dispatch, currentTicket]);
 

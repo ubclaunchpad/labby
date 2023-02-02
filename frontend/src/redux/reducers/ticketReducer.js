@@ -144,10 +144,13 @@ const currentTicketSubtasks = (state = [], action) => {
 const currentTicketAttachments = (state = {}, action) => {
   switch (action.type) {
     case SET_ATTACHMENTS: {
-      return {
+      const newMap = {
         ...state,
         [action.payload.key]: action.payload.value,
       };
+
+      console.log(newMap);
+      return newMap;
     }
     default:
       return state;
