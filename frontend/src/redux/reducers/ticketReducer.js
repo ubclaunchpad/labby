@@ -121,7 +121,7 @@ const currentTicket = (state = null, action) => {
 };
 
 const currentTicketServiceCosts = (state = [], action) => {
-  switch (action.type) {
+  switch (action.type) { 
     case SET_SERVICE_COST: {
       return action.payload;
     }

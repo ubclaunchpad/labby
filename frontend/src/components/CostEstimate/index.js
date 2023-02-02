@@ -41,7 +41,6 @@ export const CostEstimateFull = () => {
         }}
       />
       <div className="CostEstimateTitle">Cost Estimate</div>
-
       <span className="CostEstimateHeadings">
         <p>Service</p>
         <p>Quantity</p>
@@ -65,7 +64,6 @@ export const CostEstimateFull = () => {
           return null;
         })}
       </div>
-
       <div className="CostEstimateDivider" />
       <div className="CostDivider" />
       <div className="CostEstimateTotal">Total</div>
