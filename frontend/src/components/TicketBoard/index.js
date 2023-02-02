@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   ADD_SUBTASKS,
   ASSIGN_USER,
+  GET_ATTACHMENTS,
   GET_SERVICE_COST,
   GET_SUBTASKS,
   GET_TICKET_BOARD,
@@ -179,6 +180,9 @@ export const TicketBoard = () => {
   const currentTicketSubtasks = useSelector(
     (state) => state.ticketReducer.currentTicketSubtasks
   );
+  // const currentTicketAttachments = useSelector(
+  //   (state) => state.ticketReducer.currentTicketAttachments
+  // );
 
   const [assigneeAddModal, setAssigneeAddModal] = useState(false);
   const allTasks = ticketBoardDndData.tasks;
@@ -186,6 +190,7 @@ export const TicketBoard = () => {
   const [filtering, setFiltering] = useState(false);
 
   useEffect(() => {
+    // console.log(currentTicketAttachments);
     dispatch({ type: LOAD_EMPLOYEE });
     dispatch({ type: GET_TICKET_BOARD });
     if (currentTicket?.id) {
@@ -197,6 +202,10 @@ export const TicketBoard = () => {
         type: GET_SUBTASKS,
         payload: currentTicket?.id,
       });
+      // dispatch({
+      //   type: GET_ATTACHMENTS,
+      //   payload: { survey_id: currentTicket.id },
+      // });
     }
   }, [dispatch, currentTicket]);
 
@@ -521,7 +530,14 @@ export const TicketBoard = () => {
                 <div className="ticketAttachments">
                   <div className="ticketSectionTitle">Attachments</div>
                   <div className="attachmentsWrapper">
-                    <div className="addAttachment">
+                    {/* <button
+                      onClick={() => {
+                        
+                      }}
+                    >
+                      testing
+                    </button> */}
+                    {/* <div className="addAttachment">
                       <img
                         className="Add"
                         src={Add}
@@ -559,7 +575,7 @@ export const TicketBoard = () => {
                           });
                         }}
                       />
-                    </div>
+                      </div> */}
                   </div>
                 </div>
               </div>

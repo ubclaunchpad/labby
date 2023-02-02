@@ -1,13 +1,16 @@
-import { call, put, select, takeLatest } from "redux-saga/effects";
+import AWS from "aws-sdk";
+import { all, call, put, select, takeLatest } from "redux-saga/effects";
 import {
   ADD_SUBTASKS,
   ASSIGN_USER,
+  GET_ATTACHMENTS,
   GET_SERVICE_COST,
   GET_SUBTASKS,
   GET_TICKET_BOARD,
   POST_SERVICE_COST,
   REMOVE_SERVICE_COST,
   SET_ACTIVE_TICKET,
+  SET_ATTACHMENTS,
   SET_SERVICE_COST,
   SET_SUBTASKS,
   SET_TICKETS,
@@ -29,6 +32,8 @@ import {
   getSubTicketsById,
   createSubtask,
 } from "../api/ticketApi";
+
+import { getAnswersBySurvey } from "../api/questionApi";
 
 export function* fetchTickets() {
   const assigneeList = yield call(getAssignees);
@@ -109,6 +114,63 @@ export function* addSubtask(action) {
   yield call(getSubtasks, { payload: action.payload.ticket_id });
 }
 
+export function* getAttachments(action) {
+  const config = new AWS.Config({
+    // Deprecated method of passing accessKeyId and secretAccessKey -- could not get new method to work
+    accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
+    region: "ca-central-1",
+  });
+
+  // call martins endpoint
+  const surveyAnswers = yield call(getAnswersBySurvey, action.payload);
+  console.log(surveyAnswers.data[0]);
+
+  // map / filter / reduce that list to only return just list of fileInputs
+  const filteredAnswers = surveyAnswers.data[0].filter((answer) => {
+    return (
+      answer.answerid != null && answer.answerid.startsWith("fileInput/", 0)
+    );
+  });
+
+  console.log(filteredAnswers);
+
+  // call s3 endpoints for each file inside the fileInput list
+  yield all(
+    filteredAnswers.map((answer) => {
+      AWS.config.update(config);
+      const S3 = new AWS.S3({});
+      const objParams = {
+        Bucket: "labby-app",
+        Key: answer.answerid,
+        ResponseContentType: "application/pdf",
+      };
+      // TODO: Need to change where it only uploads to bucket upon form submission
+      S3.getObject(objParams, function (err, data) {
+        if (err) {
+          console.log("Issue in S3.getObject()");
+          console.log(`Error Code: ${err.code}`);
+          console.log(`Error Message: ${err.message}`);
+        } else {
+          console.log("Download completed in S3.getObject()");
+          const url = window.URL.createObjectURL(
+            new Blob([data.Body], { type: "application/pdf" })
+          );
+          return put({
+            type: SET_ATTACHMENTS,
+            payload: {
+              key: answer.answerid,
+              value: url,
+            },
+          });
+        }
+      });
+    })
+  );
+
+  // store that all into a reducer
+}
+
 export default function* ticketSaga() {
   yield takeLatest(GET_TICKET_BOARD, fetchTickets);
   yield takeLatest(UPDATE_TICKET_STATUS, updateTicketStatus);
@@ -120,4 +182,5 @@ export default function* ticketSaga() {
   yield takeLatest(GET_SERVICE_COST, getServiceCost);
   yield takeLatest(ADD_SUBTASKS, addSubtask);
   yield takeLatest(GET_SUBTASKS, getSubtasks);
+  yield takeLatest(GET_ATTACHMENTS, getAttachments);
 }
