@@ -3,7 +3,7 @@ import { all, call, takeLatest, put } from "redux-saga/effects";
 import { SUBMIT_FORM } from "../actions/formActions";
 import { createTicketApi } from "../api/formApi";
 import { saveResponse, saveSurvey } from "../api/surveyApi";
-import {POST_SERVICE_COST} from "../../redux/actions/ticketActions";
+import {POST_SERVICE_COST } from "../../redux/actions/ticketActions";
 
 export function* submitResponseSaga({ payload }) {
   const survey_id = uuid();
@@ -18,8 +18,6 @@ export function* submitResponseSaga({ payload }) {
     task_description: "Harin's Service Request (Replace this with description)",
     task_state: "open",
   });
-
-
   yield all(
     payload.billables.map((billable) => {
       return put({ type: POST_SERVICE_COST, payload: {
@@ -37,7 +35,6 @@ export function* submitResponseSaga({ payload }) {
       } });
     })
   );
-
   yield all(
     payload.formResponses.map((response) => { 
       const isChoice =

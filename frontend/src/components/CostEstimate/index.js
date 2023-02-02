@@ -28,10 +28,6 @@ export const CostEstimateFull = () => {
     (state) => state.costEstimateReducer.costEstimateList
   );
   const formResponses = useSelector((state) => state.formReducer.formResponses);
-  const costEstimateBillablesMap = useSelector(
-    (state) => state.costEstimateReducer.costEstimateBillables
-  );
- 
   let costSum = 0;
 
   return (
@@ -45,7 +41,6 @@ export const CostEstimateFull = () => {
         }}
       />
       <div className="CostEstimateTitle">Cost Estimate</div>
-
       <span className="CostEstimateHeadings">
         <p>Service</p>
         <p>Quantity</p>
@@ -53,7 +48,6 @@ export const CostEstimateFull = () => {
       </span>
 
       <div className="CostEstimates">
-        { console.log(costEstimateBillablesMap)}
         {formResponses.map((response) => {
           const cost = costEstimateMap.get(response.question.answer_id);
           if (cost != null) {
@@ -70,7 +64,6 @@ export const CostEstimateFull = () => {
           return null;
         })}
       </div>
-
       <div className="CostEstimateDivider" />
       <div className="CostDivider" />
       <div className="CostEstimateTotal">Total</div>

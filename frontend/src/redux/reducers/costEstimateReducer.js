@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { TOGGLE_COST_ESTIMATE } from "../actions/uiActions";
-import { SET_COST} from "../actions/costActions";
+import { SET_COST } from "../actions/costActions";
 
 const defaultCostEstimate = false;
 
