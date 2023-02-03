@@ -48,12 +48,12 @@ export default class UserController {
       const UserModel = new User();
       const hashPassword = "";
   
-        bcrypt.hash(plaintextPassword, 10, function(err, hash) { // generates salt and hashes password
+        bcrypt.hash(req.body.password, 10, function(err, hash) {
           if (err) {
             console.log({ error: err });
             reject(err);
           }
-          hashPassword = hash;
+          hash = hash;
           });
 
 
