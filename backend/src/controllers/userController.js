@@ -1,4 +1,6 @@
 import { User } from "../models/user.js";
+import bcrypt from "bcrypt";
+import e from "express";
 
 export default class UserController {
 
@@ -44,6 +46,16 @@ export default class UserController {
   saveUser(req) {
     return new Promise((resolve, reject) => {
       const UserModel = new User();
+      const hashPassword = "";
+  
+        bcrypt.hash(plaintextPassword, 10, function(err, hash) { // generates salt and hashes password
+          if (err) {
+            console.log({ error: err });
+            reject(err);
+          }
+          hashPassword = hash;
+          });
+
 
       const user = {
         user_id: req.body.user_id,
@@ -51,6 +63,7 @@ export default class UserController {
         username: req.body.username,
         email: req.body.email,
         employee: req.body.employee,
+        hash: hashPassword,
       };
 
       UserModel.insertUser(user, (err, result) => {
