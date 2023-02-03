@@ -1,6 +1,4 @@
 import { User } from "../models/user.js";
-import bcrypt from "bcrypt";
-import e from "express";
 
 export default class UserController {
 
@@ -17,6 +15,23 @@ export default class UserController {
     });
   }
 
+  authenticateUser(req) {
+    return new Promise((resolve, reject) => {
+      let password = req.body.password;
+      const UserModel = new User();
+      UserModel.getOneUser(req.body.username, (err, res) => {
+        if (res) {
+          bcrypt.compare(password, res.hash, function (err, result) {
+            if (result) {
+              resolve(res);
+              // password is valid - add token here
+            }
+          });
+        }
+        reject({err: "Login failed, incorrect credentials. Please try again."});
+      });
+    });
+  }
   getEmployee() {
     return new Promise((resolve, reject) => {
       const UserModel = new User();
@@ -47,7 +62,7 @@ export default class UserController {
     return new Promise((resolve, reject) => {
       const UserModel = new User();
       const hashPassword = "";
-  
+
         bcrypt.hash(req.body.password, 10, function(err, hash) {
           if (err) {
             console.log({ error: err });

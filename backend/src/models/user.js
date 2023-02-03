@@ -57,4 +57,18 @@ export class User {
       }
     });
   }
+
+
+
+  getOneUser(username, result) {
+    // con.query('CALL loadSingleUser(?)', [username], (err, res) => {
+    //   if (err) {
+    //     console.log("error: ", err);
+    //     result(err, null);
+    //   } else {
+    //     result(null, res);
+    //   }
+    // })
+
+  }
 }
