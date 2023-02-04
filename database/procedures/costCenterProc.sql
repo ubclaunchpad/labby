@@ -12,7 +12,7 @@ CREATE PROCEDURE `save_cost_center` (
     IN `_cost_center_contact` VARCHAR(255),
     IN `_cost_center_email` VARCHAR(255),
     IN `_cost_center_address` VARCHAR(255),
-    IN `_cost_center_type` VARCHAR(50)
+    IN `_cost_center_type` VARCHAR(50),
     IN `_cost_center_unit` VARCHAR(50)
 ) BEGIN 
 INSERT INTO `cost_centers` (
