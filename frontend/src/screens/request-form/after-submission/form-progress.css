@@ -1,0 +1,60 @@
+.formProgressPage {
+  padding: 50px 75px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.formProgressPage h2 {
+  color: #353535;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+.formProgressPage hr {
+  width: 100%;
+  border: 1px solid #ecedf3;
+}
+.formProgressPage h4 {
+  color: #353535;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 12px;
+  margin-bottom: 32px;
+}
+.formProgressPage .progressItem {
+  width: 70%;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.progressItem h3 {
+  color: #353535;
+  font-size: 20px;
+  font-weight: 600;
+}
+.progressItem p {
+  margin: 0;
+  padding: 0;
+}
+.progressItem .commentTitle {
+  color: #353535;
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 12px;
+}
+.progressItem .comments {
+  text-align: left;
+  color: #666666;
+  font-size: 14px;
+  font-weight: 300;
+}
+.progressItem .progressBar {
+  width: 70%;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+.progressBar progress {
+  flex: 1;
+}

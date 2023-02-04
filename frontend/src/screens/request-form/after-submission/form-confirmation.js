@@ -1,5 +1,3 @@
-import React from "react";
-
 import ExperimentIcon from "../../../assets/experiment.svg";
 
 import "./form-confirmation.css";

@@ -5,6 +5,7 @@ import EditRequest from "./screens/edit-request/edit-request";
 import RequestForm from "./screens/request-form/request-form";
 import PreviewForm from "./screens/preview-form/preview-form";
 import FormConfirmation from "./screens/request-form/after-submission/form-confirmation";
+import FormProgress from "./screens/request-form/after-submission/form-progress";
 import BillingManagement from "./screens/billing-management/billing-management";
 import TicketManagement from "./screens/ticket-management/ticket-management";
 import Invoice from "./screens/invoice/invoice";
@@ -29,7 +30,11 @@ function App() {
           <Route path="/users" element={<UserManagement />} />
           <Route path="/edit-request" element={<FormLibrary />} />
           <Route path="/request/:formId" element={<RequestForm />} />
-          <Route path="/request-confirmation/:formId" element={<FormConfirmation />} />
+          <Route
+            path="/request-confirmation/:formId"
+            element={<FormConfirmation />}
+          />
+          <Route path="/request-progress/:formId" element={<FormProgress />} />
           <Route path="/preview/:surveyId" element={<PreviewForm />} />
           <Route path="/invoice" element={<Invoice />} />
           <Route path="/settings" element={<UserManagement />} />
