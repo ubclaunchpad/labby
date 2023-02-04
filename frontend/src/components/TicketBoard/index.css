@@ -65,91 +65,91 @@
   text-align: left;
   padding: 8px;
 }
-.taskList{
-    padding: 8px;
+.taskList {
+  padding: 8px;
 }
 .task-card-container {
   font-family: inherit;
   font-size: 12px;
-  color: #6F6F6F;
-  display: flex; 
-  flex-direction: row; 
-    margin-bottom: 8px;
-    border-radius: 5px;
-    background-color: #fff;
-    min-height: 110px;
+  color: #6f6f6f;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  background-color: #fff;
+  min-height: 110px;
 }
 .task-card-color-tab {
-  font-family: inherit; 
+  font-family: inherit;
   padding: 4px;
   border-radius: 5px 0px 0px 5px;
 }
-.task-card-content{
-  display: flex; 
+.task-card-content {
+  display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  width: 100%;  
+  width: 100%;
   padding: 10px;
 }
 .task-card__header {
   display: flex;
-  flex-direction: row; 
-  justify-content:space-between;
+  flex-direction: row;
+  justify-content: space-between;
 }
-.task-card__code{
+.task-card__code {
   font-size: 16px;
   text-align: left;
 }
-.task-card__reminder--notify-true{
+.task-card__reminder--notify-true {
   display: flex;
-  border-radius: 5px; 
-  background-color: #E08E89;
+  border-radius: 5px;
+  background-color: #e08e89;
   align-items: center;
   justify-content: center;
 }
-.task-card__reminder--notify-false{
+.task-card__reminder--notify-false {
   display: flex;
-  border-radius: 5px; 
+  border-radius: 5px;
   background-color: none;
   align-items: center;
   justify-content: center;
 }
-.task-card__notificaton-container{
-  display:inline-block;
-  width: 30px; 
-  height: 30px; 
+.task-card__notificaton-container {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
 }
-.notification-icon{
+.notification-icon {
   color: black;
   margin: 3px;
   padding-top: 1px;
-  }
-.task-card__body{
+}
+.task-card__body {
   display: flex;
   flex-grow: 1;
-  flex-direction: row; 
+  flex-direction: row;
 }
 
-.task-card__footer{
-  display: flex; 
+.task-card__footer {
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-.task-card__subtasks-container{
-  display: flex; 
+.task-card__subtasks-container {
+  display: flex;
   flex-direction: row;
   align-items: center;
-  background: #E4E5EA; 
+  background: #e4e5ea;
   padding: 5px;
   border-radius: 5px;
 }
-.task-card__subtask-checkbox{
-  display: inline-block; 
+.task-card__subtask-checkbox {
+  display: inline-block;
   height: 14px;
   margin-right: 5px;
 }
 
-.task-card__subtasks-completed-text{
+.task-card__subtasks-completed-text {
   margin-top: 1px;
   display: inline-block;
   color: white;
@@ -157,19 +157,19 @@
   font-weight: 600;
 }
 
-.task-card__assignees-container-parent{
-  display: flex; 
+.task-card__assignees-container-parent {
+  display: flex;
   flex-direction: row;
   width: 100%;
   justify-content: flex-end;
 }
 
-.task-card__assignees-container{
-  display: flex; 
+.task-card__assignees-container {
+  display: flex;
   flex-direction: row;
 }
 
-.task-card__assignee-container{
+.task-card__assignee-container {
   margin-left: 5px;
   position: relative;
   width: 25px;
@@ -178,7 +178,7 @@
 }
 
 .assigneeAddModal {
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
   border-radius: 10px;
   width: 96%;
   height: 10%;
@@ -210,26 +210,33 @@
 
 .ticketDetail {
   background-color: #fff;
-  width: 50%;
-  height: 90%;
+  width: 70%;
+  height: 96%;
   position: absolute;
   left: 50%;
-  top: 5%;
+  top: 2%;
   transform: translate(-50%);
   border-radius: 8px;
-  padding: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .ticketTitle {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  text-transform: capitalize;
 }
 
 .ticketTitleId {
   font-weight: bold;
   font-size: 20px;
   margin-right: 8px;
+  text-transform: uppercase;
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ticketPreview {
@@ -256,71 +263,98 @@
 }
 
 .ticketDescription {
- display: flex;
- flex-direction: column;
- align-items: flex-start;
- margin-top: 10px;
- height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  height: 120px;
 }
 
 .ticketInfo {
+  flex-grow: 1;
+  max-height: 66%;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: stretch;
   margin-top: 10px;
-  justify-content: space-between;
+  gap: 18px;
 }
 
 .ticketColumn {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  width: 49%;
   justify-content: space-between;
+}
+
+.ticketInfo .subtasksColumn {
+  flex: 3;
+  min-width: 25%;
+}
+.ticketInfo .servicesColumn {
+  flex: 7;
+  min-width: 65%;
 }
 
 .ticketSubtasks {
-  height: 47vh;
-  background-color: #D9D9D9;
-  border-radius: 10px;
+  background-color: #d9d9d9;
+  flex-grow: 1;
+  border-top-right-radius: 5%;
+  border-top-left-radius: 5%;
+  max-height: 70%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.ticketSubtasksContainer {
+  flex: 1;
+  max-height: 100%;
+  border-radius: 10px;
 }
 
 .ticketAttachments {
-  height: 12vh;
-  margin-top: 2vh;
-  background-color: #D9D9D9;
+  margin-top: 12px;
+  padding: 5px 15px;
+  height: 20%;
+  background-color: #d9d9d9;
   border-radius: 10px;
+}
+.attachmentsWrapper{
+  padding: 3px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  gap: 10px;
+}
+.addAttachment{
+  padding: 12px 14px;
+  padding-right: 0;
+  border: 2px dashed grey;
+  border-radius: 5px;
 }
 
 .ticketCosts {
-  height: 61vh;
-  background-color: #D9D9D9;
+  background-color: #d9d9d9;
   border-radius: 10px;
+  flex-grow: 1;
+  max-height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .contentList {
-  display: flex;
   height: 100%;
+  display: flex;
   padding: 15px;
   flex-direction: column;
 }
-
-.contentListRows {
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
+.ticketCosts .contentList{
+  height: calc(100% - 50px);
 }
 
 .additionBar {
-  background-color: #B4B4B4;
+  background-color: #b4b4b4;
   height: 40px;
   width: 100%;
   padding-left: 15px;
@@ -328,27 +362,129 @@
   align-items: center;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  flex-shrink: 0;
+}
+.Add {
+  height: 15px;
+  width: 15px;
+  cursor: pointer;
+  margin-right: 15px;
 }
 
-.serviceCostRow {
+.subtaskCostRows {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.subtaskCostRow {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 15px;
   flex: 1;
+  background-color: #b4b4b4;
+  border-radius: 10px;
+  margin-right: 7px;
+}
+
+.subtaskInputContainer {
+  display: flex;
+  flex-direction: row;
+  height: 7vh;
+  align-items: center;
+  padding-left: 15px;
 }
 
 .serviceNameInput {
-  height: 30px;
-  width: 200px;
+  width: 85%;
+  border-radius: 5px;
+  border: none;
+  background-color: #D2D2D2;
 }
 
 .serviceCostInput {
-  height: 30px;
-  width: 50px;
+  border-radius: 5px;
+  border: none;
+  background-color: #D2D2D2;
+  text-align: center;
+} 
+
+.serviceListRows {
+  max-height: 95%; 
+  overflow-y: overlay;
 }
 
-.inputContainer {
+.serviceCostRow .deleteServiceItem {
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
+  cursor: pointer;
+  align-items: center;
+  background-color: #cdcccc;
+  margin-left: 18px;
+  border-radius: 10px;
+  flex: 1;
+}
+
+.Rectangle {
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+.download-icon-delete {
+  cursor: pointer;
+}
+
+.serviceTable .heading td {
+  font-weight: 600;
+  color: #a4a3a3;
+  padding: 10px 0px;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.serviceTable .heading td:last-child{
+  padding-left: 12px;
+  border: 12px solid #d9d9d9;
+}
+
+.serviceTable td {
+  padding: 10px;
+  text-overflow: ellipsis;
+}
+
+.serviceTable {
+  width: 100%;
+}
+
+.serviceTableRow{
+  background-color: #D2D2D2;
+  border-bottom: 5px solid #d9d9d9;
+}
+.serviceTableRow td:first-child{
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  width: 40%;
+}
+.serviceTableRow td:nth-last-child(2){
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+.serviceTableRow td:last-child{
+  padding: 0;
+  margin: 0;
+  padding-left: 12px;
+  border: 12px solid #d9d9d9;
+  border-radius: 80px;
+}
+
+::-webkit-scrollbar {
+  background: transparent;
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: #b4b4b4;
+  border-radius: 8px;
 }

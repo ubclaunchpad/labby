@@ -108,7 +108,7 @@ const ProjectTable = () => {
   const handleAdd = () => {
     const newData = {
       project_name: `New Project`,
-      project_description: "",
+      project_description: "New Desc",
       project_id: uuid(),
     };
     dispatch({ type: POST_PROJECT, payload: newData });

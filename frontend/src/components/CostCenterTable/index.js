@@ -81,9 +81,9 @@ const CostCenterTable = () => {
     const newData = {
       cost_center_id: uuid(),
       cost_center_name: "New Cost Center",
-      cost_center_contact: "",
-      cost_center_email: "",
-      cost_center_address: "",
+      cost_center_contact: "New Contact",
+      cost_center_email: "New Email",
+      cost_center_address: "New Address",
       cost_center_type: "Industry",
     };
     dispatch({ type: POST_COSTCENTER, payload: newData });

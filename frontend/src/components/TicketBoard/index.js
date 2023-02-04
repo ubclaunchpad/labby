@@ -15,7 +15,7 @@ import {
   UPDATE_TICKET_BOARD,
   UPDATE_TICKET_DESCRIPTION,
   UPDATE_TICKET_STATUS,
-  FILTER_TICKETS
+  FILTER_TICKETS,
 } from "../../redux/actions/ticketActions";
 import "./index.css";
 import { clsx } from "clsx";
@@ -29,6 +29,8 @@ import { appColor } from "../../constants";
 import { LOAD_EMPLOYEE } from "../../redux/actions/userActions";
 import uuid from "react-uuid";
 import X from "../../assets/X.png";
+import Add from "../../assets/AddBlack.png";
+import Rectangle from "../../assets/Rectangle.png";
 
 export const getColorNum = (id, colorArray) => {
   if (colorArray) {
@@ -151,7 +153,7 @@ const TicketBoardColumn = (props) => {
             {...provided.droppableProps}
           >
             {props.tasks.map((task, index) => {
-              return <Task key={task.id} task={task} index={index} />;
+              return <Task key={task?.id} task={task} index={index} />;
             })}
             {provided.placeholder}
           </div>
@@ -178,9 +180,12 @@ export const TicketBoard = () => {
   );
 
   const [assigneeAddModal, setAssigneeAddModal] = useState(false);
-  const [filter, setFilter] = useState("Filter..."); 
-  const filters = ticketBoardDndData.filters; 
-  console.log(filters)
+  const allTasks = ticketBoardDndData.tasks;
+  const [filteredTasks, setFilteredTasks] = useState(allTasks);
+  const [filtering, setFiltering] = useState(false);
+  const [filter, setFilter] = useState("Filter...");
+  const filters = ticketBoardDndData.filters;
+  console.log(filters);
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
@@ -266,33 +271,76 @@ export const TicketBoard = () => {
     });
   };
 
+  function onSearchHandler(searchTerm) {
+    if (searchTerm === "") {
+      setFilteredTasks(allTasks);
+      return;
+    } else {
+      const filteredTasksArray = Object.entries(allTasks).filter(
+        ([key, value]) => {
+          const lowerCaseSearchTerm = searchTerm.toLowerCase();
+          const matchedId = value?.id
+            ?.toLowerCase()
+            .includes(lowerCaseSearchTerm);
+          const matchedDescription = value?.description
+            ?.toLowerCase()
+            .includes(lowerCaseSearchTerm);
+          const matchedTitle = value?.title
+            ?.toLowerCase()
+            .includes(lowerCaseSearchTerm);
+          return matchedId || matchedDescription || matchedTitle;
+        }
+      );
+      const filteredTaskObject = Object.fromEntries(filteredTasksArray);
+      setFilteredTasks(filteredTaskObject);
+    }
+  }
+
   return (
     <div className="ticketBoardContainer">
       <div className="searchTicketSection">
-        <Input placeholder="Search..." className="ticketBoardSearch" />
+        <Input
+          placeholder="Search..."
+          className="ticketBoardSearch"
+          onChange={(e) => {
+            if (e.target.value !== "") {
+              setFiltering(true);
+            } else {
+              setFiltering(false);
+            }
+            onSearchHandler(e.target.value);
+          }}
+        />
         <select
           className="ticketBoardDropdown"
-          value= {filter}
+          value={filter}
           onChange={(e) => {
             console.log(e.target.value);
-            dispatch ({type: FILTER_TICKETS, payload: e.target.value})
-            setFilter(e.target.value)}}
-
+            dispatch({ type: FILTER_TICKETS, payload: e.target.value });
+            setFilter(e.target.value);
+          }}
         >
           <option value="Filter...">Filter</option>
-          {filters.map((filter)=>
-            
-            <option value = {filter}>{capitalizeFirstLetter(filter)}</option>
-          )}
+          {filters.map((filter) => (
+            <option value={filter}>{capitalizeFirstLetter(filter)}</option>
+          ))}
         </select>
       </div>
       <div className="ticketBoard">
         <DragDropContext onDragEnd={ticketDragEndHandler}>
           {ticketBoardDndData.columnOrder.map((columnId) => {
             const column = ticketBoardDndData.columns[columnId];
-            const tasks = column.taskIds.map(
+
+            var tasks = column.taskIds.map(
               (taskId) => ticketBoardDndData.tasks[taskId]
             );
+            if (filtering) {
+              tasks = column.taskIds
+                .map((taskId) => {
+                  return filteredTasks?.[taskId];
+                })
+                .filter(Boolean);
+            }
             return (
               <TicketBoardColumn key={columnId} column={column} tasks={tasks} />
             );
@@ -328,10 +376,10 @@ export const TicketBoard = () => {
                       backgroundColor: appColor.primaryLight,
                       color: appColor.white,
                     }}
-                    >
+                  >
                     Preview
                   </button>
-                </NavLink>                  
+                </NavLink>
               </div>
             </div>
             <div className="ticketTags">
@@ -430,135 +478,203 @@ export const TicketBoard = () => {
                 }}
               />
             </div>
+
             <div className="ticketInfo">
-              <div className="ticketColumn">
+              <div className="ticketColumn subtasksColumn">
                 <div className="ticketSubtasks">
-                  <div className="contentList">
-                    <div className="ticketSectionTitle">Subtasks</div>
-                    <div className="contentListRows">
-                    {currentTicketSubtasks.map((subtasks) => {
-                      return (
-                        <div
-                          className="serviceCostRow"
-                          key={subtasks.subtask_id}
-                        >
-                          <div className="inputContainer">
-                            <div className="serviceCostQuantity">
-                              {subtasks.subtask_title}
+                  <div className="ticketSubtasksContainer">
+                    <div className="contentList">
+                      <div className="ticketSectionTitle">Subtasks</div>
+                      <div className="subtaskCostRows">
+                        {currentTicketSubtasks.map((subtasks) => {
+                          return (
+                            <div
+                              className="subtaskCostRow"
+                              key={subtasks.subtask_id}
+                            >
+                              <div className="subtaskInputContainer">
+                                <img
+                                  className="Rectangle"
+                                  src={Rectangle}
+                                  alt="Rectangle"
+                                />
+                                <div className="serviceCostQuantity">
+                                  {subtasks.subtask_title}
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                      );
-                    })}
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
-                  <div className="additionBar">
-                    <div
-                      className="ticketSectionTitle"
-                      onClick={() => {
-                        dispatch({
-                          type: ADD_SUBTASKS,
-                          payload: { task_id: currentTicket.code },
-                        });
-                      }}
-                    >
-                      Add Subtask
+
+                    <div className="additionBar">
+                      <img
+                        className="Add"
+                        src={Add}
+                        alt="Add"
+                        onClick={() => {
+                          dispatch({
+                            type: ADD_SUBTASKS,
+                            payload: { task_id: currentTicket.code },
+                          });
+                        }}
+                      />
+                      <div className="ticketSectionTitle">Add Subtask</div>
                     </div>
                   </div>
                 </div>
+
                 <div className="ticketAttachments">
-                  <div className="contentList">
-                    <div className="ticketSectionTitle">Attachments</div>
+                  <div className="ticketSectionTitle">Attachments</div>
+                  <div className="attachmentsWrapper">
+                    <div className="addAttachment">
+                      <img
+                        className="Add"
+                        src={Add}
+                        alt="Add"
+                        onClick={() => {
+                          dispatch({
+                            type: ADD_SUBTASKS,
+                            payload: { task_id: currentTicket.code },
+                          });
+                        }}
+                      />
+                    </div>
+                    <div className="addAttachment">
+                      <img
+                        className="Add"
+                        src={Add}
+                        alt="Add"
+                        onClick={() => {
+                          dispatch({
+                            type: ADD_SUBTASKS,
+                            payload: { task_id: currentTicket.code },
+                          });
+                        }}
+                      />
+                    </div>
+                    <div className="addAttachment">
+                      <img
+                        className="Add"
+                        src={Add}
+                        alt="Add"
+                        onClick={() => {
+                          dispatch({
+                            type: ADD_SUBTASKS,
+                            payload: { task_id: currentTicket.code },
+                          });
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="ticketColumn">
+
+              <div className="ticketColumn servicesColumn">
                 <div className="ticketCosts">
                   <div className="contentList">
                     <div className="ticketSectionTitle">Service & Costs</div>
-                    <div className="contentListRows">
-                    {currentTicketServiceCosts.map((serviceCost) => {
-                      return (
-                        <div
-                          className="serviceCostRow"
-                          key={serviceCost.billable_id}
-                        >
-                          <input
-                            className="serviceNameInput"
-                            defaultValue={serviceCost.name}
-                            onBlur={(text) => {
-                              console.log(serviceCost);
-                              dispatch({
-                                type: POST_SERVICE_COST,
-                                payload: {
-                                  ...serviceCost,
-                                  sow_id: serviceCost.fk_sow_id,
-                                  project_id: serviceCost.fk_project_id,
-                                  name: text.target.value,
-                                },
-                              });
-                            }}
-                          />
-                          <div className="inputContainer">
-                            <div className="serviceCostQuantity">#</div>
-                            <input
-                              className="serviceCostInput"
-                              defaultValue={serviceCost.quantity}
-                              onBlur={(text) => {
-                                dispatch({
-                                  type: POST_SERVICE_COST,
-                                  payload: {
-                                    ...serviceCost,
-                                    sow_id: serviceCost.fk_sow_id,
-                                    project_id: serviceCost.fk_project_id,
-                                    quantity: text.target.value,
-                                  },
-                                });
-                              }}
-                            />
-                          </div>
-                          <div className="inputContainer">
-                            <div className="serviceCostCost">$</div>
-                            <input
-                              className="serviceCostInput"
-                              defaultValue={serviceCost.cost}
-                              onBlur={(text) => {
-                                dispatch({
-                                  type: POST_SERVICE_COST,
-                                  payload: {
-                                    ...serviceCost,
-                                    sow_id: serviceCost.fk_sow_id,
-                                    project_id: serviceCost.fk_project_id,
-                                    cost: text.target.value,
-                                  },
-                                });
-                              }}
-                            />
-                          </div>
-                          <div className="deleteItem">
-                            <img
-                              className="download-icon-delete"
-                              src={X}
-                              alt="Delete Service"
-                              onClick={() => {
-                                dispatch({
-                                  type: REMOVE_SERVICE_COST,
-                                  payload: {
-                                    billable_id: serviceCost.billable_id,
-                                    sow_id: serviceCost.fk_sow_id,
-                                  },
-                                });
-                              }}
-                            />
-                          </div>
-                        </div>
-                      );
-                    })}
+                    <table className="serviceTable">
+                      <thead>
+                        <tr className="heading">
+                          <td>Service</td>
+                          <td>Quantity</td>
+                          <td>Cost</td>
+                          <td></td>
+                        </tr>
+                      </thead>
+                    </table>
+                    <div className="serviceListRows">
+                      <table className="serviceTable">
+                        <tbody className="serviceTableRows">
+                          {currentTicketServiceCosts.map((serviceCost) => {
+                            return (
+                              <tr
+                                className="serviceTableRow"
+                                key={serviceCost.billable_id}
+                              >
+                                <td>
+                                  <input
+                                    className="serviceNameInput"
+                                    defaultValue={serviceCost.name}
+                                    onBlur={(text) => {
+                                      console.log(serviceCost);
+                                      dispatch({
+                                        type: POST_SERVICE_COST,
+                                        payload: {
+                                          ...serviceCost,
+                                          sow_id: serviceCost.fk_sow_id,
+                                          name: text.target.value,
+                                        },
+                                      });
+                                    }}
+                                  />
+                                </td>
+                                <td>
+                                  <input
+                                    className="serviceCostInput"
+                                    defaultValue={serviceCost.quantity}
+                                    onBlur={(text) => {
+                                      dispatch({
+                                        type: POST_SERVICE_COST,
+                                        payload: {
+                                          ...serviceCost,
+                                          sow_id: serviceCost.fk_sow_id,
+                                          quantity: text.target.value,
+                                        },
+                                      });
+                                    }}
+                                  />
+                                </td>
+                                <td>
+                                  <input
+                                    className="serviceCostInput"
+                                    defaultValue={"$ " + serviceCost.cost}
+                                    onBlur={(text) => {
+                                      dispatch({
+                                        type: POST_SERVICE_COST,
+                                        payload: {
+                                          ...serviceCost,
+                                          sow_id: serviceCost.fk_sow_id,
+                                          cost: text.target.value,
+                                        },
+                                      });
+                                    }}
+                                  />
+                                </td>
+
+                                <td>
+                                  <div className="delete>">
+                                    <img
+                                      className="download-icon-delete"
+                                      src={X}
+                                      alt="Delete Service"
+                                      onClick={() => {
+                                        dispatch({
+                                          type: REMOVE_SERVICE_COST,
+                                          payload: {
+                                            billable_id:
+                                              serviceCost.billable_id,
+                                            sow_id: serviceCost.fk_sow_id,
+                                          },
+                                        });
+                                      }}
+                                    />
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                   <div className="additionBar">
-                    <div
-                      className="ticketSectionTitle"
+                    <img
+                      className="Add"
+                      src={Add}
+                      alt="Add"
                       onClick={() => {
                         dispatch({
                           type: POST_SERVICE_COST,
@@ -577,9 +693,8 @@ export const TicketBoard = () => {
                           },
                         });
                       }}
-                    >
-                      Add Service
-                    </div>
+                    />
+                    <div className="ticketSectionTitle">Add Service</div>
                   </div>
                 </div>
               </div>

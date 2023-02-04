@@ -10,6 +10,7 @@ import {
   SET_LOGIC_QUESTION,
 } from "../../../redux/actions/logicActions";
 import uuid from "react-uuid";
+import { SuccessToast, WarningToast } from "../../Toasts";
 
 function LogicLibrary() {
   const dispatch = useDispatch();
@@ -159,9 +160,11 @@ function LogicLibrary() {
                   },
                 });
               });
-              alert("Logic Saved!");
+              console.log("got here ");
+              // <SuccessToast message="Logic Added!" size="large" />;
+              SuccessToast("Logic Added!");
             } else {
-              alert("Please select at least one answer");
+              WarningToast("Please select at least one answer");
             }
           }}
         >

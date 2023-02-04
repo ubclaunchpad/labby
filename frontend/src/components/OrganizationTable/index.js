@@ -99,12 +99,12 @@ const OrganizationTable = () => {
   const handleAdd = () => {
     const newData = {
       organization_name: `New Organization`,
-      internal_department: "",
-      organization_address: "",
-      organization_contact: "",
-      organization_email: "",
+      internal_department: "New Dept",
+      organization_address: "New Address",
+      organization_contact: "New Contact",
+      organization_email: "New Email",
       organization_id: uuid(),
-      organization_type: "",
+      organization_type: "Internal",
     };
     dispatch({ type: POST_ORGANIZATION, payload: newData });
   };
