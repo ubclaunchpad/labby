@@ -10,6 +10,7 @@ export class User {
         newUser.username,
         newUser.email,
         newUser.employee,
+        // newUser.salt,
         // newUser.hash,
       ],
       function (error, results) {
