@@ -2,17 +2,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 20px auto;
+  margin: 28px auto;
 
   font-size: 20px;
   font-weight: 500;
-  background-color: #666666;
+  background-color: #8A9DF8;
   color: #ffffff;
   padding: 5px;
   padding-left: 20px;
   padding-right: 20px;
   border-radius: 15px;
   cursor: pointer;
-
   width:fit-content;
 }
