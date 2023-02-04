@@ -312,8 +312,9 @@ export const TicketBoard = () => {
           }}
         />
         <select
-          className="ticketBoardDropdown"
+          className="ticketBoard__filter-dropdown"
           value={filter}
+          defaultValue="Filter..."
           onChange={(e) => {
             console.log(e.target.value);
             dispatch({ type: FILTER_TICKETS, payload: e.target.value });
@@ -324,6 +325,7 @@ export const TicketBoard = () => {
           {filters.map((filter) => (
             <option value={filter}>{capitalizeFirstLetter(filter)}</option>
           ))}
+          <img alt="" src="../../assets/DropdownArrow.svg" />
         </select>
       </div>
       <div className="ticketBoard">

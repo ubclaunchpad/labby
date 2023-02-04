@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  width: 65%;
+  width: 70%;
   margin-bottom: 24px;
 }
 .ticketBoardSearch {
@@ -27,16 +27,16 @@
   background-repeat: no-repeat;
   background-position: calc(0% + 16px) center;
 }
-.ticketBoardDropdown:focus {
+.ticketBoard__filter-dropdown:focus {
   outline: none;
 }
-.ticketBoardDropdown {
+.ticketBoard__filter-dropdown {
   border: 0;
   background-color: #ecedf3;
   border-radius: 15px;
   height: 45px;
   padding-left: 16px;
-  padding-right: 16px;
+  padding-right: 40px;
   display: flex;
   flex-direction: row;
   flex-basis: 120px;
@@ -45,7 +45,7 @@
   background-image: url("../../assets/DropdownArrow.svg");
   background-size: 16px;
   background-repeat: no-repeat;
-  background-position: calc(100% - 32px) center;
+  background-position: calc(100% - 12px) center;
 }
 .ticketBoard {
   display: flex;
