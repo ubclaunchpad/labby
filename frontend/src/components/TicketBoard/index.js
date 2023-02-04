@@ -181,14 +181,9 @@ export const TicketBoard = () => {
 
   const [assigneeAddModal, setAssigneeAddModal] = useState(false);
   const allTasks = ticketBoardDndData.tasks;
-  const [filteredTasks, setFilteredTasks] = useState(allTasks);
+  const [sortedTasks, setSortedTasks] = useState(allTasks);
   const [filtering, setFiltering] = useState(false);
-  const [filter, setFilter] = useState("Filter...");
-  const filters = ticketBoardDndData.filters;
-  console.log(filters);
-  function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
+  const [filterTerm, setFilterTerm] = useState("Filter...");
 
   useEffect(() => {
     dispatch({ type: LOAD_EMPLOYEE });
@@ -271,9 +266,10 @@ export const TicketBoard = () => {
     });
   };
 
+  // Searches for tickets that match the given search term
   function onSearchHandler(searchTerm) {
     if (searchTerm === "") {
-      setFilteredTasks(allTasks);
+      setSortedTasks(allTasks);
       return;
     } else {
       const filteredTasksArray = Object.entries(allTasks).filter(
@@ -292,7 +288,23 @@ export const TicketBoard = () => {
         }
       );
       const filteredTaskObject = Object.fromEntries(filteredTasksArray);
-      setFilteredTasks(filteredTaskObject);
+      setSortedTasks(filteredTaskObject);
+    }
+  }
+
+  // Filter by employee Id
+  function onFilterHandler(filterTerm = "Filter...") {
+    if (filterTerm === "Filter...") {
+      setSortedTasks(allTasks);
+    } else {
+      const filteredTasksArray = Object.entries(allTasks).filter(
+        ([key, value]) =>
+          value?.assignees
+            .map((assignee) => assignee?.user_id)
+            .includes(filterTerm)
+      );
+      const filteredTaskObject = Object.fromEntries(filteredTasksArray);
+      setSortedTasks(filteredTaskObject);
     }
   }
 
@@ -313,33 +325,36 @@ export const TicketBoard = () => {
         />
         <select
           className="ticketBoard__filter-dropdown"
-          value={filter}
+          value={filterTerm}
           defaultValue="Filter..."
           onChange={(e) => {
-            console.log(e.target.value);
-            dispatch({ type: FILTER_TICKETS, payload: e.target.value });
-            setFilter(e.target.value);
+            if (e.target.value !== "Filter...") {
+              setFiltering(true);
+            } else {
+              setFiltering(false);
+            }
+            setFilterTerm(e.target.value);
+            onFilterHandler(e.target.value);
           }}
         >
           <option value="Filter...">Filter</option>
-          {filters.map((filter) => (
-            <option value={filter}>{capitalizeFirstLetter(filter)}</option>
+
+          {employeeList.map((employee) => (
+            <option value={employee?.user_id}>{employee.username}</option>
           ))}
-          <img alt="" src="../../assets/DropdownArrow.svg" />
         </select>
       </div>
       <div className="ticketBoard">
         <DragDropContext onDragEnd={ticketDragEndHandler}>
           {ticketBoardDndData.columnOrder.map((columnId) => {
             const column = ticketBoardDndData.columns[columnId];
-
             var tasks = column.taskIds.map(
               (taskId) => ticketBoardDndData.tasks[taskId]
             );
             if (filtering) {
               tasks = column.taskIds
                 .map((taskId) => {
-                  return filteredTasks?.[taskId];
+                  return sortedTasks?.[taskId];
                 })
                 .filter(Boolean);
             }
