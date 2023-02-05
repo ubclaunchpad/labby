@@ -27,7 +27,7 @@ export function* submitResponseSaga({ payload }) {
         name: billable.service,
         quantity: billable.quantity,
         cost: billable.cost,
-        createdDate: new Date(),
+        createdDate: new Date().getDate() + "-" + new Date().getMonth() + "-" + new Date().getFullYear(),
         completedTime: null,
         billed: false,
         billedTime: null,

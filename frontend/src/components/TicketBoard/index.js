@@ -676,7 +676,7 @@ export const TicketBoard = () => {
                             name: "New Service",
                             quantity: 1,
                             cost: 0,
-                            createdDate: new Date(),
+                            createdDate: new Date().getDate() + "-" + new Date().getMonth() + "-" + new Date().getFullYear(),
                             completedTime: null,
                             billed: false,
                             billedTime: null,
