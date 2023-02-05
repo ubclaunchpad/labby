@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
 import {
   ADD_SUBTASKS,
   ASSIGN_USER,
@@ -7,7 +7,7 @@ import {
   GET_TICKET_BOARD,
   POST_SERVICE_COST,
   REMOVE_SERVICE_COST,
-  SET_ACTIVE_TICKET,
+  // SET_ACTIVE_TICKET,
   SET_SERVICE_COST,
   SET_SUBTASKS,
   SET_TICKETS,
@@ -44,17 +44,17 @@ export function* fetchTickets() {
     },
   });
 
-  let currentTicket = yield select(
-    (state) => state.ticketReducer.currentTicket
-  );
+  // let currentTicket = yield select(
+  //   (state) => state.ticketReducer.currentTicket
+  // );
 
-  if (currentTicket) {
-    let allTickets = yield select(
-      (state) => state.ticketReducer.ticketBoardDndData
-    );
-    let newTicket = allTickets.tasks[currentTicket.id];
-    yield put({ type: SET_ACTIVE_TICKET, payload: newTicket });
-  }
+  // if (currentTicket) {
+  //   let allTickets = yield select(
+  //     (state) => state.ticketReducer.ticketBoardDndData
+  //   );
+  //   let newTicket = allTickets.tasks[currentTicket.id];
+  //   yield put({ type: SET_ACTIVE_TICKET, payload: newTicket });
+  // }
 }
 
 export function* updateTicketStatus(action) {

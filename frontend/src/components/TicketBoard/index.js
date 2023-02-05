@@ -15,7 +15,6 @@ import {
   UPDATE_TICKET_BOARD,
   UPDATE_TICKET_DESCRIPTION,
   UPDATE_TICKET_STATUS,
-  FILTER_TICKETS,
 } from "../../redux/actions/ticketActions";
 import "./index.css";
 import { clsx } from "clsx";
@@ -326,7 +325,6 @@ export const TicketBoard = () => {
         <select
           className="ticketBoard__filter-dropdown"
           value={filterTerm}
-          defaultValue="Filter..."
           onChange={(e) => {
             if (e.target.value !== "Filter...") {
               setFiltering(true);
@@ -337,10 +335,10 @@ export const TicketBoard = () => {
             onFilterHandler(e.target.value);
           }}
         >
-          <option value="Filter...">Filter</option>
+          <option key="filter" value="Filter...">Filter</option>
 
           {employeeList.map((employee) => (
-            <option value={employee?.user_id}>{employee.username}</option>
+            <option key={employee?.user_id} value={employee?.user_id}>{employee.username}</option>
           ))}
         </select>
       </div>
