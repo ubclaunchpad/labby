@@ -37,9 +37,9 @@ CALL save_organization_projects('ORG-PROJ-1', 'PROJECTID-A', 'ORG-ID-A');
 CALL save_organization_projects('ORG-PROJ-2', 'PROJECTID-B', 'ORG-ID-A');
 
 -- Populate Cost Centers
-CALL save_cost_center('COST-CENTER-ID-A', 'Cost Center A', 'Harin Wu', 'harinwu99@gmail.com', '123 Main St', 'External');
-CALL save_cost_center('COST-CENTER-ID-B', 'Cost Center B', 'Harin Wu', 'harinwu99@gmail.com', '123 Main St', 'Internal');
-CALL save_cost_center('COST-CENTER-ID-C', 'Cost Center C', 'Harin Wu', 'harinwu99@gmail.com', '123 Main St', 'Industry');
+CALL ('COST-CENTER-ID-A', 'Cost Center A', 'Harin Wu', 'harinwu99@gmail.com', '123 Main St', 'External');
+CALL save_cost_center('COST-CENTER-ID-B', 'Cost Center B', 'Harin Wu', 'harinwu99@gmail.com', '123 Main St', 'Internal', 'Dollar');
+CALL save_cost_center('COST-CENTER-ID-C', 'Cost Center C', 'Harin Wu', 'harinwu99@gmail.com', '123 Main St', 'Industry', 'Dollar');
 
 -- Assign Projects to Cost Centers
 CALL save_project_cost_centers('COST-CENTER-PROJ-1', 'COST-CENTER-ID-A', 'PROJECTID-A');
