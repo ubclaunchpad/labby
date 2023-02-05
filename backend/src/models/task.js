@@ -172,6 +172,18 @@ export class Task {
     });
   }
 
+  filterTasksByProject(projectId, result) {
+    con.query("CALL filter_tasks_by_project(?)", projectId, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res[0]);
+      }
+    });
+  }
+  
+  
   deleteSubtask(subtaskId, result) {
     con.query("CALL delete_subtask(?)", subtaskId, function (error, results) {
       if (error) {

@@ -186,8 +186,9 @@ export const TicketBoard = () => {
 
   const [assigneeAddModal, setAssigneeAddModal] = useState(false);
   const allTasks = ticketBoardDndData.tasks;
-  const [filteredTasks, setFilteredTasks] = useState(allTasks);
+  const [sortedTasks, setSortedTasks] = useState(allTasks);
   const [filtering, setFiltering] = useState(false);
+  const [filterTerm, setFilterTerm] = useState("Filter...");
 
   console.log(currentTicketAttachments);
 
@@ -276,9 +277,10 @@ export const TicketBoard = () => {
     });
   };
 
+  // Searches for tickets that match the given search term
   function onSearchHandler(searchTerm) {
     if (searchTerm === "") {
-      setFilteredTasks(allTasks);
+      setSortedTasks(allTasks);
       return;
     } else {
       const filteredTasksArray = Object.entries(allTasks).filter(
@@ -297,7 +299,23 @@ export const TicketBoard = () => {
         }
       );
       const filteredTaskObject = Object.fromEntries(filteredTasksArray);
-      setFilteredTasks(filteredTaskObject);
+      setSortedTasks(filteredTaskObject);
+    }
+  }
+
+  // Filter by employee Id
+  function onFilterHandler(filterTerm = "Filter...") {
+    if (filterTerm === "Filter...") {
+      setSortedTasks(allTasks);
+    } else {
+      const filteredTasksArray = Object.entries(allTasks).filter(
+        ([key, value]) =>
+          value?.assignees
+            .map((assignee) => assignee?.user_id)
+            .includes(filterTerm)
+      );
+      const filteredTaskObject = Object.fromEntries(filteredTasksArray);
+      setSortedTasks(filteredTaskObject);
     }
   }
 
@@ -317,30 +335,36 @@ export const TicketBoard = () => {
           }}
         />
         <select
-          className="ticketBoardDropdown"
-          value="Filter..."
-          onChange={() => {}}
+          className="ticketBoard__filter-dropdown"
+          value={filterTerm}
+          onChange={(e) => {
+            if (e.target.value !== "Filter...") {
+              setFiltering(true);
+            } else {
+              setFiltering(false);
+            }
+            setFilterTerm(e.target.value);
+            onFilterHandler(e.target.value);
+          }}
         >
-          <option value="Filter..." disabled>
-            Filter
-          </option>
-          <option value="sectioning">Sectioning</option>
-          <option value="macrodisection">Macrodisection</option>
-          <option value="scrolling">Scrolling</option>
+          <option key="filter" value="Filter...">Filter</option>
+
+          {employeeList.map((employee) => (
+            <option key={employee?.user_id} value={employee?.user_id}>{employee.username}</option>
+          ))}
         </select>
       </div>
       <div className="ticketBoard">
         <DragDropContext onDragEnd={ticketDragEndHandler}>
           {ticketBoardDndData.columnOrder.map((columnId) => {
             const column = ticketBoardDndData.columns[columnId];
-
             var tasks = column.taskIds.map(
               (taskId) => ticketBoardDndData.tasks[taskId]
             );
             if (filtering) {
               tasks = column.taskIds
                 .map((taskId) => {
-                  return filteredTasks?.[taskId];
+                  return sortedTasks?.[taskId];
                 })
                 .filter(Boolean);
             }

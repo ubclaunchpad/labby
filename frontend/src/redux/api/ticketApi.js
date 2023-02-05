@@ -60,6 +60,19 @@ export const createSubtask = async (payload) => {
   }
 };
 
+export const filterTickets = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      filter: payload.filter,
+    });
+
+    const tickets = await axios.post("task/filter", data);
+    return tickets;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const updateTicketStatusApi = async (payload) => {
   try {
     var data = JSON.stringify({
