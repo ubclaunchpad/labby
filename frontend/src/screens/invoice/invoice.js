@@ -15,6 +15,7 @@ function Invoice() {
     dispatch({ type: LOAD_BILLABLE });
   }, [dispatch]);
 
+
   return (
     <div className="invoicePage">
       <div className="headerComponent">
@@ -24,6 +25,15 @@ function Invoice() {
         <div className="InvoiceTitle" style={{ color: appColor.gray }}>
           Billing & Invoicing 
           <GenerateInvoice />
+        </div>
+        <div className="searchInvoiceSection">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="invoiceTableSearch"
+              // NEED TO ADD ONCHANGE FOR SEARCHING
+
+            />
         </div>
         <div className="InvoiceTotal" style={{ color: appColor.gray }}>
           {/* <TotalTable /> */}

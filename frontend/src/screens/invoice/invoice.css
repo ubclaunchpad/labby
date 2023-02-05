@@ -20,4 +20,28 @@
     width: 75%;
   }
   
-  
+  .searchInvoiceSection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 45%;
+    margin-bottom: 24px;
+    
+  }
+  .invoiceTableSearch {
+    border: 0;
+    background-color: #ecedf3;
+    border-radius: 15px;
+    height: 35px;
+    padding-left: 40px;
+    padding-right: 16px;
+    display: flex;
+    flex-direction: row;
+    flex-basis: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("../../assets/SearchIcon.svg");
+    background-size: 16px;
+    background-repeat: no-repeat;
+    background-position: calc(0% + 16px) center;
+  }
