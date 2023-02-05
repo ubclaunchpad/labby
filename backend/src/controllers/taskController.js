@@ -230,6 +230,19 @@ export default class TaskController {
       });
     });
   }
+
+  filterTasksByProject(req) {
+    return new Promise((resolve, reject) => {
+      const TaskModel = new Task();
+      TaskModel.filterTasksByProject(req.params.projectId, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+  
   
   deleteTask(id) {
     return new Promise((resolve, reject) => {
