@@ -22,12 +22,15 @@ function Invoice() {
       </div>
       <div className="invoicePageContent">
         <div className="InvoiceTitle" style={{ color: appColor.gray }}>
-          Billing & Invoicing
+          Billing & Invoicing 
+          <GenerateInvoice />
         </div>
+        <div className="InvoiceTotal" style={{ color: appColor.gray }}>
+          {/* <TotalTable /> */}
         <div className="InvoiceTable" ref={invoiceTableRef}>
           <InvoiceTable />
+          </div>
         </div>
-        <GenerateInvoice />
       </div>
     </div>
   );
