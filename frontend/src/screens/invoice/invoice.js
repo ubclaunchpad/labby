@@ -1,7 +1,9 @@
 import { appColor } from "../../constants";
 import Header from "../../components/Header";
 import "./invoice.css";
+import InvoiceGraph from "../../components/InvoiceGraph";
 import InvoiceTable from "../../components/InvoiceTable";
+import InvoiceTotal from "../../components/InvoiceTotal";
 import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { LOAD_BILLABLE } from "../../redux/actions/billingActions";
@@ -32,17 +34,19 @@ function Invoice() {
               placeholder="Search..."
               className="invoiceTableSearch"
               // NEED TO ADD ONCHANGE FOR SEARCHING
-
             />
         </div>
+        <div className="InvoiceGraph" style={{ color: appColor.gray }}>
+          <InvoiceGraph />
+          </div>
         <div className="InvoiceTotal" style={{ color: appColor.gray }}>
-          {/* <TotalTable /> */}
+          <InvoiceTotal />
+          </div>
         <div className="InvoiceTable" ref={invoiceTableRef}>
           <InvoiceTable />
           </div>
         </div>
       </div>
-    </div>
   );
 }
 
