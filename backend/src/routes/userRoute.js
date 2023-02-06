@@ -2,9 +2,21 @@ import { Router } from "express";
 import authorize from "../auth/authorize.js";
 import UserController from "../controllers/userController.js";
 import jwt from "jsonwebtoken";
+import req from "express/lib/request.js";
 
 const router = Router();
 const userController = new UserController();
+
+router.get("/login", (_, res) => {
+  userController
+      .authenticateUser(req)
+      .then((response) => {
+        res.status(200).json(response);
+      })
+      .catch((err) => {
+        res.status(404).json(err);
+      });
+});
 
 router.get("/", authorize(), (_, res) => {
   userController
