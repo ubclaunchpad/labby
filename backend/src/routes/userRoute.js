@@ -1,10 +1,12 @@
 import { Router } from "express";
+import authorize from "../auth/authorize.js";
 import UserController from "../controllers/userController.js";
+import jwt from "jsonwebtoken";
 
 const router = Router();
 const userController = new UserController();
 
-router.get("/", (_, res) => {
+router.get("/", authorize(), (_, res) => {
   userController
     .getUser()
     .then((response) => {
@@ -13,6 +15,24 @@ router.get("/", (_, res) => {
     .catch((err) => {
       res.status(404).json(err);
     });
+});
+
+router.post("/authenticate", (_, res) => {
+  const user = {
+    username: "harin",
+  };
+  const token = jwt.sign(
+    { userid: user.username, role: "Admin" },
+    process.env.JWT_SECRET,
+    {
+      algorithm: "HS256",
+      expiresIn: "24h",
+    }
+  );
+  res.status(200).json({
+    ...user,
+    token: token,
+  });
 });
 
 router.get("/employee", (_, res) => {
