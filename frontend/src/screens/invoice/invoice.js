@@ -2,6 +2,7 @@ import { appColor } from "../../constants";
 import Header from "../../components/Header";
 import "./invoice.css";
 import InvoiceGraph from "../../components/InvoiceGraph";
+import InvoiceCalendar from "../../components/InvoiceCalendar";
 import InvoiceTable from "../../components/InvoiceTable";
 import InvoiceTotal from "../../components/InvoiceTotal";
 import { useEffect, useRef } from "react";
@@ -38,15 +39,18 @@ function Invoice() {
         </div>
         <div className="InvoiceGraph" style={{ color: appColor.gray }}>
           <InvoiceGraph />
-          </div>
+        </div>
+        <div className="InvoiceGraph" style={{ color: appColor.gray }}>
+          <InvoiceCalendar />
+        </div>
         <div className="InvoiceTotal" style={{ color: appColor.gray }}>
           <InvoiceTotal />
-          </div>
+        </div>
         <div className="InvoiceTable" ref={invoiceTableRef}>
           <InvoiceTable />
-          </div>
         </div>
       </div>
+    </div>
   );
 }
 
