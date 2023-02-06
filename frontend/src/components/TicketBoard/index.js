@@ -8,8 +8,6 @@ import {
   GET_SERVICE_COST,
   GET_SUBTASKS,
   GET_TICKET_BOARD,
-  POST_SERVICE_COST,
-  REMOVE_SERVICE_COST,
   SET_ACTIVE_TICKET,
   UNASSIGN_USER,
   UPDATE_TICKET_BOARD,
@@ -26,10 +24,9 @@ import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { appColor } from "../../constants";
 import { LOAD_EMPLOYEE } from "../../redux/actions/userActions";
-import uuid from "react-uuid";
-import X from "../../assets/X.png";
 import Add from "../../assets/AddBlack.png";
-import Rectangle from "../../assets/Rectangle.png";
+import Subtasks from "./Subtasks";
+import ServiceList from "./ServiceList";
 
 export const getColorNum = (id, colorArray) => {
   if (colorArray) {
@@ -171,12 +168,6 @@ export const TicketBoard = () => {
     (state) => state.ticketReducer.currentTicket
   );
   const employeeList = useSelector((state) => state.userReducer.employeeList);
-  const currentTicketServiceCosts = useSelector(
-    (state) => state.ticketReducer.currentTicketServiceCosts
-  );
-  const currentTicketSubtasks = useSelector(
-    (state) => state.ticketReducer.currentTicketSubtasks
-  );
 
   const [assigneeAddModal, setAssigneeAddModal] = useState(false);
   const allTasks = ticketBoardDndData.tasks;
@@ -496,50 +487,7 @@ export const TicketBoard = () => {
 
             <div className="ticketInfo">
               <div className="ticketColumn subtasksColumn">
-                <div className="ticketSubtasks">
-                  <div className="ticketSubtasksContainer">
-                    <div className="contentList">
-                      <div className="ticketSectionTitle">Subtasks</div>
-                      <div className="subtaskCostRows">
-                        {currentTicketSubtasks.map((subtasks) => {
-                          return (
-                            <div
-                              className="subtaskCostRow"
-                              key={subtasks.subtask_id}
-                            >
-                              <div className="subtaskInputContainer">
-                                <img
-                                  className="Rectangle"
-                                  src={Rectangle}
-                                  alt="Rectangle"
-                                />
-                                <div className="serviceCostQuantity">
-                                  {subtasks.subtask_title}
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    <div className="additionBar">
-                      <img
-                        className="Add"
-                        src={Add}
-                        alt="Add"
-                        onClick={() => {
-                          dispatch({
-                            type: ADD_SUBTASKS,
-                            payload: { task_id: currentTicket.code },
-                          });
-                        }}
-                      />
-                      <div className="ticketSectionTitle">Add Subtask</div>
-                    </div>
-                  </div>
-                </div>
-
+                <Subtasks />
                 <div className="ticketAttachments">
                   <div className="ticketSectionTitle">Attachments</div>
                   <div className="attachmentsWrapper">
@@ -585,133 +533,8 @@ export const TicketBoard = () => {
                   </div>
                 </div>
               </div>
-
               <div className="ticketColumn servicesColumn">
-                <div className="ticketCosts">
-                  <div className="contentList">
-                    <div className="ticketSectionTitle">Service & Costs</div>
-                    <table className="serviceTable">
-                      <thead>
-                        <tr className="heading">
-                          <td>Service</td>
-                          <td>Quantity</td>
-                          <td>Cost</td>
-                          <td></td>
-                        </tr>
-                      </thead>
-                    </table>
-                    <div className="serviceListRows">
-                      <table className="serviceTable">
-                        <tbody className="serviceTableRows">
-                          {currentTicketServiceCosts.map((serviceCost) => {
-                            return (
-                              <tr
-                                className="serviceTableRow"
-                                key={serviceCost.billable_id}
-                              >
-                                <td>
-                                  <input
-                                    className="serviceNameInput"
-                                    defaultValue={serviceCost.name}
-                                    onBlur={(text) => {
-                                      console.log(serviceCost);
-                                      dispatch({
-                                        type: POST_SERVICE_COST,
-                                        payload: {
-                                          ...serviceCost,
-                                          sow_id: serviceCost.fk_sow_id,
-                                          name: text.target.value,
-                                        },
-                                      });
-                                    }}
-                                  />
-                                </td>
-                                <td>
-                                  <input
-                                    className="serviceCostInput"
-                                    defaultValue={serviceCost.quantity}
-                                    onBlur={(text) => {
-                                      dispatch({
-                                        type: POST_SERVICE_COST,
-                                        payload: {
-                                          ...serviceCost,
-                                          sow_id: serviceCost.fk_sow_id,
-                                          quantity: text.target.value,
-                                        },
-                                      });
-                                    }}
-                                  />
-                                </td>
-                                <td>
-                                  <input
-                                    className="serviceCostInput"
-                                    defaultValue={"$ " + serviceCost.cost}
-                                    onBlur={(text) => {
-                                      dispatch({
-                                        type: POST_SERVICE_COST,
-                                        payload: {
-                                          ...serviceCost,
-                                          sow_id: serviceCost.fk_sow_id,
-                                          cost: text.target.value,
-                                        },
-                                      });
-                                    }}
-                                  />
-                                </td>
-
-                                <td>
-                                  <div className="delete>">
-                                    <img
-                                      className="download-icon-delete"
-                                      src={X}
-                                      alt="Delete Service"
-                                      onClick={() => {
-                                        dispatch({
-                                          type: REMOVE_SERVICE_COST,
-                                          payload: {
-                                            billable_id:
-                                              serviceCost.billable_id,
-                                            sow_id: serviceCost.fk_sow_id,
-                                          },
-                                        });
-                                      }}
-                                    />
-                                  </div>
-                                </td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div className="additionBar">
-                    <img
-                      className="Add"
-                      src={Add}
-                      alt="Add"
-                      onClick={() => {
-                        dispatch({
-                          type: POST_SERVICE_COST,
-                          payload: {
-                            billable_id: uuid(),
-                            sow_id: currentTicket.code,
-                            project_id: currentTicket.project_id,
-                            name: "New Service",
-                            quantity: 1,
-                            cost: 0,
-                            createdDate: new Date(),
-                            completedTime: null,
-                            billed: false,
-                            billedTime: null,
-                            createdBy: "USER-A",
-                          },
-                        });
-                      }}
-                    />
-                    <div className="ticketSectionTitle">Add Service</div>
-                  </div>
-                </div>
+                <ServiceList />
               </div>
             </div>
           </div>

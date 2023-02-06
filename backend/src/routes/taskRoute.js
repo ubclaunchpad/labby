@@ -43,23 +43,6 @@ router.post("/description/:taskId", (req, res) => {
     });
 });
 
-router.post("/subtask", (req, res) => {
-  if (!req.body) {
-    res.status(400).send({
-      message: "Content can not be empty!",
-    });
-    return;
-  }
-  taskController
-    .saveSubtask(req)
-    .then((response) => {
-      res.status(200).json(response);
-    })
-    .catch((err) => {
-      res.status(404).json(err);
-    });
-});
-
 //add subtask given task_id
 router.post("/addsubtask/:taskId", (req, res) => {
   if (!req.body) {

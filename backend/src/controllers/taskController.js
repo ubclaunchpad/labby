@@ -72,29 +72,6 @@ export default class TaskController {
     });
   }
 
-  saveSubtask(req) {
-    return new Promise((resolve, reject) => {
-      if (!req.body.subtask_title || !req.body.subtask_state || !req.body.task_id) {
-        return reject({ error: "Error with request body." });
-      }
-      const TaskModel = new Task();
-      const subtaskData = {
-        subtask_id: Math.floor(Math.random() * 100),
-        subtask_title: req.body.subtask_title,
-        subtask_description: req.body.subtask_description,
-        subtask_state: req.body.subtask_state,
-        task_id: req.body.task_id,
-      };
-      TaskModel.insertSubtask(subtaskData, (err, result) => {
-        if (err) {
-          reject({ error: err });
-        }
-        this.isTaskLoaded = false;
-        resolve(result);
-      });
-    });
-  }
-
   //add subtask given taskID
   saveSubtaskByTask(req) {
     return new Promise((resolve, reject) => {
