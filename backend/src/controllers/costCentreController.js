@@ -37,6 +37,7 @@ export default class CostCentreController {
         cost_center_email: req.body.cost_center_email,
         cost_center_address: req.body.cost_center_address,
         cost_center_type: req.body.cost_center_type,
+        cost_center_unit: req.body.cost_center_unit
       };
 
       CostCentreModel.insertCostCentre(costCenterData, (err, result) => {

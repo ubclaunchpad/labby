@@ -98,7 +98,7 @@ function RequestForm() {
         );
         const projectId = projectItem[0].response ?? "PROJECTID-A";
         const billableList = [];
-        {formResponses.map((response) => {
+        formResponses.map((response) => {
           const cost = costEstimateMap.get(response.question.answer_id);
           if (cost != null) {
             let quantity = response.quantity ?? 1;
@@ -109,7 +109,7 @@ function RequestForm() {
              });
           }
           return null;
-        })}
+        });
         dispatch({
           type: SUBMIT_FORM,
           payload: {

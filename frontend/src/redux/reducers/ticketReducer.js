@@ -20,6 +20,8 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
       let doneList = [];
       let blockedList = [];
       let assigneeMap = {};
+      
+      
       // Map Assignees
       action.payload.assigneeList.forEach((assignee) => {
         let assigneeList = assigneeMap[assignee.task_id] ?? [];
