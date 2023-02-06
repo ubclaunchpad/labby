@@ -10,6 +10,7 @@ export class User {
         newUser.username,
         newUser.email,
         newUser.employee,
+        // newUser.salt,
         // newUser.hash,
       ],
       function (error, results) {
@@ -56,5 +57,19 @@ export class User {
         result(null, res);
       }
     });
+  }
+
+
+
+  getOneUser(username, result) {
+    // con.query('CALL loadSingleUser(?)', [username], (err, res) => {
+    //   if (err) {
+    //     console.log("error: ", err);
+    //     result(err, null);
+    //   } else {
+    //     result(null, res);
+    //   }
+    // })
+
   }
 }
