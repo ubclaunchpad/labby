@@ -2,8 +2,9 @@ import React, { useState, useRef, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   SAVE_CELL_DATA,
+  UPDATE_QUANTIFIABLE
 } from "../../redux/actions/costActions";
-import { Table, Form, Input } from "antd";
+import { Table, Form, Input, Checkbox } from "antd";
 import "antd/dist/antd.min.css";
 import "./index.css";
 import { SET_INVOICE_LIST } from "../../redux/actions/billingActions";
@@ -39,6 +40,27 @@ const InvoiceTable = () => {
       dataIndex: "cost",
       key: "cost",
       editable: false,
+    },
+    {
+      title: "Select",
+      dataIndex: "quantifiable",
+      key: "quantifiable",
+      render: (_, record) =>
+        dataSource.length >= 1 ? (
+          <Checkbox
+            checked={record.quantifiable}
+            onClick={(e) => {
+              dispatch({
+                type: UPDATE_QUANTIFIABLE,
+                payload: {
+                  answer_id: record.key,
+                  quantifiable: e.currentTarget.checked,
+                },
+              });
+            }}
+          />
+        ) : null,
+      width: "5%",
     },
   ];
 
