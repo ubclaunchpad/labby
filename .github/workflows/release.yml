@@ -2,9 +2,9 @@ name: CI
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
+  # Triggers the workflow on push or pull request events but only for the release branch
   push:
-    branches: [ main ]
+    branches: [ release ]
     
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -24,8 +24,8 @@ jobs:
       # Runs a single command using the runners shell
       - name: Deploy in EC2
         env:
-            PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY_DEV  }}
-            HOSTNAME : ${{ secrets.HOSTNAME_DEV  }}
+            PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY  }}
+            HOSTNAME : ${{ secrets.HOSTNAME  }}
             USER_NAME : ${{ secrets.USER  }}
             
         run: |
@@ -48,9 +48,9 @@ jobs:
               yarn
             fi
             
-            git checkout main &&
+            git checkout release &&
             git fetch --all &&
-            git reset --hard origin/main &&
-            git pull origin main &&
+            git reset --hard origin/release &&
+            git pull origin release &&
             pm2 start index.js
           '

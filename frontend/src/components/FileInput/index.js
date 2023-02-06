@@ -36,7 +36,7 @@ function FileInput({ question }) {
             console.log("DEBUG filename: ", file.name);
             console.log("DEBUG file type ", file.type);
             const objParams = {
-              Bucket: "labby-app",
+              Bucket: process.env.REACT_APP_S3_BUCKET,
               // TODO: Eventually change object key to question number + random generated ID/number
               // need to save the randomly generated ID/number so it can also be retrieved
               Key: `fileInput/${question.question_id}/${file.name}`,
