@@ -24,7 +24,7 @@ export const getEmployeeList = async () => {
   }
 };
 
-export const saveUserApi = async (payload) => {
+export const saveUserApi = async (payload) => { // TODO: update this to use hash
   try {
     var data = JSON.stringify({
       user_id: payload.user_id,
@@ -32,6 +32,7 @@ export const saveUserApi = async (payload) => {
       username: payload.username,
       email: payload.email,
       employee: payload.employee,
+      password: payload.password,
     });
 
     const user = await axios.post("user/", data);
@@ -115,4 +116,20 @@ export const addAssignmentApi = async (payload) => {
   } catch (err) {
     return console.error(err);
   }
+}
+
+export const authenticateUserApi = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      username: payload.username,
+      password: payload.password
+    });
+
+    const user = await axios.get("user/login", data);
+
+    return user;
+  } catch (err) {
+    return console.error(err);
+  }
+
 }

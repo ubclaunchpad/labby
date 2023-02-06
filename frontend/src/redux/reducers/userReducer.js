@@ -51,6 +51,7 @@ const organizationList = (state = defaultOrganizationList, action) => {
   }
 };
 
+
 export default combineReducers({
   userList,
   employeeList,

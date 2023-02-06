@@ -13,6 +13,8 @@ import UserManagement from "./screens/user-management/user-management";
 import InvoicePreview from "./screens/invoice/invoice-preview";
 import Organizations from "./screens/organizations/organizations";
 import Projects from "./screens/projects/projects";
+import LoginForm from "./components/LoginForm";
+import SignUpForm from "./components/SignUpForm";
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
           <Route path="/settings" element={<UserManagement />} />
           <Route path="/tickets" element={<TicketManagement />} />
           <Route path="/pdf" element={<InvoicePreview />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/signup" element={<SignUpForm />} />
         </Routes>
       </BrowserRouter>
     </div>
