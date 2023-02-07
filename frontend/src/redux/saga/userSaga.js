@@ -7,9 +7,12 @@ import {
   LOAD_USERLIST,
   POST_ORGANIZATION,
   POST_USER,
+  AUTHENTICATE_USER,
   SET_EMPLOYEE,
   SET_ORGANIZATION,
   SET_USERLIST,
+  SET_CURRENT_USER,
+  PING,
 } from "../actions/userActions";
 import { getProjectAssignmentApi } from "../api/projectApi";
 import {
@@ -20,6 +23,8 @@ import {
   getUserlist,
   postOrganizationApi,
   saveUserApi,
+  authenticateUserApi,
+  pingCheckApi,
 } from "../api/userApi";
 
 export function* loadUserlistSaga() {
@@ -39,7 +44,13 @@ export function* deleteUserSaga({ payload }) {
 
 export function* postUserSaga({ payload }) {
   yield call(saveUserApi, payload);
-  yield loadUserlistSaga();
+  yield loadUserlistSaga(); // QUESTION: why do we need to load the userlist?
+}
+
+export function* authenticateUserSaga({ payload }) {
+  const currentUser = yield call(authenticateUserApi, payload);
+  yield put({ type: SET_CURRENT_USER, payload: currentUser.data });
+  localStorage.setItem("currentUser", JSON.stringify(currentUser.data));
 }
 
 export function* loadOrganizationSaga() {
@@ -64,6 +75,15 @@ export function* deleteOrganizationSaga({ payload }) {
   yield loadOrganizationSaga();
 }
 
+export function* pingCheckSaga({ payload }) {
+  const res = yield call(pingCheckApi, payload);
+  if (res.status === 200) {
+    yield put({ type: SET_CURRENT_USER, payload: payload });
+  } else {
+    yield put({ type: SET_CURRENT_USER, payload: null });
+  }
+}
+
 export default function* userSaga() {
   yield takeLatest(LOAD_USERLIST, loadUserlistSaga);
   yield takeLatest(DELETE_USER, deleteUserSaga);
@@ -72,4 +92,6 @@ export default function* userSaga() {
   yield takeLatest(GET_ORGANIZATION, loadOrganizationSaga);
   yield takeLatest(POST_ORGANIZATION, postOrganizationSaga);
   yield takeLatest(DELETE_ORGANIZATION, deleteOrganizationSaga);
+  yield takeLatest(AUTHENTICATE_USER, authenticateUserSaga);
+  yield takeLatest(PING, pingCheckSaga);
 }

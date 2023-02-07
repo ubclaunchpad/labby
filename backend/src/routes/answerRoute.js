@@ -1,10 +1,11 @@
 import { Router } from "express";
+import authorize from "../auth/authorize.js";
 import AnswerController from "../controllers/answerController.js";
 
 const router = Router();
 const answerController = new AnswerController();
 
-router.post("/", (req, res) => {
+router.post("/", authorize(), (req, res) => {
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!",
@@ -21,7 +22,7 @@ router.post("/", (req, res) => {
     });
 });
 
-router.get("/:surveyId", (req, res) => {
+router.get("/:surveyId", authorize(), (req, res) => {
   answerController
     .getAnswer(req.params.surveyId)
     .then((response) => {
@@ -33,7 +34,7 @@ router.get("/:surveyId", (req, res) => {
 })
 
 
-router.delete("/:answerId", (req, res) => {
+router.delete("/:answerId", authorize(), (req, res) => {
   answerController
     .deleteAnswer(req.params.answerId)
     .then((response) => {

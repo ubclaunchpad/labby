@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import {
+  SET_CURRENT_USER,
   SET_EMPLOYEE,
   SET_ORGANIZATION,
   SET_USERLIST,
@@ -7,6 +8,17 @@ import {
 
 const defaultUserList = [];
 const defaultOrganizationList = [];
+
+const currentUser = (state = null, action) => {
+  switch (action.type) {
+    case SET_CURRENT_USER: {
+      return action.payload;
+    }
+    default: {
+      return state;
+    }
+  }
+};
 
 const userList = (state = defaultUserList, action) => {
   switch (action.type) {
@@ -51,8 +63,10 @@ const organizationList = (state = defaultOrganizationList, action) => {
   }
 };
 
+
 export default combineReducers({
   userList,
   employeeList,
   organizationList,
+  currentUser,
 });
