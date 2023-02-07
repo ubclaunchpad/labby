@@ -3,23 +3,23 @@ import con from "../config/Database.js";
 export class User {
   insertUser(newUser, result) {
     con.query(
-      "CALL addUser(?, ?, ?, ?, ?)", // add extra ? for hash later
+      "CALL addUser(?, ?, ?, ?, ?, ?, ?)",
       [
         newUser.user_id,
         newUser.organization_id,
         newUser.username,
         newUser.email,
         newUser.employee,
-        // newUser.salt,
-        // newUser.hash,
+        newUser.salt,
+        newUser.hash,
       ],
-      function (error, results) {
-        if(error) {
+      function (error, _) {
+        if (error) {
           console.log("error: ", error);
-          result(error,null);
+          result(error, null);
         } else {
           result(null, {
-            result: `Response ${results.user_id} Saved Successfully`,
+            result: `Response ${newUser.user_id} Saved Successfully`,
           });
         }
       }
@@ -59,17 +59,14 @@ export class User {
     });
   }
 
-
-
-  getOneUser(username, result) {
-    // con.query('CALL loadSingleUser(?)', [username], (err, res) => {
-    //   if (err) {
-    //     console.log("error: ", err);
-    //     result(err, null);
-    //   } else {
-    //     result(null, res);
-    //   }
-    // })
-
+  getOneUser(email, result) {
+    con.query("CALL loadSingleUser(?)", [email], (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res[0]);
+      }
+    });
   }
 }

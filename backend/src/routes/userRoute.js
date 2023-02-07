@@ -2,16 +2,29 @@ import { Router } from "express";
 import authorize from "../auth/authorize.js";
 import UserController from "../controllers/userController.js";
 import jwt from "jsonwebtoken";
-import req from "express/lib/request.js";
 
 const router = Router();
 const userController = new UserController();
 
-router.get("/login", (_, res) => {
+router.post("/login", (req, res) => {
   userController
       .authenticateUser(req)
       .then((response) => {
-        res.status(200).json(response);
+        const token = jwt.sign(
+          { 
+            userid: response.user_id, 
+            email: response.email, 
+            role: response.employee ? "Admin" : "User" 
+          },
+          process.env.JWT_SECRET,
+          {
+            algorithm: "HS256",
+            expiresIn: "24h",
+          }
+        );
+        res.status(200).json({
+          token: token,
+        });
       })
       .catch((err) => {
         res.status(404).json(err);
@@ -27,24 +40,6 @@ router.get("/", authorize(), (_, res) => {
     .catch((err) => {
       res.status(404).json(err);
     });
-});
-
-router.post("/authenticate", (_, res) => {
-  const user = {
-    username: "harin",
-  };
-  const token = jwt.sign(
-    { userid: user.username, role: "Admin" },
-    process.env.JWT_SECRET,
-    {
-      algorithm: "HS256",
-      expiresIn: "24h",
-    }
-  );
-  res.status(200).json({
-    ...user,
-    token: token,
-  });
 });
 
 router.get("/employee", (_, res) => {

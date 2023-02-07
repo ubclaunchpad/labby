@@ -1,18 +1,16 @@
 import { User } from "../models/user.js";
+import crypto from "crypto";
 
 function genRandomString(number) {
   return crypto.randomBytes(Math.ceil(number/2))
       .toString('hex') /** convert to hexadecimal format */
-      .slice(0,length); /** return required number of characters */
+      .slice(0,number); /** return required number of characters */
 }
 function encrypt(password, salt) {
   var hash = crypto.createHmac('sha512', salt); /** Hashing algorithm sha512 */
   hash.update(password);
   const value = hash.digest('hex');
-  return {
-    salt:salt,
-    passwordHash:value
-  };
+  return value
 }
 
 export default class UserController {
@@ -29,22 +27,20 @@ export default class UserController {
     });
   };
 
-
-
   authenticateUser(req) {
     return new Promise((resolve, reject) => {
       let password = req.body.password;
       const UserModel = new User();
-      UserModel.getOneUser(req.body.username, (err, res) => {
-        if (res) {
-          if(res.hashedPassword === encrypt(password, res.salt)) {
-            resolve();
+      UserModel.getOneUser(req.body.email, (_, res) => {
+        if (res && res.length > 0 && res[0].email === req.body.email) {
+          if(res[0].hashed_password === encrypt(password, res[0].salt)) {
+            resolve(res[0]);
           }
-          }
-        })
+        }
         reject({err: "Login failed, incorrect credentials. Please try again."});
       });
-    }
+    });
+  }
 
   getEmployee() {
     return new Promise((resolve, reject) => {
