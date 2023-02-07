@@ -50,6 +50,13 @@ const CostCenterTable = () => {
       width: "9%",
     },
     {
+      title: "Unit",
+      dataIndex: "cost_center_unit",
+      key: "cost_center_unit",
+      editable: true,
+      width: "10%",
+    },
+    {
       title: "",
       dataIndex: "operation",
       render: (_, record) =>
@@ -85,6 +92,7 @@ const CostCenterTable = () => {
       cost_center_email: "New Email",
       cost_center_address: "New Address",
       cost_center_type: "Industry",
+      cost_center_unit: "Unit",
     };
     dispatch({ type: POST_COSTCENTER, payload: newData });
   };
