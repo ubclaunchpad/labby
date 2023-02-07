@@ -1,10 +1,11 @@
 import { Router } from "express";
+import authorize from "../auth/authorize.js";
 import SurveyController from "../controllers/surveyController.js";
 
 const router = Router();
 const surveyController = new SurveyController();
 
-router.post("/", (req, res) => {
+router.post("/", authorize(), (req, res) => {
     if(!req.body) {
         res.status(400).send({
             message: "Content can not be empty!"
@@ -21,7 +22,7 @@ router.post("/", (req, res) => {
         });
 });
 
-router.post("/response", (req, res) => {
+router.post("/response", authorize(), (req, res) => {
     if(!req.body) {
         res.status(400).send({
             message: "Content can not be empty!"
@@ -38,7 +39,7 @@ router.post("/response", (req, res) => {
         });
 });
 
-router.delete("/:surveyId", (req, res) => {
+router.delete("/:surveyId", authorize(), (req, res) => {
     if(!req.body) {
         res.status(400).send({
             message: "Content can not be empty!"

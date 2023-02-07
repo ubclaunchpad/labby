@@ -89,7 +89,7 @@ export function* getServiceCost(action) {
 
 export function* postServiceCost(action) {
   yield call(postServiceCostApi, action.payload);
-  yield call(getServiceCost, { payload: action.payload.sow_id });
+  yield call(getServiceCost, { payload: action.payload });
 }
 
 export function* removeServiceCost(action) {
@@ -108,7 +108,7 @@ export function* getSubtasks(action) {
 
 export function* addSubtask(action) {
   yield call(createSubtask, action.payload);
-  yield call(getSubtasks, { payload: action.payload.ticket_id });
+  yield call(getSubtasks, { payload: action.payload.task_id });
 }
 
 // Need to know why there is an infinite loop and how to connect the saga to call the API properly. 

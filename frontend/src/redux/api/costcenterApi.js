@@ -8,7 +8,11 @@ const axios = defaultAxios.create({
 
 export const getCostcenterApi = async () => {
   try {
-    const costcenterList = await axios.get("costcenter/");
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const costcenterList = await axios.get("costcenter/", { headers: headers });
 
     return costcenterList;
   } catch (err) {
@@ -18,7 +22,13 @@ export const getCostcenterApi = async () => {
 
 export const getCostcenterAssignmentApi = async () => {
   try {
-    const costcenterAssignmentList = await axios.get("costcenter/assignment/");
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const costcenterAssignmentList = await axios.get("costcenter/assignment/", {
+      headers: headers,
+    });
 
     return costcenterAssignmentList;
   } catch (err) {
@@ -28,7 +38,13 @@ export const getCostcenterAssignmentApi = async () => {
 
 export const clearProjectAssignmentApi = async (payload) => {
   try {
-    const assignment = await axios.delete(`costcenter/assignment/${payload}`);
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const assignment = await axios.delete(`costcenter/assignment/${payload}`, {
+      headers: headers,
+    });
 
     return assignment;
   } catch (err) {
@@ -38,13 +54,19 @@ export const clearProjectAssignmentApi = async (payload) => {
 
 export const addProjectAssignmentApi = async (payload) => {
   try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
     var data = JSON.stringify({
       project_id: payload.project_id,
       cost_center_id: payload.costcenter_id,
       assignment_id: payload.assignment_id,
     });
 
-    const assignment = await axios.post("costcenter/assignment/", data);
+    const assignment = await axios.post("costcenter/assignment/", data, {
+      headers: headers,
+    });
 
     return assignment;
   } catch (err) {
@@ -54,6 +76,10 @@ export const addProjectAssignmentApi = async (payload) => {
 
 export const postCostCenterApi = async (payload) => {
   try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
     var data = JSON.stringify({
       cost_center_id: payload.cost_center_id,
       cost_center_name: payload.cost_center_name,
@@ -63,7 +89,9 @@ export const postCostCenterApi = async (payload) => {
       cost_center_type: payload.cost_center_type,
     });
 
-    const costcenter = await axios.post("costcenter/", data);
+    const costcenter = await axios.post("costcenter/", data, {
+      headers: headers,
+    });
 
     return costcenter;
   } catch (err) {
@@ -73,7 +101,13 @@ export const postCostCenterApi = async (payload) => {
 
 export const deleteCostCenterApi = async (payload) => {
   try {
-    const costcenter = await axios.delete(`costcenter/${payload}`);
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const costcenter = await axios.delete(`costcenter/${payload}`, {
+      headers: headers,
+    });
 
     return costcenter;
   } catch (err) {

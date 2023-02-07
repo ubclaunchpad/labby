@@ -1,10 +1,11 @@
 import { Router } from "express";
+import authorize from "../auth/authorize.js";
 import QuestionController from "../controllers/questionController.js";
 
 const router = Router();
 const questionController = new QuestionController();
 
-router.post("/", (req, res) => {
+router.post("/", authorize(), (req, res) => {
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!",
@@ -21,7 +22,7 @@ router.post("/", (req, res) => {
     });
 });
 
-router.get("/", (_, res) => {
+router.get("/", authorize(), (_, res) => {
   questionController
     .loadQuestion()
     .then((response) => {
@@ -32,7 +33,7 @@ router.get("/", (_, res) => {
     });
 });
 
-router.get("/:formId", (req, res) => {
+router.get("/:formId", authorize(), (req, res) => {
   questionController
     .loadQuestionByForm(req.params.formId)
     .then((response) => {
@@ -43,7 +44,7 @@ router.get("/:formId", (req, res) => {
     });
 });
 
-router.delete("/:questionId", (req, res) => {
+router.delete("/:questionId", authorize(), (req, res) => {
   questionController
     .deleteQuestion(req.params.questionId)
     .then((response) => {
