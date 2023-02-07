@@ -1,10 +1,11 @@
 import { Router } from "express";
+import authorize from "../auth/authorize.js";
 import LogicController from "../controllers/logicController.js";
 
 const router = Router();
 const logicController = new LogicController();
 
-router.get("/", (_, res) => {
+router.get("/", authorize(), (_, res) => {
   logicController
     .getLogic()
     .then((response) => {
@@ -15,7 +16,7 @@ router.get("/", (_, res) => {
     });
 });
 
-router.delete("/:conditionId", (req, res) => {
+router.delete("/:conditionId", authorize(), (req, res) => {
   logicController
     .deleteLogic(req.params.conditionId)
     .then((response) => {
@@ -26,7 +27,7 @@ router.delete("/:conditionId", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/", authorize(), (req, res) => {
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!",

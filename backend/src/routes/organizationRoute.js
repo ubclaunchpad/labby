@@ -1,10 +1,11 @@
 import { Router } from "express";
+import authorize from "../auth/authorize.js";
 import OrganizationController from "../controllers/organizationController.js";
 
 const router = Router();
 const organizationController = new OrganizationController();
 
-router.get("/", (_, res) => {
+router.get("/", authorize(), (_, res) => {
   organizationController
     .getOrganization()
     .then((response) => {
@@ -15,7 +16,7 @@ router.get("/", (_, res) => {
     });
 });
 
-router.delete("/:organizationId", (req, res) => {
+router.delete("/:organizationId", authorize(), (req, res) => {
   organizationController
     .deleteOrganization(req.params.organizationId)
     .then((response) => {
@@ -26,7 +27,7 @@ router.delete("/:organizationId", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/", authorize(), (req, res) => {
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!",

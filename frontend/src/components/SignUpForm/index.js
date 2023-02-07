@@ -1,9 +1,9 @@
 import "./index.css";
-import Hide from "../../assets/hide.png";
+// import Hide from "../../assets/hide.png";
 import uuid from "react-uuid";
 import { useDispatch } from "react-redux";
 import {useState} from 'react';
-import { POST_USER } from "../../redux/actions/userActions";
+import { SIGNUP_USER } from "../../redux/actions/userActions";
 
 function LoginForm() {
     const dispatch = useDispatch();
@@ -21,7 +21,7 @@ function LoginForm() {
     const handleUserSubmit = (e) => {
         e.preventDefault();
         dispatch({
-            type: POST_USER,
+            type: SIGNUP_USER,
             payload: {
               user_id: uuid(),
               fk_organization_id: null,

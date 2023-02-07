@@ -140,8 +140,10 @@
   flex-direction: row;
   align-items: center;
   background: #e4e5ea;
-  padding: 5px;
+  padding: 10px;
   border-radius: 5px;
+  width: 100px;
+  height: 30px;
 }
 .task-card__subtask-checkbox {
   display: inline-block;

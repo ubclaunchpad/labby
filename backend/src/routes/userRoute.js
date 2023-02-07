@@ -19,16 +19,25 @@ router.post("/login", (req, res) => {
           process.env.JWT_SECRET,
           {
             algorithm: "HS256",
-            expiresIn: "24h",
+            expiresIn: "12h",
           }
         );
         res.status(200).json({
+          user_id: response.user_id,
+          organization_id: response.fk_organization_id,
+          username: response.username,
+          email: response.email,
+          employee: response.employee,
           token: token,
         });
       })
       .catch((err) => {
         res.status(404).json(err);
       });
+});
+
+router.get("/pingcheck", authorize(), (_, res) => {
+  res.status(200).json({ message: "pong" });
 });
 
 router.get("/", authorize(), (_, res) => {
@@ -42,7 +51,7 @@ router.get("/", authorize(), (_, res) => {
     });
 });
 
-router.get("/employee", (_, res) => {
+router.get("/employee", authorize(), (_, res) => {
   userController
     .getEmployee()
     .then((response) => {
@@ -53,7 +62,7 @@ router.get("/employee", (_, res) => {
     });
 });
 
-router.delete("/:userId", (req, res) => {
+router.delete("/:userId", authorize(), (req, res) => {
   userController
     .deleteUser(req.params.userId)
     .then((response) => {

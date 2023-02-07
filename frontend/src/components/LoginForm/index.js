@@ -1,8 +1,8 @@
 import "./index.css";
-import Hide from "../../assets/hide.png";
+// import Hide from "../../assets/hide.png";
 import { useDispatch } from "react-redux";
-import {useState} from 'react';
-import { AUTHENTICATE_USER} from "../../redux/actions/userActions";
+import { useState } from 'react';
+import { AUTHENTICATE_USER } from "../../redux/actions/userActions";
 
 function LoginForm() {
     const dispatch = useDispatch();
@@ -22,14 +22,12 @@ function LoginForm() {
         dispatch({
             type: AUTHENTICATE_USER,
             payload: {
-              username: email,
+              email: email,
               password: password,
             },
           });
-          // need to handle authentication here
-        console.log(email);
-        console.log(password);
     }
+
     return(
         <div className="LoginPage">
 
@@ -37,20 +35,20 @@ function LoginForm() {
         <div className="LoginForm">
             <h1 className="LoginTitle">Login</h1>
             <form onSubmit={handleUserSubmit}>
-                <input  className="LoginInput" placeholder="Email" onChange={handleEmailChange}>
+                <input  className="LoginInput" placeholder="Email" type={"email"} onChange={handleEmailChange}>
                 </input>
-                <input  className="LoginInput" placeholder="Password" onChange={handlePasswordChange}>
+                <input  className="LoginInput" placeholder="Password" type={"password"} onChange={handlePasswordChange}>
                 </input>
-                <p1>
+                <div>
                     Forgot Password
-                </p1>
-                <button className="SignInBtn">
+                </div>
+                <button className="SignInBtn" onClick={handleUserSubmit}>
                     Sign In
                 </button>
             </form>
-            <p1>
+            <div>
                 Create new account here
-            </p1>
+            </div>
         </div>
     </div>
         </div>

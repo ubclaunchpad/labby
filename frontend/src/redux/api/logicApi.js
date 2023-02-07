@@ -8,6 +8,10 @@ const axios = defaultAxios.create({
 
 export const saveLogics = async (payload) => {
   try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
     var data = JSON.stringify({
       condition_id: payload.condition_id,
       question_id: payload.question_id,
@@ -17,7 +21,7 @@ export const saveLogics = async (payload) => {
       result: payload.result,
     });
 
-    const logics = await axios.post("logic/", data);
+    const logics = await axios.post("logic/", data, { headers: headers });
 
     return logics;
   } catch (err) {
@@ -27,7 +31,11 @@ export const saveLogics = async (payload) => {
 
 export const getLogics = async () => {
   try {
-    const logics = await axios.get("logic/");
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const logics = await axios.get("logic/", { headers: headers });
 
     return logics;
   } catch (err) {
@@ -37,7 +45,13 @@ export const getLogics = async () => {
 
 export const deleteLogic = async (payload) => {
   try {
-    const logics = await axios.delete(`logic/${payload.logic_id}`);
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const logics = await axios.delete(`logic/${payload.logic_id}`, {
+      headers: headers,
+    });
 
     return logics;
   } catch (err) {
