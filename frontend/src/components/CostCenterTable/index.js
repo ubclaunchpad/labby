@@ -56,7 +56,6 @@ const CostCenterTable = () => {
       editable: true,
       width: "10%",
     },
-
     {
       title: "",
       dataIndex: "operation",
