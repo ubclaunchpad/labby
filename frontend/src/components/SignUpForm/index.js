@@ -3,9 +3,10 @@ import "./index.css";
 import uuid from "react-uuid";
 import { useDispatch } from "react-redux";
 import {useState} from 'react';
-import { SIGNUP_USER } from "../../redux/actions/userActions";
+import { POST_USER } from "../../redux/actions/userActions";
+import { useNavigate } from "react-router-dom";
 
-function LoginForm() {
+function SignUpForm() {
     const dispatch = useDispatch();
 
     const [email, setEmail] = useState("");
@@ -21,7 +22,7 @@ function LoginForm() {
     const handleUserSubmit = (e) => {
         e.preventDefault();
         dispatch({
-            type: SIGNUP_USER,
+            type: POST_USER,
             payload: {
               user_id: uuid(),
               fk_organization_id: null,
@@ -33,6 +34,12 @@ function LoginForm() {
           // need to handle success/failure here
         console.log(email);
         console.log(password);
+        redirectLogin();
+    }
+
+    let navigate = useNavigate();
+    const redirectLogin = () => {
+        navigate('/login');
     }
     return(
         <div className="LoginPage">
@@ -41,9 +48,9 @@ function LoginForm() {
         <div className="LoginForm">
             <h1 className="LoginTitle">Create Account</h1>
             <form onSubmit={handleUserSubmit}>
-                <input  className="LoginInput" placeholder="Email" onChange={handleEmailChange}>
+                <input  className="LoginInput" placeholder="Email" type={"email"} onChange={handleEmailChange}>
                 </input>
-                <input  className="LoginInput" placeholder="Password" onChange={handlePasswordChange}>
+                <input  className="LoginInput" placeholder="Password" type={"password"} onChange={handlePasswordChange}>
                 </input>
                 <button className="SignInBtn">
                     Sign Up
@@ -56,4 +63,4 @@ function LoginForm() {
 
 }
 
-export default LoginForm;
+export default SignUpForm;
