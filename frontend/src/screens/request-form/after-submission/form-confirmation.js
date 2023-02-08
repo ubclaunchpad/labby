@@ -1,13 +1,20 @@
+import { useDispatch, useSelector } from "react-redux";
+
 import ExperimentIcon from "../../../assets/experiment.svg";
 
 import "./form-confirmation.css";
 
 function FormConfirmation() {
+  const dispatch = useDispatch();
+  const formSubmission = useSelector(
+    (state) => state.formReducer.formSubmissions
+  );
+  console.log(formSubmission);
   return (
     <div className="formConfirmationPage">
       <h4>Thank you!</h4>
       <h2>Your request has been submitted</h2>
-      <img src={ExperimentIcon} alt=""/>
+      <img src={ExperimentIcon} alt="" />
       <h3>Request Summary</h3>
       <table>
         <tr>
