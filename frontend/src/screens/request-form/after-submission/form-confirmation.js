@@ -1,10 +1,12 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 import ExperimentIcon from "../../../assets/experiment.svg";
-
 import "./form-confirmation.css";
 
 function FormConfirmation() {
+  const [loadProgressPage, setLoadProgressPage] = useState(false);
   const dispatch = useDispatch();
   const formId = window.location.pathname.split("/")[2];
   const allFormSubmissions = useSelector(
@@ -58,6 +60,17 @@ function FormConfirmation() {
           </tr>
         </tbody>
       </table>
+      <div className="FormSubmit">
+        <div
+          onClick={() => {
+            setLoadProgressPage(true);
+          }}
+          className="progressPageLink"
+        >
+          View all my requests
+        </div>
+        {loadProgressPage && <Navigate to={`/request-progress/${formId}`} />}
+      </div>
     </div>
   );
 }
