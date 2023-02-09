@@ -96,13 +96,15 @@ CREATE PROCEDURE `save_cost` (
    IN `_cost` DOUBLE,
    IN `_fk_answer_id` VARCHAR(50),
    IN `_price_category` VARCHAR(50),
-   IN `_quantifiable` BOOLEAN
+   IN `_quantifiable` BOOLEAN,
+   IN `_unit` VARCHAR(50)
 ) BEGIN REPLACE INTO `questions_cost` (
    `cost_id`,
    `cost`,
    `fk_answer_id`,
    `price_category`,
-   `quantifiable`
+   `quantifiable`,
+   `unit`
 )
 VALUES
    (
@@ -110,7 +112,8 @@ VALUES
    `_cost`,
    `_fk_answer_id`,
    `_price_category`,
-   `_quantifiable`
+   `_quantifiable`,
+   `_unit`
    );
 
 END $$

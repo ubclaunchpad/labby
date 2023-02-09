@@ -14,7 +14,7 @@ export const getQuestions = async (payload) => {
     };
     if (payload) {
       const formId = payload;
-      const questions = await axios.get(`question/${formId}`);
+      const questions = await axios.get(`question/${formId}`, { headers: headers });
       return questions;
     }
 
