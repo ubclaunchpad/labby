@@ -1,10 +1,11 @@
 import { Router } from "express";
+import authorize from "../auth/authorize.js";
 import CostCentreController from "../controllers/costCentreController.js";
 
 const router = Router();
 const costCentreController = new CostCentreController();
 
-router.get("/", (_, res) => {
+router.get("/", authorize(), (_, res) => {
   costCentreController
     .loadCostCentre()
     .then((response) => {
@@ -15,7 +16,7 @@ router.get("/", (_, res) => {
     });
 });
 
-router.get("/assignment", (req, res) => {
+router.get("/assignment", authorize(), (req, res) => {
   costCentreController
     .loadCostCentreAssignment()
     .then((response) => {
@@ -26,7 +27,7 @@ router.get("/assignment", (req, res) => {
     });
 });
 
-router.post("/assignment", (req, res) => {
+router.post("/assignment", authorize(), (req, res) => {
   costCentreController
     .assignCostCentre(req)
     .then((response) => {
@@ -37,7 +38,7 @@ router.post("/assignment", (req, res) => {
     });
 });
 
-router.delete("/assignment/:id", (req, res) => {
+router.delete("/assignment/:id", authorize(), (req, res) => {
   costCentreController
     .deleteCostCenterAssignment(req.params.id)
     .then((response) => {
@@ -48,7 +49,7 @@ router.delete("/assignment/:id", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/", authorize(), (req, res) => {
   if (!req.body) {
     res.status(400).send({
       message: "Content cannot be empty!",
@@ -66,7 +67,7 @@ router.post("/", (req, res) => {
     });
 });
 
-router.post("/:organizationId/:costCentreId", (req, res) => {
+router.post("/:organizationId/:costCentreId", authorize(), (req, res) => {
   costCentreController
     .assignCostCentre(req.params.organizationId, req.params.costCentreId)
     .then((response) => {
@@ -77,7 +78,7 @@ router.post("/:organizationId/:costCentreId", (req, res) => {
     });
 });
 
-router.delete("/:costCentreId", (req, res) => {
+router.delete("/:costCentreId", authorize(), (req, res) => {
   costCentreController
     .deleteCostCentre(req.params.costCentreId)
     .then((response) => {

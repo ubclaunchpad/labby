@@ -4,6 +4,7 @@ DROP PROCEDURE IF EXISTS `addUser`;
 DROP PROCEDURE IF EXISTS `deleteUser`;
 DROP PROCEDURE IF EXISTS `loadUser`;
 DROP PROCEDURE IF EXISTS `loadEmployee`;
+DROP PROCEDURE IF EXISTS `loadSingleUser`;
 
 DELIMITER $$
 
@@ -12,7 +13,9 @@ CREATE PROCEDURE `addUser` (
 	IN `_fk_organization_id` VARCHAR(50),
 	IN `_username` VARCHAR(255),
 	IN `_email` VARCHAR(255),
-	IN `_employee` BOOLEAN
+	IN `_employee` BOOLEAN,
+	IN `_salt` VARCHAR(255),
+	IN `_hashed_password` VARCHAR(255)
 )
 BEGIN 
 INSERT INTO `users` (
@@ -20,14 +23,18 @@ INSERT INTO `users` (
 	`fk_organization_id`,
 	`username`,
 	`email`,
-	`employee`
+	`employee`,
+	`salt`,
+	`hashed_password`
 )
 VALUES (
 	`_user_id`,
 	`_fk_organization_id`,
 	`_username`,
 	`_email`,
-	`_employee`
+	`_employee`,
+	`_salt`,
+	`_hashed_password`
 ) ON DUPLICATE KEY UPDATE
     users.user_id=_user_id,
     users.fk_organization_id=_fk_organization_id,
@@ -51,6 +58,13 @@ END $$
 CREATE PROCEDURE `loadEmployee`  ()
 BEGIN
     SELECT * FROM users WHERE employee = 1;
+END $$
+
+CREATE PROCEDURE `loadSingleUser`  (
+	IN `_email` VARCHAR(255)
+)
+BEGIN
+	SELECT * FROM users WHERE email = _email;
 END $$
 
 DELIMITER ;

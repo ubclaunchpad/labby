@@ -13,6 +13,8 @@ CREATE TABLE `users` (
 	username VARCHAR(255),
 	email VARCHAR(255),
 	employee BOOLEAN,
+	salt VARCHAR(255),
+	hashed_password VARCHAR(255),
 	PRIMARY KEY (`user_id`),
 	FOREIGN KEY (fk_organization_id) REFERENCES organizations(organization_id)
 );

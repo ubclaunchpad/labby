@@ -1,10 +1,11 @@
 import { Router } from "express";
+import authorize from "../auth/authorize.js";
 import ProjectController from "../controllers/projectController.js";
 
 const router = Router();
 const projectController = new ProjectController();
 
-router.get("/", (_, res) => {
+router.get("/", authorize(), (_, res) => {
   projectController
     .loadProject()
     .then((response) => {
@@ -15,7 +16,7 @@ router.get("/", (_, res) => {
     });
 });
 
-router.get("/assignment", (req, res) => {
+router.get("/assignment", authorize(), (req, res) => {
   projectController
     .loadProjectAssignment()
     .then((response) => {
@@ -26,7 +27,7 @@ router.get("/assignment", (req, res) => {
     });
 });
 
-router.post("/assignment", (req, res) => {
+router.post("/assignment", authorize(), (req, res) => {
   projectController
     .saveProjectAssignment(req)
     .then((response) => {
@@ -37,7 +38,7 @@ router.post("/assignment", (req, res) => {
     });
 });
 
-router.delete("/assignment/:id", (req, res) => {
+router.delete("/assignment/:id", authorize(), (req, res) => {
   projectController
     .deleteProjectAssignment(req.params.id)
     .then((response) => {
@@ -48,7 +49,7 @@ router.delete("/assignment/:id", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/", authorize(), (req, res) => {
   projectController
     .saveProject(req)
     .then((response) => {
@@ -59,7 +60,7 @@ router.post("/", (req, res) => {
     });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", authorize(), (req, res) => {
   projectController
     .deleteProject(req.params.id)
     .then((response) => {

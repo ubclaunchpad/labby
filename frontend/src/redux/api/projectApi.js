@@ -8,7 +8,11 @@ const axios = defaultAxios.create({
 
 export const getProjectApi = async () => {
   try {
-    const projectList = await axios.get("project/");
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const projectList = await axios.get("project/", { headers: headers });
 
     return projectList;
   } catch (err) {
@@ -18,7 +22,13 @@ export const getProjectApi = async () => {
 
 export const getProjectAssignmentApi = async () => {
   try {
-    const projectAssignmentList = await axios.get("project/assignment/");
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const projectAssignmentList = await axios.get("project/assignment/", {
+      headers: headers,
+    });
 
     return projectAssignmentList;
   } catch (err) {
@@ -28,13 +38,17 @@ export const getProjectAssignmentApi = async () => {
 
 export const postProjectApi = async (payload) => {
   try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
     var data = JSON.stringify({
       project_id: payload.project_id,
       project_name: payload.project_name,
       project_description: payload.project_description,
     });
 
-    const project = await axios.post("project/", data);
+    const project = await axios.post("project/", data, { headers: headers });
 
     return project;
   } catch (err) {
@@ -44,7 +58,13 @@ export const postProjectApi = async (payload) => {
 
 export const deleteProjectApi = async (payload) => {
   try {
-    const project = await axios.delete(`project/${payload}`);
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const project = await axios.delete(`project/${payload}`, {
+      headers: headers,
+    });
 
     return project;
   } catch (err) {

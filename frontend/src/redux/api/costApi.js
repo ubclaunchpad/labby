@@ -8,7 +8,11 @@ const axios = defaultAxios.create({
 
 export const getCosts = async () => {
   try {
-    const costs = await axios.get("quote/");
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const costs = await axios.get("quote/", { headers: headers });
     return costs;
   } catch (err) {
     return console.error(err);
@@ -17,7 +21,11 @@ export const getCosts = async () => {
 
 export const deleteCosts = async (answerId) => {
   try {
-    const costs = await axios.delete(`quote/${answerId}`);
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const costs = await axios.delete(`quote/${answerId}`, { headers: headers });
     return costs;
   } catch (err) {
     return console.error(err);
@@ -26,6 +34,10 @@ export const deleteCosts = async (answerId) => {
 
 export const postCosts = async (payload) => {
   try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
     var data = JSON.stringify({
       answer_id: payload.answer_id,
       org_type: payload.org_type,
@@ -33,7 +45,7 @@ export const postCosts = async (payload) => {
       cost_id: payload.cost_id,
     });
 
-    const costs = await axios.post(`quote/`, data);
+    const costs = await axios.post(`quote/`, data, { headers: headers });
     return costs;
   } catch (err) {
     return console.error(err);
@@ -42,14 +54,20 @@ export const postCosts = async (payload) => {
 
 export const updateQuantifiableApi = async (payload) => {
   try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
     var data = JSON.stringify({
       answer_id: payload.answer_id,
       quantifiable: payload.quantifiable,
     });
 
-    const costs = await axios.post(`quote/updateQuantifiable/`, data);
+    const costs = await axios.post(`quote/updateQuantifiable/`, data, {
+      headers: headers,
+    });
     return costs;
   } catch (err) {
     return console.error(err);
   }
-}
+};
