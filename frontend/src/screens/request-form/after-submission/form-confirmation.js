@@ -7,10 +7,20 @@ import "./form-confirmation.css";
 function FormConfirmation() {
   const dispatch = useDispatch();
   const formId = window.location.pathname.split("/")[2];
-  const formSubmissions = useSelector(
+  const allFormSubmissions = useSelector(
     (state) => state.formReducer.formSubmissions
   );
-  console.log(formSubmissions)
+  const currentFormSubmission = allFormSubmissions.filter(
+    (formSubmission) => formSubmission.formId === formId
+  )[0];
+  let billables;
+  if (currentFormSubmission) {
+    billables = currentFormSubmission.billables;
+  } else {
+    // if this page is not redirected to dynamically after form submission, but visited directly by url
+    billables = [];
+  }
+  console.log(billables);
   return (
     <div className="formConfirmationPage">
       <h4>Thank you!</h4>
@@ -18,31 +28,35 @@ function FormConfirmation() {
       <img src={ExperimentIcon} alt="" />
       <h3>Request Summary</h3>
       <table>
-        <tr>
-          <th>Service</th>
-          <th>Quantity</th>
-          <th>Estimated Cost</th>
-        </tr>
-        <tr>
-          <td>Microtomy</td>
-          <td>12</td>
-          <td>$</td>
-        </tr>
-        <tr>
-          <td>Consultation</td>
-          <td>12</td>
-          <td>$</td>
-        </tr>
-        <tr>
-          <td>Single-plex IHC</td>
-          <td>3</td>
-          <td>$</td>
-        </tr>
-        <tr>
-          <td> </td>
-          <td> </td>
-          <td> </td>
-        </tr>
+        <tbody>
+          <tr>
+            <th>Service</th>
+            <th>Quantity</th>
+            <th>Estimated Cost</th>
+          </tr>
+          {billables.length ? (
+            billables.map((billable) => {
+              return (
+                <tr>
+                  <td>{billable.service}</td>
+                  <td>{billable.quantity}</td>
+                  <td>{billable.cost}</td>
+                </tr>
+              );
+            })
+          ) : (
+            <tr>
+              <td> N/A </td>
+              <td> N/A </td>
+              <td> N/A </td>
+            </tr>
+          )}
+          <tr>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+          </tr>
+        </tbody>
       </table>
     </div>
   );
