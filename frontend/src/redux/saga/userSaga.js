@@ -43,8 +43,9 @@ export function* deleteUserSaga({ payload }) {
 }
 
 export function* postUserSaga({ payload }) {
-  yield call(saveUserApi, payload);
+  const response = yield call(saveUserApi, payload);
   yield loadUserlistSaga(); // QUESTION: why do we need to load the userlist?
+  return response;
 }
 
 export function* authenticateUserSaga({ payload }) {
