@@ -12,6 +12,7 @@ export default class QuoteController {
         cost: req.body.cost,
         cost_id: req.body.cost_id,
         quantifiable: req.body.quantifiable,
+        unit: req.body.unit,
       };
       QuoteModel.insertCost(costData, (err, result) => {
         if (err) {
