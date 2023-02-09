@@ -47,6 +47,8 @@ function App() {
           <Route path="/users" element={(currentUser && currentUser.employee) ? <UserManagement /> : (currentUser ? <Setting /> : <LoginForm from={window.location.pathname} />)} />
           <Route path="/edit-request" element={(currentUser && currentUser.employee) ? <FormLibrary /> : (currentUser ? <Setting /> : <LoginForm from={window.location.pathname} />)} />
           <Route path="/request/:formId" element={currentUser ? <RequestForm /> : <LoginForm from={window.location.pathname} />} />
+          <Route path="/request-confirmation/:formId" element={currentUser ? <FormConfirmation /> : <LoginForm from={window.location.pathname} />} />
+          <Route path="/request-progress/:formId" element={currentUser ? <FormProgress /> : <LoginForm from={window.location.pathname} />} />
           <Route path="/preview/:surveyId" element={(currentUser && currentUser.employee) ? <PreviewForm /> : (currentUser ? <Setting /> : <LoginForm from={window.location.pathname} />)} />
           <Route path="/invoice" element={(currentUser && currentUser.employee) ? <Invoice /> : (currentUser ? <Setting /> : <LoginForm from={window.location.pathname} />)} />
           <Route path="/settings" element={currentUser ? <Setting /> : <LoginForm from={window.location.pathname} />} />
