@@ -46,14 +46,16 @@ CALL save_project_cost_centers('COST-CENTER-PROJ-1', 'COST-CENTER-ID-A', 'PROJEC
 CALL save_project_cost_centers('COST-CENTER-PROJ-2', 'COST-CENTER-ID-A', 'PROJECTID-B');
 
 -- Populate Cost
-CALL save_cost('COSTID-B', 10.0, 'MAPCORE-105', 'Internal', true);
-CALL save_cost('COSTID-C', 10.0, 'MAPCORE-105', 'External', true);
-CALL save_cost('COSTID-D', 10.0, 'MAPCORE-105', 'Industry', true);
+CALL save_cost('COSTID-B', 10.0, 'MAPCORE-105', 'Internal', true, "mm");
+CALL save_cost('COSTID-C', 10.0, 'MAPCORE-105', 'External', true, "mm");
+CALL save_cost('COSTID-D', 10.0, 'MAPCORE-105', 'Industry', true, "mm");
 
 -- Populate User
-CALL addUser('USER-A', 'ORG-ID-A', 'Harin Wu', 'harinwu99@gmail.com', true);
-CALL addUser('USER-B', 'ORG-ID-A', 'Elon Musk', 'elonmusk@gmail.com', false);
-CALL addUser('USER-C', 'ORG-ID-A', 'Jeff Bezos', 'jeffbezos@gmail.com', false);
+CALL addUser('USER-A', 'ORG-ID-A', 'Harin Wu', 'harinwu99@gmail.com', true, 'd7f349eab1e95fa9', '39cb61ac781817affb8d1af5fe4768007e160646af0e8a844db0ae27e0a7263d6182a133347505a442f2672f499e14b51e4830cfcdbe64c9a8a5077cbfd3a831');
+CALL addUser('USER-B', 'ORG-ID-A', 'Elon Musk', 'elonmusk@gmail.com', false, 'd7f349eab1e95fa9', '39cb61ac781817affb8d1af5fe4768007e160646af0e8a844db0ae27e0a7263d6182a133347505a442f2672f499e14b51e4830cfcdbe64c9a8a5077cbfd3a831');
+CALL addUser('USER-C', 'ORG-ID-A', 'Jeff Bezos', 'jeffbezos@gmail.com', false, 'd7f349eab1e95fa9', '39cb61ac781817affb8d1af5fe4768007e160646af0e8a844db0ae27e0a7263d6182a133347505a442f2672f499e14b51e4830cfcdbe64c9a8a5077cbfd3a831');
+CALL addUser('DEMO-USER-1', 'ORG-ID-A', 'Mapcore', 'labby@ubc.com', true, 'd7f349eab1e95fa9', '39cb61ac781817affb8d1af5fe4768007e160646af0e8a844db0ae27e0a7263d6182a133347505a442f2672f499e14b51e4830cfcdbe64c9a8a5077cbfd3a831');
+
 
 -- Populate Surveys
 CALL addSurvey('SURVEYA', 'USER-A', 	2008-11-11);

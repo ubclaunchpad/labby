@@ -1,10 +1,11 @@
 import { Router } from "express";
+import authorize from "../auth/authorize.js";
 import AssignmentController from "../controllers/assignmentController.js";
 
 const router = Router();
 const assignmentController = new AssignmentController();
 
-router.delete("/:assignmentId", (req, res) => {
+router.delete("/:assignmentId", authorize(), (req, res) => {
   assignmentController
     .deleteAssignment(req.params.assignmentId)
     .then((response) => {
@@ -15,7 +16,7 @@ router.delete("/:assignmentId", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/", authorize(), (req, res) => {
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!",

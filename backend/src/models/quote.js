@@ -4,13 +4,14 @@ import { QuoteHelper } from "./quoteHelper.js";
 export class Quote {
   insertCost(costData, result) {
     con.query(
-      "CALL save_cost(?, ?, ?, ?, ?)",
+      "CALL save_cost(?, ?, ?, ?, ?, ?)",
       [
         costData.cost_id,
         costData.cost,
         costData.answer_id,
         costData.org_type,
         costData.quantifiable,
+        costData.unit
       ],
       function (error, results) {
         if (error) {

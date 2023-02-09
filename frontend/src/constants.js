@@ -10,7 +10,7 @@ export const appColor = {
   darkGray: "#909090",
 };
 
-export const backend = "https://labbybe.harinwu.com/";
+export const backend = process.env.REACT_APP_BACKEND;
 // export const backend = "http://localhost:8080/"
 
 export const ticketsColors = {

@@ -37,7 +37,6 @@ VALUES
     cost_centers.cost_center_email=_cost_center_email,
     cost_centers.cost_center_address=_cost_center_address,
     cost_centers.cost_center_type=_cost_center_type;
-  
 END $$
 
 CREATE PROCEDURE `load_cost_center` ()

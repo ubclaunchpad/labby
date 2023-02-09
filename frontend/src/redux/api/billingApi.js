@@ -8,7 +8,11 @@ const axios = defaultAxios.create({
 
 export const getBillable = async () => {
   try {
-    const billingList = await axios.get("billing/");
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const billingList = await axios.get("billing/", { headers: headers });
 
     return billingList;
   } catch (err) {

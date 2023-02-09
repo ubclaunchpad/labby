@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
 import {
   ADD_SUBTASKS,
   ASSIGN_USER,
@@ -7,13 +7,14 @@ import {
   GET_TICKET_BOARD,
   POST_SERVICE_COST,
   REMOVE_SERVICE_COST,
-  SET_ACTIVE_TICKET,
+  // SET_ACTIVE_TICKET,
   SET_SERVICE_COST,
   SET_SUBTASKS,
   SET_TICKETS,
   UNASSIGN_USER,
   UPDATE_TICKET_DESCRIPTION,
   UPDATE_TICKET_STATUS,
+  FILTER_TICKETS
 } from "../actions/ticketActions";
 import {
   assignUserApi,
@@ -43,17 +44,17 @@ export function* fetchTickets() {
     },
   });
 
-  let currentTicket = yield select(
-    (state) => state.ticketReducer.currentTicket
-  );
+  // let currentTicket = yield select(
+  //   (state) => state.ticketReducer.currentTicket
+  // );
 
-  if (currentTicket) {
-    let allTickets = yield select(
-      (state) => state.ticketReducer.ticketBoardDndData
-    );
-    let newTicket = allTickets.tasks[currentTicket.id];
-    yield put({ type: SET_ACTIVE_TICKET, payload: newTicket });
-  }
+  // if (currentTicket) {
+  //   let allTickets = yield select(
+  //     (state) => state.ticketReducer.ticketBoardDndData
+  //   );
+  //   let newTicket = allTickets.tasks[currentTicket.id];
+  //   yield put({ type: SET_ACTIVE_TICKET, payload: newTicket });
+  // }
 }
 
 export function* updateTicketStatus(action) {
@@ -88,7 +89,7 @@ export function* getServiceCost(action) {
 
 export function* postServiceCost(action) {
   yield call(postServiceCostApi, action.payload);
-  yield call(getServiceCost, { payload: action.payload.sow_id });
+  yield call(getServiceCost, { payload: action.payload });
 }
 
 export function* removeServiceCost(action) {
@@ -104,11 +105,34 @@ export function* getSubtasks(action) {
   });
 }
 
+
 export function* addSubtask(action) {
   yield call(createSubtask, action.payload);
-  yield call(getSubtasks, { payload: action.payload.ticket_id });
+  yield call(getSubtasks, { payload: action.payload.task_id });
 }
 
+// Need to know why there is an infinite loop and how to connect the saga to call the API properly. 
+export function* filterTickets(action) {
+  console.log("HIT THE SAGA FUNCTION")
+  const ticketList = yield call(getTickets);
+  const subticketList = yield call(getSubTickets);
+  const allTickets = ticketList.data.concat(subticketList.data);
+  console.log("THESE ARE ALL TICKETS --> ", allTickets)
+  const filteredTickets = allTickets.filter((ticket) => {
+    console.log('These are the ticket status -->', ticket.task_state);
+    return ticket.task_state === action.payload;
+  });
+  console.log(filteredTickets)
+  yield put({
+    type: FILTER_TICKETS,
+    payload: {
+      ticketList: filteredTickets,
+    },
+  });
+
+  console.log("These are the new tickets -->",yield call(getTickets));
+
+}
 export default function* ticketSaga() {
   yield takeLatest(GET_TICKET_BOARD, fetchTickets);
   yield takeLatest(UPDATE_TICKET_STATUS, updateTicketStatus);
@@ -120,4 +144,5 @@ export default function* ticketSaga() {
   yield takeLatest(GET_SERVICE_COST, getServiceCost);
   yield takeLatest(ADD_SUBTASKS, addSubtask);
   yield takeLatest(GET_SUBTASKS, getSubtasks);
+  yield takeLatest(FILTER_TICKETS, filterTickets);
 }

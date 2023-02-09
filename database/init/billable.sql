@@ -21,7 +21,6 @@ CREATE TABLE `billable` (
   `billedTime` DATETIME,
   `created_by` VARCHAR(50),
   PRIMARY KEY (`billable_id`),
-  FOREIGN KEY (fk_sow_id) REFERENCES tasks(task_id) ON DELETE CASCADE,
   FOREIGN KEY (fk_project_id) REFERENCES projects(project_id) ON DELETE CASCADE,
   FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE CASCADE
 );

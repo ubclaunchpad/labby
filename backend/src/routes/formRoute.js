@@ -1,10 +1,11 @@
 import { Router } from "express";
+import authorize from "../auth/authorize.js";
 import FormController from "../controllers/formController.js";
 
 const router = Router();
 const formController = new FormController();
 
-router.post("/", (req, res) => {
+router.post("/", authorize(), (req, res) => {
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!",
@@ -21,7 +22,7 @@ router.post("/", (req, res) => {
     });
 });
 
-router.get("/", (_, res) => {
+router.get("/", authorize(), (_, res) => {
   formController
     .loadForm()
     .then((response) => {
@@ -32,7 +33,7 @@ router.get("/", (_, res) => {
     });
 });
 
-router.delete("/:formId", (req, res) => {
+router.delete("/:formId", authorize(), (req, res) => {
   formController
     .deleteForm(req.params.formId)
     .then((response) => {
