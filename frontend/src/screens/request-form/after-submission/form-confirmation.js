@@ -7,10 +7,10 @@ import "./form-confirmation.css";
 function FormConfirmation() {
   const dispatch = useDispatch();
   const formId = window.location.pathname.split("/")[2];
-  const formSubmission = useSelector(
+  const formSubmissions = useSelector(
     (state) => state.formReducer.formSubmissions
   );
-  console.log(formSubmission);
+  console.log(formSubmissions)
   return (
     <div className="formConfirmationPage">
       <h4>Thank you!</h4>

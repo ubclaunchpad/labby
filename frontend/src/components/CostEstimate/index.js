@@ -61,8 +61,6 @@ export const CostEstimateFull = () => {
               </div>
             </div>
           );
-
-          return null;
         })}
       </div>
       <div className="CostEstimateDivider" />

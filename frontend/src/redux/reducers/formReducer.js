@@ -184,12 +184,8 @@ const formList = (state = defaultFormList, action) => {
 const formSubmissions = (state = defaultFormSubmissions, action) => {
   switch (action.type) {
     case SUBMIT_FORM: {
-      // const newState = Array.from(state);
-      // newState.push(action.payload);
-      // console.log(state);
-      // return newState;
       state.push(action.payload)
-      console.log(state)
+      // TODO: save submitted forms to backend
       return state;
     }
     default: {

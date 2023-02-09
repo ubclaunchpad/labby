@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 import "./request-form.css";
 import { appColor } from "../../constants";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
@@ -25,6 +26,7 @@ import { SuccessToast, WarningToast } from "../../components/Toasts";
 
 function RequestForm() {
   const dispatch = useDispatch();
+  const [submissionSuccessful, setSubmissionSuccessful] = useState(false);
   const formId = window.location.pathname.split("/")[2];
   const questions = useSelector((state) => state.questionReducer.questionList);
   const formResponses = useSelector((state) => state.formReducer.formResponses);
@@ -74,8 +76,7 @@ function RequestForm() {
   }
 
   // Basic Form Validation and Submit
-  function submitForm() { 
-
+  function submitForm() {
     var filled = true;
     questions.forEach((question) => {
       if (
@@ -101,9 +102,7 @@ function RequestForm() {
           : "PROJECTID-A";
         const billableList = [];
         formResponses.map((response) => {
-          console.log(response);
           const cost = costEstimateMap.get(response.question.answer_id);
-          console.log(cost);
           let quantity = response.quantity ?? 1;
           let service = response.question.answer;
           if (cost) {
@@ -131,7 +130,9 @@ function RequestForm() {
             billables: billableList,
           },
         });
-        SuccessToast("Form Submitted!");
+        setSubmissionSuccessful(true)
+        // SuccessToast("Form Submitted!");
+        // window.location.href = `/request-confirmation/${formId}`;
       }
     } else {
       WarningToast("Please fill out all mandatory fields");
@@ -219,6 +220,9 @@ function RequestForm() {
             >
               Submit
             </button>
+            {submissionSuccessful && (
+              <Navigate to={`/request-confirmation/${formId}`} />
+            )}
           </div>
         </div>
         {hideCost ? <CostEstimateCollapsed /> : <CostEstimateFull />}
