@@ -6,6 +6,7 @@ import "./form-confirmation.css";
 
 function FormConfirmation() {
   const dispatch = useDispatch();
+  const formId = window.location.pathname.split("/")[2];
   const formSubmission = useSelector(
     (state) => state.formReducer.formSubmissions
   );

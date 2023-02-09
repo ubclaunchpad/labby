@@ -30,11 +30,13 @@ const defaultQuestionlist = {
 };
 const defaultFormList = [];
 const defaultAnswerList = [];
-const defaultFormSubmission = {
-  formResponses: [],
-  projectId: "",
-  billables: [],
-};
+const defaultFormSubmissions = [
+  // {
+  //   formResponses: [],
+  //   projectId: "",
+  //   billables: [],
+  // },
+];
 
 const formQuestions = (state = defaultQuestionlist, action) => {
   switch (action.type) {
@@ -179,11 +181,15 @@ const formList = (state = defaultFormList, action) => {
   }
 };
 
-const formSubmissions = (state = defaultFormSubmission, action) => {
+const formSubmissions = (state = defaultFormSubmissions, action) => {
   switch (action.type) {
     case SUBMIT_FORM: {
-      state.push(action.payload);
-      console.log(state);
+      // const newState = Array.from(state);
+      // newState.push(action.payload);
+      // console.log(state);
+      // return newState;
+      state.push(action.payload)
+      console.log(state)
       return state;
     }
     default: {

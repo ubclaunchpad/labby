@@ -96,26 +96,29 @@ function RequestForm() {
         const projectItem = formResponses.filter(
           (response) => response.question.project_id !== undefined
         );
-        const projectId = projectItem[0].response ?? "PROJECTID-A";
+        const projectId = projectItem[0]
+          ? projectItem[0].response
+          : "PROJECTID-A";
         const billableList = [];
         formResponses.map((response) => {
           const cost = costEstimateMap.get(response.question.answer_id);
           if (cost != null) {
             let quantity = response.quantity ?? 1;
-            billableList.push({ 
+            billableList.push({
               service: response.question.answer,
               quantity: quantity,
-              cost: cost * quantity
-             });
+              cost: cost * quantity,
+            });
           }
           return null;
         });
         dispatch({
           type: SUBMIT_FORM,
           payload: {
+            formId,
             formResponses,
             projectId: projectId,
-            billables: billableList
+            billables: billableList,
           },
         });
         SuccessToast("Form Submitted!");
