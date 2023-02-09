@@ -6,7 +6,7 @@
 .BackgroundImg {
     width: 50%;
     background-image: url("../../assets/LoginBackground.png");
-
+    background-size: cover;
 }
 
 .SignUpBackgroundImg {
@@ -15,6 +15,7 @@
     width: 50%;
     background-image: url("../../assets/LoginBackground.png");
     justify-content: flex-end;
+    background-size: cover;
 }
 .LoginPage {
     display: flex;
