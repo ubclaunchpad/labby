@@ -37,18 +37,18 @@ CALL save_organization_projects('ORG-PROJ-1', 'PROJECTID-A', 'ORG-ID-A');
 CALL save_organization_projects('ORG-PROJ-2', 'PROJECTID-B', 'ORG-ID-A');
 
 -- Populate Cost Centers
-CALL ('COST-CENTER-ID-A', 'Cost Center A', 'Harin Wu', 'harinwu99@gmail.com', '123 Main St', 'External');
-CALL save_cost_center('COST-CENTER-ID-B', 'Cost Center B', 'Harin Wu', 'harinwu99@gmail.com', '123 Main St', 'Internal', 'Dollar');
-CALL save_cost_center('COST-CENTER-ID-C', 'Cost Center C', 'Harin Wu', 'harinwu99@gmail.com', '123 Main St', 'Industry', 'Dollar');
+CALL save_cost_center('COST-CENTER-ID-A', 'Cost Center A', 'Harin Wu', 'harinwu99@gmail.com', '123 Main St', 'External');
+CALL save_cost_center('COST-CENTER-ID-B', 'Cost Center B', 'Harin Wu', 'harinwu99@gmail.com', '123 Main St', 'Internal');
+CALL save_cost_center('COST-CENTER-ID-C', 'Cost Center C', 'Harin Wu', 'harinwu99@gmail.com', '123 Main St', 'Industry');
 
 -- Assign Projects to Cost Centers
 CALL save_project_cost_centers('COST-CENTER-PROJ-1', 'COST-CENTER-ID-A', 'PROJECTID-A');
 CALL save_project_cost_centers('COST-CENTER-PROJ-2', 'COST-CENTER-ID-A', 'PROJECTID-B');
 
 -- Populate Cost
-CALL save_cost('COSTID-B', 10.0, 'MAPCORE-105', 'Internal', true);
-CALL save_cost('COSTID-C', 10.0, 'MAPCORE-105', 'External', true);
-CALL save_cost('COSTID-D', 10.0, 'MAPCORE-105', 'Industry', true);
+CALL save_cost('COSTID-B', 10.0, 'MAPCORE-105', 'Internal', true, "mm");
+CALL save_cost('COSTID-C', 10.0, 'MAPCORE-105', 'External', true, "mm");
+CALL save_cost('COSTID-D', 10.0, 'MAPCORE-105', 'Industry', true, "mm");
 
 -- Populate User
 CALL addUser('USER-A', 'ORG-ID-A', 'Harin Wu', 'harinwu99@gmail.com', true, 'd7f349eab1e95fa9', '39cb61ac781817affb8d1af5fe4768007e160646af0e8a844db0ae27e0a7263d6182a133347505a442f2672f499e14b51e4830cfcdbe64c9a8a5077cbfd3a831');
