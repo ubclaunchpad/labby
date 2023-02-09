@@ -50,24 +50,27 @@ export const CostEstimateFull = () => {
       <div className="CostEstimates">
         {formResponses.map((response) => {
           const cost = costEstimateMap.get(response.question.answer_id);
-          if (cost != null) {
-            let quantity = response.quantity ?? 1;
-            costSum += cost * quantity;
-            return (
-              <div className="CostBox" key={response.question.answer}>
-                <div className="CostLeft"> {response.question.answer} </div>
-                <div className="CostCenter"> {`${quantity}`} </div>
-                <div className="CostRight"> ${cost * quantity} </div>
+          let quantity = response.quantity ?? 1;
+          costSum += cost * quantity;
+          return (
+            <div className="CostBox" key={response.question.answer}>
+              <div className="CostLeft"> {response.question.answer} </div>
+              <div className="CostCenter"> {`${quantity}`} </div>
+              <div className="CostRight">
+                {cost != null ? `$${cost * quantity}` : "N/A"}
               </div>
-            );
-          }
+            </div>
+          );
+
           return null;
         })}
       </div>
       <div className="CostEstimateDivider" />
       <div className="CostDivider" />
       <div className="CostEstimateTotal">Total</div>
-      <div className="costEstimateFinalCost">${costSum}</div>
+      <div className="costEstimateFinalCost">
+        {costSum ? `$${costSum}` : "N/A"}
+      </div>
       <div className="Warning">
         {" "}
         This total is an automatically generated cost estimate

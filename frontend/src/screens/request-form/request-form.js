@@ -101,13 +101,23 @@ function RequestForm() {
           : "PROJECTID-A";
         const billableList = [];
         formResponses.map((response) => {
+          console.log(response);
           const cost = costEstimateMap.get(response.question.answer_id);
-          if (cost != null) {
-            let quantity = response.quantity ?? 1;
+          console.log(cost);
+          let quantity = response.quantity ?? 1;
+          let service = response.question.answer;
+          if (cost) {
             billableList.push({
-              service: response.question.answer,
+              service: service,
               quantity: quantity,
               cost: cost * quantity,
+            });
+          } else {
+            // This question's cost not in current stored cost estimate
+            billableList.push({
+              service,
+              quantity,
+              cost: response.question.cost ?? "N/A",
             });
           }
           return null;
