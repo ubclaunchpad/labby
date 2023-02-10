@@ -41,7 +41,7 @@ function SignUpForm() {
     }
     let navigate = useNavigate();
     const redirectLogin = () => {
-        navigate('/login');
+        navigate('/'); 
     }
     return(
         <div className="PageContainer">

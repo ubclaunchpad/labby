@@ -4,9 +4,9 @@ import Logo from "../../assets/LogoIcon.png";
 import { useDispatch } from "react-redux";
 import { useState } from 'react';
 import { AUTHENTICATE_USER } from "../../redux/actions/userActions";
-import { NavLink } from "react-router-dom";
+import { NavLink , useNavigate} from "react-router-dom";
 
-function LoginForm() {
+function LoginForm({ from }) {
     const dispatch = useDispatch();
 
     const [email, setEmail] = useState("");
@@ -19,6 +19,8 @@ function LoginForm() {
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
     }
+    
+    let navigate = useNavigate();
     const handleUserSubmit = (e) => {
         e.preventDefault();
         dispatch({
@@ -28,7 +30,9 @@ function LoginForm() {
               password: password,
             },
           });
+          navigate(from);
     }
+    console.log("path", from);
 
 
     return(
