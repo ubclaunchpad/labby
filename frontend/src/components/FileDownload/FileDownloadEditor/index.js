@@ -62,7 +62,7 @@ function FileDownloadEditor({ question }) {
     console.log("DEBUG file type ", file.type);
 
     const objParams = {
-      Bucket: "labby-app",
+      Bucket: process.env.REACT_APP_S3_BUCKET,
       Key: `fileDownload/${fileName}`,
       Body: file,
       ContentType: file.type,
@@ -182,7 +182,7 @@ function FileDownloadEditor({ question }) {
                 AWS.config.update(config);
                 const S3 = new AWS.S3({});
                 const objParams = {
-                  Bucket: "labby-app",
+                  Bucket: process.env.REACT_APP_S3_BUCKET,
                   Key: `fileDownload/${option.answer}`,
                 };
                 S3.deleteObject(objParams, function (err, _) {

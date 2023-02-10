@@ -1,10 +1,11 @@
 import { Router } from "express";
+import authorize from "../auth/authorize.js";
 import OrderController from "../controllers/orderController.js";
 
 const router = Router();
 const orderController = new OrderController();
 
-router.post("/", (req, res) => {
+router.post("/", authorize(), (req, res) => {
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!",

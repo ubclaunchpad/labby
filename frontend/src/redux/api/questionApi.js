@@ -2,19 +2,23 @@ import defaultAxios from "axios";
 import { backend } from "../../constants";
 
 const axios = defaultAxios.create({
-  baseURL: backend, 
+  baseURL: backend,
   headers: { "Content-Type": "application/json" },
 });
 
 export const getQuestions = async (payload) => {
   try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
     if (payload) {
       const formId = payload;
-      const questions = await axios.get(`question/${formId}`);
+      const questions = await axios.get(`question/${formId}`, { headers: headers });
       return questions;
     }
 
-    const questions = await axios.get("question/");
+    const questions = await axios.get("question/", { headers: headers });
     return questions;
   } catch (err) {
     return console.error(err);
@@ -23,6 +27,10 @@ export const getQuestions = async (payload) => {
 
 export const saveQuestions = async (payload) => {
   try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
     var data = JSON.stringify({
       question_id: payload.question_id,
       form_id: payload.form_id,
@@ -32,7 +40,7 @@ export const saveQuestions = async (payload) => {
       mandatory: payload.mandatory,
     });
 
-    const questions = await axios.post("question/", data);
+    const questions = await axios.post("question/", data, { headers: headers });
 
     return questions;
   } catch (err) {
@@ -42,7 +50,13 @@ export const saveQuestions = async (payload) => {
 
 export const removeQuestion = async (payload) => {
   try {
-    const questions = await axios.delete(`question/${payload.question_id}`);
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const questions = await axios.delete(`question/${payload.question_id}`, {
+      headers: headers,
+    });
 
     return questions;
   } catch (err) {
@@ -52,6 +66,10 @@ export const removeQuestion = async (payload) => {
 
 export const saveAnswer = async (payload) => {
   try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
     var data = JSON.stringify({
       answer_id: payload.answer_id,
       fk_question_id: payload.fk_question_id,
@@ -59,7 +77,7 @@ export const saveAnswer = async (payload) => {
       answer: payload.answer,
     });
 
-    const answers = await axios.post("answer/", data);
+    const answers = await axios.post("answer/", data, { headers: headers });
 
     return answers;
   } catch (err) {
@@ -69,7 +87,13 @@ export const saveAnswer = async (payload) => {
 
 export const removeAnswer = async (payload) => {
   try {
-    const answers = await axios.delete(`answer/${payload.answer_id}`);
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const answers = await axios.delete(`answer/${payload.answer_id}`, {
+      headers: headers,
+    });
 
     return answers;
   } catch (err) {
@@ -79,10 +103,16 @@ export const removeAnswer = async (payload) => {
 
 export const getAnswersBySurvey = async (payload) => {
   try {
-    const answers = await axios.get(`answer/${payload.survey_id}`);
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const answers = await axios.get(`answer/${payload.survey_id}`, {
+      headers: headers,
+    });
 
     return answers;
   } catch (err) {
     return console.error(err);
   }
-}
+};
