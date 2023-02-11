@@ -3,9 +3,7 @@ import { useSelector } from "react-redux";
 import "./index.css";
 
 const InvoiceTotal = () => {
-  const dataSource = useSelector(
-    (state) => state.billingReducer.billingList
-  );
+  const dataSource = useSelector((state) => state.billingReducer.billingList);
 
   const totalServices = dataSource.length;
   const totalSows = dataSource.length;
@@ -13,18 +11,18 @@ const InvoiceTotal = () => {
 
   return (
     <div className="InvoiceTotal">
-      <div className="InvoiceTotalValues">
+      <div className="invoice-total-values-container">
         <div className="TotalServices">{totalServices}</div>
         <div className="TotalSows">{totalSows}</div>
         <div className="TotalProjects">{totalProjects}</div>
       </div>
-      <div className="InvoiceTotalNames">
-        <div className="TotalServices">Total Services</div>
-        <div className="TotalSows">Total SOWs</div>
-        <div className="TotalProjects">Total Projects</div>
+      <div className="invoice-total-name-container">
+        <div className="invoice-total-names TotalServices">Total Services</div>
+        <div className=" invoice-total-names TotalSows">Total SOWs</div>
+        <div className=" invoice-total-names TotalProjects">Total Projects</div>
       </div>
     </div>
   );
-}
+};
 
 export default InvoiceTotal;

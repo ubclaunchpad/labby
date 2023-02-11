@@ -5,25 +5,25 @@
   background-color: #f5f5f5;
   border-radius: 10px;
   height: 73px;
-  width: 600px;
+  width: 100%;
   padding: 0 1rem;
 }
 
-.InvoiceTotalNames {
+.invoice-total-name-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #f5f5f5;
   border-radius: 10px;
   height: 73px;
-  width: 600px;
+  width: 100%;
   padding: 0 1rem;
   font-size: 16px;
   font-weight: 700;
   font-style: semi-bold;
 }
 
-.InvoiceTotalValues {
+.invoice-total-values-container {
   display: flex;
   justify-content: space-between;
   padding: 0 1rem;
@@ -31,3 +31,4 @@
   font-weight: 700;
   font-style: bold;
 }
+
