@@ -65,9 +65,9 @@ function SignUpForm() {
                         <form onSubmit={handleUserSubmit}>
                             <input  className="LoginInput" placeholder="Email" type={"email"} onChange={handleEmailChange}>
                             </input>
-                            <input  className="LoginInput" placeholder="First Name" type={"text"} onChange={handlePasswordChange}>
+                            <input  className="LoginInput" placeholder="First Name" type={"text"}> 
                             </input>
-                            <input  className="LoginInput" placeholder="Last Name" type={"text"} onChange={handleEmailChange}>
+                            <input  className="LoginInput" placeholder="Last Name" type={"text"}> 
                             </input>
                             <input  className="LoginInput" placeholder="Password" type={"password"} onChange={handlePasswordChange}>
                             </input>

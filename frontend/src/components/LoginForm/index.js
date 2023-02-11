@@ -32,7 +32,6 @@ function LoginForm({ from }) {
           });
           navigate(from);
     }
-    console.log("path", from);
 
 
     return(
