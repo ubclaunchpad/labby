@@ -101,6 +101,16 @@
     align-items: center;
 }
 
+.GlobalEditorCheckbox {
+    display: flex;
+    height: 30px;
+    font-size: 14px;
+    color: #AEAEAE;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+}
+
 
 /* Customer Form Components */
 .GlobalCustomerQuestionContainer {

@@ -5,17 +5,17 @@ use labby;
 CALL save_form('SAMPLE-FORM-1', 'Sample Form');
 
 -- Populate the form title
-CALL save_question('RANDOM-ID-A','SAMPLE-FORM-1','My Sample Form','heading', 0, false);
+CALL save_question('RANDOM-ID-A','SAMPLE-FORM-1','My Sample Form','heading', 0, false, false);
 
 -- Populate some sample questions
-CALL save_question('RANDOM-ID-B','Request Type','multi', 1, false);
-CALL save_question('RANDOM-ID-C','Contact Details','contact', 2, false);
-CALL save_question('RANDOM-ID-D','Study Title','textline', 3, false);
-CALL save_question('RANDOM-ID-E','Sample Dropdown','dropdown', 4, false);
-CALL save_question('RANDOM-ID-F','Sample Upload','upload', 5, false);
-CALL save_question('RANDOM-ID-G','Edit Your Text!','text', 6, false);
-CALL save_question('RANDOM-ID-H','Edit Your Single Choice!','single', 7, false);
-CALL save_question('RANDOM-ID-I','My Sample Heading','heading', 8, false);
+CALL save_question('RANDOM-ID-B','Request Type','multi', 1, false, false);
+CALL save_question('RANDOM-ID-C','Contact Details','contact', 2, false, false);
+CALL save_question('RANDOM-ID-D','Study Title','textline', 3, false, false);
+CALL save_question('RANDOM-ID-E','Sample Dropdown','dropdown', 4, false, false);
+CALL save_question('RANDOM-ID-F','Sample Upload','upload', 5, false, false);
+CALL save_question('RANDOM-ID-G','Edit Your Text!','text', 6, false, false);
+CALL save_question('RANDOM-ID-H','Edit Your Single Choice!','single', 7, false, false);
+CALL save_question('RANDOM-ID-I','My Sample Heading','heading', 8, false, false);
 
 -- Populate Answers
 CALL save_answer('ANSWERID-B','Option1','multi', 'RANDOM-ID-B');

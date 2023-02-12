@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 import ExperimentIcon from "../../../assets/experiment.svg";
@@ -7,7 +7,7 @@ import "./form-confirmation.css";
 
 function FormConfirmation() {
   const [loadProgressPage, setLoadProgressPage] = useState(false);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const formId = window.location.pathname.split("/")[2];
   const allFormSubmissions = useSelector(
     (state) => state.formReducer.formSubmissions

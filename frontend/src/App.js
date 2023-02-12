@@ -20,19 +20,28 @@ import SignUpForm from "./components/SignUpForm";
 import Setting from "./screens/setting/setting";
 import { useDispatch, useSelector } from "react-redux";
 import { PING } from "./redux/actions/userActions";
+import { START_LOADING } from "./redux/actions/uiActions";
 
 function App() {
   const dispatch = useDispatch();
   const currentUser = useSelector(
     (state) => state.userReducer.currentUser
   );
+  const loading = useSelector(
+    (state) => state.uiReducer.loading
+  );
 
   useEffect(() => {
+    dispatch({type: START_LOADING});
     const user = localStorage.getItem("currentUser");
     if (user) {
       dispatch({type: PING, payload: JSON.parse(user)});
     }
   }, [dispatch]);
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <div className="App">

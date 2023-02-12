@@ -22,7 +22,7 @@ import { SUBMIT_FORM } from "../../redux/actions/formActions";
 import { TOGGLE_COST_ESTIMATE } from "../../redux/actions/uiActions";
 import ProjectSelector from "../../components/ProjectSelector";
 import { ToastContainer } from "react-toastify";
-import { SuccessToast, WarningToast } from "../../components/Toasts";
+import { WarningToast } from "../../components/Toasts";
 
 function RequestForm() {
   const dispatch = useDispatch();
