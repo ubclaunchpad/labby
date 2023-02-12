@@ -81,7 +81,7 @@ function LogicView() {
                         type: DELETE_LOGIC,
                         payload: {
                           logic_id: logic.condition_id,
-                          form_id: formId
+                          form_id: formId,
                         },
                       });
                     }}

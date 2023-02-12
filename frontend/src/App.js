@@ -32,9 +32,9 @@ function App() {
   );
 
   useEffect(() => {
-    dispatch({type: START_LOADING});
     const user = localStorage.getItem("currentUser");
     if (user) {
+      dispatch({type: START_LOADING});
       dispatch({type: PING, payload: JSON.parse(user)});
     }
   }, [dispatch]);
