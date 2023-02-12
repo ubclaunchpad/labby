@@ -28,7 +28,7 @@ function EditComponentFooter({ question }) {
             });
           }}
         >
-          Logic Added
+          View Logic
         </div>
       ) : (
         <div />

@@ -76,7 +76,7 @@
     align-items: flex-end;
     justify-content: space-between;
 }
-/* Logic Added (div) */
+/* View Logic (div) */
 .GlobalEditorLogicAdded {
     display: flex;
     padding-left: 20px;
