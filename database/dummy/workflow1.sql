@@ -85,5 +85,5 @@ CALL save_assignment('ASN-2', 'USER-A', 'SUB-1');
 CALL save_assignment('ASN-3', 'USER-B', 'SUB-1');
 
 -- Create Billable Items
-CALL save_billable('BILLABLE-1', 'SOW-1', 'PROJECTID-A', 'Testing Billable 1', 1, 10.0, '2015-01-01', '2015-01-01', false, '2015-01-01', 'USER-A');
-CALL save_billable('BILLABLE-2', 'SOW-1', 'PROJECTID-A', 'Testing Billable 2', 1, 15.0, '2015-01-01', '2015-01-01', false, '2015-01-01', 'USER-A');
+CALL save_billable('BILLABLE-1', 'SOW-1', 'PROJECTID-A', 'Testing Billable 1', 1, 10.0, 'Comment for Billable 1', '2015-01-01', '2015-01-01', false, '2015-01-01', 'USER-A');
+CALL save_billable('BILLABLE-2', 'SOW-1', 'PROJECTID-A', 'Testing Billable 2', 1, 15.0, 'Comment for Billable 2', '2015-01-01', '2015-01-01', false, '2015-01-01', 'USER-A');

@@ -50,6 +50,7 @@ export default class BillingController {
         name: req.body.name,
         quantity: req.body.quantity,
         cost: req.body.cost,
+        comment: req.body.comment,
         createdDate: req.body.createdDate,
         completedTime: req.body.completedTime,
         billed: req.body.billed,

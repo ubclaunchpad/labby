@@ -123,6 +123,7 @@ function ServiceList() {
               name: "New Service",
               quantity: 1,
               cost: 0,
+              comment: "",
               createdDate: new Date(),
               completedTime: null,
               billed: false,
