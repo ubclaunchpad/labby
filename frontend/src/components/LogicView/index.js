@@ -33,7 +33,10 @@ function LogicView() {
           }}
         >
           <div className="LogicTitle">Your Added Logic</div>
-          <div className="LogicText">{`For Q${selectedQuestion.position_index}: ${selectedQuestion.question}`}</div>
+          <div className="LogicText">
+            For{" "}
+            <div className="LogicTextInside">{`Q${selectedQuestion.position_index}: ${selectedQuestion.question}`}</div>
+          </div>
           <div className="LogicDivider" />
           {logicList[selectedQuestion.question_id].map((logic) => {
             const answerArray = Object.values(answerList).flat();
@@ -51,13 +54,15 @@ function LogicView() {
                     src={SideArrow}
                     alt="Side Arrow"
                   />
-                  {/* <div className="LogicText">{answerObj.question}</div>
+                  <div className="LogicText">{`Q${answerObj.position_index}: ${answerObj.question}`}</div>
                   <img
                     className="LogicArrow"
                     src={SideArrow}
                     alt="Side Arrow"
-                  /> */}
-                  <div className="LogicText">{answerObj.answer}</div>
+                  />
+                  <div className="LogicBox">
+                    <div className="LogicText">{answerObj.answer}</div>
+                  </div>
                   <img
                     className="LogicArrow"
                     src={SideArrow}
@@ -94,7 +99,6 @@ function LogicView() {
               return null;
             }
           })}
-
           <div className="LogicDivider" />
         </div>
       </div>
