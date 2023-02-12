@@ -192,6 +192,7 @@ export const postServiceCostApi = async (payload) => {
       name: payload.name,
       quantity: payload.quantity,
       cost: payload.cost,
+      comment: payload.comment,
       createdDate: payload.createdDate,
       completedTime: payload.completedTime,
       billed: payload.billed,
