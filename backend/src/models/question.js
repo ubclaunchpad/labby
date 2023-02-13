@@ -3,7 +3,7 @@ import con from "../config/Database.js";
 export class Question {
   insertQuestion(newQuestion, result) {
     con.query(
-      "CALL save_question(?, ?, ?, ?, ?, ?)",
+      "CALL save_question(?, ?, ?, ?, ?, ?, ?)",
       [
         newQuestion.question_id,
         newQuestion.form_id,
@@ -11,6 +11,7 @@ export class Question {
         newQuestion.question_type,
         newQuestion.question_index,
         newQuestion.mandatory,
+        newQuestion.clinical,
       ],
       function (error, results) {
         if (error) {

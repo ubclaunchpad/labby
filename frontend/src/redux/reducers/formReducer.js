@@ -14,6 +14,7 @@ import {
   REMOVE_SINGLE_RESPONSE,
   SET_FORMS,
   REMOVE_PROJECT_RESPONSE,
+  SUBMIT_FORM,
 } from "../actions/formActions";
 
 const defaultQuestionlist = {
@@ -29,6 +30,13 @@ const defaultQuestionlist = {
 };
 const defaultFormList = [];
 const defaultAnswerList = [];
+const defaultFormSubmissions = [
+  // {
+  //   formResponses: [],
+  //   projectId: "",
+  //   billables: [],
+  // },
+];
 
 const formQuestions = (state = defaultQuestionlist, action) => {
   switch (action.type) {
@@ -75,7 +83,9 @@ const formResponses = (state = defaultAnswerList, action) => {
       return [...state];
     }
     case REMOVE_PROJECT_RESPONSE: {
-      state = state.filter((response) => response.question.project_id === undefined);
+      state = state.filter(
+        (response) => response.question.project_id === undefined
+      );
       return [...state];
     }
     case ADD_FULLNAME_RESPONSE: {
@@ -171,4 +181,22 @@ const formList = (state = defaultFormList, action) => {
   }
 };
 
-export default combineReducers({ formQuestions, formResponses, formList });
+const formSubmissions = (state = defaultFormSubmissions, action) => {
+  switch (action.type) {
+    case SUBMIT_FORM: {
+      state.push(action.payload)
+      // TODO: save submitted forms to backend
+      return state;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
+export default combineReducers({
+  formQuestions,
+  formResponses,
+  formList,
+  formSubmissions,
+});

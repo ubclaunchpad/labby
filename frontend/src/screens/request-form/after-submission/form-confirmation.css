@@ -1,0 +1,66 @@
+.formConfirmationPage {
+  height: 100vh;
+  padding: 100px 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.formConfirmationPage h4 {
+  color: #5974e9;
+  font-weight: bold;
+  font-size: 22px;
+}
+.formConfirmationPage h2 {
+  color: #353535;
+  font-weight: bold;
+  font-size: 26px;
+}
+.formConfirmationPage h3 {
+  color: #353535;
+  font-weight: bold;
+  font-size: 24px;
+}
+.formConfirmationPage img {
+  width: 100px;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 35px;
+}
+.formConfirmationPage table {
+  border: none;
+  /* border-bottom: 18px solid #ecedf3; */
+  min-width: 60%;
+  margin-top: 12px;
+  margin-bottom: 18px;
+  background-color: transparent;
+}
+.formConfirmationPage tr:nth-child(odd) {
+  background-color: #f6f6f6;
+}
+.formConfirmationPage tr:first-child,
+.formConfirmationPage tr:last-child {
+  background-color: #ecedf3;
+}
+.formConfirmationPage tr:first-child th:first-child {
+  border-top-left-radius: 10px;
+}
+.formConfirmationPage tr:first-child th:last-child {
+  border-top-right-radius: 10px;
+}
+.formConfirmationPage tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+.formConfirmationPage tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
+.formConfirmationPage th,
+.formConfirmationPage td {
+  padding: 8px;
+  color: #666;
+}
+.formConfirmationPage .progressPageLink{
+  color: #5974e9;
+  cursor: pointer;
+  font-weight: 600;
+}

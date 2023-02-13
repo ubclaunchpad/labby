@@ -14,7 +14,7 @@ export const getQuestions = async (payload) => {
     };
     if (payload) {
       const formId = payload;
-      const questions = await axios.get(`question/${formId}`);
+      const questions = await axios.get(`question/${formId}`, { headers: headers });
       return questions;
     }
 
@@ -38,6 +38,7 @@ export const saveQuestions = async (payload) => {
       question_type: payload.question_type,
       question_index: payload.question_index,
       mandatory: payload.mandatory,
+      clinical: payload.clinical,
     });
 
     const questions = await axios.post("question/", data, { headers: headers });

@@ -15,6 +15,7 @@ CREATE TABLE `questions_cost` (
 	price_category VARCHAR(50),
 	cost DOUBLE,
 	quantifiable BOOLEAN,
+	unit VARCHAR(50),
 	PRIMARY KEY (`cost_id`),
 	FOREIGN KEY (fk_answer_id) REFERENCES questions_answer(answer_id) ON DELETE CASCADE
 );

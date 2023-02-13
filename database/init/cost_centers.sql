@@ -15,7 +15,6 @@ CREATE TABLE `cost_centers` (
 	cost_center_email VARCHAR(255),
 	cost_center_address VARCHAR(255),
 	cost_center_type VARCHAR(50),
-	cost_center_unit VARCHAR(50),
 	PRIMARY KEY (`cost_center_id`)
 ); 
 

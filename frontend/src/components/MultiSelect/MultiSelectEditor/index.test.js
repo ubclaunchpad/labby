@@ -14,7 +14,7 @@ describe("A test suite for the single select component", () => {
     screen.getByText("Q4");
     const questionTitle = screen.getByTitle("Add a question name");
     const optionInput = screen.getByTitle("Add an option");
-    const logicRequired = screen.getByText("Logic Added");
+    const logicRequired = screen.getByText("View Logic");
     screen.getByText("Required");
     screen.getByTitle("Make this question required");
     userEvent.type(optionInput, "TestOption");

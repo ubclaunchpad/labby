@@ -1,4 +1,5 @@
 import { call, put, takeLatest } from "redux-saga/effects";
+import { STOP_LOADING } from "../actions/uiActions";
 import {
   DELETE_ORGANIZATION,
   DELETE_USER,
@@ -43,8 +44,9 @@ export function* deleteUserSaga({ payload }) {
 }
 
 export function* postUserSaga({ payload }) {
-  yield call(saveUserApi, payload);
-  yield loadUserlistSaga(); // QUESTION: why do we need to load the userlist?
+  const response = yield call(saveUserApi, payload);
+  // yield loadUserlistSaga(); // QUESTION: why do we need to load the userlist?
+  return response;
 }
 
 export function* authenticateUserSaga({ payload }) {
@@ -82,6 +84,7 @@ export function* pingCheckSaga({ payload }) {
   } else {
     yield put({ type: SET_CURRENT_USER, payload: null });
   }
+  yield put({ type: STOP_LOADING});
 }
 
 export default function* userSaga() {

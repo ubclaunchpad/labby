@@ -76,7 +76,7 @@
     align-items: flex-end;
     justify-content: space-between;
 }
-/* Logic Added (div) */
+/* View Logic (div) */
 .GlobalEditorLogicAdded {
     display: flex;
     padding-left: 20px;
@@ -99,6 +99,16 @@
     color: #AEAEAE;
     justify-content: center;
     align-items: center;
+}
+
+.GlobalEditorCheckbox {
+    display: flex;
+    height: 30px;
+    font-size: 14px;
+    color: #AEAEAE;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
 }
 
 

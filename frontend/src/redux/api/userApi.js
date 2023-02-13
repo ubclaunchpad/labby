@@ -38,10 +38,6 @@ export const getEmployeeList = async () => {
 
 export const saveUserApi = async (payload) => {
   try {
-    const token = JSON.parse(localStorage.getItem("currentUser")).token;
-    var headers = {
-      Authorization: `Bearer ${token}`,
-    };
     var data = JSON.stringify({
       user_id: payload.user_id,
       organization_id: payload.fk_organization_id,
@@ -51,9 +47,7 @@ export const saveUserApi = async (payload) => {
       password: payload.password,
     });
 
-    const user = await axios.post("user/", data, {
-      headers: headers,
-    });
+    const user = await axios.post("user/", data);
 
     return user;
   } catch (err) {
