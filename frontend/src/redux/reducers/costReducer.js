@@ -9,6 +9,7 @@ const defaultCostDataSourceData = [
     internal: "$150",
     external: "$",
     industry: "$",
+    unit: "CAD",
   },
   {
     key: "2",
@@ -17,6 +18,7 @@ const defaultCostDataSourceData = [
     internal: "$150",
     external: "$",
     industry: "$",
+    unit: "CAD",
   },
   {
     key: "3",
@@ -25,6 +27,7 @@ const defaultCostDataSourceData = [
     internal: "$150",
     external: "$",
     industry: "$",
+    unit: "CAD",
   },
 ];
 

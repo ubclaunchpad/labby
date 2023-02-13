@@ -52,6 +52,13 @@ const CostTable = () => {
       width: "10%",
     },
     {
+      title: "Unit",
+      dataIndex: "unit",
+      key: "unit",
+      editable: true,
+      width: "10%",
+    },
+    {
       title: "Quantifiable",
       dataIndex: "quantifiable",
       key: "quantifiable",
