@@ -26,7 +26,6 @@ function ServiceList() {
               <td>Service</td>
               <td>Quantity</td>
               <td>Cost</td>
-              <td>Unit</td>
             </tr>
           </thead>
         </table>
@@ -85,23 +84,6 @@ function ServiceList() {
                         }}
                       />
                     </td>
-                    <td>
-                      <input
-                        className="serviceUnitInput"
-                        defaultValue={"CAD"}
-                        onBlur={(text) => {
-                          dispatch({
-                            type: POST_SERVICE_COST,
-                            payload: {
-                              ...serviceCost,
-                              sow_id: serviceCost.fk_sow_id,
-                              cost: text.target.value,
-                            },
-                          });
-                        }}
-                      />
-                    </td>
-
                     <td>
                       <div>
                         <img

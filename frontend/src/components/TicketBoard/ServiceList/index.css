@@ -26,7 +26,7 @@
 }
 
 .serviceTable td {
-  padding: 2px;
+  padding: 10px;
   text-overflow: ellipsis;
 }
 
@@ -63,12 +63,6 @@
 }
 
 .serviceCostInput {
-  border-radius: 5px;
-  border: none;
-  background-color: #d2d2d2;
-  text-align: center;
-}
-.serviceUnitInput {
   border-radius: 5px;
   border: none;
   background-color: #d2d2d2;
