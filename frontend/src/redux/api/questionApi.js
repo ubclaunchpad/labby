@@ -9,6 +9,7 @@ const axios = defaultAxios.create({
 export const getQuestions = async (payload) => {
   try {
     const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    console.log(token);
     var headers = {
       Authorization: `Bearer ${token}`,
     };

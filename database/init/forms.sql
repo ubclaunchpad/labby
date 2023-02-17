@@ -18,7 +18,16 @@ END$$
 
 DELIMITER ;
 
+DELIMITER $$
 
+CREATE PROCEDURE `publish_form` (IN `_form_id` VARCHAR(50))
 
+BEGIN
+    UPDATE forms
+	SET published = "TRUE"
+    WHERE forms.form_id = _form_id
+  
+END $$
 
+DELIMITER ;
 
