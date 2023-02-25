@@ -69,6 +69,13 @@
   text-align: center;
 }
 
+.serviceCommentInput {
+  width: 250%;
+  border-radius: 5px;
+  border: none;
+  background-color: #d2d2d2;
+}
+
 .serviceListRows {
   max-height: 95%;
   overflow-y: overlay;
