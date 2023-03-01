@@ -44,7 +44,6 @@ export class Form {
   }
 
   insertFormBuild(id, result) {
-    console.log("id: ", id)
     con.query(`CALL publish_form(?)`, [id], (err, res) => {
       if (err) {
         console.log("error: ", err);

@@ -22,7 +22,7 @@ router.post("/", authorize(), (req, res) => {
     });
 });
 
-router.post("/:formId", (req, res) => {
+router.post("/:formId", authorize(), (req, res) => {
   formController
     .saveFormBuild(req.params.formId)
     .then((response) => {

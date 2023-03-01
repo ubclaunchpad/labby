@@ -21,7 +21,7 @@ import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { DraggableElement } from "../BuilderLibrary/ComponentLibrary";
 import ProjectSelectorEditor from "../ProjectSelector/ProjectSelectorEditor";
 
-import { SuccessToast, WarningToast } from "../../components/Toasts";
+import { SuccessToast } from "../../components/Toasts";
 import { SAVE_FORM_BUILD } from "../../redux/actions/formActions";
 
 const QuestionContainer = styled.div`
@@ -105,7 +105,7 @@ function FormBuilder() {
                   dispatch({ type: SAVE_FORM_BUILD, payload: { form_id: formId }});
                 }}
             >
-              Submit
+              Publish Form
             </button>
           </div> 
           <div className="FormPreview">

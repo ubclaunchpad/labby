@@ -20,6 +20,10 @@
   padding-bottom: 5px;
 }
 
+.FormSubmitT {
+  margin-right: 10px;
+}
+
 .FormTitle {
   display: flex;
   flex-direction: row;
