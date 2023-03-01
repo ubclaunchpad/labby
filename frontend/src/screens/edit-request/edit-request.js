@@ -84,6 +84,7 @@ function EditRequest() {
       question_type: draggableId,
       question_index: destination.index + 1,
       mandatory: false,
+      clinical: false,
     };
 
     dispatch({ type: SAVE_QUESTION, payload: newQuestion });

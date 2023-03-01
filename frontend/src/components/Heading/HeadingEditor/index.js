@@ -106,7 +106,7 @@ function HeadingEditor({ question }) {
               });
             }}
           >
-            Logic Added
+            View Logic
           </div>
         ) : (
           <div />

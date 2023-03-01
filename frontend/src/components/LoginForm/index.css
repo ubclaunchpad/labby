@@ -1,36 +1,76 @@
-.LoginPage {
+.PageContainer {
     display: flex;
     flex-direction: row;
+}
+
+.BackgroundImg {
+    width: 50%;
+    background-image: url("../../assets/LoginBackground.png");
+    background-size: cover;
+}
+
+.SignUpBackgroundImg {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    background-image: url("../../assets/LoginBackground.png");
+    justify-content: flex-end;
+    background-size: cover;
+}
+.LoginPage {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 100vh;
+    width:  50%;
 }
+
 .LoginContainer {
-    width: 33%;
+    width: 50%;
     height: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center; 
-    background-color: #ECEDF3;
-    /* border-style: solid; */
     border-radius: 10px;
+}
+
+.CreateAccount {
+    display: flex;
+    flex-direction: row;
+}
+
+.LogoImg {
+    width: 10%;
+    float: left;
 }
 
 
 .LoginForm {
+    padding: 25px;
     display: flex;
     flex-direction: column;
-    align-items: right;
-    width: 75%;
-    /* border-style: solid; */
+    justify-content: center;
+    width: 100%;
 }
 
 .LoginInput {
     width: 100%;
-    height: 40px; /* should make responsive? */
+    height: 50px; 
     margin-top: 3%;
-    border: 0;
-    border-radius: 5px;
+    outline: 0;
+    border-width: 0 0 1px;
+}
+
+.LoginTitle {
+    display: flex;
+    align-items: right;
+}
+
+.ForgotPassword {
+    display: flex;
+    align-items: right;
 }
 
 .LoginText {
@@ -39,15 +79,35 @@
 
 .SignInBtn {
     cursor: pointer;
-    width: 60%;
-    height: 40px;
-    margin-top: 3%;
+    width: 30%;
+    height: 30px;
+    margin-top: 20%;
     align-self: center;
     border: 0;
-    border-radius: 15px;
+    border-radius: 10px;
     background-color: #5B73E8;
     color: #fff;
     font-size: 12px;
     font-style: bold;
 }
+
+.LogInBtn {
+    cursor: pointer;
+    width: 15%;
+    height: 30px;
+    margin: 2% 2% 10% 2%;
+    align-self: center;
+    border: 0;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    font-size: 12px;
+    font-style: bold;
+
+}
+
+.AlreadyUser {
+    color: white;
+}
+
 

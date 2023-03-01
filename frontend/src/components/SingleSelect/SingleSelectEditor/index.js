@@ -7,7 +7,6 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import X from "../../../assets/X.png";
 import DragDots from "../../../assets/DragDots.png";
-import { Checkbox } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import uuid from "react-uuid";
 import {
@@ -17,15 +16,11 @@ import {
   SAVE_ANSWER,
   SAVE_QUESTION,
 } from "../../../redux/actions/questionActions";
-import {
-  SET_LOGIC_QUESTION,
-  SET_LOGIC_VIEW_QUESTION,
-} from "../../../redux/actions/logicActions";
-import { TOGGLE_LOGIC } from "../../../redux/actions/uiActions";
+import { SET_LOGIC_QUESTION } from "../../../redux/actions/logicActions";
+import EditComponentFooter from "../../EditComponentFooter";
 
 function SingleSelectEditor({ question }) {
   const dispatch = useDispatch();
-  const logicList = useSelector((state) => state.logicReducer.logicList);
   const questionList = useSelector(
     (state) => state.questionReducer.questionList
   );
@@ -116,8 +111,8 @@ function SingleSelectEditor({ question }) {
       </div>
       {/* Copy Everything Except Content Below For Reusability */}
       <div className="single-select-options-container">
-      <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
-        <FormControl style={{width: "100%"}}>
+        <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
+        <FormControl style={{ width: "100%" }}>
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
             defaultValue="female"
@@ -170,47 +165,7 @@ function SingleSelectEditor({ question }) {
         </FormControl>
       </div>
       {/* Copy Everything Except Content Above For Reusability */}
-      <div className="GlobalEditorComponentFooter">
-        {logicList[question.question_id] ? (
-          <div
-            className="GlobalEditorLogicAdded"
-            onClick={() => {
-              dispatch({
-                type: TOGGLE_LOGIC,
-                payload: true,
-              });
-              dispatch({
-                type: SET_LOGIC_VIEW_QUESTION,
-                payload: question,
-              });
-            }}
-          >
-            Logic Added
-          </div>
-        ) : (
-          <div />
-        )}
-        <div className="GlobalEditorRequiredQuestion">
-          <Checkbox
-            style={{ color: "#AEAEAE", padding: 3 }}
-            checked={question.mandatory === 1}
-            onClick={(e) => {
-              dispatch({
-                type: SAVE_QUESTION,
-                payload: {
-                  ...question,
-                  form_id: question.fk_form_id,
-                  question_title: question.question,
-                  mandatory: e.target.checked,
-                  question_index: question.position_index,
-                },
-              });
-              dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
-            }}
-          />
-          Required
-        </div>
-      </div>
+      <EditComponentFooter question={question} />
     </div>
   );
 }
