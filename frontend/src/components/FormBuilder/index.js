@@ -1,5 +1,5 @@
 import "./index.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { appColor } from "../../constants";
 import DropdownEditor from "../Dropdown/DropdownEditor";
 import FileInputEditor from "../FileInput/FileInputEditor";
@@ -20,6 +20,9 @@ import styled from "styled-components";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { DraggableElement } from "../BuilderLibrary/ComponentLibrary";
 import ProjectSelectorEditor from "../ProjectSelector/ProjectSelectorEditor";
+
+import { SuccessToast } from "../../components/Toasts";
+import { SAVE_FORM_BUILD } from "../../redux/actions/formActions";
 
 const QuestionContainer = styled.div`
   border: ${(props) =>
@@ -64,6 +67,7 @@ function renderQuestion(question) {
 }
 
 function FormBuilder() {
+  const dispatch = useDispatch();
   const questionList = useSelector(
     (state) => state.questionReducer.questionList
   );
@@ -83,6 +87,27 @@ function FormBuilder() {
         </div>
         <div className="FormTitle">
           {FormTitle()}
+          <div className="FormSubmitT">
+            <button
+                className="FormPreviewButton"
+                style={{
+                  backgroundColor: appColor.primaryLight,
+                  color: appColor.white,
+                }}
+                onMouseOver={(e) => {
+                  e.target.style.backgroundColor = appColor.primary;
+                }}
+                onMouseOut={(e) => {
+                  e.target.style.backgroundColor = appColor.primaryLight;
+                }}
+                onClick={() => {
+                  SuccessToast("Form Submitted!");
+                  dispatch({ type: SAVE_FORM_BUILD, payload: { form_id: formId }});
+                }}
+            >
+              Publish Form
+            </button>
+          </div> 
           <div className="FormPreview">
             <NavLink to={`/request/${formId}`}>
               <button

@@ -10,21 +10,24 @@ DELIMITER $$
 CREATE PROCEDURE `save_form` (
    IN `_form_id` VARCHAR(50),
    IN `_form_name` VARCHAR(50)
- 
 ) BEGIN INSERT INTO `forms` (
    `form_id`,
    `form_name`,
-   `date_created`
+   `date_created`,
+   `published`
 )
 VALUES
    (
    `_form_id`,
    `_form_name`,
-   now()
+   now(),
+   false
    )
 ON DUPLICATE KEY UPDATE 
    forms.form_id=`_form_id`, 
-   forms.form_name=`_form_name`;
+   forms.form_name=`_form_name`,
+   forms.date_created=now(),
+   forms.published=false;
   
 END $$
  
