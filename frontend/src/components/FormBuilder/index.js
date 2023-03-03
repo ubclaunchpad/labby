@@ -1,5 +1,5 @@
 import "./index.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { appColor } from "../../constants";
 import DropdownEditor from "../Dropdown/DropdownEditor";
 import FileInputEditor from "../FileInput/FileInputEditor";
@@ -20,6 +20,7 @@ import styled from "styled-components";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { DraggableElement } from "../BuilderLibrary/ComponentLibrary";
 import ProjectSelectorEditor from "../ProjectSelector/ProjectSelectorEditor";
+import { useEffect, useMemo } from "react";
 
 const QuestionContainer = styled.div`
   border: ${(props) =>
@@ -64,9 +65,32 @@ function renderQuestion(question) {
 }
 
 function FormBuilder() {
+  const dispatch = useDispatch();
+
   const questionList = useSelector(
     (state) => state.questionReducer.questionList
   );
+
+  const urgentQuestion = useMemo(() => {
+    return {
+    question_id: 1,
+    question_type: "single",
+    question_title: "Is this request urgent?",
+    question_description: "",
+    question_options: [
+      { option_id: "yes", option_text: "Yes" },
+      { option_id: "no", option_text: "No" },
+    ],
+    question_required: true,
+    question_order: 1,
+    position_index: 1000,
+  };
+  }, []);
+
+  useEffect(() => {
+    dispatch({ type: "ADD_QUESTION", payload: urgentQuestion });
+  }, [dispatch, urgentQuestion]);
+
   const selectedQuestion = useSelector(
     (state) => state.logicReducer.currentLogicQuestion
   );
@@ -160,6 +184,11 @@ function FormBuilder() {
                 </div>
               )}
               {provided.placeholder}
+              
+              <div>
+                {renderQuestion(urgentQuestion)}
+              </div>
+
             </QuestionContainer>
           )}
         </StrictModeDroppable>

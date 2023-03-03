@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import "./request-form.css";
 import { appColor } from "../../constants";
-import { LOAD_QUESTION } from "../../redux/actions/questionActions";
+import { LOAD_QUESTION} from "../../redux/actions/questionActions";
 import { LOAD_COST } from "../../redux/actions/costActions";
 import MultiSelect from "../../components/MultiSelect";
 import SingleSelect from "../../components/SingleSelect";

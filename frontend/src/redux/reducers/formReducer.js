@@ -41,12 +41,16 @@ const defaultFormSubmissions = [
 const formQuestions = (state = defaultQuestionlist, action) => {
   switch (action.type) {
     case ADD_QUESTION: {
-      action.payload.forEach((question) => {
-        if (!state[question.question_type].includes(question)) {
-          state[question.question_type].push(question);
-        }
-      });
-      return [...state];
+      if(Array.isArray(action.payload)){
+        action.payload.forEach((question) => {
+          if (!state[question.question_type].includes(question)) {
+            state[question.question_type].push(question);
+          }
+        });
+      } else {
+        state[action.payload.question_type].push(action.payload);
+      }
+      return {...state};
     }
     default: {
       return state;
