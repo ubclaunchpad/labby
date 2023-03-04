@@ -21,3 +21,5 @@ export const SAVE_FORM = "SAVE_FORM";
 export const LOAD_FORMS = "LOAD_FORMS";
 export const SET_FORMS = "SET_FORMS";
 export const DELETE_FORM = "DELETE_FORM";
+
+export const SAVE_FORM_BUILD = "SUBMIT_FORM_BUILD";

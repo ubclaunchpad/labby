@@ -38,6 +38,24 @@ export const saveFormsApi = async (payload) => {
   }
 };
 
+export const saveBuildFormsApi = async (payload) => {
+  try {
+    console.log(payload.form_id);
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    console.log(token);
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const form = await axios.post(`form/${payload.form_id}`, {
+      headers: headers,
+    });
+
+    return form;
+  } catch (err) {
+    return console.error(err);
+  }
+}
+
 export const createTicketApi = async (payload) => {
   try {
     const token = JSON.parse(localStorage.getItem("currentUser")).token;
