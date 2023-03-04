@@ -5,21 +5,22 @@ import "./index.css";
 const InvoiceTotal = () => {
   const dataSource = useSelector((state) => state.billingReducer.billingList);
 
-  const totalServices = dataSource.length;
-  const totalSows = dataSource.length;
-  const totalProjects = dataSource.length;
+  const totalServices = dataSource.length.toString().padStart(1, "0");
+  const totalSows = dataSource.filter(item => item.type === "SOW").length.toString().padStart(1, "0");
+  const totalProjects = dataSource.filter(item => item.type === "Project").length.toString().padStart(1, "0");
 
   return (
     <div className="InvoiceTotal">
-      <div className="invoice-total-values-container">
-        <div className="TotalServices">{totalServices}</div>
-        <div className="TotalSows">{totalSows}</div>
-        <div className="TotalProjects">{totalProjects}</div>
-      </div>
-      <div className="invoice-total-name-container">
-        <div className="invoice-total-names TotalServices">Total Services</div>
-        <div className=" invoice-total-names TotalSows">Total SOWs</div>
-        <div className=" invoice-total-names TotalProjects">Total Projects</div>
+      <div className="invoice-total-container">
+        <div className="TotalServices">
+          <span className="total-number">{totalServices}</span> Total Services
+        </div>
+        <div className="TotalSows">
+          <span className="total-number">{totalSows}</span> Total SOWs
+        </div>
+        <div className="TotalProjects">
+          <span className="total-number">{totalProjects}</span> Total Projects
+        </div>
       </div>
     </div>
   );
