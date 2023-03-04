@@ -6,7 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import { Checkbox } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import Divider from "../Divider";
-import { ADD_RESPONSE, REMOVE_RESPONSE } from "../../redux/actions/formActions";
+import { ADD_RESPONSE, REMOVE_RESPONSE, ADD_OTHER_RESPONSE, REMOVE_OTHER_RESPONSE } from "../../redux/actions/formActions";
 import uuid from "react-uuid";
 
 function MultiSelect({ question }) {
@@ -67,14 +67,14 @@ function MultiSelect({ question }) {
                       <Checkbox
                         onClick={(e) => {
                           if (e.target.checked) {
-                            dispatch({
-                              type: ADD_RESPONSE,
-                              payload: {
-                                id: uuid(),
-                                response: option.answer_id,
-                                question: option,
-                              },
-                            });
+                              dispatch({
+                                type: ADD_RESPONSE,
+                                payload: {
+                                  id: uuid(),
+                                  response: option.answer_id,
+                                  question: option,
+                                },
+                              });
                             setSelectedAnswers([
                               ...selectedAnswers,
                               option.answer_id,
@@ -82,7 +82,7 @@ function MultiSelect({ question }) {
                           } else {
                             dispatch({
                               type: REMOVE_RESPONSE,
-                              payload: {
+                              payload: { 
                                 response: option.answer_id,
                                 question: option,
                               },
@@ -100,7 +100,7 @@ function MultiSelect({ question }) {
                   <div className="new-question-input">{option.answer}</div>
                 </div>
                 {selectedAnswers.includes(option.answer_id) &&
-                option.quantifiable ? (
+                option.quantifiable ? ( 
                   <div className="quantityBox">
                     <input
                       className="quantityInput"
@@ -126,6 +126,44 @@ function MultiSelect({ question }) {
                         ? quantityMap[option.answer_id][1]
                         : ""}
                     </div>
+                  </div>
+                ) : null}
+                {selectedAnswers.includes(option.answer_id) &&
+                option.answer == "Other" ? ( 
+                  <div className="quantityBox">
+                    <input
+                      className="quantityInput"
+                      required
+                      onBlur={(e) => {
+                        const inputValue = e.target.value;
+                        if (inputValue.trim() === "") {
+                          const errorMessage = "This field is required";
+                          const popup = document.createElement("div");
+                          popup.className = "popup";
+                          popup.textContent = errorMessage;
+                          e.target.parentNode.appendChild(popup);
+
+                          //set timer for warning
+                          setTimeout(() => {
+                            e.target.parentNode.removeChild(popup);
+                          }, 3000);
+                          
+                          dispatch({
+                            type: REMOVE_OTHER_RESPONSE,
+                            payload: { question: question },
+                          });
+                        } else {
+                          dispatch({
+                                type: ADD_OTHER_RESPONSE,
+                                payload: {
+                                  id: uuid(),
+                                  response: "OTHER_" + inputValue,
+                                  question: question,
+                                },
+                              });
+                        }
+                      }}
+                    />
                   </div>
                 ) : null}
               </div>
