@@ -82,8 +82,9 @@ function ProjectSelectorEditor({ question }) {
         />
       </div>
       {/* Copy Everything Except Content Below For Reusability */}
-      <div className="single-select-options-container">
+      <div className="project-options-container">
         <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
+        <div className="project-options-instruction">No Further Configuration Required</div>
       </div>
       {/* Copy Everything Except Content Above For Reusability */}
       <EditComponentFooter question={question} />

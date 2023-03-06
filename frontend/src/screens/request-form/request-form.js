@@ -32,6 +32,9 @@ function RequestForm() {
   const formResponses = useSelector((state) => state.formReducer.formResponses);
   const logicList = useSelector((state) => state.logicReducer.logicList);
   const hideCost = useSelector((state) => state.costEstimateReducer.hideCost);
+  const clinicalList = useSelector(
+    (state) => state.formReducer.clinicalResponses
+  );
 
   const costEstimateMap = useSelector(
     (state) => state.costEstimateReducer.costEstimateList
@@ -128,6 +131,7 @@ function RequestForm() {
             formResponses,
             projectId: projectId,
             billables: billableList,
+            clinicalResponses: clinicalList,
           },
         });
         setSubmissionSuccessful(true)

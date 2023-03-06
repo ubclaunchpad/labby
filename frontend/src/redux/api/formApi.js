@@ -40,13 +40,12 @@ export const saveFormsApi = async (payload) => {
 
 export const saveBuildFormsApi = async (payload) => {
   try {
-    console.log(payload.form_id);
     const token = JSON.parse(localStorage.getItem("currentUser")).token;
-    console.log(token);
     var headers = {
       Authorization: `Bearer ${token}`,
     };
-    const form = await axios.post(`form/${payload.form_id}`, {
+    var data = JSON.stringify({});
+    const form = await axios.post(`form/${payload.form_id}`, data, {
       headers: headers,
     });
 
