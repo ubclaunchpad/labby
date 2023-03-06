@@ -15,6 +15,8 @@ import {
   SET_FORMS,
   REMOVE_PROJECT_RESPONSE,
   SUBMIT_FORM,
+  ADD_OTHER_RESPONSE,
+  REMOVE_OTHER_RESPONSE,
 } from "../actions/formActions";
 
 const defaultQuestionlist = {
@@ -69,9 +71,10 @@ const formResponses = (state = defaultAnswerList, action) => {
     case REMOVE_RESPONSE: {
       state = state.filter(
         (response) =>
-          response.question.question_id !==
-            action.payload.question.question_id ||
-          response.response !== action.payload.response
+        response.question.question_id !==
+        action.payload.question.question_id ||
+        response.question.answer_id !==
+        action.payload.question.answer_id
       );
       return [...state];
     }
@@ -161,6 +164,26 @@ const formResponses = (state = defaultAnswerList, action) => {
           response.question.question_id !==
             action.payload.question.question_id ||
           response.response.split("_")[0] !== "PHONE"
+      );
+      return [...state];
+    }
+    case ADD_OTHER_RESPONSE: {
+      state = state.filter(
+        (response) =>
+        response.question.question_id !==
+        action.payload.question.question_id ||
+        response.question.answer_id !==
+        action.payload.question.answer_id
+      );
+      state.push(action.payload);
+      return [...state];
+    }
+    case REMOVE_OTHER_RESPONSE: {
+      state = state.filter(
+        (response) =>
+        response.question.question_id !==
+        action.payload.question.question_id ||
+        response.response.split("_")[0] !== "OTHER"
       );
       return [...state];
     }
