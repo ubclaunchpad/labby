@@ -25,7 +25,7 @@ function ServiceList() {
             <tr className="heading">
               <td>Service</td>
               <td>Quantity</td>
-              <td>Cost</td>
+              <td>Cost ($)</td>
               <td></td>
             </tr>
           </thead>
@@ -72,7 +72,7 @@ function ServiceList() {
                     <td>
                       <input
                         className="serviceCostInput"
-                        defaultValue={"$ " + serviceCost.cost}
+                        defaultValue={serviceCost.cost}
                         onBlur={(text) => {
                           dispatch({
                             type: POST_SERVICE_COST,
@@ -119,7 +119,7 @@ function ServiceList() {
             payload: {
               billable_id: uuid(),
               sow_id: currentTicket.code,
-              project_id: currentTicket.project_id,
+              fk_project_id: currentTicket.project_id,
               name: "New Service",
               quantity: 1,
               cost: 0,
@@ -128,7 +128,7 @@ function ServiceList() {
               completedTime: null,
               billed: false,
               billedTime: null,
-              createdBy: "USER-A",
+              created_by: "USER-A",
             },
           });
         }}

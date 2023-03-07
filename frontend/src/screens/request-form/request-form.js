@@ -114,7 +114,7 @@ function RequestForm() {
               quantity: quantity,
               cost: cost * quantity,
             });
-          } else {
+          } else if (service !== "" && service !== undefined) {
             // This question's cost not in current stored cost estimate
             billableList.push({
               service,

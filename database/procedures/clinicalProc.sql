@@ -1,6 +1,7 @@
 USE `labby`;
 
 DROP PROCEDURE IF EXISTS `addClinical`;
+DROP PROCEDURE IF EXISTS `load_clinical_by_survey`;
 
 DELIMITER $$
 
@@ -28,6 +29,13 @@ VALUES (
 	`_sample_id`,
 	`_authorized_by`
 );
+END $$
+
+CREATE PROCEDURE `load_clinical_by_survey` (IN `_survey_id` VARCHAR(50))
+
+BEGIN
+SELECT * FROM clinical 
+WHERE fk_survey_id = `_survey_id`;
 END $$
 
 DELIMITER ;

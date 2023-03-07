@@ -23,15 +23,16 @@ export function* submitResponseSaga({ payload }) {
       return put({ type: POST_SERVICE_COST, payload: {
         billable_id: uuid(),
         sow_id: survey_id,
-        project_id: payload.projectId,
+        fk_project_id: payload.projectId,
         name: billable.service,
         quantity: billable.quantity,
         cost: billable.cost,
+        comment: "",
         createdDate: new Date(),
         completedTime: null,
         billed: false,
         billedTime: null,
-        createdBy: "USER-A"
+        created_by: "USER-A"
       } });
     })
   );
