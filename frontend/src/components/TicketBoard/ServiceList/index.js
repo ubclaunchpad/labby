@@ -25,7 +25,7 @@ function ServiceList() {
             <tr className="heading">
               <td>Service</td>
               <td>Quantity</td>
-              <td>Cost</td>
+              <td>Cost ($)</td>
               <td></td>
             </tr>
           </thead>
@@ -35,57 +35,56 @@ function ServiceList() {
             <tbody>
               {currentTicketServiceCosts.map((serviceCost) => {
                 return (
-                  <div key={serviceCost.billable_id}>
-                    <tr className="serviceTableRow">
-                      <td>
-                        <input
-                          className="serviceNameInput"
-                          defaultValue={serviceCost.name}
-                          onBlur={(text) => {
-                            console.log(serviceCost);
-                            dispatch({
-                              type: POST_SERVICE_COST,
-                              payload: {
-                                ...serviceCost,
-                                sow_id: serviceCost.fk_sow_id,
-                                name: text.target.value,
-                              },
-                            });
-                          }}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          className="serviceCostInput"
-                          defaultValue={serviceCost.quantity}
-                          onBlur={(text) => {
-                            dispatch({
-                              type: POST_SERVICE_COST,
-                              payload: {
-                                ...serviceCost,
-                                sow_id: serviceCost.fk_sow_id,
-                                quantity: text.target.value,
-                              },
-                            });
-                          }}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          className="serviceCostInput"
-                          defaultValue={"$ " + serviceCost.cost}
-                          onBlur={(text) => {
-                            dispatch({
-                              type: POST_SERVICE_COST,
-                              payload: {
-                                ...serviceCost,
-                                sow_id: serviceCost.fk_sow_id,
-                                cost: text.target.value,
-                              },
-                            });
-                          }}
-                        />
-                      </td>
+<tr className="serviceTableRow" key={serviceCost.billable_id}>
+                    <td className="serviceTableRow">
+                      <input
+                        className="serviceNameInput"
+                        defaultValue={serviceCost.name}
+                        onBlur={(text) => {
+                          console.log(serviceCost);
+                          dispatch({
+                            type: POST_SERVICE_COST,
+                            payload: {
+                              ...serviceCost,
+                              sow_id: serviceCost.fk_sow_id,
+                              name: text.target.value,
+                            },
+                          });
+                        }}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        className="serviceCostInput"
+                        defaultValue={serviceCost.quantity}
+                        onBlur={(text) => {
+                          dispatch({
+                            type: POST_SERVICE_COST,
+                            payload: {
+                              ...serviceCost,
+                              sow_id: serviceCost.fk_sow_id,
+                              quantity: text.target.value,
+                            },
+                          });
+                        }}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        className="serviceCostInput"
+                        defaultValue={serviceCost.cost}
+                        onBlur={(text) => {
+                          dispatch({
+                            type: POST_SERVICE_COST,
+                            payload: {
+                              ...serviceCost,
+                              sow_id: serviceCost.fk_sow_id,
+                              cost: text.target.value,
+                            },
+                          });
+                        }}
+                      />
+                    </td>
 
                       <td>
                         <div>
@@ -141,7 +140,7 @@ function ServiceList() {
             payload: {
               billable_id: uuid(),
               sow_id: currentTicket.code,
-              project_id: currentTicket.project_id,
+              fk_project_id: currentTicket.project_id,
               name: "New Service",
               quantity: 1,
               cost: 0,
@@ -150,7 +149,7 @@ function ServiceList() {
               completedTime: null,
               billed: false,
               billedTime: null,
-              createdBy: "USER-A",
+              created_by: "USER-A",
             },
           });
         }}

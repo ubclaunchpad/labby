@@ -8,7 +8,7 @@ import {
 
 const defaultQuestionList = [];
 const defaultAnswerList = {};
-const AnswerSurveyList = [];
+const defaultAnswerSurveyList = [];
 
 const questionList = (state = defaultQuestionList, action) => {
   switch (action.type) {
@@ -59,15 +59,10 @@ const answerList = (state = defaultAnswerList, action) => {
   }
 };
 
-const answerSurveyList = (state = AnswerSurveyList, action) => {
+const answerSurveyList = (state = defaultAnswerSurveyList, action) => {
   switch (action.type) {
     case SET_ANSWER_BY_SURVEY: {
-      var finalAnswers = [];
-      action.payload.forEach((answer) => {
-        finalAnswers.push(answer);
-      });
-      console.log("Asnwer", finalAnswers);
-      return finalAnswers;
+      return action.payload;
     }
     default: {
       return state;

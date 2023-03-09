@@ -34,26 +34,29 @@ function EditComponentFooter({ question }) {
         <div />
       )}
       <div className="GlobalEditorRequiredQuestion">
-        <div className="GlobalEditorCheckbox">
-          <Checkbox
-            style={{ color: "#AEAEAE", padding: 3 }}
-            checked={question.clinical === 1}
-            onClick={(e) => {
-              dispatch({
-                type: SAVE_QUESTION,
-                payload: {
-                  ...question,
-                  form_id: question.fk_form_id,
-                  question_title: question.question,
-                  clinical: e.target.checked,
-                  question_index: question.position_index,
-                },
-              });
-              dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
-            }}
-          />
-          Clinical Service
-        </div>
+        {question.question_type === "multi" ||
+        question.question_type === "single" ? (
+          <div className="GlobalEditorCheckbox">
+            <Checkbox
+              style={{ color: "#AEAEAE", padding: 3 }}
+              checked={question.clinical === 1}
+              onClick={(e) => {
+                dispatch({
+                  type: SAVE_QUESTION,
+                  payload: {
+                    ...question,
+                    form_id: question.fk_form_id,
+                    question_title: question.question,
+                    clinical: e.target.checked,
+                    question_index: question.position_index,
+                  },
+                });
+                dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
+              }}
+            />
+            Clinical Service
+          </div>
+        ) : null}
         <div className="GlobalEditorCheckbox">
           <Checkbox
             style={{ color: "#AEAEAE", padding: 3 }}

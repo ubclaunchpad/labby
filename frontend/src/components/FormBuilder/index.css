@@ -20,6 +20,10 @@
   padding-bottom: 5px;
 }
 
+.FormSubmitT {
+  margin-right: 10px;
+}
+
 .FormTitle {
   display: flex;
   flex-direction: row;
@@ -27,8 +31,13 @@
 }
 
 .FormPreview {
+  flex: 0.3;
+  text-align: right;
+}
+
+.FormSubmitT {
   flex: 1;
-  text-align: end;
+  text-align: right;
 }
 
 .FormPreviewButton {
@@ -41,6 +50,18 @@
   transition-duration: 0.4s;
   cursor: pointer;
 }
+
+.FormSubmitButton {
+  height: 45px;
+  width: 150px;
+  border: 0;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
 
 .DragAndDropText {
   display: flex;

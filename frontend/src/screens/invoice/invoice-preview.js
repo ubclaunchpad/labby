@@ -29,11 +29,13 @@ function InvoicePreview() {
   const projectList = useSelector((state) => state.projectReducer.projectList);
 
   useEffect(() => {
+    if (projectList.length === 0) return;
     const customers = [];
     const projectMap = {};
     invoiceList.forEach((invoice) => {
       const billableProject = invoice.fk_project_id;
-      const billableCostCenterList = projectList.find((project) => project.project_id === billableProject).costcenter;
+      const billableProjectFilter = projectList.find((project) => project.project_id === billableProject);
+      const billableCostCenterList = billableProjectFilter.costcenter;
       const costcenter = billableCostCenterList[0] ?? "No Cost Center";
       if (customers.filter((customer) => customer.cost_center_id === costcenter.cost_center_id).length === 0) {
         customers.push(costcenter);
@@ -56,8 +58,8 @@ function InvoicePreview() {
 
         <div className="InvoicePreview">
           <div>
-            {customerList.map((customer) => (
-              <div ref={addtoRefs} key={customer.cost_center_id}>
+            {customerList.map((customer, index) => (
+              <div ref={addtoRefs} key={customer.cost_center_id ?? index}>
                 <InvoiceTemplate customer={customer} costcenterMap={costcenterMapping} />
               </div>
             ))}
