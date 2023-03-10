@@ -110,7 +110,7 @@ function UrgentEditor({ question }) {
         />
       </div>
       {/* Copy Everything Except Content Below For Reusability */}
-      <div className="urgent-options-container">
+      <div className="single-select-options-container">
         <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
         <FormControl style={{ width: "100%" }}>
           <RadioGroup
@@ -120,7 +120,7 @@ function UrgentEditor({ question }) {
           >
             {options.map((option, index) => {
               return (
-                <div className="urgent-option" key={index}>
+                <div className="single-select-option" key={index}>
                   <FormControlLabel control={<Radio />} />
                   <input
                     type="text"

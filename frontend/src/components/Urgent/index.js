@@ -23,7 +23,6 @@ function Urgent({ question }) {
     optionList = optionList.sort((a, b) => {
       let fa = a.answer;
       let fb = b.answer;
-
       if (fa < fb) {
         return -1;
       }
@@ -42,7 +41,7 @@ function Urgent({ question }) {
         {question.question}{" "}
         <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
       </div>
-      <div className="urgent-options-container">
+      <div className="single-select-options-container">
         <FormControl style={{ width: "100%" }}>
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
@@ -50,7 +49,7 @@ function Urgent({ question }) {
           >
             {options.map((option, index) => {
               return (
-                <div className="urgent-option" key={index}>
+                <div className="single-select-option" key={index}>
                   <FormControlLabel
                     value={option.answer}
                     control={

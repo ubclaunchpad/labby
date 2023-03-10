@@ -109,7 +109,7 @@ export const UrgentCard = () => {
   return (
     <DraggableCard>
       <img className="iconImage" src={SCIcon} alt="Contact Information" />
-      Urgent Request Question
+      Urgent Request
     </DraggableCard>
   );
 };

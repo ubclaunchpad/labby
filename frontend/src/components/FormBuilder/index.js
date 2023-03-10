@@ -21,8 +21,6 @@ import styled from "styled-components";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { DraggableElement } from "../BuilderLibrary/ComponentLibrary";
 import ProjectSelectorEditor from "../ProjectSelector/ProjectSelectorEditor";
-import { useEffect, useMemo } from "react";
-import uuid from "react-uuid";
 
 const QuestionContainer = styled.div`
   border: ${(props) =>
@@ -74,26 +72,7 @@ function FormBuilder() {
   const questionList = useSelector(
     (state) => state.questionReducer.questionList
   );
-/*
-  const urgentQuestion = useMemo(() => {
-    return {
-      question_id: uuid(),
-      question_type: "urgent",
-      question_title: "Is this request urgent?",
-      question_description: "Urgent?",
-      question_options: [
-        { option_id: 1, option_text: "Yes" },
-        { option_id: 2, option_text: "No" },
-      ],
-      question_required: true,
-      position_index: questionList.length,
-    };
-  }, [questionList.length]);
 
-  useEffect(() => {
-    dispatch({ type: "ADD_QUESTION", payload: [urgentQuestion] });
-  }, [dispatch, urgentQuestion]);
-*/
   const selectedQuestion = useSelector(
     (state) => state.logicReducer.currentLogicQuestion
   );
