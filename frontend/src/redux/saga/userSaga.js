@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, delay, put, takeLatest } from "redux-saga/effects";
 import { STOP_LOADING } from "../actions/uiActions";
 import {
   DELETE_ORGANIZATION,
@@ -51,6 +51,7 @@ export function* approveAllPendingUserSaga({ payload }) {
   parsed_payload["users"] = userPendingIDList;
 
   yield call(approveUserList, parsed_payload);
+  yield delay(1000);
   yield loadUserlistSaga();
   yield loadPendingUserListSaga();
 }
