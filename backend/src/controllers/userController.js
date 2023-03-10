@@ -42,6 +42,22 @@ export default class UserController {
     });
   }
 
+  approveUser(users) {
+    return new Promise((resolve, reject) => {
+      const UserModel = new User();
+      let res = [];
+      for(let userId of users) {
+        UserModel.approveUser(userId, (err, result) => {
+          if (err) {
+            reject({ error: err });
+          }
+          res.push(result);
+        });
+      }
+      resolve(res.length);
+    })
+  }
+
   getEmployee() {
     return new Promise((resolve, reject) => {
       const UserModel = new User();
@@ -92,5 +108,16 @@ export default class UserController {
         resolve(result);
       });
     });
+  }
+
+  getPendingUsers() {
+    return new Promise((resolve, reject) => {
+      const UserModel = new User();
+      UserModel.getPendingUsers((err, res) => {
+        if (err) {
+          reject(err);
+        } resolve(res);
+      });
+    })
   }
 }
