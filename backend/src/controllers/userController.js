@@ -45,16 +45,16 @@ export default class UserController {
   approveUser(users) {
     return new Promise((resolve, reject) => {
       const UserModel = new User();
-      let res = "Approved users:";
+      let res = [];
       for(let userId of users) {
         UserModel.approveUser(userId, (err, result) => {
           if (err) {
             reject({ error: err });
           }
-          res.append(result);
+          res.push(result);
         });
       }
-      resolve(res);
+      resolve(res.length);
     })
   }
 

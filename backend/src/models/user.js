@@ -5,14 +5,14 @@ export class User {
   approveUser(newUser, result) {
     con.query(
         "CALL approveUser(?)",
-        newUser.user_id,
+        [newUser],
         function (error, _) {
           if (error) {
             console.log("error: ", error);
             result(error, null);
           } else {
             result(null, {
-              result: `Response ${newUser.user_id} Saved Successfully`,
+              result: `Response Saved Successfully`,
             });
           }
         }

@@ -21,6 +21,44 @@ export const getUserlist = async () => {
   }
 };
 
+export const getPendingUserlist = async () => {
+  try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const userList = await axios.get("user/pending/", {
+      headers: headers,
+    });
+    return userList;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const approveUserList = async (payload) => {
+  try {
+
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    var data = JSON.stringify({
+      users: payload.users,
+    });
+
+    console.log(data);
+
+    const approve = await axios.post("user/approve/", data, {
+      headers: headers,
+    });
+
+    return approve;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const getEmployeeList = async () => {
   try {
     const token = JSON.parse(localStorage.getItem("currentUser")).token;
