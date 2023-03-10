@@ -326,10 +326,14 @@ export const TicketBoard = () => {
             onFilterHandler(e.target.value);
           }}
         >
-          <option key="filter" value="Filter...">Filter</option>
+          <option key="filter" value="Filter...">
+            Filter
+          </option>
 
           {employeeList.map((employee) => (
-            <option key={employee?.user_id} value={employee?.user_id}>{employee.username}</option>
+            <option key={employee?.user_id} value={employee?.user_id}>
+              {employee.username}
+            </option>
           ))}
         </select>
       </div>
@@ -374,20 +378,20 @@ export const TicketBoard = () => {
             <div className="ticketTitle">
               <div className="ticketTitleId">{currentTicket.code}</div>
               <div>{currentTicket.title}</div>
-              <div className="ticketPreview">
-                <NavLink to={`/preview/${currentTicket.id}`}>
-                  <button
-                    className="FormPreviewButton"
-                    style={{
-                      backgroundColor: appColor.primaryLight,
-                      color: appColor.white,
-                    }}
-                  >
-                    Preview
-                  </button>
-                </NavLink>
-              </div>
             </div>
+            <div className="ticketPreview">
+              <NavLink to={`/preview/${currentTicket.id}`}>
+                <p
+                  className="FormPreviewButton"
+                  style={{
+                    color: "grey",
+                  }}
+                >
+                  View Summary
+                </p>
+              </NavLink>
+            </div>
+            <div className="assignees-title">Assignees</div>
             <div className="ticketTags">
               {currentTicket.assignees.map((assignee) => {
                 const colorNumberMod = getColorNum(

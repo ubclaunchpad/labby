@@ -41,14 +41,11 @@
 }
 
 .FormPreviewButton {
-  height: 45px;
-  width: 150px;
-  border: 0;
-  border-radius: 10px;
-  font-size: 18px;
-  font-weight: 600;
+  text-align: left; 
+  font-weight: 500;
   transition-duration: 0.4s;
   cursor: pointer;
+
 }
 
 .FormSubmitButton {
