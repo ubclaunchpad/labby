@@ -13,7 +13,8 @@ import { LOAD_BILLABLE } from "../../redux/actions/billingActions";
 import GenerateInvoice from "../../components/GenerateInvoice";
 import { Chart } from "../../components/Chart/Chart";
 import { DateRange } from "react-date-range";
-import "react-date-range/dist/styles.css"; // main css file
+
+import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 
 function Invoice() {
@@ -21,13 +22,11 @@ function Invoice() {
   const invoiceTableRef = useRef(null);
   const { register, handleSubmit } = useForm();
   const [data, setData] = useState("");
-  const [state, setState] = useState([
-    {
-      startDate: new Date(),
-      endDate: null,
-      key: "dateRange",
-    },
-  ]);
+  const [dateRange, setDateRange] = useState({
+    startDate: new Date(),
+    endDate: undefined,
+    key: "selection",
+  });
 
   useEffect(() => {
     dispatch({ type: LOAD_BILLABLE });
@@ -127,14 +126,12 @@ function Invoice() {
               <div className="search-invoices-calendar-container">
                 <div className="search-invoices-calendar">
                   <DateRange
-                    color="#f5f5f5"
                     editableDateInputs={true}
-                    onChange={(item) => {
-                      console.log(item.selection);
-                      setState([item.selection]);
+                    ranges={[dateRange]}
+                    onChange={({ selection }) => {
+                      console.log("These are the ranges -->", selection);
+                      setDateRange(selection);
                     }}
-                    moveRangeOnFirstSelection={false}
-                    ranges={state}
                   />
                 </div>
               </div>
