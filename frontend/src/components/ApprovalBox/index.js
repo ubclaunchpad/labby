@@ -20,6 +20,8 @@ function ApprovalBox() {
     dispatch({ type: GET_PENDING_USER });
   }, [dispatch]);
 
+  if (pendingUserList.length === 0) return null;
+
   return (
     <div className="approvalBox">
       <div className="approveAllBox">
