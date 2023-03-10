@@ -6,17 +6,17 @@
     align-self: right;
 }
 
-.single-select-option{
+.urgent-option{
     display: flex; 
     align-items: center; 
     justify-content: space-between;
     width: 100%;
 }
-.single-select-option-delete{
+.urgent-option-delete{
     height: 50%;
 }
 
-.single-select-options-container{
+.urgent-options-container{
     display: flex; 
     margin-top: 2%;
     margin-bottom: 2%;

@@ -105,6 +105,15 @@ export const ProjectSelectorCard = () => {
   );
 };
 
+export const UrgentCard = () => {
+  return (
+    <DraggableCard>
+      <img className="iconImage" src={SCIcon} alt="Contact Information" />
+      Urgent Request Question
+    </DraggableCard>
+  );
+};
+
 export const componentsSideViewData = {
   components: {
     multi: {
@@ -147,12 +156,16 @@ export const componentsSideViewData = {
       id: "project",
       component: ProjectSelectorCard,
     },
+    urgent: {
+      id: "urgent",
+      component: UrgentCard,
+    },
   },
   sections: {
     "question-elements": {
       id: "question-elements",
       title: "Question Elements",
-      componentIds: ["multi", "single", "text", "dropdown"],
+      componentIds: ["multi", "single", "text", "dropdown", "urgent"],
     },
     "layout-elements": {
       id: "layout-elements",

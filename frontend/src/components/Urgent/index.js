@@ -42,7 +42,7 @@ function Urgent({ question }) {
         {question.question}{" "}
         <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
       </div>
-      <div className="single-select-options-container">
+      <div className="urgent-options-container">
         <FormControl style={{ width: "100%" }}>
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
@@ -50,7 +50,7 @@ function Urgent({ question }) {
           >
             {options.map((option, index) => {
               return (
-                <div className="single-select-option" key={index}>
+                <div className="urgent-option" key={index}>
                   <FormControlLabel
                     value={option.answer}
                     control={
