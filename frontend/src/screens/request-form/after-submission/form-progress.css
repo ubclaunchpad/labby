@@ -1,5 +1,57 @@
 .formProgressPage {
-  padding: 50px 75px;
+  padding: 32px 36px;
+  text-align: left;
+}
+.formProgressPage .pageTitle{
+  margin-top: 12px;
+  padding: 0 36px;
+}
+.formProgressPage .signout{
+  display: flex;
+  justify-content: flex-end;
+}
+.formProgressPage .signoutBtn{
+  color: #353535;
+  font-weight: 600;
+  padding: 8px 20px;
+  margin-right: 48px; 
+  background-color: #ecedf3;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.formProgressPage .wrapper{
+  display: flex;
+  gap: 48px;
+}
+.formProgressPage .newServices{
+  flex: 2;
+  padding: 18px 36px;
+}
+.formProgressPage .newServicesWrapper{
+  
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.formProgressPage .newService{
+  background-color: #ecedf3;
+  color: #353535;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 16px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.formProgressPage .newService .formIcon{
+  width: 20px;
+}
+.formProgressPage .requestedServices{
+  padding: 18px;
+  flex: 3;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -7,6 +59,12 @@
 .formProgressPage h2 {
   color: #353535;
   font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.formProgressPage h3 {
+  color: #353535;
+  font-size: 24px;
   font-weight: 700;
   margin-bottom: 32px;
 }
@@ -22,7 +80,7 @@
   margin-bottom: 32px;
 }
 .formProgressPage .progressItem {
-  width: 70%;
+  width: 90%;
   margin-bottom: 40px;
   display: flex;
   flex-direction: column;
@@ -32,6 +90,7 @@
   color: #353535;
   font-size: 20px;
   font-weight: 600;
+  margin-bottom: 24px;
 }
 .progressItem p {
   margin: 0;
@@ -50,7 +109,7 @@
   font-weight: 300;
 }
 .progressItem .progressBar {
-  width: 70%;
+  width: 90%;
   display: flex;
   align-items: center;
   font-size: 12px;
