@@ -7,6 +7,7 @@ import TextAnswerEditor from "../TextAnswer/TextAnswerEditor";
 import MultiSelectEditor from "../MultiSelect/MultiSelectEditor";
 import ContactInfoEditor from "../ContactInfo/ContactInfoEditor";
 import SingleSelectEditor from "../SingleSelect/SingleSelectEditor";
+import UrgentEditor from "../Urgent/UrgentEditor";
 import FormTitle from "./FormTitle";
 import HeadingEditor from "../Heading/HeadingEditor";
 import FileDownloadEditor from "../FileDownload/FileDownloadEditor";
@@ -21,6 +22,7 @@ import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { DraggableElement } from "../BuilderLibrary/ComponentLibrary";
 import ProjectSelectorEditor from "../ProjectSelector/ProjectSelectorEditor";
 import { useEffect, useMemo } from "react";
+import uuid from "react-uuid";
 
 const QuestionContainer = styled.div`
   border: ${(props) =>
@@ -59,6 +61,8 @@ function renderQuestion(question) {
       return <ContactInfoEditor question={question} />;
     case "project":
       return <ProjectSelectorEditor question={question} />;
+    case "urgent":
+      return <UrgentEditor question={question} />;
     default:
       return null;
   }
@@ -70,27 +74,26 @@ function FormBuilder() {
   const questionList = useSelector(
     (state) => state.questionReducer.questionList
   );
-
+/*
   const urgentQuestion = useMemo(() => {
     return {
-    question_id: 1,
-    question_type: "single",
-    question_title: "Is this request urgent?",
-    question_description: "",
-    question_options: [
-      { option_id: "yes", option_text: "Yes" },
-      { option_id: "no", option_text: "No" },
-    ],
-    question_required: true,
-    question_order: 1,
-    position_index: 1000,
-  };
-  }, []);
+      question_id: uuid(),
+      question_type: "urgent",
+      question_title: "Is this request urgent?",
+      question_description: "Urgent?",
+      question_options: [
+        { option_id: 1, option_text: "Yes" },
+        { option_id: 2, option_text: "No" },
+      ],
+      question_required: true,
+      position_index: questionList.length,
+    };
+  }, [questionList.length]);
 
   useEffect(() => {
-    dispatch({ type: "ADD_QUESTION", payload: urgentQuestion });
+    dispatch({ type: "ADD_QUESTION", payload: [urgentQuestion] });
   }, [dispatch, urgentQuestion]);
-
+*/
   const selectedQuestion = useSelector(
     (state) => state.logicReducer.currentLogicQuestion
   );
@@ -184,10 +187,6 @@ function FormBuilder() {
                 </div>
               )}
               {provided.placeholder}
-              
-              <div>
-                {renderQuestion(urgentQuestion)}
-              </div>
 
             </QuestionContainer>
           )}
