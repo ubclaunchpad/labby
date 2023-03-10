@@ -5,6 +5,7 @@ DROP PROCEDURE IF EXISTS `deleteUser`;
 DROP PROCEDURE IF EXISTS `loadUser`;
 DROP PROCEDURE IF EXISTS `loadEmployee`;
 DROP PROCEDURE IF EXISTS `loadSingleUser`;
+DROP PROCEDURE IF EXISTS `loadPendingUsers`;
 
 DELIMITER $$
 
@@ -46,13 +47,31 @@ END $$
 CREATE PROCEDURE `deleteUser`  (
     IN id VARCHAR(50)
 )
+
 BEGIN
     DELETE FROM users WHERE user_id = id;
 END $$
 
+CREATE PROCEDURE `approveUser` (
+	IN id VARCHAR(50),
+)
+
+BEGIN
+	UPDATE FROM users WHERE user_id = id 
+	SET approved = 1;
+END $$
+
+
 CREATE PROCEDURE `loadUser`  ()
 BEGIN
-    SELECT * FROM users;
+    SELECT * FROM users
+	WHERE approved = 1;
+END $$
+
+CREATE PROCEDURE `loadPendingUsers`  ()
+BEGIN
+    SELECT * FROM users
+	WHERE approved = 0;
 END $$
 
 CREATE PROCEDURE `loadEmployee`  ()
