@@ -55,7 +55,7 @@ export class CostCentre {
 
   insertCostCentre(newCostCentre, result) {
     con.query(
-      "CALL save_cost_center(?, ?, ?, ?, ?, ?)",
+      "CALL save_cost_center(?, ?, ?, ?, ?, ?, ?)",
       [
         newCostCentre.cost_center_id,
         newCostCentre.cost_center_name,
@@ -63,6 +63,7 @@ export class CostCentre {
         newCostCentre.cost_center_email,
         newCostCentre.cost_center_address,
         newCostCentre.cost_center_type,
+        newCostCentre.cost_center_unit
       ],
       function (error, results) {
         if (error) {

@@ -1,5 +1,6 @@
 import "./index.css";
 import { NavLink } from "react-router-dom";
+import LogoWhite from "../../assets/LogoWhite.png";
 import tasks from "../../assets/Tasks.png";
 import form from "../../assets/Form.png";
 import money from "../../assets/Money.png";
@@ -16,7 +17,7 @@ function Header() {
   return (
     <div className="Header" style={{ backgroundColor: appColor.primary }}>
       <NavLink to="/" className="header-navbar--title">
-        Labby
+        <img className="header-navbar--logo" src={LogoWhite} alt="Logo" />
       </NavLink>
 
       <hr />

@@ -14,6 +14,10 @@ import {
   REMOVE_SINGLE_RESPONSE,
   SET_FORMS,
   REMOVE_PROJECT_RESPONSE,
+  SUBMIT_FORM,
+  ADD_OTHER_RESPONSE,
+  REMOVE_OTHER_RESPONSE,
+  ADD_CLINICAL_RESPONSE,
 } from "../actions/formActions";
 
 const defaultQuestionlist = {
@@ -29,6 +33,14 @@ const defaultQuestionlist = {
 };
 const defaultFormList = [];
 const defaultAnswerList = [];
+const defaultFormSubmissions = [
+  // {
+  //   formResponses: [],
+  //   projectId: "",
+  //   billables: [],
+  // },
+];
+const defaultClinicalResponses = {};
 
 const formQuestions = (state = defaultQuestionlist, action) => {
   switch (action.type) {
@@ -63,7 +75,7 @@ const formResponses = (state = defaultAnswerList, action) => {
         (response) =>
           response.question.question_id !==
             action.payload.question.question_id ||
-          response.response !== action.payload.response
+          response.question.answer_id !== action.payload.question.answer_id
       );
       return [...state];
     }
@@ -75,7 +87,9 @@ const formResponses = (state = defaultAnswerList, action) => {
       return [...state];
     }
     case REMOVE_PROJECT_RESPONSE: {
-      state = state.filter((response) => response.question.project_id === undefined);
+      state = state.filter(
+        (response) => response.question.project_id === undefined
+      );
       return [...state];
     }
     case ADD_FULLNAME_RESPONSE: {
@@ -154,6 +168,25 @@ const formResponses = (state = defaultAnswerList, action) => {
       );
       return [...state];
     }
+    case ADD_OTHER_RESPONSE: {
+      state = state.filter(
+        (response) =>
+          response.question.question_id !==
+            action.payload.question.question_id ||
+          response.question.answer_id !== action.payload.question.answer_id
+      );
+      state.push(action.payload);
+      return [...state];
+    }
+    case REMOVE_OTHER_RESPONSE: {
+      state = state.filter(
+        (response) =>
+          response.question.question_id !==
+            action.payload.question.question_id ||
+          response.response.split("_")[0] !== "OTHER"
+      );
+      return [...state];
+    }
     default: {
       return state;
     }
@@ -171,4 +204,35 @@ const formList = (state = defaultFormList, action) => {
   }
 };
 
-export default combineReducers({ formQuestions, formResponses, formList });
+const formSubmissions = (state = defaultFormSubmissions, action) => {
+  switch (action.type) {
+    case SUBMIT_FORM: {
+      state.push(action.payload);
+      // TODO: save submitted forms to backend
+      return state;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
+const clinicalResponses = (state = defaultClinicalResponses, action) => {
+  switch (action.type) {
+    case ADD_CLINICAL_RESPONSE: {
+      state[action.payload.clinical_id] = action.payload;
+      return { ...state };
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
+export default combineReducers({
+  formQuestions,
+  formResponses,
+  formList,
+  formSubmissions,
+  clinicalResponses,
+});

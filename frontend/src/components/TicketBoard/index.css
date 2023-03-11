@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  width: 65%;
+  width: 70%;
   margin-bottom: 24px;
 }
 .ticketBoardSearch {
@@ -27,16 +27,16 @@
   background-repeat: no-repeat;
   background-position: calc(0% + 16px) center;
 }
-.ticketBoardDropdown:focus {
+.ticketBoard__filter-dropdown:focus {
   outline: none;
 }
-.ticketBoardDropdown {
+.ticketBoard__filter-dropdown {
   border: 0;
   background-color: #ecedf3;
   border-radius: 15px;
   height: 45px;
   padding-left: 16px;
-  padding-right: 16px;
+  padding-right: 40px;
   display: flex;
   flex-direction: row;
   flex-basis: 120px;
@@ -45,7 +45,7 @@
   background-image: url("../../assets/DropdownArrow.svg");
   background-size: 16px;
   background-repeat: no-repeat;
-  background-position: calc(100% - 32px) center;
+  background-position: calc(100% - 12px) center;
 }
 .ticketBoard {
   display: flex;
@@ -140,8 +140,10 @@
   flex-direction: row;
   align-items: center;
   background: #e4e5ea;
-  padding: 5px;
+  padding: 10px;
   border-radius: 5px;
+  width: 100px;
+  height: 30px;
 }
 .task-card__subtask-checkbox {
   display: inline-block;
@@ -297,23 +299,6 @@
   min-width: 65%;
 }
 
-.ticketSubtasks {
-  background-color: #d9d9d9;
-  flex-grow: 1;
-  border-top-right-radius: 5%;
-  border-top-left-radius: 5%;
-  max-height: 70%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.ticketSubtasksContainer {
-  flex: 1;
-  max-height: 100%;
-  border-radius: 10px;
-}
-
 .ticketAttachments {
   margin-top: 12px;
   padding: 5px 15px;
@@ -333,24 +318,11 @@
   border-radius: 5px;
 }
 
-.ticketCosts {
-  background-color: #d9d9d9;
-  border-radius: 10px;
-  flex-grow: 1;
-  max-height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
 .contentList {
   height: 100%;
   display: flex;
   padding: 15px;
   flex-direction: column;
-}
-.ticketCosts .contentList{
-  height: calc(100% - 50px);
 }
 
 .additionBar {
@@ -363,121 +335,14 @@
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   flex-shrink: 0;
+  cursor: pointer;
 }
+
 .Add {
   height: 15px;
   width: 15px;
   cursor: pointer;
   margin-right: 15px;
-}
-
-.subtaskCostRows {
-  height: 100%;
-  overflow-y: auto;
-}
-
-.subtaskCostRow {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 15px;
-  flex: 1;
-  background-color: #b4b4b4;
-  border-radius: 10px;
-  margin-right: 7px;
-}
-
-.subtaskInputContainer {
-  display: flex;
-  flex-direction: row;
-  height: 7vh;
-  align-items: center;
-  padding-left: 15px;
-}
-
-.serviceNameInput {
-  width: 85%;
-  border-radius: 5px;
-  border: none;
-  background-color: #D2D2D2;
-}
-
-.serviceCostInput {
-  border-radius: 5px;
-  border: none;
-  background-color: #D2D2D2;
-  text-align: center;
-} 
-
-.serviceListRows {
-  max-height: 95%; 
-  overflow-y: overlay;
-}
-
-.serviceCostRow .deleteServiceItem {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  cursor: pointer;
-  align-items: center;
-  background-color: #cdcccc;
-  margin-left: 18px;
-  border-radius: 10px;
-  flex: 1;
-}
-
-.Rectangle {
-  height: 25px;
-  width: 25px;
-  cursor: pointer;
-  margin-right: 15px;
-}
-
-.download-icon-delete {
-  cursor: pointer;
-}
-
-.serviceTable .heading td {
-  font-weight: 600;
-  color: #a4a3a3;
-  padding: 10px 0px;
-  text-overflow: ellipsis;
-  text-align: center;
-}
-
-.serviceTable .heading td:last-child{
-  padding-left: 12px;
-  border: 12px solid #d9d9d9;
-}
-
-.serviceTable td {
-  padding: 10px;
-  text-overflow: ellipsis;
-}
-
-.serviceTable {
-  width: 100%;
-}
-
-.serviceTableRow{
-  background-color: #D2D2D2;
-  border-bottom: 5px solid #d9d9d9;
-}
-.serviceTableRow td:first-child{
-  border-top-left-radius: 12px;
-  border-bottom-left-radius: 12px;
-  width: 40%;
-}
-.serviceTableRow td:nth-last-child(2){
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-.serviceTableRow td:last-child{
-  padding: 0;
-  margin: 0;
-  padding-left: 12px;
-  border: 12px solid #d9d9d9;
-  border-radius: 80px;
 }
 
 ::-webkit-scrollbar {

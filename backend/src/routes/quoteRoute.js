@@ -1,10 +1,11 @@
 import { Router } from "express";
+import authorize from "../auth/authorize.js";
 import QuoteController from "../controllers/quoteController.js";
 
 const router = Router();
 const quoteController = new QuoteController();
 
-router.post("/", (req, res) => {
+router.post("/", authorize(), (req, res) => {
   if (!req || req == undefined || !req.body) {
     res.status(400).send({
       message: "Content can not be empty!",
@@ -21,7 +22,7 @@ router.post("/", (req, res) => {
     });
 });
 
-router.get("/", (_, res) => {
+router.get("/", authorize(), (_, res) => {
   quoteController
     .loadQuote()
     .then((response) => {
@@ -32,7 +33,7 @@ router.get("/", (_, res) => {
     });
 });
 
-router.post("/getQuote", (req, res) => {
+router.post("/getQuote", authorize(), (req, res) => {
   if (!req || req == undefined || !req.body) {
     res.status(400).send({
       message: "Content can not be empty!",
@@ -49,7 +50,7 @@ router.post("/getQuote", (req, res) => {
     });
 });
 
-router.post("/updateQuantifiable", (req, res) => {
+router.post("/updateQuantifiable", authorize(), (req, res) => {
   if (!req || req == undefined || !req.body) {
     res.status(400).send({
       message: "Content can not be empty!",
@@ -66,7 +67,7 @@ router.post("/updateQuantifiable", (req, res) => {
     });
 });
 
-router.delete("/:answerId", (req, res) => {
+router.delete("/:answerId", authorize(), (req, res) => {
   quoteController
     .deleteCost(req.params.answerId)
     .then((response) => {

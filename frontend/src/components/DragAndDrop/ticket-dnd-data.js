@@ -1,4 +1,5 @@
 export const ticketBoardData = {
+  filters: ["open", "blocked", "progress", "completed"],
   tasks: {
     "task-1": {
       id: "task-1",

@@ -1,10 +1,11 @@
 import { Router } from "express";
+import authorize from "../auth/authorize.js";
 import BillingController from "../controllers/billingController.js";
 
 const router = Router();
 const billingController = new BillingController();
 
-router.get("/", (_, res) => {
+router.get("/", authorize(), (_, res) => {
     billingController
       .loadBillable()
       .then((response) => {
@@ -15,7 +16,7 @@ router.get("/", (_, res) => {
       });
   });
 
-  router.get("/:sowID", (req, res) => {
+  router.get("/:sowID", authorize(), (req, res) => {
     billingController
       .loadBillableBySowId(req.params.sowID)
       .then((response) => {
@@ -26,7 +27,7 @@ router.get("/", (_, res) => {
       });
   });
 
-router.post("/", (req, res) => {
+router.post("/", authorize(), (req, res) => {
     billingController
       .saveBillable(req)
       .then((response) => {
@@ -37,7 +38,7 @@ router.post("/", (req, res) => {
       });
   });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", authorize(), (req, res) => {
     billingController
       .deleteBillable(req.params.id)
       .then((response) => {

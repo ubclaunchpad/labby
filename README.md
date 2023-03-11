@@ -2,7 +2,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/ubclaunchpad/labby">
-    <!-- <img src="frontend/src/assets/Logo.png" alt="Logo" height="100" resize> -->
+    <img src="frontend/src/assets/LogoIcon.png" alt="Logo" height="100" resize>
   </a>
   <h3 align="center">Labby</h3>
 </p>

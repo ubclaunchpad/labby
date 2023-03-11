@@ -36,7 +36,7 @@ function FileDownload({ question }) {
             AWS.config.update(config);
             const S3 = new AWS.S3({});
             const objParams = {
-              Bucket: "labby-app",
+              Bucket: process.env.REACT_APP_S3_BUCKET,
               Key: `fileDownload/${option.answer}`,
             };
             S3.getObject(objParams, function (err, data) {

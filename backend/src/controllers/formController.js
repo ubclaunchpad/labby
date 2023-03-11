@@ -44,4 +44,17 @@ export default class FormController {
       });
     });
   }
+
+  saveFormBuild(id) {
+    return new Promise((resolve, reject) => {
+      const FormModel = new Form();
+
+      FormModel.insertFormBuild(id, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
 }

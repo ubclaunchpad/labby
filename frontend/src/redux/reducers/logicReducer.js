@@ -4,6 +4,7 @@ import { SET_LOGIC, SET_LOGIC_QUESTION, SET_LOGIC_VIEW_QUESTION } from "../actio
 const defaultLogicQuestion = null;
 const defaultLogicMap = {};
 
+// Deprecated: This reducer is no longer used, but can offer good utility in the future
 const currentLogicQuestion = (state = defaultLogicQuestion, action) => {
   switch (action.type) {
     case SET_LOGIC_QUESTION: {

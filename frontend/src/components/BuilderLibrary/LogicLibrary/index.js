@@ -4,11 +4,8 @@ import Checkbox from "@mui/material/Checkbox";
 import DownArrow from "../../../assets/Arrow.png";
 import { appColor } from "../../../constants";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import {
-  SAVE_LOGIC,
-  SET_LOGIC_QUESTION,
-} from "../../../redux/actions/logicActions";
+import { useState } from "react";
+import { SAVE_LOGIC } from "../../../redux/actions/logicActions";
 import uuid from "react-uuid";
 import { SuccessToast, WarningToast } from "../../Toasts";
 
@@ -18,32 +15,45 @@ function LogicLibrary() {
     (state) => state.questionReducer.questionList
   );
   const answerList = useSelector((state) => state.questionReducer.answerList);
-  const selectedQuestion = useSelector(
-    (state) => state.logicReducer.currentLogicQuestion
-  );
+  const logicList = useSelector((state) => state.logicReducer.logicList);
 
   const rules = ["Display this question if"];
   const condition = ["Is Selected"];
   const [selectedRule, setSelectedRule] = useState([]);
 
+  const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [ifDisplay, setIfDisplay] = useState(rules[0]);
   const [ifThisAnswer, setIfThisAnswer] = useState(null);
   const [ifCondition, setIfCondition] = useState(condition[0]);
 
-  useEffect(() => {
-    if (!selectedQuestion && questionList.length > 1) {
-      dispatch({
-        type: SET_LOGIC_QUESTION,
-        payload: questionList[1],
-      });
-    }
-  }, [dispatch, selectedQuestion, questionList]);
+  function sameLogic(questionId, answerId) {
+    return Object.values(logicList).some((logic) => {
+      let sameQuestion = logic[0].fk_question_id === questionId;
+      let sameAnswer = logic[0].fk_answer_id === answerId;
+      let sameType = logic[0].condition_type === "2";
+      let sameParameter = logic[0].condition_parameter === "";
+      return sameQuestion && sameAnswer && sameType && sameParameter;
+    });
+  }
 
   return (
     <div className="LogicViewContainer">
-      <div className="titleText">{`Display Logic for Q${
-        selectedQuestion ? selectedQuestion.position_index : "1"
-      }`}</div>
+      <div className="titleText">Display Logic for</div>
+      <div className="subtitleText">Question</div>
+      <div className="selectionBoxView">
+        <select
+          className="selectBox"
+          onChange={(e) => {
+            setSelectedQuestion(JSON.parse(e.target.value));
+          }}
+        >
+          {questionList.slice(1).map((question) => (
+            <option key={question.question_id} value={JSON.stringify(question)}>
+              {`Q${question.position_index}: ${question.question}`}
+            </option>
+          ))}
+        </select>
+      </div>
       <div className="subtitleText">Rule</div>
       <div className="selectionBoxView">
         <select
@@ -147,22 +157,24 @@ function LogicLibrary() {
           onClick={() => {
             if (selectedRule.length > 0) {
               selectedRule.forEach((rule) => {
-                dispatch({
-                  type: SAVE_LOGIC,
-                  payload: {
-                    condition_id: uuid(),
-                    question_id: selectedQuestion.question_id,
-                    answer_id: rule,
-                    condition_type: 2,
-                    parameters: true,
-                    result: true,
-                    form_id: selectedQuestion.fk_form_id,
-                  },
-                });
+                if (!sameLogic(selectedQuestion.question_id, rule)) {
+                  dispatch({
+                    type: SAVE_LOGIC,
+                    payload: {
+                      condition_id: uuid(),
+                      question_id: selectedQuestion.question_id,
+                      answer_id: rule,
+                      condition_type: 2,
+                      parameters: true,
+                      result: true,
+                      form_id: selectedQuestion.fk_form_id,
+                    },
+                  });
+                  SuccessToast("Logic Added!");
+                } else {
+                  WarningToast("Duplicate Logic Found! Skipping...");
+                }
               });
-              console.log("got here ");
-              // <SuccessToast message="Logic Added!" size="large" />;
-              SuccessToast("Logic Added!");
             } else {
               WarningToast("Please select at least one answer");
             }

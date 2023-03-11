@@ -10,7 +10,10 @@ const TicketManagement = () => {
         <Header />
       </div>
       <div className="ticketPageContent">
-        <div className="ticketManagementTitle" style={{ color: appColor.primaryBlack }}>
+        <div
+          className="ticketManagementTitle"
+          style={{ color: appColor.primaryBlack }}
+        >
           Your Tickets
         </div>
         <div className="ticketBoard">

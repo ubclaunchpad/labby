@@ -1,7 +1,19 @@
 import { User } from "../models/user.js";
+import crypto from "crypto";
+
+function genRandomString(number) {
+  return crypto.randomBytes(Math.ceil(number/2))
+      .toString('hex') /** convert to hexadecimal format */
+      .slice(0,number); /** return required number of characters */
+}
+function encrypt(password, salt) {
+  var hash = crypto.createHmac('sha512', salt); /** Hashing algorithm sha512 */
+  hash.update(password);
+  const value = hash.digest('hex');
+  return value
+}
 
 export default class UserController {
-
   getUser() {
     return new Promise((resolve, reject) => {
       const UserModel = new User();
@@ -13,6 +25,37 @@ export default class UserController {
         resolve(result);
       });
     });
+  };
+
+  authenticateUser(req) {
+    return new Promise((resolve, reject) => {
+      let password = req.body.password;
+      const UserModel = new User();
+      UserModel.getOneUser(req.body.email, (_, res) => {
+        if (res && res.length > 0 && res[0].email === req.body.email) {
+          if(res[0].hashed_password === encrypt(password, res[0].salt)) {
+            resolve(res[0]);
+          }
+        }
+        reject({err: "Login failed, incorrect credentials. Please try again."});
+      });
+    });
+  }
+
+  approveUser(users) {
+    return new Promise((resolve, reject) => {
+      const UserModel = new User();
+      let res = [];
+      for(let userId of users) {
+        UserModel.approveUser(userId, (err, result) => {
+          if (err) {
+            reject({ error: err });
+          }
+          res.push(result);
+        });
+      }
+      resolve(res.length);
+    })
   }
 
   getEmployee() {
@@ -44,6 +87,9 @@ export default class UserController {
   saveUser(req) {
     return new Promise((resolve, reject) => {
       const UserModel = new User();
+      let salt = genRandomString(16); /** Gives us salt of length 16 */
+      let hashedPassword = encrypt(req.body.password, salt);
+
 
       const user = {
         user_id: req.body.user_id,
@@ -51,6 +97,8 @@ export default class UserController {
         username: req.body.username,
         email: req.body.email,
         employee: req.body.employee,
+        salt: salt,
+        hash: hashedPassword,
       };
 
       UserModel.insertUser(user, (err, result) => {
@@ -60,5 +108,16 @@ export default class UserController {
         resolve(result);
       });
     });
+  }
+
+  getPendingUsers() {
+    return new Promise((resolve, reject) => {
+      const UserModel = new User();
+      UserModel.getPendingUsers((err, res) => {
+        if (err) {
+          reject(err);
+        } resolve(res);
+      });
+    })
   }
 }

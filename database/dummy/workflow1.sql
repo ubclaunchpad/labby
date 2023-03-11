@@ -5,17 +5,17 @@ use labby;
 CALL save_form('SAMPLE-FORM-1', 'Sample Form');
 
 -- Populate the form title
-CALL save_question('RANDOM-ID-A','SAMPLE-FORM-1','My Sample Form','heading', 0, false);
+CALL save_question('RANDOM-ID-A','SAMPLE-FORM-1','My Sample Form','heading', 0, false, false);
 
 -- Populate some sample questions
-CALL save_question('RANDOM-ID-B','Request Type','multi', 1, false);
-CALL save_question('RANDOM-ID-C','Contact Details','contact', 2, false);
-CALL save_question('RANDOM-ID-D','Study Title','textline', 3, false);
-CALL save_question('RANDOM-ID-E','Sample Dropdown','dropdown', 4, false);
-CALL save_question('RANDOM-ID-F','Sample Upload','upload', 5, false);
-CALL save_question('RANDOM-ID-G','Edit Your Text!','text', 6, false);
-CALL save_question('RANDOM-ID-H','Edit Your Single Choice!','single', 7, false);
-CALL save_question('RANDOM-ID-I','My Sample Heading','heading', 8, false);
+CALL save_question('RANDOM-ID-B','Request Type','multi', 1, false, false);
+CALL save_question('RANDOM-ID-C','Contact Details','contact', 2, false, false);
+CALL save_question('RANDOM-ID-D','Study Title','textline', 3, false, false);
+CALL save_question('RANDOM-ID-E','Sample Dropdown','dropdown', 4, false, false);
+CALL save_question('RANDOM-ID-F','Sample Upload','upload', 5, false, false);
+CALL save_question('RANDOM-ID-G','Edit Your Text!','text', 6, false, false);
+CALL save_question('RANDOM-ID-H','Edit Your Single Choice!','single', 7, false, false);
+CALL save_question('RANDOM-ID-I','My Sample Heading','heading', 8, false, false);
 
 -- Populate Answers
 CALL save_answer('ANSWERID-B','Option1','multi', 'RANDOM-ID-B');
@@ -46,14 +46,17 @@ CALL save_project_cost_centers('COST-CENTER-PROJ-1', 'COST-CENTER-ID-A', 'PROJEC
 CALL save_project_cost_centers('COST-CENTER-PROJ-2', 'COST-CENTER-ID-A', 'PROJECTID-B');
 
 -- Populate Cost
-CALL save_cost('COSTID-B', 10.0, 'MAPCORE-105', 'Internal', true);
-CALL save_cost('COSTID-C', 10.0, 'MAPCORE-105', 'External', true);
-CALL save_cost('COSTID-D', 10.0, 'MAPCORE-105', 'Industry', true);
+CALL save_cost('COSTID-B', 10.0, 'MAPCORE-105', 'Internal', true, "mm");
+CALL save_cost('COSTID-C', 10.0, 'MAPCORE-105', 'External', true, "mm");
+CALL save_cost('COSTID-D', 10.0, 'MAPCORE-105', 'Industry', true, "mm");
 
 -- Populate User
-CALL addUser('USER-A', 'ORG-ID-A', 'Harin Wu', 'harinwu99@gmail.com', true);
-CALL addUser('USER-B', 'ORG-ID-A', 'Elon Musk', 'elonmusk@gmail.com', false);
-CALL addUser('USER-C', 'ORG-ID-A', 'Jeff Bezos', 'jeffbezos@gmail.com', false);
+CALL addUser('USER-A', 'ORG-ID-A', 'Harin Wu', 'harinwu99@gmail.com', true, 'd7f349eab1e95fa9', '39cb61ac781817affb8d1af5fe4768007e160646af0e8a844db0ae27e0a7263d6182a133347505a442f2672f499e14b51e4830cfcdbe64c9a8a5077cbfd3a831');
+CALL addUser('USER-B', 'ORG-ID-A', 'Elon Musk', 'elonmusk@gmail.com', false, 'd7f349eab1e95fa9', '39cb61ac781817affb8d1af5fe4768007e160646af0e8a844db0ae27e0a7263d6182a133347505a442f2672f499e14b51e4830cfcdbe64c9a8a5077cbfd3a831');
+CALL addUser('USER-C', 'ORG-ID-A', 'Jeff Bezos', 'jeffbezos@gmail.com', false, 'd7f349eab1e95fa9', '39cb61ac781817affb8d1af5fe4768007e160646af0e8a844db0ae27e0a7263d6182a133347505a442f2672f499e14b51e4830cfcdbe64c9a8a5077cbfd3a831');
+CALL addUser('DEMO-USER-1', 'ORG-ID-A', 'Mapcore', 'labby@ubc.com', true, 'd7f349eab1e95fa9', '39cb61ac781817affb8d1af5fe4768007e160646af0e8a844db0ae27e0a7263d6182a133347505a442f2672f499e14b51e4830cfcdbe64c9a8a5077cbfd3a831');
+CALL addUser('USER-D', 'ORG-ID-A', 'Bad User', 'baduser@gmail.com', false, 'd7f349eab1e95fa9', '39cb61ac781817affb8d1af5fe4768007e160646af0e8a844db0ae27e0a7263d6182a133347505a442f2672f499e14b51e4830cfcdbe64c9a8a5077cbfd3a831');
+
 
 -- Populate Surveys
 CALL addSurvey('SURVEYA', 'USER-A', 	2008-11-11);
@@ -83,5 +86,5 @@ CALL save_assignment('ASN-2', 'USER-A', 'SUB-1');
 CALL save_assignment('ASN-3', 'USER-B', 'SUB-1');
 
 -- Create Billable Items
-CALL save_billable('BILLABLE-1', 'SOW-1', 'PROJECTID-A', 'Testing Billable 1', 1, 10.0, '2015-01-01', '2015-01-01', false, '2015-01-01', 'USER-A');
-CALL save_billable('BILLABLE-2', 'SOW-1', 'PROJECTID-A', 'Testing Billable 2', 1, 15.0, '2015-01-01', '2015-01-01', false, '2015-01-01', 'USER-A');
+CALL save_billable('BILLABLE-1', 'SOW-1', 'PROJECTID-A', 'Testing Billable 1', 1, 10.0, 'Comment for Billable 1', '2015-01-01', '2015-01-01', false, '2015-01-01', 'USER-A');
+CALL save_billable('BILLABLE-2', 'SOW-1', 'PROJECTID-A', 'Testing Billable 2', 1, 15.0, 'Comment for Billable 2', '2015-01-01', '2015-01-01', false, '2015-01-01', 'USER-A');
