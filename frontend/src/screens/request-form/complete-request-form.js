@@ -5,6 +5,7 @@ import { appColor } from "../../constants";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
 import { LOAD_COST } from "../../redux/actions/costActions";
 import MultiSelect from "../../components/MultiSelect";
+import Urgent from "../../components/Urgent";
 import SingleSelect from "../../components/SingleSelect";
 import TextAnswer from "../../components/TextAnswer";
 import Dropdown from "../../components/Dropdown";
@@ -57,6 +58,8 @@ function RequestForm() {
         return <FileDownload question={question} />;
       case "contact":
         return <ContactInfo question={question} />;
+      case "urgent":
+        return <Urgent question={question} />;
       default:
         return null;
     }

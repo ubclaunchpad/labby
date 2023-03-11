@@ -33,7 +33,7 @@ function UrgentEditor({ question }) {
 
   useEffect(() => {
     setQuestionNum(`Q${question.position_index}`);
-    setTitle(question.question);
+    setTitle("Is this request urgent?");
   }, [question]);
 
   useEffect(() => {
@@ -52,6 +52,8 @@ function UrgentEditor({ question }) {
     });
     optionList = optionList.filter((option) => option !== "");
     optionList.push("");
+    optionList.unshift({answer_id: uuid(), answer: "No"});
+    optionList.unshift({answer_id: uuid(), answer: "Yes"});
     setOptions(optionList);
   }, [answerList, question]);
 

@@ -7,6 +7,7 @@ import { LOAD_QUESTION} from "../../redux/actions/questionActions";
 import { LOAD_COST } from "../../redux/actions/costActions";
 import MultiSelect from "../../components/MultiSelect";
 import SingleSelect from "../../components/SingleSelect";
+import Urgent from "../../components/Urgent";
 import TextAnswer from "../../components/TextAnswer";
 import Dropdown from "../../components/Dropdown";
 import Heading from "../../components/Heading";
@@ -70,6 +71,8 @@ function RequestForm() {
         return <ContactInfo question={question} />;
       case "project":
         return <ProjectSelector question={question} />;
+      case "urgent":
+        return <Urgent question={question} />;
       default:
         return null;
     }
