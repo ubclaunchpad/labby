@@ -8,7 +8,7 @@ import InvoiceCalendar from "../../components/InvoiceCalendar";
 import InvoiceTable from "../../components/InvoiceTable";
 import InvoiceTotal from "../../components/InvoiceTotal";
 import { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LOAD_BILLABLE } from "../../redux/actions/billingActions";
 import GenerateInvoice from "../../components/GenerateInvoice";
 import { Chart } from "../../components/Chart/Chart";
@@ -16,6 +16,7 @@ import { DateRange } from "react-date-range";
 
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
+import { getUserlist } from "../../redux/api/userApi";
 
 function Invoice() {
   const dispatch = useDispatch();
@@ -27,6 +28,28 @@ function Invoice() {
     endDate: undefined,
     key: "selection",
   });
+
+  // Need to know what is gonna come through over here to know how to use it appropriately. Right now there does not seem to be any cost centers.
+  const costCenterData = useSelector(
+    (state) => state?.costCenterReducer?.costcenterList
+  );
+  // console.log("This is the cost center data -->", costCenterData);
+
+  // Project data also does not seem to be returning anything back to me: Need to know what kind of data is coming back.
+  const projectData = useSelector(
+    (state) => state?.projectReducer?.projectList
+  );
+  // console.log("This is the project data -->", projectData);
+
+  // Not sure how to get the data back and it is a little bit odd that none of these are set up properly.
+  const organizationData = useSelector(
+    (state) => state?.userReducer?.organizationList
+  );
+  // console.log("This is the organization data -->", organizationData);
+
+  // Why is the user data not returning something from the backend?????
+  const userData = useSelector((state) => state?.userReducer?.userList);
+  // console.log("This is the user data -->", userData);
 
   useEffect(() => {
     dispatch({ type: LOAD_BILLABLE });
