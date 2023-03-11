@@ -75,13 +75,14 @@ function UrgentEditor({ question }) {
           className="GlobalEditorQuestionTitleInput"
           defaultValue={title}
           placeholder="Type your form name here..."
-          onBlur={(text) => {
+          onChange={(event) => setTitle(event.target.value)}
+          onBlur={() => {
             dispatch({
               type: SAVE_QUESTION,
               payload: {
                 ...question,
                 form_id: question.fk_form_id,
-                question_title: text.target.value,
+                question_title: title, //text.target.value,
                 question_index: question.position_index,
               },
             });
