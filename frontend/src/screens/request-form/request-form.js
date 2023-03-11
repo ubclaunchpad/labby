@@ -26,6 +26,8 @@ import { WarningToast } from "../../components/Toasts";
 
 function RequestForm() {
   const dispatch = useDispatch();
+  let projectQuestion = false;
+  let projectQuestionId = "";
   const [submissionSuccessful, setSubmissionSuccessful] = useState(false);
   const formId = window.location.pathname.split("/")[2];
   const questions = useSelector((state) => state.questionReducer.questionList);
@@ -45,10 +47,20 @@ function RequestForm() {
     dispatch({ type: LOAD_QUESTION, payload: formId });
   }, [dispatch, formId]);
 
+
   // Load Cost Estimate
   useEffect(() => {
     dispatch({ type: LOAD_COST, payload: { formResponses: formResponses } });
   }, [dispatch, formResponses]);
+
+  useEffect(() => {
+    questions.map(question => {
+      if(question.question_type == "project"){
+        projectQuestion = true;
+        projectQuestionId = question.question_id;
+      }
+    })
+  });
 
   // Helper Function to Render Each Question
   function renderQuestion(question) {
@@ -81,6 +93,7 @@ function RequestForm() {
   // Basic Form Validation and Submit
   function submitForm() {
     var filled = true;
+    
     questions.forEach((question) => {
       if (
         question.mandatory &&
@@ -92,7 +105,17 @@ function RequestForm() {
         return;
       }
     });
+      
+    console.log("projectQuestion", projectQuestion);
+    if((formResponses.some(answer => answer.question_id === projectQuestionId))) {
+      projectQuestion = false;
+    }
+
     if (filled) {
+      if(projectQuestion) {
+          WarningToast("Please Select a Project and Submit!");
+      }
+      else {
       if (hideCost) {
         dispatch({ type: TOGGLE_COST_ESTIMATE });
         WarningToast("Please Review Your Cost Estimate and Submit!");
@@ -138,6 +161,7 @@ function RequestForm() {
         // SuccessToast("Form Submitted!");
         // window.location.href = `/request-confirmation/${formId}`;
       }
+    }
     } else {
       WarningToast("Please fill out all mandatory fields");
     }
