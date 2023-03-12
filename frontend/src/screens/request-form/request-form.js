@@ -93,7 +93,10 @@ function RequestForm() {
   // Basic Form Validation and Submit
   function submitForm() {
     var filled = true;
-    
+    console.log("questions: ", questions);
+
+    console.log("formResponses: ", formResponses);
+
     questions.forEach((question) => {
       if (
         question.mandatory &&
@@ -106,10 +109,12 @@ function RequestForm() {
       }
     });
       
-    console.log("projectQuestion", projectQuestion);
-    if((formResponses.some(answer => answer.question_id === projectQuestionId))) {
-      projectQuestion = false;
-    }
+    formResponses.map(answer => {
+      if(answer.question_info != null){
+        projectQuestion = false;
+        console.log("projectQuestion after selected: ", projectQuestion);
+      }
+    })
 
     if (filled) {
       if(projectQuestion) {
@@ -157,7 +162,7 @@ function RequestForm() {
             clinicalResponses: clinicalList,
           },
         });
-        setSubmissionSuccessful(true)
+        setSubmissionSuccessful(true);
         // SuccessToast("Form Submitted!");
         // window.location.href = `/request-confirmation/${formId}`;
       }
