@@ -2,6 +2,12 @@ USE `labby`;
 
 DROP procedure IF EXISTS `save_billable`;
 DROP procedure IF EXISTS `load_billable`;
+DROP procedure IF EXISTS `load_billable_by_service_id`;
+DROP procedure IF EXISTS `load_billable_by_costcenter_id`;
+DROP procedure IF EXISTS `load_billable_by_project_id`;
+DROP procedure IF EXISTS `load_billable_by_organization_id`;
+DROP procedure IF EXISTS `load_billable_by_user_id`;
+DROP procedure IF EXISTS `load_billable_by_date`;
 DROP procedure IF EXISTS `load_billable_by_sow`;
 DROP procedure IF EXISTS `delete_billable`;
 
@@ -69,6 +75,59 @@ CREATE PROCEDURE `load_billable` ()
 
 BEGIN
     SELECT * FROM billable;
+END $$
+
+CREATE PROCEDURE `load_billable_by_service_id` (
+    IN `_service_id` VARCHAR(50)
+)
+
+BEGIN
+    SELECT * FROM billable WHERE fk_sow_id = _service_id;
+END $$
+
+CREATE PROCEDURE `load_billable_by_costcenter_id` (
+    IN `_costcenter_id` VARCHAR(50)
+)
+
+BEGIN
+    SELECT * FROM billable
+    LEFT JOIN costcenter_assignments ca on ca.fk_project_id = billable.fk_project_id
+    WHERE ca.fk_costcenter_id = _costcenter_id;
+END $$
+
+CREATE PROCEDURE `load_billable_by_project_id` (
+    IN `_project_id` VARCHAR(50)
+)
+
+BEGIN
+    SELECT * FROM billable where fk_project_id = _project_id;
+END $$
+
+CREATE PROCEDURE `load_billable_by_organization_id` (
+    IN `_organization_id` VARCHAR(50)
+)
+
+BEGIN
+    SELECT * FROM billable
+    LEFT JOIN project_assignments pa on pa.fk_project_id = billable.fk_project_id
+    WHERE pa.fk_organization_id = _organization_id;
+END $$
+
+CREATE PROCEDURE `load_billable_by_user_id` (
+    IN `_user_id` VARCHAR(50)
+)
+
+BEGIN
+    SELECT * FROM billable where created_by = _user_id;
+END $$
+
+CREATE PROCEDURE `load_billable_by_date` (
+    IN `_start_date` DATETIME,
+    IN `_end_date` DATETIME
+)
+
+BEGIN
+    SELECT * FROM billable where createdDate BETWEEN _start_date AND _end_date;
 END $$
 
 CREATE PROCEDURE `load_billable_by_sow` (

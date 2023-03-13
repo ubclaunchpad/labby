@@ -14,6 +14,29 @@ export default class BillingController {
     });
   }
 
+  loadBillableByFilter(req) {
+    return new Promise((resolve, reject) => {
+      const BillableModel = new Billable();
+
+      const billableFilter = {
+        service_id: req.body.service_id,
+        costcenter_id: req.body.costcenter_id,
+        project_id: req.body.project_id,
+        organization_id: req.body.organization_id,
+        user_id: req.body.user_id,
+        start_date: req.body.start_date,
+        end_date: req.body.end_date,
+      };
+
+      BillableModel.loadBillableByServiceID(billableFilter, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+
   loadBillableBySowId(sowID) {
     return new Promise((resolve, reject) => {
       const BillableModel = new Billable();
@@ -26,7 +49,7 @@ export default class BillingController {
       });
     });
   }
-
+  
   deleteBillable(billableId) {
     return new Promise((resolve, reject) => {
       const BillableModel = new Billable();
