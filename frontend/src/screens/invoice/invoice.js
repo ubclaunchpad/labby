@@ -1,59 +1,86 @@
 import { appColor } from "../../constants";
 import Header from "../../components/Header";
 import "./invoice.css";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
-import InvoiceGraph from "../../components/InvoiceGraph";
-import InvoiceCalendar from "../../components/InvoiceCalendar";
 import InvoiceTable from "../../components/InvoiceTable";
 import InvoiceTotal from "../../components/InvoiceTotal";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LOAD_BILLABLE } from "../../redux/actions/billingActions";
+import {
+  GET_COSTCENTER,
+  GET_PROJECT,
+  LOAD_BILLABLE,
+} from "../../redux/actions/billingActions";
 import GenerateInvoice from "../../components/GenerateInvoice";
 import { Chart } from "../../components/Chart/Chart";
 import { DateRange } from "react-date-range";
 
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import { getUserlist } from "../../redux/api/userApi";
+import {
+  GET_ORGANIZATION,
+  LOAD_USERLIST,
+} from "../../redux/actions/userActions";
+import { LOAD_ALL_COST } from "../../redux/actions/costActions";
 
 function Invoice() {
   const dispatch = useDispatch();
   const invoiceTableRef = useRef(null);
   const { register, handleSubmit } = useForm();
-  const [data, setData] = useState("");
   const [dateRange, setDateRange] = useState({
     startDate: new Date(),
     endDate: undefined,
     key: "selection",
   });
 
-  // Need to know what is gonna come through over here to know how to use it appropriately. Right now there does not seem to be any cost centers.
+  const servicesData = useSelector(
+    (state) => state?.costReducer?.costTableServices
+  );
   const costCenterData = useSelector(
     (state) => state?.costCenterReducer?.costcenterList
   );
-  // console.log("This is the cost center data -->", costCenterData);
-
-  // Project data also does not seem to be returning anything back to me: Need to know what kind of data is coming back.
   const projectData = useSelector(
     (state) => state?.projectReducer?.projectList
   );
-  // console.log("This is the project data -->", projectData);
-
-  // Not sure how to get the data back and it is a little bit odd that none of these are set up properly.
   const organizationData = useSelector(
     (state) => state?.userReducer?.organizationList
   );
-  // console.log("This is the organization data -->", organizationData);
-
-  // Why is the user data not returning something from the backend?????
-  const userData = useSelector((state) => state?.userReducer?.userList);
-  // console.log("This is the user data -->", userData);
+  const usersData = useSelector((state) => state?.userReducer?.userList);
+  const onSubmit = (data) => {
+    const filters = {
+      ...data,
+      start_date: dateRange.startDate,
+      end_date: dateRange.endDate,
+    };
+    console.log(filters);
+  };
 
   useEffect(() => {
     dispatch({ type: LOAD_BILLABLE });
-  }, [dispatch]);
+    if (costCenterData.length === 0) {
+      dispatch({ type: GET_COSTCENTER });
+    }
+    if (usersData.length === 0) {
+      dispatch({ type: LOAD_USERLIST });
+    }
+    if (organizationData.length === 0) {
+      dispatch({ type: GET_ORGANIZATION });
+    }
+    if (projectData.length === 0) {
+      dispatch({ type: GET_PROJECT });
+    }
+    if (servicesData === 0) {
+      dispatch({ type: LOAD_ALL_COST });
+    }
+  }, [
+    dispatch,
+    usersData,
+    organizationData,
+    projectData,
+    costCenterData,
+    servicesData,
+  ]);
 
   return (
     <div className="invoicePage">
@@ -91,68 +118,112 @@ function Invoice() {
             <div className="form-calender-container">
               <div className="search-invoices-form-container">
                 <form
-                  onSubmit={handleSubmit((data) => {
-                    console.log(data);
-                    setData(JSON.stringify(data));
-                  })}
+                  onSubmit={handleSubmit(onSubmit)}
                   className="search-invoices-form"
                 >
                   <label>
                     Service:
                     <select
                       className="search-invoices-form--input"
-                      {...register("service", { required: true })}
+                      {...register("service")}
+                      onBlur={handleSubmit(onSubmit)}
                     >
-                      <option value="">Select...</option>
+                      <option value="">Select service...</option>
+                      {servicesData.map((service) => {
+                        return (
+                          <option key={service.key} value={service?.service}>
+                            {service.service}
+                          </option>
+                        );
+                      })}
                     </select>
                   </label>
                   <label>
                     Cost Center
                     <select
                       className="search-invoices-form--input"
-                      {...register("costCenter", { required: true })}
+                      {...register("costcenter_id")}
+                      onBlur={handleSubmit(onSubmit)}
                     >
-                      <option value="">Select...</option>
-                      <option value="A">Option A</option>
-                      <option value="B">Option B</option>
+                      <option value="">Select cost center... </option>
+                      {costCenterData.map((costCenter) => {
+                        return (
+                          <option
+                            key={costCenter?.cost_center_id}
+                            value={costCenter?.cost_center_id}
+                          >
+                            {costCenter?.cost_center_name}
+                          </option>
+                        );
+                      })}
                     </select>
                   </label>
                   <label>
                     Project:
                     <select
                       className="search-invoices-form--input"
-                      {...register("project", { required: true })}
+                      {...register("project_id")}
+                      onBlur={handleSubmit(onSubmit)}
                     >
-                      <option value="">Select...</option>
+                      <option value="">Select project... </option>
+                      {projectData.map((project) => {
+                        return (
+                          <option
+                            key={project?.project_id}
+                            value={project?.project_id}
+                          >
+                            {project?.project_name}
+                          </option>
+                        );
+                      })}
                     </select>
                   </label>
                   <label>
                     Organization
                     <select
                       className="search-invoices-form--input"
-                      {...register("organization", { required: true })}
+                      {...register("organization_id")}
+                      onBlur={handleSubmit(onSubmit)}
                     >
-                      <option value="">Select...</option>
+                      <option value="">Select organization... </option>
+                      {organizationData.map((organization) => {
+                        return (
+                          <option
+                            key={organization.organization_id}
+                            value={organization.organization_id}
+                          >
+                            {organization.organization_name}
+                          </option>
+                        );
+                      })}
                     </select>
                   </label>
                   <label>
                     User
                     <select
                       className="search-invoices-form--input"
-                      {...register("user", { required: true })}
+                      {...register("user_id")}
+                      onBlur={handleSubmit(onSubmit)}
                     >
-                      <option value="">Select...</option>
+                      <option value="">Select user... </option>
+                      {usersData.map((user) => (
+                        <option key={user.user_id} value={user.user_id}>
+                          {user.username}
+                        </option>
+                      ))}
                     </select>
                   </label>
                 </form>
               </div>
               <div className="search-invoices-calendar-container">
-                <div className="search-invoices-calendar">
+                <div
+                  className="search-invoices-calendar"
+                  onBlur={handleSubmit(onSubmit)}
+                >
                   <DateRange
                     editableDateInputs={true}
                     ranges={[dateRange]}
                     onChange={({ selection }) => {
-                      console.log("These are the ranges -->", selection);
                       setDateRange(selection);
                     }}
                   />
