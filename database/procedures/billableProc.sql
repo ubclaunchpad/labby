@@ -2,7 +2,7 @@ USE `labby`;
 
 DROP procedure IF EXISTS `save_billable`;
 DROP procedure IF EXISTS `load_billable`;
-DROP procedure IF EXISTS `load_billable_by_service_id`;
+DROP procedure IF EXISTS `load_billable_by_service`;
 DROP procedure IF EXISTS `load_billable_by_costcenter_id`;
 DROP procedure IF EXISTS `load_billable_by_project_id`;
 DROP procedure IF EXISTS `load_billable_by_organization_id`;
@@ -77,12 +77,12 @@ BEGIN
     SELECT * FROM billable;
 END $$
 
-CREATE PROCEDURE `load_billable_by_service_id` (
-    IN `_service_id` VARCHAR(50)
+CREATE PROCEDURE `load_billable_by_service` (
+    IN `_service_name` VARCHAR(50)
 )
 
 BEGIN
-    SELECT * FROM billable WHERE fk_sow_id = _service_id;
+    SELECT * FROM billable WHERE name = _service_name;
 END $$
 
 CREATE PROCEDURE `load_billable_by_costcenter_id` (
@@ -92,7 +92,7 @@ CREATE PROCEDURE `load_billable_by_costcenter_id` (
 BEGIN
     SELECT * FROM billable
     LEFT JOIN costcenter_assignments ca on ca.fk_project_id = billable.fk_project_id
-    WHERE ca.fk_costcenter_id = _costcenter_id;
+    WHERE ca.fk_cost_center_id = _costcenter_id;
 END $$
 
 CREATE PROCEDURE `load_billable_by_project_id` (
