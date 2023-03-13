@@ -93,10 +93,6 @@ function RequestForm() {
   // Basic Form Validation and Submit
   function submitForm() {
     var filled = true;
-    console.log("questions: ", questions);
-
-    console.log("formResponses: ", formResponses);
-
     questions.forEach((question) => {
       if (
         question.mandatory &&
