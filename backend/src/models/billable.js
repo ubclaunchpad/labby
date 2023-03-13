@@ -23,10 +23,10 @@ export class Billable {
     });
   }
 
-  loadBillableByServiceID(billableFilter, result) {
+  loadBillableByService(billableFilter, result) {
     con.query(
-      "CALL load_billable_by_service_id(?)",
-      [billableFilter.service_id],
+      "CALL load_billable_by_service(?)",
+      [billableFilter.service],
       (err, res) => {
         if (err) {
           console.log("error: ", err);
@@ -55,7 +55,7 @@ export class Billable {
 
   loadBillableByProjectId(billableFilter, result) {
     con.query(
-      "CALL load_billable_by_project(?)",
+      "CALL load_billable_by_project_id(?)",
       [billableFilter.project_id],
       (err, res) => {
         if (err) {
