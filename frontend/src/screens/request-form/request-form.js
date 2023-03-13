@@ -112,7 +112,6 @@ function RequestForm() {
     formResponses.map(answer => {
       if(answer.question_info != null){
         projectQuestion = false;
-        console.log("projectQuestion after selected: ", projectQuestion);
       }
     })
 
