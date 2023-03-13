@@ -19,3 +19,32 @@ export const getBillable = async () => {
     return console.error(err);
   }
 };
+
+export const getBillableByFilter = async (payload) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    console.log(payload)
+
+    var data = JSON.stringify({
+      service: payload.service,
+      costcenter_id: payload.costcenter_id,
+      project_id: payload.project_id,
+      organization_id: payload.organization_id,
+      user_id: payload.user_id,
+      start_date: payload.start_date,
+      end_date: payload.end_date,
+    });
+
+    const billingList = await axios.post("billing/filter/", data, {
+      headers: headers,
+    });
+
+    return billingList;
+  } catch (err) {
+    return console.error(err);
+  }
+};

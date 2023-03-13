@@ -1,16 +1,18 @@
 import { appColor } from "../../constants";
 import Header from "../../components/Header";
 import "./invoice.css";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import InvoiceTable from "../../components/InvoiceTable";
 import InvoiceTotal from "../../components/InvoiceTotal";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  FILTER_BILLABLE,
   GET_COSTCENTER,
   GET_PROJECT,
   LOAD_BILLABLE,
+  SET_BILLABLE,
 } from "../../redux/actions/billingActions";
 import GenerateInvoice from "../../components/GenerateInvoice";
 import { Chart } from "../../components/Chart/Chart";
@@ -22,21 +24,27 @@ import {
   GET_ORGANIZATION,
   LOAD_USERLIST,
 } from "../../redux/actions/userActions";
-import { LOAD_ALL_COST } from "../../redux/actions/costActions";
+import { LOAD_QUESTION } from "../../redux/actions/questionActions";
 
 function Invoice() {
   const dispatch = useDispatch();
   const invoiceTableRef = useRef(null);
   const { register, handleSubmit } = useForm();
   const [dateRange, setDateRange] = useState({
-    startDate: new Date(),
+    startDate: undefined,
     endDate: undefined,
     key: "selection",
   });
 
-  const servicesData = useSelector(
-    (state) => state?.costReducer?.costTableServices
+  const invoiceDataSourceOG = useSelector(
+    (state) => state.billingReducer.billingListOG
   );
+
+  const servicesObject = useSelector(
+    (state) => state?.questionReducer?.answerList
+  );
+  const serviceData = Object.values(servicesObject).flat();
+
   const costCenterData = useSelector(
     (state) => state?.costCenterReducer?.costcenterList
   );
@@ -53,7 +61,13 @@ function Invoice() {
       start_date: dateRange.startDate,
       end_date: dateRange.endDate,
     };
-    console.log(filters);
+    console.log(filters)
+    const emptyValues = Object.values(data).every((value) => !value);
+    if (emptyValues) {
+      dispatch({ type: SET_BILLABLE, payload: invoiceDataSourceOG });
+    } else {
+      dispatch({ type: FILTER_BILLABLE, payload: filters });
+    }
   };
 
   useEffect(() => {
@@ -70,16 +84,13 @@ function Invoice() {
     if (projectData.length === 0) {
       dispatch({ type: GET_PROJECT });
     }
-    if (servicesData === 0) {
-      dispatch({ type: LOAD_ALL_COST });
-    }
+    dispatch({ type: LOAD_QUESTION });
   }, [
     dispatch,
     usersData,
     organizationData,
     projectData,
     costCenterData,
-    servicesData,
   ]);
 
   return (
@@ -113,6 +124,23 @@ function Invoice() {
                 placeholder="Search..."
                 className="invoiceTableSearch"
                 // NEED TO ADD ONCHANGE FOR SEARCHING
+                onBlur={(text) => {
+                  const searchTerm = text.target.value;
+
+                  if (searchTerm === "") {
+                    dispatch({
+                      type: SET_BILLABLE,
+                      payload: invoiceDataSourceOG,
+                    });
+                  } else {
+                    const filteredData = invoiceDataSourceOG.filter((item) => {
+                      const objectString = Object.values(item).join(" ");
+  
+                      return objectString.toLowerCase().includes(searchTerm.toLowerCase());
+                    });
+                    dispatch({ type: SET_BILLABLE, payload: filteredData });
+                  }
+                }}
               />
             </div>
             <div className="form-calender-container">
@@ -129,10 +157,10 @@ function Invoice() {
                       onBlur={handleSubmit(onSubmit)}
                     >
                       <option value="">Select service...</option>
-                      {servicesData.map((service) => {
+                      {serviceData.map((service) => {
                         return (
-                          <option key={service.key} value={service?.service}>
-                            {service.service}
+                          <option key={service?.answer_id} value={service?.answer}>
+                            {service.answer}
                           </option>
                         );
                       })}

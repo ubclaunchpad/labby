@@ -6,8 +6,8 @@ const InvoiceTotal = () => {
   const dataSource = useSelector((state) => state.billingReducer.billingList);
 
   const totalServices = dataSource.length.toString().padStart(1, "0");
-  const totalSows = dataSource.filter(item => item.type === "SOW").length.toString().padStart(1, "0");
-  const totalProjects = dataSource.filter(item => item.type === "Project").length.toString().padStart(1, "0");
+  const totalSows = dataSource.filter((item) => item.type === "SOW #").length;
+  const totalProjects = dataSource.filter((item) => item.type === "Project").length;
 
   return (
     <div className="InvoiceTotal">

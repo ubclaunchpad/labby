@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { SET_BILLABLE, SET_INVOICE_LIST } from "../actions/billingActions";
+import { SET_BILLABLE, SET_INVOICE_LIST, SET_OG_BILLABLE } from "../actions/billingActions";
 
 const defaultBillingList = [];
 const defaultInvoiceList = [];
@@ -7,6 +7,17 @@ const defaultInvoiceList = [];
 const billingList = (state = defaultBillingList, action) => {
   switch (action.type) {
     case SET_BILLABLE: {
+      return action.payload;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
+const billingListOG = (state = defaultBillingList, action) => {
+  switch (action.type) {
+    case SET_OG_BILLABLE: {
       return action.payload;
     }
     default: {
@@ -29,4 +40,5 @@ const invoiceList = (state = defaultInvoiceList, action) => {
 export default combineReducers({
   billingList,
   invoiceList,
+  billingListOG,
 });
