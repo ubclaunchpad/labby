@@ -1,12 +1,6 @@
 .GeneratePdfButton {
   display: flex;
   justify-content: center;
-  margin: auto;
-  margin-top: -40px;
-  margin-right: 0;
-  margin-bottom: 0;
-  
-
   font-size: 18px;
   font-weight: 600;
   background-color: #8A9DF8;
@@ -17,4 +11,5 @@
   border-radius: 10px;
   cursor: pointer;
   width:fit-content;
+  margin-top: 10px;
 }

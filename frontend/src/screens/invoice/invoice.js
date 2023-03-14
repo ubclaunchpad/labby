@@ -88,13 +88,7 @@ function Invoice() {
       dispatch({ type: GET_PROJECT });
     }
     dispatch({ type: LOAD_QUESTION });
-  }, [
-    dispatch,
-    usersData,
-    organizationData,
-    projectData,
-    costCenterData,
-  ]);
+  }, [dispatch, usersData, organizationData, projectData, costCenterData]);
 
   return (
     <div className="invoicePage">
@@ -138,8 +132,10 @@ function Invoice() {
                   } else {
                     const filteredData = invoiceDataSourceOG.filter((item) => {
                       const objectString = Object.values(item).join(" ");
-  
-                      return objectString.toLowerCase().includes(searchTerm.toLowerCase());
+
+                      return objectString
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase());
                     });
                     dispatch({ type: SET_BILLABLE, payload: filteredData });
                   }
@@ -162,7 +158,10 @@ function Invoice() {
                       <option value="">Select service...</option>
                       {serviceData.map((service) => {
                         return (
-                          <option key={service?.answer_id} value={service?.answer}>
+                          <option
+                            key={service?.answer_id}
+                            value={service?.answer}
+                          >
                             {service.answer}
                           </option>
                         );

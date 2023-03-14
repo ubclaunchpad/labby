@@ -20,7 +20,15 @@
     width: 75%;
   }
   
-  
+  .invoice-page-header{
+    margin-top: 10px;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+  }
+  .generate-invoice-button{
+    width: 200px;
+  }
   
 
   /* CSS For widgets containers and items inside:  */
@@ -136,6 +144,8 @@
     margin: 5px 0px 15px 0px ;
     font-weight: 600;
   }
+
+
 
   .search-invoices-calendar-container{
     align-items: center;   
