@@ -242,7 +242,14 @@
 }
 
 .ticketPreview {
-  margin-left: auto;
+
+}
+.assignees-title{
+  font-size: 11px; 
+  font-weight: 600; 
+  color: #AEAEAE;
+  text-align: left;
+  margin-bottom: none;
 }
 
 .ticketSectionTitle {
@@ -261,7 +268,6 @@
   display: flex;
   align-items: center;
   height: 30px;
-  margin-top: 10px;
 }
 
 .ticketDescription {
