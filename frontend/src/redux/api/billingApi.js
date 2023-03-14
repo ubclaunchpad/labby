@@ -27,8 +27,6 @@ export const getBillableByFilter = async (payload) => {
       Authorization: `Bearer ${token}`,
     };
 
-    console.log(payload)
-
     var data = JSON.stringify({
       service: payload.service,
       costcenter_id: payload.costcenter_id,

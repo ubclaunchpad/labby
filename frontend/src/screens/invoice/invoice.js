@@ -56,13 +56,16 @@ function Invoice() {
   );
   const usersData = useSelector((state) => state?.userReducer?.userList);
   const onSubmit = (data) => {
+    const startDate = new Date(dateRange.startDate);
+    const endDate = new Date(dateRange.endDate);
+    const start = startDate.toISOString();
+    const end = endDate.toISOString();
     const filters = {
       ...data,
-      start_date: dateRange.startDate,
-      end_date: dateRange.endDate,
+      start_date: start,
+      end_date: end,
     };
-    console.log(filters)
-    const emptyValues = Object.values(data).every((value) => !value);
+    const emptyValues = Object.values(filters).every((value) => !value);
     if (emptyValues) {
       dispatch({ type: SET_BILLABLE, payload: invoiceDataSourceOG });
     } else {

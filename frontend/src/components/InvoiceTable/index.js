@@ -30,7 +30,7 @@ const InvoiceTable = () => {
       editable: false,
     },
     {
-      title: "Completion Date",
+      title: "Created Date",
       dataIndex: "createdDate",
       key: "createdDate",
       editable: false,
