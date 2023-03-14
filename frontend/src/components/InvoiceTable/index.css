@@ -1,5 +1,5 @@
 .table {
-  margin-top: 30px;
+  /* margin-top: 30px; */
 }
 .addService {
   display: flex;
@@ -46,7 +46,7 @@ So try and beat it with CSS specificity */
 .ant-table-container,
 .ant-table-container table > thead > tr:first-child > th {
   background-color: #d9d9d9;
-  border: 1px solid #d9d9d9;
+  /* border: 1px solid #d9d9d9; */
 }
 .ant-table-container,
 .ant-table-container table > thead > tr:first-child th:first-child {
@@ -73,4 +73,11 @@ So try and beat it with CSS specificity */
 .ant-table-container,
 .ant-table-container table > tbody > tr:last-child td:last-child {
   border-bottom-right-radius: 10px;
+}
+.ant-table.ant-table-bordered>.ant-table-container>.ant-table-content>table, .ant-table.ant-table-bordered>.ant-table-container>.ant-table-header>table{
+  border-top: none;
+}
+
+.ant-table.ant-table-bordered>.ant-table-container>.ant-table-content>table>thead>tr>th{
+border-right: none;
 }
