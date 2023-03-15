@@ -26,6 +26,7 @@ import { WarningToast } from "../../components/Toasts";
 
 function RequestForm() {
   const dispatch = useDispatch();
+  const [projectQuestion, setProjectQuestion] = useState(false);
   const [submissionSuccessful, setSubmissionSuccessful] = useState(false);
   const formId = window.location.pathname.split("/")[2];
   const questions = useSelector((state) => state.questionReducer.questionList);
@@ -49,6 +50,12 @@ function RequestForm() {
   useEffect(() => {
     dispatch({ type: LOAD_COST, payload: { formResponses: formResponses } });
   }, [dispatch, formResponses]);
+
+  useEffect(() => {
+    setProjectQuestion(
+      questions.some((question) => question.question_type === "project")
+    );
+  }, [questions]);
 
   // Helper Function to Render Each Question
   function renderQuestion(question) {
@@ -92,51 +99,60 @@ function RequestForm() {
         return;
       }
     });
+
+    setProjectQuestion(
+      formResponses.some((answer) => answer.question_info !== null)
+    );
+
     if (filled) {
-      if (hideCost) {
-        dispatch({ type: TOGGLE_COST_ESTIMATE });
-        WarningToast("Please Review Your Cost Estimate and Submit!");
+      if (projectQuestion) {
+        WarningToast("Please Select a Project and Submit!");
       } else {
-        const projectItem = formResponses.filter(
-          (response) => response.question.project_id !== undefined
-        );
-        const projectId = projectItem[0]
-          ? projectItem[0].response
-          : "PROJECTID-A";
-        const billableList = [];
-        formResponses.map((response) => {
-          const cost = costEstimateMap.get(response.question.answer_id);
-          let quantity = response.quantity ?? 1;
-          let service = response.question.answer;
-          if (cost) {
-            billableList.push({
-              service: service,
-              quantity: quantity,
-              cost: cost * quantity,
-            });
-          } else if (service !== "" && service !== undefined) {
-            // This question's cost not in current stored cost estimate
-            billableList.push({
-              service,
-              quantity,
-              cost: response.question.cost ?? "N/A",
-            });
-          }
-          return null;
-        });
-        dispatch({
-          type: SUBMIT_FORM,
-          payload: {
-            formId,
-            formResponses,
-            projectId: projectId,
-            billables: billableList,
-            clinicalResponses: clinicalList,
-          },
-        });
-        setSubmissionSuccessful(true)
-        // SuccessToast("Form Submitted!");
-        // window.location.href = `/request-confirmation/${formId}`;
+        if (hideCost) {
+          dispatch({ type: TOGGLE_COST_ESTIMATE });
+          WarningToast("Please Review Your Cost Estimate and Submit!");
+        } else {
+          const projectItem = formResponses.filter(
+            (response) => response.question.project_id !== undefined
+          );
+          const projectId = projectItem[0]
+            ? projectItem[0].response
+            : "PROJECTID-A";
+          const billableList = [];
+          formResponses.map((response) => {
+            const cost = costEstimateMap.get(response.question.answer_id);
+            let quantity = response.quantity ?? 1;
+            let service = response.question.answer;
+            if (cost) {
+              billableList.push({
+                service: service,
+                quantity: quantity,
+                cost: cost * quantity,
+              });
+            } else if (service !== "" && service !== undefined) {
+              // This question's cost not in current stored cost estimate
+              billableList.push({
+                service,
+                quantity,
+                cost: response.question.cost ?? "N/A",
+              });
+            }
+            return null;
+          });
+          dispatch({
+            type: SUBMIT_FORM,
+            payload: {
+              formId,
+              formResponses,
+              projectId: projectId,
+              billables: billableList,
+              clinicalResponses: clinicalList,
+            },
+          });
+          setSubmissionSuccessful(true);
+          // SuccessToast("Form Submitted!");
+          // window.location.href = `/request-confirmation/${formId}`;
+        }
       }
     } else {
       WarningToast("Please fill out all mandatory fields");

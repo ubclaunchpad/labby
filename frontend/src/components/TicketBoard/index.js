@@ -22,7 +22,6 @@ import { AssigneeIcon } from "../Icons/AssigneeIcon";
 import { ticketsColors } from "../../constants";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { appColor } from "../../constants";
 import { LOAD_EMPLOYEE } from "../../redux/actions/userActions";
 import Add from "../../assets/AddBlack.png";
 import Subtasks from "./Subtasks";
@@ -379,10 +378,10 @@ export const TicketBoard = () => {
               <div className="ticketTitleId">{currentTicket.code}</div>
               <div>{currentTicket.title}</div>
             </div>
-            <div className="ticketPreview">
+            <div>
               <NavLink to={`/preview/${currentTicket.id}`}>
                 <p
-                  className="FormPreviewButton"
+                  className="TicketPreviewButton"
                   style={{
                     color: "grey",
                   }}
