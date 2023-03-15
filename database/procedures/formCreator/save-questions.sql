@@ -33,7 +33,7 @@ END $$
  
 CREATE PROCEDURE `save_answer` (
    IN `_answer_id` VARCHAR(50),
-   IN `_answer` VARCHAR(50),
+   IN `_answer` VARCHAR(255),
    IN `_question_type` VARCHAR(50),
    IN `_fk_question_id` VARCHAR(50)
  

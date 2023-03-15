@@ -1,0 +1,28 @@
+.InvoiceTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  height: 73px;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.invoice-total-container {
+  display: flex;
+  margin: 0 1rem;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: 18px;
+  font-weight: 700;
+  font-style: bold;
+
+}
+
+.total-number {
+  font-size: 1.8em;
+  font-weight: 700;
+  font-style: bold;
+}
