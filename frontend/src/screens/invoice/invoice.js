@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import InvoiceTable from "../../components/InvoiceTable";
 import InvoiceTotal from "../../components/InvoiceTotal";
+import ServicesAnalytics from "../../components/ServicesAnalytics";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,6 +14,7 @@ import {
   GET_PROJECT,
   LOAD_BILLABLE,
   SET_BILLABLE,
+  SET_ACTIVE_ANALYTICS
 } from "../../redux/actions/billingActions";
 import GenerateInvoice from "../../components/GenerateInvoice";
 import { Chart } from "../../components/Chart/Chart";
@@ -25,6 +27,7 @@ import {
   LOAD_USERLIST,
 } from "../../redux/actions/userActions";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
+
 
 function Invoice() {
   const dispatch = useDispatch();
@@ -53,6 +56,9 @@ function Invoice() {
   );
   const organizationData = useSelector(
     (state) => state?.userReducer?.organizationList
+  );
+  const servicesAnalytics = useSelector(
+    (state) => state.billingReducer.servicesAnalytics
   );
   const usersData = useSelector((state) => state?.userReducer?.userList);
   const onSubmit = (data) => {
@@ -91,6 +97,10 @@ function Invoice() {
   }, [dispatch, usersData, organizationData, projectData, costCenterData]);
 
   return (
+  <div className="invoicePageContainer">
+    <div>
+      {servicesAnalytics ? <ServicesAnalytics/> : null}
+    </div>
     <div className="invoicePage">
       <div className="headerComponent">
         <Header />
@@ -110,8 +120,12 @@ function Invoice() {
             <div className="invoices-chart-container">
               <Chart />
             </div>
-            <div className="InvoiceTotal" style={{ color: appColor.gray }}>
-              <InvoiceTotal />
+            <div className="InvoiceTotal" 
+                 style={{ color: appColor.gray }}
+                 onClick={() => {
+                    dispatch({ type: SET_ACTIVE_ANALYTICS });
+                 }}>
+              <InvoiceTotal  />
             </div>
           </div>
           <div className="search-invoices-container">
@@ -268,6 +282,7 @@ function Invoice() {
         </div>
       </div>
     </div>
+  </div>
   );
 }
 

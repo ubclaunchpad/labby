@@ -40,7 +40,6 @@
     /* background-color: red; */
     align-content: space-between;
     /* padding: 2%; */
-
   }
 
   .invoices-statistics-container{
@@ -97,8 +96,6 @@
   .form-calender-container{
     display: flex;
     height: 95%;
- 
-
   }
   .search-invoices-form-container{
     display: flex;
@@ -112,7 +109,6 @@
     -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
     box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
     margin-right: 24px;
-  
   }
   .search-invoices-form{
     width: 100%;
@@ -121,9 +117,8 @@
     padding-top: 5px;
     display: flex; 
     flex-direction: column;
-
-  
   }
+
   input {
     font-family: inherit;
     display: block;
@@ -145,8 +140,6 @@
     font-weight: 600;
   }
 
-
-
   .search-invoices-calendar-container{
     align-items: center;   
     /* padding-top:40px; */
@@ -166,4 +159,8 @@
   .rdrDateDisplayWrapper{
     background-color: #f5f5f5 !important;
 
+  }
+
+  .InvoiceTotal {
+    cursor: pointer;
   }
