@@ -18,7 +18,7 @@ import {
   CostEstimateCollapsed,
   CostEstimateFull,
 } from "../../components/CostEstimate";
-import { SUBMIT_FORM } from "../../redux/actions/formActions";
+import { SUBMIT_SURVEY } from "../../redux/actions/formActions";
 import { TOGGLE_COST_ESTIMATE } from "../../redux/actions/uiActions";
 import ProjectSelector from "../../components/ProjectSelector";
 import { ToastContainer } from "react-toastify";
@@ -122,7 +122,7 @@ function RequestForm() {
           return null;
         });
         dispatch({
-          type: SUBMIT_FORM,
+          type: SUBMIT_SURVEY,
           payload: {
             formId,
             formResponses,

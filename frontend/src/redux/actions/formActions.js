@@ -21,3 +21,5 @@ export const SET_FORMS = "SET_FORMS";
 export const DELETE_FORM = "DELETE_FORM";
 
 export const SAVE_FORM_BUILD = "SUBMIT_FORM_BUILD";
+export const SUBMIT_SURVEY = "SUBMIT_SURVEY";
+export const SAVE_SURVEY_ID = "SAVE_SURVEY_ID";

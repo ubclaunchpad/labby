@@ -1,8 +1,9 @@
 import { combineReducers } from "redux";
-import { SET_BILLABLE, SET_INVOICE_LIST } from "../actions/billingActions";
+import { SET_BILLABLE, SET_INVOICE_LIST, LOAD_BILLABLE_BY_SOWID } from "../actions/billingActions";
 
 const defaultBillingList = [];
 const defaultInvoiceList = [];
+const defaultBillablesBySOWID = {};
 
 const billingList = (state = defaultBillingList, action) => {
   switch (action.type) {
@@ -14,6 +15,19 @@ const billingList = (state = defaultBillingList, action) => {
     }
   }
 };
+
+// reducer with map of  sowid to billables
+const billablesBySOWIDMap = (state = defaultBillablesBySOWID, action) => {
+  switch (action.type) {
+    case LOAD_BILLABLE_BY_SOWID: {
+      return action.payload;
+    }
+    default: {
+      return state; 
+    }
+  }
+}
+
 
 const invoiceList = (state = defaultInvoiceList, action) => {
   switch (action.type) {

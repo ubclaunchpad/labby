@@ -1,6 +1,6 @@
 import uuid from "react-uuid";
 import { all, call, takeLatest, put } from "redux-saga/effects";
-import { SUBMIT_FORM } from "../actions/formActions";
+import { SUBMIT_SURVEY } from "../actions/formActions";
 import { createTicketApi } from "../api/formApi";
 import { saveResponse, saveSurvey } from "../api/surveyApi";
 import {POST_SERVICE_COST } from "../../redux/actions/ticketActions";
@@ -22,7 +22,7 @@ export function* submitResponseSaga({ payload }) {
     payload.billables.map((billable) => {
       return put({ type: POST_SERVICE_COST, payload: {
         billable_id: uuid(),
-        sow_id: survey_id,
+        sow_id: survey_id, 
         project_id: payload.projectId,
         name: billable.service,
         quantity: billable.quantity,
@@ -35,6 +35,8 @@ export function* submitResponseSaga({ payload }) {
       } });
     })
   );
+  localStorage.setItem("currentSurveyId", JSON.stringify(survey_id));
+  
   yield all(
     payload.formResponses.map((response) => { 
       const isChoice =
@@ -55,5 +57,5 @@ export function* submitResponseSaga({ payload }) {
 }
 
 export default function* surveySaga() {
-  yield takeLatest(SUBMIT_FORM, submitResponseSaga);
+  yield takeLatest(SUBMIT_SURVEY, submitResponseSaga);
 }
