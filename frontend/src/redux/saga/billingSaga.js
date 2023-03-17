@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { LOAD_BILLABLE, LOAD_BILLABLE_BY_SOWID, SET_BILLABLE } from "../actions/billingActions";
+import { LOAD_BILLABLE, LOAD_BILLABLE_BY_SOWID, SET_BILLABLE, SET_BILLABLE_BY_SOWID } from "../actions/billingActions";
 import { getBillable, getBillableBySOWID } from "../api/billingApi";
 
 export function* loadBillableSaga() {
@@ -8,10 +8,8 @@ export function* loadBillableSaga() {
 }
 
 export function* loadBillableBySOWIDSaga({ payload }) {
-  console.log("beforeapi")
   const billableList = yield call(getBillableBySOWID, payload);
-  console.log("afterapi")
-  // yield put({ type: LOAD_BILLABLE_BY_SOWID, payload: billableList.data })
+  yield put({ type: SET_BILLABLE_BY_SOWID, payload: { data: billableList.data, sowID: payload.survey_id }});
 }
 
 export default function* billingSaga() {

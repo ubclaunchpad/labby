@@ -17,9 +17,9 @@ router.get("/", authorize(), (_, res) => {
   });
 
   router.get("/:sowID", authorize(), (req, res) => {
-    console.log('hereasdfasdfasdf');
+    console.log(req.params);
     billingController
-      .loadBillableBySowId(req.params.sowID)
+      .loadBillableBySowId(req.params.survey_id)
       .then((response) => {
         res.status(200).json(response);
       })

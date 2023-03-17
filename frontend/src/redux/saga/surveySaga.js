@@ -35,7 +35,7 @@ export function* submitResponseSaga({ payload }) {
       } });
     })
   );
-  localStorage.setItem("currentSurveyId", JSON.stringify(survey_id));
+  localStorage.setItem("currentSurveyId", survey_id);
   
   yield all(
     payload.formResponses.map((response) => { 
