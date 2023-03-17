@@ -15,7 +15,7 @@ export default class TaskController {
       }
       const TaskModel = new Task();
       const taskData = {
-        task_id: req.body.task_id,
+        // task_id: req.body.task_id,
         fk_form_id: req.body.fk_form_id,
         fk_project_id: req.body.fk_project_id,
         task_title: req.body.task_title,
@@ -84,7 +84,7 @@ export default class TaskController {
         subtask_title: req.body.subtask_title,
         subtask_description: req.body.subtask_description,
         subtask_state: req.body.subtask_state,
-        task_id: req.params.taskId,
+        // task_id: req.params.taskId,
       };
       TaskModel.insertSubtask(subtaskData, (err, result) => {
         if (err) {

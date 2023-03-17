@@ -10,7 +10,7 @@ export function* submitResponseSaga({ payload }) {
   const survey_id = uuid();
   yield call(saveSurvey, { survey_id: survey_id });
   yield call(createTicketApi, {
-    task_id: survey_id,
+    // task_id: survey_id,
     fk_form_id:
       payload.formResponses[0].question.fk_form_id ??
       payload.formResponses[1].question.fk_form_id,

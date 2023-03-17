@@ -5,9 +5,9 @@ export class Task {
   loadedSubtask = false;
   insertTask(taskData, result) {
     con.query(
-      "CALL save_task(?, ?, ?, ?, ?, ?)",
+      "CALL save_task(?, ?, ?, ?, ?)",
       [
-        taskData.task_id,
+        // taskData.task_id,
         taskData.fk_form_id,
         taskData.fk_project_id,
         taskData.task_title,
@@ -20,7 +20,7 @@ export class Task {
           result(error, null);
         } else {
           result(null, {
-            result: `Task of ${taskData.title} Saved Successfully for Task ID: ${taskData.task_id}`,
+            result: `Task of ${taskData.title} Saved Successfully for Task ID:`,
           });
         }
       }
