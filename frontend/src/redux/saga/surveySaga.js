@@ -1,11 +1,12 @@
 import uuid from "react-uuid";
-import { all, call, takeLatest, put } from "redux-saga/effects";
+import { all, call, takeLatest, put, select } from "redux-saga/effects";
 import { SUBMIT_FORM } from "../actions/formActions";
 import { createTicketApi } from "../api/formApi";
 import { saveClinical, saveResponse, saveSurvey } from "../api/surveyApi";
 import {POST_SERVICE_COST } from "../../redux/actions/ticketActions";
 
 export function* submitResponseSaga({ payload }) {
+  const user = yield select((state) => state.userReducer.currentUser);
   const survey_id = uuid();
   yield call(saveSurvey, { survey_id: survey_id });
   yield call(createTicketApi, {
@@ -32,7 +33,7 @@ export function* submitResponseSaga({ payload }) {
         completedTime: null,
         billed: false,
         billedTime: null,
-        created_by: "USER-A"
+        created_by: user.user_id
       } });
     })
   );

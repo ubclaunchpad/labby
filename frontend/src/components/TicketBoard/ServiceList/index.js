@@ -16,6 +16,9 @@ function ServiceList() {
   const currentTicketServiceCosts = useSelector(
     (state) => state.ticketReducer.currentTicketServiceCosts
   );
+  const currentUser = useSelector(
+    (state) => state.userReducer.currentUser
+  );
   return (
     <div className="ticketCosts">
       <div className="contentList">
@@ -152,7 +155,7 @@ function ServiceList() {
               completedTime: null,
               billed: false,
               billedTime: null,
-              created_by: "USER-A",
+              created_by: currentUser.user_id,
             },
           });
         }}

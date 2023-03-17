@@ -1,5 +1,9 @@
 import { combineReducers } from "redux";
-import { SET_BILLABLE, SET_INVOICE_LIST, SET_OG_BILLABLE } from "../actions/billingActions";
+import {
+  SET_BILLABLE,
+  SET_INVOICE_LIST,
+  SET_OG_BILLABLE,
+} from "../actions/billingActions";
 
 const defaultBillingList = [];
 const defaultInvoiceList = [];
