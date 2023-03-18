@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 
@@ -19,7 +19,7 @@ function FormConfirmation() {
       }})
     }, 1000)
   }, [dispatch]);
-  
+
   const formId = window.location.pathname.split("/")[2];
   
   return (
