@@ -19,18 +19,6 @@ const PreviewTable = () => {
         ) : null,
     },
     {
-      title: "Question Type",
-      dataIndex: "question_type",
-      key: "question_type",
-      editable: false,
-      render: (_, record) =>
-        dataSource.length >= 1 ? (
-          <div>
-            {record.question_type ?? "project"}
-          </div>
-        ) : null,
-    },
-    {
       title: "Answer",
       dataIndex: "answer",
       key: "answer",
@@ -39,6 +27,18 @@ const PreviewTable = () => {
         dataSource.length >= 1 ? (
           <div>
             {record.answer ?? record.answerid ?? "No Project ID"}
+          </div>
+        ) : null,
+    },
+    {
+      title: "Clinical Samples",
+      dataIndex: "clinicalList",
+      key: "clinicalList",
+      editable: false,
+      render: (_, record) =>
+        dataSource.length >= 1 ? (
+          <div>
+            {record.clinicalList ? record.clinicalList.join(", ") : ""}
           </div>
         ) : null,
     }

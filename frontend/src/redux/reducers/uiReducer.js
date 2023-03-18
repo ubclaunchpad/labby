@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { TOGGLE_LOGIC } from "../actions/uiActions";
+import { START_LOADING, STOP_LOADING, TOGGLE_LOGIC } from "../actions/uiActions";
 
 const defaultLogicView = false;
 
@@ -14,7 +14,22 @@ const logicView = (state = defaultLogicView, action) => {
   }
 };
 
+const loading = (state = false, action) => {
+  switch (action.type) {
+    case START_LOADING: {
+      return true;
+    }
+    case STOP_LOADING: {
+      return false;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 export default combineReducers({
   logicView,
+  loading,
 });
 

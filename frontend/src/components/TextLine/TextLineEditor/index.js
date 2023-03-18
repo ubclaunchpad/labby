@@ -105,7 +105,7 @@ function TextLineEditor({ question }) {
               });
             }}
           >
-            Logic Added
+            View Logic
           </div>
         ) : (
           <div />

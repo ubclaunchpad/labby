@@ -15,6 +15,7 @@ CREATE TABLE `billable` (
   `name` VARCHAR(50),
   `quantity` DOUBLE,
   `cost` DOUBLE,
+  `comment` VARCHAR(255),
   `createdDate` DATETIME,
   `completedTime` DATETIME,
   `billed` BOOLEAN,

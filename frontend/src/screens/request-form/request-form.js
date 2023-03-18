@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 import "./request-form.css";
 import { appColor } from "../../constants";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
@@ -21,15 +22,20 @@ import { SUBMIT_FORM } from "../../redux/actions/formActions";
 import { TOGGLE_COST_ESTIMATE } from "../../redux/actions/uiActions";
 import ProjectSelector from "../../components/ProjectSelector";
 import { ToastContainer } from "react-toastify";
-import { SuccessToast, WarningToast } from "../../components/Toasts";
+import { WarningToast } from "../../components/Toasts";
 
 function RequestForm() {
   const dispatch = useDispatch();
+  const [projectQuestion, setProjectQuestion] = useState(false);
+  const [submissionSuccessful, setSubmissionSuccessful] = useState(false);
   const formId = window.location.pathname.split("/")[2];
   const questions = useSelector((state) => state.questionReducer.questionList);
   const formResponses = useSelector((state) => state.formReducer.formResponses);
   const logicList = useSelector((state) => state.logicReducer.logicList);
   const hideCost = useSelector((state) => state.costEstimateReducer.hideCost);
+  const clinicalList = useSelector(
+    (state) => state.formReducer.clinicalResponses
+  );
 
   const costEstimateMap = useSelector(
     (state) => state.costEstimateReducer.costEstimateList
@@ -44,6 +50,12 @@ function RequestForm() {
   useEffect(() => {
     dispatch({ type: LOAD_COST, payload: { formResponses: formResponses } });
   }, [dispatch, formResponses]);
+
+  useEffect(() => {
+    setProjectQuestion(
+      questions.some((question) => question.question_type === "project")
+    );
+  }, [questions]);
 
   // Helper Function to Render Each Question
   function renderQuestion(question) {
@@ -74,8 +86,7 @@ function RequestForm() {
   }
 
   // Basic Form Validation and Submit
-  function submitForm() { 
-
+  function submitForm() {
     var filled = true;
     questions.forEach((question) => {
       if (
@@ -88,37 +99,60 @@ function RequestForm() {
         return;
       }
     });
+
+    setProjectQuestion(
+      formResponses.some((answer) => answer.question_info !== null)
+    );
+
     if (filled) {
-      if (hideCost) {
-        dispatch({ type: TOGGLE_COST_ESTIMATE });
-        WarningToast("Please Review Your Cost Estimate and Submit!");
+      if (projectQuestion) {
+        WarningToast("Please Select a Project and Submit!");
       } else {
-        const projectItem = formResponses.filter(
-          (response) => response.question.project_id !== undefined
-        );
-        const projectId = projectItem[0].response ?? "PROJECTID-A";
-        const billableList = [];
-        formResponses.map((response) => {
-          const cost = costEstimateMap.get(response.question.answer_id);
-          if (cost != null) {
+        if (hideCost) {
+          dispatch({ type: TOGGLE_COST_ESTIMATE });
+          WarningToast("Please Review Your Cost Estimate and Submit!");
+        } else {
+          const projectItem = formResponses.filter(
+            (response) => response.question.project_id !== undefined
+          );
+          const projectId = projectItem[0]
+            ? projectItem[0].response
+            : "PROJECTID-A";
+          const billableList = [];
+          formResponses.map((response) => {
+            const cost = costEstimateMap.get(response.question.answer_id);
             let quantity = response.quantity ?? 1;
-            billableList.push({ 
-              service: response.question.answer,
-              quantity: quantity,
-              cost: cost * quantity
-             });
-          }
-          return null;
-        });
-        dispatch({
-          type: SUBMIT_FORM,
-          payload: {
-            formResponses,
-            projectId: projectId,
-            billables: billableList
-          },
-        });
-        SuccessToast("Form Submitted!");
+            let service = response.question.answer;
+            if (cost) {
+              billableList.push({
+                service: service,
+                quantity: quantity,
+                cost: cost * quantity,
+              });
+            } else if (service !== "" && service !== undefined) {
+              // This question's cost not in current stored cost estimate
+              billableList.push({
+                service,
+                quantity,
+                cost: response.question.cost ?? "N/A",
+              });
+            }
+            return null;
+          });
+          dispatch({
+            type: SUBMIT_FORM,
+            payload: {
+              formId,
+              formResponses,
+              projectId: projectId,
+              billables: billableList,
+              clinicalResponses: clinicalList,
+            },
+          });
+          setSubmissionSuccessful(true);
+          // SuccessToast("Form Submitted!");
+          // window.location.href = `/request-confirmation/${formId}`;
+        }
       }
     } else {
       WarningToast("Please fill out all mandatory fields");
@@ -206,6 +240,9 @@ function RequestForm() {
             >
               Submit
             </button>
+            {submissionSuccessful && (
+              <Navigate to={`/request-confirmation/${formId}`} />
+            )}
           </div>
         </div>
         {hideCost ? <CostEstimateCollapsed /> : <CostEstimateFull />}

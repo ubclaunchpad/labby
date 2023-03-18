@@ -1,4 +1,5 @@
 import { Answer } from "../models/answer.js";
+import { Clinical } from "../models/clinical.js";
 
 export default class AnswerController {
   saveAnswer(req) {
@@ -24,12 +25,31 @@ export default class AnswerController {
   getAnswer(id) {
     return new Promise((resolve, reject) => {
       const AnswerModel = new Answer();
+      const ClinicalModel = new Clinical();
 
-      AnswerModel.readAnswer(id, (err, result) => {
+      AnswerModel.readAnswer(id, (err, res) => {
         if (err) {
           reject({ error: err });
         }
-        resolve(result);
+        ClinicalModel.readClinical(id, (err, clinicalRes) => {
+          if (err) {
+            reject({ error: err });
+          }
+          const combinedResults = [];
+          res[0].forEach((answer) => {
+            var resJson = Object.assign({}, answer);
+            var clinicalList = [];
+            clinicalRes[0].forEach((clinical) => {
+              var clinicalJson = Object.assign({}, clinical);
+              if (clinicalJson.fk_questions_answer_id === resJson.answerid) {
+                clinicalList.push(`${clinicalJson.sample_id} (${clinicalJson.authorized_by})`);
+              }
+            });
+            resJson.clinicalList = clinicalList;
+            combinedResults.push(resJson);
+          });
+          resolve(combinedResults);
+        });
       });
     });
   }

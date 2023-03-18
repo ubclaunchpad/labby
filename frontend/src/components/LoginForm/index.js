@@ -1,10 +1,12 @@
 import "./index.css";
 // import Hide from "../../assets/hide.png";
+import Logo from "../../assets/LogoIcon.png";
 import { useDispatch } from "react-redux";
 import { useState } from 'react';
 import { AUTHENTICATE_USER } from "../../redux/actions/userActions";
+import { NavLink , useNavigate} from "react-router-dom";
 
-function LoginForm() {
+function LoginForm({ from }) {
     const dispatch = useDispatch();
 
     const [email, setEmail] = useState("");
@@ -17,6 +19,8 @@ function LoginForm() {
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
     }
+    
+    let navigate = useNavigate();
     const handleUserSubmit = (e) => {
         e.preventDefault();
         dispatch({
@@ -26,32 +30,47 @@ function LoginForm() {
               password: password,
             },
           });
+          navigate(from);
     }
 
-    return(
-        <div className="LoginPage">
 
-    <div className="LoginContainer">
-        <div className="LoginForm">
-            <h1 className="LoginTitle">Login</h1>
-            <form onSubmit={handleUserSubmit}>
-                <input  className="LoginInput" placeholder="Email" type={"email"} onChange={handleEmailChange}>
-                </input>
-                <input  className="LoginInput" placeholder="Password" type={"password"} onChange={handlePasswordChange}>
-                </input>
-                <div>
-                    Forgot Password
+    return(
+    <div className="PageContainer">
+
+        <div className="LoginPage">
+            <img src={Logo} className="LogoImg" alt="Labby Logo"></img>
+
+            <div className="LoginContainer">
+                <div className="LoginForm">
+                    <div className="LoginTitle">
+                        <h2>Log in</h2>
+                    </div>
+                    <form onSubmit={handleUserSubmit}>
+                        <input  className="LoginInput" placeholder="Email" type={"email"} onChange={handleEmailChange}>
+                        </input>
+                        <input  className="LoginInput" placeholder="Password" type={"password"} onChange={handlePasswordChange}>
+                        </input>
+                        {/* <div className="ForgotPassword">
+                            Forgot Password
+                        </div> */}
+                        <button className="SignInBtn" onClick={handleUserSubmit}>
+                            Log in
+                        </button>
+                    </form>
                 </div>
-                <button className="SignInBtn" onClick={handleUserSubmit}>
-                    Sign In
-                </button>
-            </form>
-            <div>
-                Create new account here
+                        <div className="CreateAccount">
+                            <div>Not a user? Create an account&nbsp;</div>
+                            <NavLink
+                            to={`/signup`}
+                            >
+                            here. 
+                            </NavLink>  
+                        </div>
             </div>
         </div>
+        <div className="BackgroundImg">
+            </div>
     </div>
-        </div>
     );
 
 }

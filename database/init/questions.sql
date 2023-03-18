@@ -12,9 +12,10 @@ CREATE TABLE `questions` (
   `question_id` VARCHAR(50) NOT NULL,
   `fk_form_id` VARCHAR(50),
   `question_type` VARCHAR(50),
-  `question` VARCHAR(50),
+  `question` VARCHAR(255),
   `position_index` INT,
   `mandatory` BOOLEAN,
+  `clinical` BOOLEAN,
   PRIMARY KEY (`question_id`),
   FOREIGN KEY (fk_form_id) REFERENCES forms(form_id) ON DELETE CASCADE  
 );

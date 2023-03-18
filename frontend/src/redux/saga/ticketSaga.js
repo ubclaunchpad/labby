@@ -99,7 +99,7 @@ export function* postServiceCost(action) {
 
 export function* removeServiceCost(action) {
   yield call(deleteServiceCost, action.payload);
-  yield call(getServiceCost, { payload: action.payload.sow_id });
+  yield call(getServiceCost, { payload: action.payload });
 }
 
 export function* getSubtasks(action) {

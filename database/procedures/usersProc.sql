@@ -5,6 +5,7 @@ DROP PROCEDURE IF EXISTS `deleteUser`;
 DROP PROCEDURE IF EXISTS `loadUser`;
 DROP PROCEDURE IF EXISTS `loadEmployee`;
 DROP PROCEDURE IF EXISTS `loadSingleUser`;
+DROP PROCEDURE IF EXISTS `loadPendingUsers`;
 
 DELIMITER $$
 
@@ -25,7 +26,8 @@ INSERT INTO `users` (
 	`email`,
 	`employee`,
 	`salt`,
-	`hashed_password`
+	`hashed_password`,
+	`is_approved`
 )
 VALUES (
 	`_user_id`,
@@ -34,25 +36,46 @@ VALUES (
 	`_email`,
 	`_employee`,
 	`_salt`,
-	`_hashed_password`
+	`_hashed_password`,
+	0
 ) ON DUPLICATE KEY UPDATE
     users.user_id=_user_id,
     users.fk_organization_id=_fk_organization_id,
     users.username=_username,
     users.email=_email,
-    users.employee=_employee;
+    users.employee=_employee,
+	users.is_approved=0;
 END $$
 
 CREATE PROCEDURE `deleteUser`  (
     IN id VARCHAR(50)
 )
+
 BEGIN
     DELETE FROM users WHERE user_id = id;
 END $$
 
+CREATE PROCEDURE `approveUser` (
+	IN id VARCHAR(50)
+)
+
+BEGIN
+	UPDATE users 
+	SET is_approved = 1
+	WHERE user_id = id;
+END $$
+
+
 CREATE PROCEDURE `loadUser`  ()
 BEGIN
-    SELECT * FROM users;
+    SELECT * FROM users
+	WHERE is_approved = 1;
+END $$
+
+CREATE PROCEDURE `loadPendingUsers`  ()
+BEGIN
+    SELECT * FROM users
+	WHERE is_approved = 0;
 END $$
 
 CREATE PROCEDURE `loadEmployee`  ()

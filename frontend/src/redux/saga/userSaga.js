@@ -1,4 +1,5 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, delay, put, takeLatest } from "redux-saga/effects";
+import { STOP_LOADING } from "../actions/uiActions";
 import {
   DELETE_ORGANIZATION,
   DELETE_USER,
@@ -12,7 +13,11 @@ import {
   SET_ORGANIZATION,
   SET_USERLIST,
   SET_CURRENT_USER,
+  SET_PENDING_USER,
+  APPROVE_USER,
+  APPROVE_ALL_USER,
   PING,
+  GET_PENDING_USER,
 } from "../actions/userActions";
 import { getProjectAssignmentApi } from "../api/projectApi";
 import {
@@ -25,7 +30,31 @@ import {
   saveUserApi,
   authenticateUserApi,
   pingCheckApi,
+  getPendingUserlist,
+  approveUserList,
 } from "../api/userApi";
+
+export function* loadPendingUserListSaga() {
+  const userPendingList = yield call(getPendingUserlist);
+  yield put({ type: SET_PENDING_USER, payload: userPendingList.data });
+}
+
+export function* approvePendingUserSaga({ payload }) {
+  yield call(approveUserList, payload);
+  yield loadUserlistSaga();
+  yield loadPendingUserListSaga();
+}
+
+export function* approveAllPendingUserSaga({ payload }) {
+  const parsed_payload = {};
+  const userPendingIDList = payload.map((user) => user.user_id);
+  parsed_payload["users"] = userPendingIDList;
+
+  yield call(approveUserList, parsed_payload);
+  yield delay(1000);
+  yield loadUserlistSaga();
+  yield loadPendingUserListSaga();
+}
 
 export function* loadUserlistSaga() {
   const userList = yield call(getUserlist);
@@ -40,11 +69,13 @@ export function* loadEmployeeSaga() {
 export function* deleteUserSaga({ payload }) {
   yield call(deleteUserApi, payload);
   yield loadUserlistSaga();
+  yield loadPendingUserListSaga();
 }
 
 export function* postUserSaga({ payload }) {
-  yield call(saveUserApi, payload);
-  yield loadUserlistSaga(); // QUESTION: why do we need to load the userlist?
+  const response = yield call(saveUserApi, payload);
+  // yield loadUserlistSaga(); // QUESTION: why do we need to load the userlist?
+  return response;
 }
 
 export function* authenticateUserSaga({ payload }) {
@@ -82,9 +113,13 @@ export function* pingCheckSaga({ payload }) {
   } else {
     yield put({ type: SET_CURRENT_USER, payload: null });
   }
+  yield put({ type: STOP_LOADING });
 }
 
 export default function* userSaga() {
+  yield takeLatest(APPROVE_ALL_USER, approveAllPendingUserSaga);
+  yield takeLatest(APPROVE_USER, approvePendingUserSaga);
+  yield takeLatest(GET_PENDING_USER, loadPendingUserListSaga);
   yield takeLatest(LOAD_USERLIST, loadUserlistSaga);
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(POST_USER, postUserSaga);

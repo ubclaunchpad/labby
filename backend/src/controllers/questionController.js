@@ -12,6 +12,7 @@ export default class QuestionController {
         question_type: req.body.question_type,
         question_index: req.body.question_index,
         mandatory: req.body.mandatory,
+        clinical: req.body.clinical,
       };
 
       QuestionModel.insertQuestion(question, (err, result) => {

@@ -1,6 +1,35 @@
 import con from "../config/Database.js";
 
 export class User {
+
+  approveUser(newUser, result) {
+    con.query(
+        "CALL approveUser(?)",
+        [newUser],
+        function (error, _) {
+          if (error) {
+            console.log("error: ", error);
+            result(error, null);
+          } else {
+            result(null, {
+              result: `Response Saved Successfully`,
+            });
+          }
+        }
+    );
+
+  }
+
+  getPendingUsers(result) {
+    con.query(`CALL loadPendingUsers()`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res[0]);
+      }
+    });
+  }
   insertUser(newUser, result) {
     con.query(
       "CALL addUser(?, ?, ?, ?, ?, ?, ?)",

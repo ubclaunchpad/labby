@@ -27,8 +27,14 @@
 }
 
 .FormPreview {
+  flex: 0.3;
+  text-align: right;
+}
+
+.FormSubmitT {
   flex: 1;
-  text-align: end;
+  text-align: right;
+  margin-right: 10px;
 }
 
 .FormPreviewButton {

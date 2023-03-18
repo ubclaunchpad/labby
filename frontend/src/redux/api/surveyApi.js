@@ -43,3 +43,21 @@ export const saveResponse = async (payload) => {
     return console.error(err);
   }
 };
+
+export const saveClinical = async (payload) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    var data = JSON.stringify(payload);
+
+    const clinicalResponse = await axios.post("clinical/", data, {
+      headers: headers,
+    });
+
+    return clinicalResponse;
+  } catch (err) {
+    return console.error(err);
+  }
+};

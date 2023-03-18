@@ -230,19 +230,30 @@
   text-transform: capitalize;
 }
 
+.TicketPreviewButton {
+  text-align: left; 
+  font-weight: 500;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
 .ticketTitleId {
   font-weight: bold;
   font-size: 20px;
   margin-right: 8px;
   text-transform: uppercase;
-  max-width: 120px;
+  max-width: 500px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.ticketPreview {
-  margin-left: auto;
+.assignees-title{
+  font-size: 11px; 
+  font-weight: 600; 
+  color: #AEAEAE;
+  text-align: left;
+  margin-bottom: none;
 }
 
 .ticketSectionTitle {
@@ -261,7 +272,6 @@
   display: flex;
   align-items: center;
   height: 30px;
-  margin-top: 10px;
 }
 
 .ticketDescription {

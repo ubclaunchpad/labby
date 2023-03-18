@@ -1,11 +1,13 @@
-import "./index.css";
+import "../LoginForm/index.css";
 // import Hide from "../../assets/hide.png";
 import uuid from "react-uuid";
 import { useDispatch } from "react-redux";
 import {useState} from 'react';
-import { SIGNUP_USER } from "../../redux/actions/userActions";
+import { POST_USER } from "../../redux/actions/userActions";
+import { useNavigate} from "react-router-dom";
+import Logo from "../../assets/LogoIcon.png";
 
-function LoginForm() {
+function SignUpForm() {
     const dispatch = useDispatch();
 
     const [email, setEmail] = useState("");
@@ -20,8 +22,8 @@ function LoginForm() {
     }
     const handleUserSubmit = (e) => {
         e.preventDefault();
-        dispatch({
-            type: SIGNUP_USER,
+        const response = dispatch({   // do we have to wait for this to complete?
+            type: POST_USER,
             payload: {
               user_id: uuid(),
               fk_organization_id: null,
@@ -30,30 +32,58 @@ function LoginForm() {
               password: password,
             },
           });
-          // need to handle success/failure here
-        console.log(email);
-        console.log(password);
+        if (response.payload.email) {
+            alert("Account created successfully! Please login to continue.")
+        } else {
+            alert("Account creation failed. Please try again.")
+        }
+        redirectLogin();
+    }
+    let navigate = useNavigate();
+    const redirectLogin = () => {
+        navigate('/'); 
     }
     return(
-        <div className="LoginPage">
-
-    <div className="LoginContainer">
-        <div className="LoginForm">
-            <h1 className="LoginTitle">Create Account</h1>
-            <form onSubmit={handleUserSubmit}>
-                <input  className="LoginInput" placeholder="Email" onChange={handleEmailChange}>
-                </input>
-                <input  className="LoginInput" placeholder="Password" onChange={handlePasswordChange}>
-                </input>
-                <button className="SignInBtn">
-                    Sign Up
+        <div className="PageContainer">
+    
+            <div className="SignUpBackgroundImg">
+                <div className="AlreadyUser">
+                    Already have an account? 
+                </div>
+                <button className="LogInBtn" onClick={redirectLogin}>
+                    Log in
                 </button>
-            </form>
+                </div>
+            <div className="LoginPage">
+                <img src={Logo} className="LogoImg" alt="Background"></img>
+    
+                <div className="LoginContainer">
+                    <div className="LoginForm">
+                        <div className="LoginTitle">
+                            <h2>Create an Account</h2>
+                        </div>
+                        <form onSubmit={handleUserSubmit}>
+                            <input  className="LoginInput" placeholder="Email" type={"email"} onChange={handleEmailChange}>
+                            </input>
+                            <input  className="LoginInput" placeholder="First Name" type={"text"}> 
+                            </input>
+                            <input  className="LoginInput" placeholder="Last Name" type={"text"}> 
+                            </input>
+                            <input  className="LoginInput" placeholder="Password" type={"password"} onChange={handlePasswordChange}>
+                            </input>
+                            {/* <div className="ForgotPassword">
+                                Forgot Password
+                            </div> */}
+                            <button className="SignInBtn" onClick={handleUserSubmit}>
+                                Sign up
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-        </div>
-    );
+        );    
 
 }
 
-export default LoginForm;
+export default SignUpForm;

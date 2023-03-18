@@ -23,7 +23,6 @@ import { AssigneeIcon } from "../Icons/AssigneeIcon";
 import { ticketsColors } from "../../constants";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { appColor } from "../../constants";
 import { LOAD_EMPLOYEE } from "../../redux/actions/userActions";
 import uuid from "react-uuid";
 import X from "../../assets/X.png";
@@ -398,20 +397,20 @@ export const TicketBoard = () => {
             <div className="ticketTitle">
               <div className="ticketTitleId">{currentTicket.code}</div>
               <div>{currentTicket.title}</div>
-              <div className="ticketPreview">
-                <NavLink to={`/preview/${currentTicket.id}`}>
-                  <button
-                    className="FormPreviewButton"
-                    style={{
-                      backgroundColor: appColor.primaryLight,
-                      color: appColor.white,
-                    }}
-                  >
-                    Preview
-                  </button>
-                </NavLink>
-              </div>
             </div>
+            <div>
+              <NavLink to={`/preview/${currentTicket.id}`}>
+                <p
+                  className="TicketPreviewButton"
+                  style={{
+                    color: "grey",
+                  }}
+                >
+                  View Summary
+                </p>
+              </NavLink>
+            </div>
+            <div className="assignees-title">Assignees</div>
             <div className="ticketTags">
               {currentTicket.assignees.map((assignee) => {
                 const colorNumberMod = getColorNum(
