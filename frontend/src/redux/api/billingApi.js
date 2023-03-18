@@ -24,13 +24,13 @@ export const getBillableBySOWID = async (payload) => {
   try {
     const token = JSON.parse(localStorage.getItem("currentUser")).token;
     var headers = {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     };
-    var params = {
-      sowId: payload.survey_id
-    }
+    var data = JSON.stringify({
+      survey_id: payload.survey_id
+    })
     console.log(`billing/${payload.survey_id}`)
-    const billables = await axios.get(`billing/${payload.survey_id}`, { headers: headers });
+    const billables = await axios.get(`billing/${payload.survey_id}`, data, { headers: headers });
     console.log(billables);
     return billables;
   } catch (err) {

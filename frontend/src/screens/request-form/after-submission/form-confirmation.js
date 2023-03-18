@@ -8,22 +8,13 @@ import "./form-confirmation.css";
 
 function FormConfirmation() {
   const [loadProgressPage, setLoadProgressPage] = useState(false);
-  const [currentSurveyId, setCurrentSurveyId] = useState(null);
   const dispatch = useDispatch();
   const billables = useSelector((state) => state.billingReducer.billablesBySOWIDMap);
-  
-  // const currentSurveyId = useMemo(() => {
-  //   return localStorage.getItem("currentSurveyId");
-  // }, [currentSurveyId, dispatch])
-  useEffect(() => {
-    setCurrentSurveyId(localStorage.getItem("currentSurveyId"));
-  }, [])
-   
-  // const currentSurveyId = localStorage.survey_id;
+
 
   useEffect(() => {
     dispatch({ type: LOAD_BILLABLE_BY_SOWID, payload: {
-      survey_id: currentSurveyId
+      survey_id: localStorage.getItem("currentSurveyId")
     }})
   }, [dispatch]);
 
@@ -42,8 +33,8 @@ function FormConfirmation() {
             <th>Quantity</th>
             <th>Estimated Cost</th>
           </tr>
-          {currentSurveyId && billables[currentSurveyId] != null ? (
-            billables[currentSurveyId].map((billable, idx) => {
+          {localStorage.getItem("currentSurveyId") && billables[localStorage.getItem("currentSurveyId")] != null ? (
+            billables[localStorage.getItem("currentSurveyId")].map((billable, idx) => {
               return (
                 <tr key={idx}>
                   <td>{billable.name}</td>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import uuid from "react-uuid";
 import "./request-form.css";
 import { appColor } from "../../constants";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
@@ -121,6 +122,8 @@ function RequestForm() {
           }
           return null;
         });
+        const survey_id = uuid();
+        localStorage.setItem("currentSurveyId", survey_id);
         dispatch({
           type: SUBMIT_SURVEY,
           payload: {
@@ -128,6 +131,7 @@ function RequestForm() {
             formResponses,
             projectId: projectId,
             billables: billableList,
+            survey_id
           },
         });
         setSubmissionSuccessful(true)

@@ -17,9 +17,8 @@ router.get("/", authorize(), (_, res) => {
   });
 
   router.get("/:sowID", authorize(), (req, res) => {
-    console.log(req.params);
     billingController
-      .loadBillableBySowId(req.params.survey_id)
+      .loadBillableBySowId(req)
       .then((response) => {
         res.status(200).json(response);
       })

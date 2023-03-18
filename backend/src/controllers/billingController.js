@@ -14,11 +14,11 @@ export default class BillingController {
     });
   }
 
-  loadBillableBySowId(sowID) {
+  loadBillableBySowId(req) {
     return new Promise((resolve, reject) => {
       const BillableModel = new Billable();
 
-      BillableModel.loadBillableBySowId(sowID, (err, result) => {
+      BillableModel.loadBillableBySowId(req.body.survey_id, (err, result) => {
         if (err) {
           reject({ error: err });
         }
