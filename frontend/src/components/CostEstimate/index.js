@@ -52,15 +52,19 @@ export const CostEstimateFull = () => {
           const cost = costEstimateMap.get(response.question.answer_id);
           let quantity = response.quantity ?? 1;
           costSum += cost * quantity;
-          return (
-            <div className="CostBox" key={response.question.answer}>
-              <div className="CostLeft"> {response.question.answer} </div>
-              <div className="CostCenter"> {`${quantity}`} </div>
-              <div className="CostRight">
-                {cost != null ? `$${cost * quantity}` : "N/A"}
+          if (cost != null) {
+            return (
+              <div className="CostBox" key={response.question.answer}>
+                <div className="CostLeft"> {response.question.answer} </div>
+                <div className="CostCenter"> {`${quantity}`} </div>
+                <div className="CostRight">
+                  {`$${cost * quantity}`}
+                </div>
               </div>
-            </div>
-          );
+            );
+          } else {
+            return null;
+          }
         })}
       </div>
       <div className="CostEstimateDivider" />

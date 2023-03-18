@@ -4,10 +4,12 @@ import {
   SET_EMPLOYEE,
   SET_ORGANIZATION,
   SET_USERLIST,
+  SET_PENDING_USER,
 } from "../actions/userActions";
 
 const defaultUserList = [];
 const defaultOrganizationList = [];
+const defaultPendingUserList = [];
 
 const currentUser = (state = null, action) => {
   switch (action.type) {
@@ -49,7 +51,10 @@ const organizationList = (state = defaultOrganizationList, action) => {
       action.payload.organizationList.forEach((organization) => {
         organization.projects = [];
         action.payload.projectAssignmentList.forEach((projectAssignment) => {
-          if (projectAssignment.fk_organization_id === organization.organization_id) {
+          if (
+            projectAssignment.fk_organization_id ===
+            organization.organization_id
+          ) {
             organization.projects.push(projectAssignment);
           }
         });
@@ -63,8 +68,19 @@ const organizationList = (state = defaultOrganizationList, action) => {
   }
 };
 
+const pendingUserList = (state = defaultPendingUserList, action) => {
+  switch (action.type) {
+    case SET_PENDING_USER: {
+      return action.payload;
+    }
+    default: {
+      return state;
+    }
+  }
+};
 
 export default combineReducers({
+  pendingUserList,
   userList,
   employeeList,
   organizationList,

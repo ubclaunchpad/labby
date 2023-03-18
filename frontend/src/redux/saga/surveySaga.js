@@ -1,20 +1,21 @@
 import uuid from "react-uuid";
-import { all, call, takeLatest, put } from "redux-saga/effects";
+import { all, call, takeLatest, put, select } from "redux-saga/effects";
 import { SUBMIT_SURVEY } from "../actions/formActions";
 import { createTicketApi } from "../api/formApi";
-import { saveResponse, saveSurvey } from "../api/surveyApi";
+import { saveClinical, saveResponse, saveSurvey } from "../api/surveyApi";
 import {POST_SERVICE_COST } from "../../redux/actions/ticketActions";
 
 export function* submitResponseSaga({ payload }) {
   yield call(saveSurvey, { survey_id: payload.survey_id });
+  const user = yield select((state) => state.userReducer.currentUser);
   yield call(createTicketApi, {
     task_id: payload.survey_id,
     fk_form_id:
       payload.formResponses[0].question.fk_form_id ??
       payload.formResponses[1].question.fk_form_id,
     fk_project_id: payload.projectId,
-    task_title: "Harin's Request",
-    task_description: "Harin's Service Request (Replace this with description)",
+    task_title: "New Customer Request",
+    task_description: "Service Request (Replace this with description)",
     task_state: "open",
   });
   yield all(
@@ -26,11 +27,12 @@ export function* submitResponseSaga({ payload }) {
         name: billable.service,
         quantity: billable.quantity,
         cost: billable.cost,
+        comment: "",
         createdDate: new Date(),
         completedTime: null,
         billed: false,
         billedTime: null,
-        createdBy: "USER-A"
+        created_by: user.user_id
       } });
     })
   );
@@ -50,6 +52,23 @@ export function* submitResponseSaga({ payload }) {
         answer: isChoice ? true : response.response,
       };
       return call(saveResponse, responseBody);
+    })
+  );
+  yield all(
+    Object.values(payload.clinicalResponses).map((response) => {
+      if (response.sample_id !== "") {
+        const clinicalBody = {
+          clinical_id: response.clinical_id,
+          fk_survey_id: payload.survey_id,
+          fk_question_id: response.question,
+          fk_questions_answer_id: response.answer,
+          sample_id: response.sample_id,
+          authorized_by: response.authorized_by,
+        };
+        return call(saveClinical, clinicalBody);
+      } else {
+        return null;
+      }
     })
   );
 }

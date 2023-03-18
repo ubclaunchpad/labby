@@ -14,7 +14,79 @@ export default class BillingController {
     });
   }
 
-  loadBillableBySowId(req) {
+  loadBillableByFilter(req) {
+    return new Promise((resolve, reject) => {
+      const BillableModel = new Billable();
+
+      const billableFilter = {
+        service: req.body.service,
+        costcenter_id: req.body.costcenter_id,
+        project_id: req.body.project_id,
+        organization_id: req.body.organization_id,
+        user_id: req.body.user_id,
+        start_date: req.body.start_date,
+        end_date: req.body.end_date,
+      };
+
+      BillableModel.loadBillableByService(billableFilter, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+
+        BillableModel.loadBillableByCostCenterID(billableFilter, (err2, result2) => {
+          if (err2) {
+            reject({ error: err2 });
+          }
+
+          BillableModel.loadBillableByProjectId(billableFilter, (err3, result3) => {
+            if (err3) {
+              reject({ error: err3 });
+            }
+
+            BillableModel.loadBillableByOrganizationId(billableFilter, (err4, result4) => {
+              if (err4) {
+                reject({ error: err4 });
+              }
+
+              BillableModel.loadBillableByUserId(billableFilter, (err5, result5) => {
+                if (err5) {
+                  reject({ error: err5 });
+                }
+
+                BillableModel.loadBillableByDate(billableFilter, (err6, result6) => {
+                  if (err6) {
+                    reject({ error: err6 });
+                  }
+                  
+                  const finalResult = result.concat(result2, result3, result4, result5, result6);
+                  const distinctFinalResult = [...new Map(finalResult.map(item => [item.billable_id, item])).values()];
+                  const finalANDBillable = [];
+
+                  for (let i = 0; i < distinctFinalResult.length; i++) {
+                    const billable = distinctFinalResult[i];
+                    const serviceCheck = !billableFilter.service || (billableFilter.service === "") || result.some((resBillable) => resBillable.billable_id === billable.billable_id);
+                    const costCenterCheck = !billableFilter.costcenter_id || (billableFilter.costcenter_id === "") || result2.some((resBillable) => resBillable.billable_id === billable.billable_id);
+                    const projectCheck = !billableFilter.project_id || (billableFilter.project_id === "") || result3.some((resBillable) => resBillable.billable_id === billable.billable_id);
+                    const organizationCheck = !billableFilter.organization_id || (billableFilter.organization_id === "") || result4.some((resBillable) => resBillable.billable_id === billable.billable_id);
+                    const userCheck = !billableFilter.user_id || (billableFilter.user_id === "") || result5.some((resBillable) => resBillable.billable_id === billable.billable_id);
+                    const dateCheck = (!billableFilter.start_date && !billableFilter.end_date) || (billableFilter.start_date === "" && billableFilter.end_date === "") || result6.some((resBillable) => resBillable.billable_id === billable.billable_id);
+
+                    if (serviceCheck && costCenterCheck && projectCheck && organizationCheck && userCheck && dateCheck) {
+                      finalANDBillable.push(billable);
+                    }
+                  }
+
+                  resolve(finalANDBillable);
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  }
+
+  loadBillableBySowId(sowID) {
     return new Promise((resolve, reject) => {
       const BillableModel = new Billable();
       BillableModel.loadBillableBySowId(req.params.sowID, (err, result) => {
@@ -25,7 +97,7 @@ export default class BillingController {
       });
     });
   }
-
+  
   deleteBillable(billableId) {
     return new Promise((resolve, reject) => {
       const BillableModel = new Billable();

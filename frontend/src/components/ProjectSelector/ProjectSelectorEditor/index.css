@@ -1,3 +1,18 @@
+.project-options-container{
+  display: flex; 
+  margin-top: 2%;
+  margin-bottom: 2%;
+  width: 100%;
+  padding-left: 5px;
+  padding-right: 5px;
+  min-height: 150px;
+  align-items: center;
+}
+
+.project-options-instruction {
+  width: 100%;
+}
+
 .question-header-row {
   margin-top: 15px;
   display: flex;

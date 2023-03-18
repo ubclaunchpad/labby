@@ -1,14 +1,16 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  SAVE_CELL_DATA,
-} from "../../redux/actions/costActions";
-import { Table, Form, Input } from "antd";
+import { SAVE_CELL_DATA } from "../../redux/actions/costActions";
+import { Table, Form, Input, Checkbox } from "antd";
 import "antd/dist/antd.min.css";
 import "./index.css";
 import { SET_INVOICE_LIST } from "../../redux/actions/billingActions";
 
 const InvoiceTable = () => {
+  const dispatch = useDispatch();
+  const dataSource = useSelector((state) => state.billingReducer.billingList);
+  const invoiceList = useSelector((state) => state.billingReducer.invoiceList);
+
   const columns = [
     {
       title: "SOW #",
@@ -17,15 +19,9 @@ const InvoiceTable = () => {
       editable: false,
     },
     {
-      title: "Task",
+      title: "Service",
       dataIndex: "name",
       key: "name",
-      editable: false,
-    },
-    {
-      title: "Completion Date",
-      dataIndex: "createdDate",
-      key: "createdDate",
       editable: false,
     },
     {
@@ -35,20 +31,50 @@ const InvoiceTable = () => {
       editable: false,
     },
     {
-      title: "Bill Amount",
+      title: "Created Date",
+      dataIndex: "createdDate",
+      key: "createdDate",
+      editable: false,
+    },
+    {
+      title: "Cost",
       dataIndex: "cost",
       key: "cost",
       editable: false,
-    }
+    },
+    {
+      title: "Select",
+      dataIndex: "quantifiable",
+      key: "quantifiable",
+      render: (_, record) =>
+        dataSource.length >= 1 ? (
+          <Checkbox
+            checked={invoiceList.some(
+              (item) => item.billable_id === record.billable_id
+            )}
+            onClick={(e) => {
+              if (e.target.checked) {
+                dispatch({
+                  type: SET_INVOICE_LIST,
+                  payload: [...invoiceList, record],
+                });
+              } else {
+                dispatch({
+                  type: SET_INVOICE_LIST,
+                  payload: invoiceList.filter(
+                    (item) => item.billable_id !== record.billable_id
+                  ),
+                });
+              }
+            }}
+          />
+        ) : null,
+      width: "5%",
+    },
   ];
 
-  const dispatch = useDispatch();
-  const dataSource = useSelector(
-    (state) => state.billingReducer.billingList
-  );
-
   useEffect(() => {
-    dispatch({ type: SET_INVOICE_LIST, payload: dataSource });
+    dispatch({ type: SET_INVOICE_LIST, payload: [] });
   }, [dispatch, dataSource]);
 
   const handleSave = (row) => {
