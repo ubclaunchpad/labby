@@ -83,8 +83,11 @@ function TextAnswerEditor({ question }) {
       <div className="text-box-container">
         <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
         <Input.TextArea
-          placeholder="User types here..."
-          rows={5}
+          placeholder="[Height of input automatically adjusts based on content] User types here..."
+          autoSize={{
+            minRows: 1,
+            maxRows: 5,
+          }}
           className="text-box"
         />
       </div>
