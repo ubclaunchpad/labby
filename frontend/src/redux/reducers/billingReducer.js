@@ -19,9 +19,9 @@ const billingList = (state = defaultBillingList, action) => {
 // reducer with map of  sowid to billables
 const billablesBySOWIDMap = (state = defaultBillablesBySOWID, action) => {
   switch (action.type) {
-    case SET_BILLABLE_BY_SOWID: {
-      defaultBillablesBySOWID[action.payload.sowID] = action.payload.data;
-      return defaultBillablesBySOWID;
+    case SET_BILLABLE_BY_SOWID: { 
+      state[action.payload.sowID] = action.payload.data;
+      return {...state};
     }
     default: {
       return state; 

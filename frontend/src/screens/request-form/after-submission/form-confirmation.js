@@ -13,11 +13,13 @@ function FormConfirmation() {
 
 
   useEffect(() => {
-    dispatch({ type: LOAD_BILLABLE_BY_SOWID, payload: {
-      survey_id: localStorage.getItem("currentSurveyId")
-    }})
+    setTimeout(() => {
+      dispatch({ type: LOAD_BILLABLE_BY_SOWID, payload: {
+        survey_id: localStorage.getItem("currentSurveyId")
+      }})
+    }, 1000)
   }, [dispatch]);
-
+  
   const formId = window.location.pathname.split("/")[2];
   
   return (

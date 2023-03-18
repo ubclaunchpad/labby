@@ -26,12 +26,7 @@ export const getBillableBySOWID = async (payload) => {
     var headers = {
       Authorization: `Bearer ${token}`,
     };
-    var data = JSON.stringify({
-      survey_id: payload.survey_id
-    })
-    console.log(`billing/${payload.survey_id}`)
-    const billables = await axios.get(`billing/${payload.survey_id}`, data, { headers: headers });
-    console.log(billables);
+    const billables = await axios.get(`billing/${payload.survey_id}`, { headers: headers });
     return billables;
   } catch (err) {
     return console.error(err);
