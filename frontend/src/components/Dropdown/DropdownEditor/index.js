@@ -163,6 +163,47 @@ function DropdownEditor({ question }) {
                 </div>
               );
             })}
+            <label>
+              <input
+                type="number"
+                className="new-question-input"
+                defaultValue="0"
+                placeholder="Click to add new option"
+                // onBlur={(e) => {
+                //   const answerVal = e.target.value;
+                //   if (answerVal.trim() !== "") {
+                //     dispatch({
+                //       type: SAVE_ANSWER,
+                //       payload: {
+                //         // answer_id: option.answer_id ?? uuid(),
+                //         answer_id: uuid(),
+                //         fk_question_id: question.question_id,
+                //         question_type: question.question_type,
+                //         answer: answerVal,
+                //         form_id: question.fk_form_id,
+                //       },
+                //     });
+                //   } else {
+                //     dispatch({
+                //       type: DELETE_ANSWER,
+                //       payload: {
+                //         // answer_id: option.answer_id,
+                //         answer_id: uuid(),
+                //         form_id: question.fk_form_id,
+                //       },
+                //     });
+                //   }
+                //   setOptions([]);
+                // }}
+                //   If we want to have key down functionality as well:
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.target.blur();
+                  }
+                }}
+              />
+              Autogenerate number options
+            </label>
           </RadioGroup>
         </FormControl>
       </div>
