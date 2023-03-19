@@ -15,7 +15,7 @@ function FormConfirmation() {
   useEffect(() => {
     setTimeout(() => {
       dispatch({ type: LOAD_BILLABLE_BY_SOWID, payload: {
-        survey_id: localStorage.getItem("currentSurveyId")
+        sowId: localStorage.getItem("currentSurveyId")
       }})
     }, 1000)
   }, [dispatch]);

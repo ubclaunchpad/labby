@@ -25,7 +25,7 @@ const billingList = (state = defaultBillingList, action) => {
 const billablesBySOWIDMap = (state = defaultBillablesBySOWID, action) => {
   switch (action.type) {
     case SET_BILLABLE_BY_SOWID: { 
-      state[action.payload.sowID] = action.payload.data;
+      state[action.payload.sowId] = action.payload.data;
       return {...state};
     }
     default: {
@@ -59,6 +59,6 @@ const invoiceList = (state = defaultInvoiceList, action) => {
 export default combineReducers({
   billingList,
   invoiceList,
-  billablesBySOWIDMap
+  billablesBySOWIDMap,
   billingListOG,
 });

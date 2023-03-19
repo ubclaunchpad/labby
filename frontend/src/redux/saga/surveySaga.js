@@ -6,10 +6,10 @@ import { saveClinical, saveResponse, saveSurvey } from "../api/surveyApi";
 import {POST_SERVICE_COST } from "../../redux/actions/ticketActions";
 
 export function* submitResponseSaga({ payload }) {
-  yield call(saveSurvey, { survey_id: payload.survey_id });
+  yield call(saveSurvey, { survey_id: payload.sowId });
   const user = yield select((state) => state.userReducer.currentUser);
   yield call(createTicketApi, {
-    task_id: payload.survey_id,
+    task_id: payload.sowId,
     fk_form_id:
       payload.formResponses[0].question.fk_form_id ??
       payload.formResponses[1].question.fk_form_id,
@@ -22,7 +22,7 @@ export function* submitResponseSaga({ payload }) {
     payload.billables.map((billable) => {
       return put({ type: POST_SERVICE_COST, payload: {
         billable_id: uuid(),
-        sow_id: payload.survey_id, 
+        sow_id: payload.sowId, 
         project_id: payload.projectId,
         name: billable.service,
         quantity: billable.quantity,
@@ -44,7 +44,7 @@ export function* submitResponseSaga({ payload }) {
         response.question.type === "single";
       const responseBody = {
         answer_id: response.id,
-        fk_survey_id: payload.survey_id,
+        fk_survey_id: payload.sowId,
         fk_question_id: response.question.question_id,
         fk_questions_answer_id: isChoice
           ? response.response
@@ -59,7 +59,7 @@ export function* submitResponseSaga({ payload }) {
       if (response.sample_id !== "") {
         const clinicalBody = {
           clinical_id: response.clinical_id,
-          fk_survey_id: payload.survey_id,
+          fk_survey_id: payload.sowId,
           fk_question_id: response.question,
           fk_questions_answer_id: response.answer,
           sample_id: response.sample_id,

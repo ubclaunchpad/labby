@@ -86,10 +86,10 @@ export default class BillingController {
     });
   }
 
-  loadBillableBySowId(sowID) {
+  loadBillableBySowId(req) {
     return new Promise((resolve, reject) => {
       const BillableModel = new Billable();
-      BillableModel.loadBillableBySowId(req.params.sowID, (err, result) => {
+      BillableModel.loadBillableBySowId(req.params.sowId, (err, result) => {
         if (err) {
           reject({ error: err });
         }
@@ -112,6 +112,7 @@ export default class BillingController {
   }
 
   saveBillable(req) {
+    console.log("saving billable");
     return new Promise((resolve, reject) => {
       const BillableModel = new Billable();
       const billableData = {

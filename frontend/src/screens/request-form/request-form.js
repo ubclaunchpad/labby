@@ -143,14 +143,14 @@ function RequestForm() {
           const survey_id = uuid();
           localStorage.setItem("currentSurveyId", survey_id);
           dispatch({
-            type: SUBMIT_FORM,
+            type: SUBMIT_SURVEY,
             payload: {
               formId,
               formResponses,
               projectId: projectId,
               billables: billableList,
               clinicalResponses: clinicalList,
-              survey_id
+              sowId: survey_id
             },
           });
           setSubmissionSuccessful(true);

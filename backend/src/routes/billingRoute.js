@@ -27,7 +27,7 @@ router.get("/", authorize(), (_, res) => {
       });
   });
 
-  router.get("/:sowID", authorize(), (req, res) => {
+  router.get("/:sowId", authorize(), (req, res) => {
     billingController
       .loadBillableBySowId(req)
       .then((response) => {
