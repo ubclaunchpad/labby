@@ -8,7 +8,7 @@ import {POST_SERVICE_COST } from "../../redux/actions/ticketActions";
 export function* submitResponseSaga({ payload }) {
   const user = yield select((state) => state.userReducer.currentUser);
   const survey_id = uuid();
-  yield call(saveSurvey, { survey_id: survey_id });
+  yield call(saveSurvey, { survey_id: survey_id }); // need to address 
   yield call(createTicketApi, {
     // task_id: survey_id,
     fk_form_id:
@@ -23,7 +23,7 @@ export function* submitResponseSaga({ payload }) {
     payload.billables.map((billable) => {
       return put({ type: POST_SERVICE_COST, payload: {
         billable_id: uuid(),
-        sow_id: survey_id,
+        sow_id: survey_id, // need to address this 
         fk_project_id: payload.projectId,
         name: billable.service,
         quantity: billable.quantity,
@@ -44,7 +44,7 @@ export function* submitResponseSaga({ payload }) {
         response.question.type === "single";
       const responseBody = {
         answer_id: response.id,
-        fk_survey_id: survey_id,
+        fk_survey_id: survey_id, // need to address this 
         fk_question_id: response.question.question_id,
         fk_questions_answer_id: isChoice
           ? response.response
@@ -59,7 +59,7 @@ export function* submitResponseSaga({ payload }) {
       if (response.sample_id !== "") {
         const clinicalBody = {
           clinical_id: response.clinical_id,
-          fk_survey_id: survey_id,
+          fk_survey_id: survey_id, // need to address
           fk_question_id: response.question,
           fk_questions_answer_id: response.answer,
           sample_id: response.sample_id,
