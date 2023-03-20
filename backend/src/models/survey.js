@@ -1,19 +1,14 @@
 import con from "../config/Database.js";
 
 export class Survey {
-  
   insertSurvey(newSurvey, result) {
     con.query(
       "CALL addSurvey(?, ?, ?)",
-      [
-        newSurvey.survey_id,
-        newSurvey.fk_user_id,
-        newSurvey.date_created,
-      ],
+      [newSurvey.survey_id, newSurvey.fk_user_id, newSurvey.date_created],
       function (error, results) {
-        if(error) {
+        if (error) {
           console.log("error: ", error);
-          result(error,null);
+          result(error, null);
         } else {
           result(null, {
             result: `Response ${results.survey_id} Saved Successfully`,
@@ -22,7 +17,18 @@ export class Survey {
       }
     );
   }
-  
+
+  loadSurvey(uid, result) {
+    con.query("CALL loadSurveyByUser(?)", [uid], function (error, results) {
+      if (error) {
+        console.log("error: ", error);
+        result(error, null);
+      } else {
+        result(null, results);
+      }
+    });
+  }
+
   insertResponse(newResponse, result) {
     con.query(
       "CALL addAnswer(?, ?, ?, ?, ?)",
@@ -56,6 +62,4 @@ export class Survey {
       }
     });
   }
-
-
 }

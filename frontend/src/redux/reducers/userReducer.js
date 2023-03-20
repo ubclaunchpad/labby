@@ -5,11 +5,13 @@ import {
   SET_ORGANIZATION,
   SET_USERLIST,
   SET_PENDING_USER,
+  SET_USER_SURVEY,
 } from "../actions/userActions";
 
 const defaultUserList = [];
 const defaultOrganizationList = [];
 const defaultPendingUserList = [];
+const defaultUserRequestList = [];
 
 const currentUser = (state = null, action) => {
   switch (action.type) {
@@ -79,10 +81,22 @@ const pendingUserList = (state = defaultPendingUserList, action) => {
   }
 };
 
+const userRequestList = (state = defaultUserRequestList, action) => {
+  switch (action.type) {
+    case SET_USER_SURVEY: {
+      return action.payload;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 export default combineReducers({
   pendingUserList,
   userList,
   employeeList,
   organizationList,
   currentUser,
+  userRequestList,
 });

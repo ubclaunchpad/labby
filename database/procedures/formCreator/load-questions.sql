@@ -1,6 +1,7 @@
 USE `labby`;
  
 DROP procedure IF EXISTS `load_forms`;
+DROP procedure IF EXISTS `load_published_forms`;
 DROP procedure IF EXISTS `load_questions`;
 DROP procedure IF EXISTS `load_questions_by_form`;
 DROP procedure IF EXISTS `load_questions_answers`;
@@ -15,6 +16,15 @@ CREATE PROCEDURE `load_forms` ()
 
 BEGIN
     SELECT * FROM forms
+    ORDER BY date_created DESC;
+  
+END $$
+
+CREATE PROCEDURE `load_published_forms` ()
+
+BEGIN
+    SELECT * FROM forms
+    WHERE published = 1
     ORDER BY date_created DESC;
   
 END $$

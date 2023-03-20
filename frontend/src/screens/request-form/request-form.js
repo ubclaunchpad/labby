@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import uuid from "react-uuid";
 import "./request-form.css";
 import { appColor } from "../../constants";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
@@ -18,7 +19,7 @@ import {
   CostEstimateCollapsed,
   CostEstimateFull,
 } from "../../components/CostEstimate";
-import { SUBMIT_FORM } from "../../redux/actions/formActions";
+import { SUBMIT_SURVEY } from "../../redux/actions/formActions";
 import { TOGGLE_COST_ESTIMATE } from "../../redux/actions/uiActions";
 import ProjectSelector from "../../components/ProjectSelector";
 import { ToastContainer } from "react-toastify";
@@ -26,7 +27,6 @@ import { WarningToast } from "../../components/Toasts";
 
 function RequestForm() {
   const dispatch = useDispatch();
-  const [projectQuestion, setProjectQuestion] = useState(false);
   const [submissionSuccessful, setSubmissionSuccessful] = useState(false);
   const formId = window.location.pathname.split("/")[2];
   const questions = useSelector((state) => state.questionReducer.questionList);
@@ -50,12 +50,6 @@ function RequestForm() {
   useEffect(() => {
     dispatch({ type: LOAD_COST, payload: { formResponses: formResponses } });
   }, [dispatch, formResponses]);
-
-  useEffect(() => {
-    setProjectQuestion(
-      questions.some((question) => question.question_type === "project")
-    );
-  }, [questions]);
 
   // Helper Function to Render Each Question
   function renderQuestion(question) {
@@ -100,12 +94,15 @@ function RequestForm() {
       }
     });
 
-    setProjectQuestion(
-      formResponses.some((answer) => answer.question_info !== null)
+    const projectSelected = formResponses.some(
+      (answer) =>
+        answer.question_info &&
+        answer.question_info.question_type === "project" &&
+        answer.response !== undefined
     );
 
     if (filled) {
-      if (projectQuestion) {
+      if (!projectSelected) {
         WarningToast("Please Select a Project and Submit!");
       } else {
         if (hideCost) {
@@ -139,14 +136,17 @@ function RequestForm() {
             }
             return null;
           });
+          const survey_id = uuid();
+          localStorage.setItem("currentSurveyId", survey_id);
           dispatch({
-            type: SUBMIT_FORM,
+            type: SUBMIT_SURVEY,
             payload: {
               formId,
               formResponses,
               projectId: projectId,
               billables: billableList,
               clinicalResponses: clinicalList,
+              sowId: survey_id,
             },
           });
           setSubmissionSuccessful(true);

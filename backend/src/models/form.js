@@ -32,6 +32,17 @@ export class Form {
     });
   }
 
+  loadPublishedForm(result) {
+    con.query("CALL load_published_forms", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res[0]);
+      }
+    });
+  }
+
   deleteForm(id, result) {
     con.query(`CALL delete_form(?)`, [id], (err, res) => {
       if (err) {
