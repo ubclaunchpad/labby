@@ -1,4 +1,4 @@
-import "../LoginForm/index.css";
+import "./index.css";
 // import Hide from "../../assets/hide.png";
 import uuid from "react-uuid";
 import { useDispatch } from "react-redux";
@@ -57,6 +57,10 @@ function SignUpForm() {
             alert("Password must be at least 8 characters long.");
             return;
         }
+        if (!/\d/.test(password)) {
+            alert("Password must contain at least one number.");
+            return;
+        }
         const response = dispatch({   // do we have to wait for this to complete?
             type: POST_USER,
             payload: {
@@ -89,24 +93,24 @@ function SignUpForm() {
                     Log in
                 </button>
                 </div>
-            <div className="LoginPage">
+            <div className="SignUpPage">
                 <img src={Logo} className="LogoImg" alt="Background"></img>
     
-                <div className="LoginContainer">
-                    <div className="LoginForm">
-                        <div className="LoginTitle">
+                <div className="SignUpContainer">
+                    <div className="SignUpForm">
+                        <div className="SignUpTitle">
                             <h2>Create an Account</h2>
                         </div>
                         <form onSubmit={handleUserSubmit}>
-                            <input  className="LoginInput" placeholder="First Name*" type={"firstName"} onChange={handleFirstNameChange} required> 
+                            <input  className="SignUpInput" placeholder="First Name*" type={"firstName"} onChange={handleFirstNameChange} required> 
                             </input> 
-                            <input  className="LoginInput" placeholder="Last Name*" type={"lastName"} onChange={handleLastNameChange} required> 
+                            <input  className="SignUpInput" placeholder="Last Name*" type={"lastName"} onChange={handleLastNameChange} required> 
                             </input>
-                            <input  className="LoginInput" placeholder="Email*" type={"email"} onChange={handleEmailChange} required >
+                            <input  className="SignUpInput" placeholder="Email*" type={"email"} onChange={handleEmailChange} required>
                             </input>
-                            <input  className="LoginInput" placeholder="Password*" type={"password"} onChange={handlePasswordChange} required>
+                            <input  className="SignUpInput" placeholder="Password*" type={"password"} onChange={handlePasswordChange} required>
                             </input>
-                            <button className="SignInBtn" onClick={handleUserSubmit}>
+                            <button className="SignUpBtn" onClick={handleUserSubmit}>
                                 Sign up
                             </button>
                         </form>
