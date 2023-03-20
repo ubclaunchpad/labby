@@ -17,6 +17,7 @@ import Organizations from "./screens/organizations/organizations";
 import Projects from "./screens/projects/projects";
 import LoginForm from "./components/LoginForm";
 import SignUpForm from "./components/SignUpForm";
+// import ForgotPasswordForm from "./components/ForgotPasswordForm";
 import Setting from "./screens/setting/setting";
 import { useDispatch, useSelector } from "react-redux";
 import { PING } from "./redux/actions/userActions";
@@ -65,6 +66,7 @@ function App() {
           <Route path="/pdf" element={(currentUser && currentUser.employee) ? <InvoicePreview /> : (currentUser ? <Setting /> : <LoginForm from={window.location.pathname} />)} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SignUpForm />} />
+          {/* <Route path="/forgotPassword" element={<ForgotPasswordForm />} /> */}
         </Routes>
       </BrowserRouter>
     </div>

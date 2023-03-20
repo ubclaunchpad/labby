@@ -9,9 +9,18 @@ import Logo from "../../assets/LogoIcon.png";
 
 function SignUpForm() {
     const dispatch = useDispatch();
-
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const handleFirstNameChange = (e) => {
+        setFirstName(e.target.value);
+    }
+
+    const handleLastNameChange = (e) => {
+        setLastName(e.target.value);
+    }
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -20,8 +29,34 @@ function SignUpForm() {
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
     }
+    
     const handleUserSubmit = (e) => {
         e.preventDefault();
+        if (firstName === "") {
+            alert("First Name Required.");
+            return;
+        }
+        if (lastName === "") {
+            alert("Last Name Required.");
+            return;
+        }
+
+        if (email === "") {
+            alert("Please enter an email address.");
+            return;
+        }
+        if (password === "") {
+            alert("Please enter a password.");
+            return;
+        }        
+        if (!/\S+@\S+\.\S+/.test(email)) {
+            alert("Please enter a valid email address.");
+            return;
+        }
+        if (password.length < 8) {
+            alert("Password must be at least 8 characters long.");
+            return;
+        }
         const response = dispatch({   // do we have to wait for this to complete?
             type: POST_USER,
             payload: {
@@ -63,17 +98,14 @@ function SignUpForm() {
                             <h2>Create an Account</h2>
                         </div>
                         <form onSubmit={handleUserSubmit}>
-                            <input  className="LoginInput" placeholder="Email" type={"email"} onChange={handleEmailChange}>
+                            <input  className="LoginInput" placeholder="First Name*" type={"firstName"} onChange={handleFirstNameChange} required> 
+                            </input> 
+                            <input  className="LoginInput" placeholder="Last Name*" type={"lastName"} onChange={handleLastNameChange} required> 
                             </input>
-                            <input  className="LoginInput" placeholder="First Name" type={"text"}> 
+                            <input  className="LoginInput" placeholder="Email*" type={"email"} onChange={handleEmailChange} required >
                             </input>
-                            <input  className="LoginInput" placeholder="Last Name" type={"text"}> 
+                            <input  className="LoginInput" placeholder="Password*" type={"password"} onChange={handlePasswordChange} required>
                             </input>
-                            <input  className="LoginInput" placeholder="Password" type={"password"} onChange={handlePasswordChange}>
-                            </input>
-                            {/* <div className="ForgotPassword">
-                                Forgot Password
-                            </div> */}
                             <button className="SignInBtn" onClick={handleUserSubmit}>
                                 Sign up
                             </button>
@@ -82,8 +114,7 @@ function SignUpForm() {
                 </div>
             </div>
         </div>
-        );    
-
+    ); 
 }
 
 export default SignUpForm;

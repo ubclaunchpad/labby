@@ -111,3 +111,29 @@
 }
 
 
+
+.RememberMe {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.RememberMe input[type="checkbox"] {
+  margin-right: 10px;
+  position: relative;
+}
+
+.SignUpBtn {
+    cursor: pointer;
+    width: 15%;
+    height: 30px;
+    margin: 2% 2% 10% 2%;
+    align-self: center;
+    border: 0;
+    border-radius: 10px;
+    background-color: #5B73E8;
+    color: white;
+    font-size: 12px;
+    font-style: bold;
+}
+
