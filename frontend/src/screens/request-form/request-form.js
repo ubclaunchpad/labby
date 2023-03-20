@@ -27,7 +27,6 @@ import { WarningToast } from "../../components/Toasts";
 
 function RequestForm() {
   const dispatch = useDispatch();
-  const [projectQuestion, setProjectQuestion] = useState(false);
   const [submissionSuccessful, setSubmissionSuccessful] = useState(false);
   const formId = window.location.pathname.split("/")[2];
   const questions = useSelector((state) => state.questionReducer.questionList);
@@ -51,12 +50,6 @@ function RequestForm() {
   useEffect(() => {
     dispatch({ type: LOAD_COST, payload: { formResponses: formResponses } });
   }, [dispatch, formResponses]);
-
-  useEffect(() => {
-    setProjectQuestion(
-      questions.some((question) => question.question_type === "project")
-    );
-  }, [questions]);
 
   // Helper Function to Render Each Question
   function renderQuestion(question) {
@@ -101,12 +94,15 @@ function RequestForm() {
       }
     });
 
-    setProjectQuestion(
-      formResponses.some((answer) => answer.question_info !== null)
+    const projectSelected = formResponses.some(
+      (answer) =>
+        answer.question_info &&
+        answer.question_info.question_type === "project" &&
+        answer.response !== undefined
     );
 
     if (filled) {
-      if (projectQuestion) {
+      if (!projectSelected) {
         WarningToast("Please Select a Project and Submit!");
       } else {
         if (hideCost) {
@@ -150,7 +146,7 @@ function RequestForm() {
               projectId: projectId,
               billables: billableList,
               clinicalResponses: clinicalList,
-              sowId: survey_id
+              sowId: survey_id,
             },
           });
           setSubmissionSuccessful(true);

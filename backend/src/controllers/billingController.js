@@ -112,7 +112,6 @@ export default class BillingController {
   }
 
   saveBillable(req) {
-    console.log("saving billable");
     return new Promise((resolve, reject) => {
       const BillableModel = new Billable();
       const billableData = {

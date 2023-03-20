@@ -19,8 +19,6 @@ function FormConfirmation() {
       }})
     }, 1000)
   }, [dispatch]);
-
-  const formId = window.location.pathname.split("/")[2];
   
   return (
     <div className="formConfirmationPage">
@@ -68,7 +66,7 @@ function FormConfirmation() {
         >
           View all my requests
         </div>
-        {loadProgressPage && <Navigate to={`/request-progress/${formId}`} />}
+        {loadProgressPage && <Navigate to={`/request-progress`} />}
       </div>
     </div>
   );

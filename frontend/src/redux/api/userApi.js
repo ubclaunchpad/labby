@@ -86,6 +86,7 @@ export const saveUserApi = async (payload) => {
     });
 
     const user = await axios.post("user/", data);
+
     return user;
   } catch (err) {
     return console.error(err);

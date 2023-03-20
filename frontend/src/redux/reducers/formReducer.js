@@ -18,6 +18,7 @@ import {
   ADD_OTHER_RESPONSE,
   REMOVE_OTHER_RESPONSE,
   ADD_CLINICAL_RESPONSE,
+  SET_PUBLISHED_FORMS,
 } from "../actions/formActions";
 
 const defaultQuestionlist = {
@@ -204,6 +205,17 @@ const formList = (state = defaultFormList, action) => {
   }
 };
 
+const publishedFormList = (state = defaultFormList, action) => {
+  switch (action.type) {
+    case SET_PUBLISHED_FORMS: {
+      return action.payload;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 const formSubmissions = (state = defaultFormSubmissions, action) => {
   switch (action.type) {
     case SUBMIT_FORM: {
@@ -236,4 +248,5 @@ export default combineReducers({
   formList,
   formSubmissions,
   clinicalResponses,
+  publishedFormList,
 });
