@@ -14,6 +14,11 @@ function SignUpForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const [firstNameError, setFirstNameError] = useState("");
+    const [lastNameError, setLastNameError] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+
     const handleFirstNameChange = (e) => {
         setFirstName(e.target.value);
     }
@@ -32,45 +37,56 @@ function SignUpForm() {
     
     const handleUserSubmit = (e) => {
         e.preventDefault();
+        let errors = false;
         if (firstName === "") {
-            alert("First Name Required.");
-            return;
+            setFirstNameError("First Name Required.");
+            errors = true;
+        } else {
+            setFirstNameError("");
         }
+
         if (lastName === "") {
-            alert("Last Name Required.");
-            return;
+            setLastNameError("Last Name Required.");
+            errors = true;
+        } else {
+            setLastNameError("");
         }
 
         if (email === "") {
-            alert("Please enter an email address.");
-            return;
+            setEmailError("Please enter an email address.");
+            errors = true;
+        } else if (!/\S+@\S+\.\S+/.test(email)) {
+            setEmailError("Please enter a valid email address.");
+            errors = true;
+        } else {
+            setEmailError("");
         }
+
         if (password === "") {
-            alert("Please enter a password.");
-            return;
-        }        
-        if (!/\S+@\S+\.\S+/.test(email)) {
-            alert("Please enter a valid email address.");
-            return;
+            setPasswordError("Please enter a valid password.");
+            errors = true;
+
+        } else if (password.length < 8) {
+            setPasswordError("Password must be at least 8 characters long.");
+            errors = true;
+
+        } else if (!/\d/.test(password)) {
+            setPasswordError("Password must contain at least one number.");
+            errors = true;
+        } else {
+            setPasswordError("");
         }
-        if (password.length < 8) {
-            alert("Password must be at least 8 characters long.");
-            return;
-        }
-        if (!/\d/.test(password)) {
-            alert("Password must contain at least one number.");
-            return;
-        }
-        const response = dispatch({   // do we have to wait for this to complete?
-            type: POST_USER,
-            payload: {
-              user_id: uuid(),
-              fk_organization_id: null,
-              username: null,
-              email: email,
-              password: password,
-            },
-          });
+        if (!errors) {
+            const response = dispatch({
+                type: POST_USER,
+                payload: {
+                    user_id: uuid(),
+                    fk_organization_id: null,
+                    username: null,
+                    email: email,
+                    password: password,
+                },
+            });
         if (response.payload.email) {
             alert("Account created successfully! Please login to continue.")
         } else {
@@ -78,6 +94,7 @@ function SignUpForm() {
         }
         redirectLogin();
     }
+}
     let navigate = useNavigate();
     const redirectLogin = () => {
         navigate('/'); 
@@ -103,13 +120,21 @@ function SignUpForm() {
                         </div>
                         <form onSubmit={handleUserSubmit}>
                             <input  className="SignUpInput" placeholder="First Name*" type={"firstName"} onChange={handleFirstNameChange} required> 
-                            </input> 
+                            </input>
+                            <div className="ErrorMessage">{firstNameError}</div>
                             <input  className="SignUpInput" placeholder="Last Name*" type={"lastName"} onChange={handleLastNameChange} required> 
                             </input>
+                            <div className="ErrorMessage">{lastNameError}</div>
                             <input  className="SignUpInput" placeholder="Email*" type={"email"} onChange={handleEmailChange} required>
                             </input>
+                            <div className="ErrorMessage">{emailError}</div>
                             <input  className="SignUpInput" placeholder="Password*" type={"password"} onChange={handlePasswordChange} required>
                             </input>
+                            <div className="ErrorMessage">{passwordError}</div>
+                            <br/>
+                            <div className="SignUpTerms">
+                                By signing up, you agree to our <a href="https://www.google.com">Terms of Service</a> and <a href="https://www.google.com">Privacy Policy</a>.
+                            </div>
                             <button className="SignUpBtn" onClick={handleUserSubmit}>
                                 Sign up
                             </button>
