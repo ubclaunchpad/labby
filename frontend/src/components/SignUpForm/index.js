@@ -13,11 +13,13 @@ function SignUpForm() {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [verifyPassword, setVerifyPassword] = useState("");
 
     const [firstNameError, setFirstNameError] = useState("");
     const [lastNameError, setLastNameError] = useState("");
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const [verifyPasswordError, setVerifyPasswordError] = useState("");
 
     const handleFirstNameChange = (e) => {
         setFirstName(e.target.value);
@@ -34,48 +36,61 @@ function SignUpForm() {
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
     }
+
+    const handleVerifyPasswordChange = (e) => {
+        if (password !== "") 
+        setVerifyPassword(e.target.value);
+    }
     
     const handleUserSubmit = (e) => {
         e.preventDefault();
         let errors = false;
         if (firstName === "") {
-            setFirstNameError("First Name Required.");
+            setFirstNameError("First Name Required");
             errors = true;
         } else {
             setFirstNameError("");
         }
 
         if (lastName === "") {
-            setLastNameError("Last Name Required.");
+            setLastNameError("Last Name Required");
             errors = true;
         } else {
             setLastNameError("");
         }
 
         if (email === "") {
-            setEmailError("Please enter an email address.");
+            setEmailError("Please enter an email address");
             errors = true;
         } else if (!/\S+@\S+\.\S+/.test(email)) {
-            setEmailError("Please enter a valid email address.");
+            setEmailError("Please enter a valid email address");
             errors = true;
         } else {
             setEmailError("");
         }
 
         if (password === "") {
-            setPasswordError("Please enter a valid password.");
+            setPasswordError("Please enter a valid password");
             errors = true;
 
         } else if (password.length < 8) {
-            setPasswordError("Password must be at least 8 characters long.");
+            setPasswordError("Password must be at least 8 characters long");
             errors = true;
 
         } else if (!/\d/.test(password)) {
-            setPasswordError("Password must contain at least one number.");
+            setPasswordError("Password must contain at least one number");
             errors = true;
         } else {
             setPasswordError("");
         }
+        
+        if (password !== verifyPassword) {
+            setVerifyPasswordError("Passwords do not match");
+            errors = true;
+        } else {
+            setVerifyPasswordError("");
+        }
+
         if (!errors) {
             const response = dispatch({
                 type: POST_USER,
@@ -131,6 +146,9 @@ function SignUpForm() {
                             <input  className="SignUpInput" placeholder="Password*" type={"password"} onChange={handlePasswordChange} required>
                             </input>
                             <div className="ErrorMessage">{passwordError}</div>
+                            <input  className="SignUpInput" placeholder="Verify New Password" type={"VerifyPassword"} onChange={handleVerifyPasswordChange} required>
+                            </input>
+                            <div className="ErrorMessage">{verifyPasswordError}</div>
                             <br/>
                             <div className="SignUpTerms">
                                 By signing up, you agree to our <a href="https://www.google.com">Terms of Service</a> and <a href="https://www.google.com">Privacy Policy</a>.

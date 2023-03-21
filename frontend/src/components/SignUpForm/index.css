@@ -54,7 +54,8 @@
 
 .SignUpTitle {
     display: flex;
-    align-items: right;
+    align-items: center;
+    justify-content: center;
 }
 
 .ForgotPassword {
@@ -113,4 +114,7 @@
 
 .ErrorMessage {
     color: red;
+    margin-top: 10px;
+    text-align: left;
+    font-size: 12px
   }

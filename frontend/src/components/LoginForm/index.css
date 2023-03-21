@@ -65,7 +65,8 @@
 
 .LoginTitle {
     display: flex;
-    align-items: right;
+    align-items: center;
+    justify-content: center;
 }
 
 .ForgotPassword {
@@ -110,8 +111,6 @@
     color: white;
 }
 
-
-
 .RememberMe {
   display: flex;
   align-items: center;
@@ -123,4 +122,9 @@
   position: relative;
 }
 
-
+.ErrorMessage {
+    color: red;
+    margin-top: 10px;
+    text-align: left;
+    font-size: 12px
+  }

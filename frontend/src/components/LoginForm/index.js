@@ -11,8 +11,10 @@ function LoginForm({ from }) {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [rememberMe, setRememberMe] = useState(false);
+    const [emailError, setEmailError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
 
+    const [rememberMe, setRememberMe] = useState(false);
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
     }
@@ -24,23 +26,35 @@ function LoginForm({ from }) {
     let navigate = useNavigate();
     const handleUserSubmit = (e) => {
         e.preventDefault();
+        let errors = false;
+        
         if (rememberMe) {
             localStorage.setItem('loginEmail', email);
-            localStorage.setItem('rememberMe', 'true');
-          } else {
+            localStorage.setItem('rememberMe', rememberMe);
+        } else {
             localStorage.removeItem('loginEmail');
             localStorage.removeItem('rememberMe');
-          }
-        dispatch({
-            type: AUTHENTICATE_USER,
-            payload: {
-              email: email,
-              password: password,
-            },
-          });
-          navigate(from);
+        }
+        
+        if (email === "") {
+            setEmailError("Error: Please enter a valid email");
+            errors = true;
+        }
+        if (password === "") {
+            setPasswordError("Error: Please enter your password");
+            errors = true;
+        }
+        if (!errors) {
+            dispatch({
+                type: AUTHENTICATE_USER,
+                payload: {
+                email: email,
+                password: password,
+                },
+            });
+            navigate(from);
+        }
     }
-
     useEffect(() => {
         const storedEmail = localStorage.getItem('loginEmail');
         const storedRememberMe = localStorage.getItem('rememberMe');
@@ -68,8 +82,10 @@ function LoginForm({ from }) {
                     <form onSubmit={handleUserSubmit}>
                         <input  className="LoginInput" placeholder="Email" type={"email"} onChange={handleEmailChange}>
                         </input>
+                        <div className="ErrorMessage">{emailError}</div>
                         <input  className="LoginInput" placeholder="Password" type={"password"} onChange={handlePasswordChange}>
                         </input>
+                        <div className="ErrorMessage">{passwordError}</div>
                         <div className="RememberMe">
                             <input type="checkbox" id="rememberMe" name="rememberMe" />
                             <label htmlFor="rememberMe">Remember me</label>
@@ -79,20 +95,21 @@ function LoginForm({ from }) {
                         </button>
                     </form>
                 </div>
+                    <div className="CreateAccount">
+                        <div>Don't have an account yet?&nbsp;</div>
+                        <NavLink
+                        to={`/signup`}
+                        >
+                        Create Account 
+                        </NavLink>  
+                    </div>
+                    <br></br>
                     <div className="ForgotPassword">
                         <NavLink
                         to={`/forgotpassword`}
                         >
-                        Forgot password?
+                        Forgot your password?
                         </NavLink>
-                    </div>
-                    <div className="CreateAccount">
-                        <div>Not a user? Create an account&nbsp;</div>
-                        <NavLink
-                        to={`/signup`}
-                        >
-                        here. 
-                        </NavLink>  
                     </div>
             </div>
         </div>
