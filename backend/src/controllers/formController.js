@@ -32,11 +32,37 @@ export default class FormController {
     });
   }
 
+  loadPublishedForm() {
+    return new Promise((resolve, reject) => {
+      const FormModel = new Form();
+
+      FormModel.loadPublishedForm((err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+
   deleteForm(id) {
     return new Promise((resolve, reject) => {
       const FormModel = new Form();
 
       FormModel.deleteForm(id, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+
+  saveFormBuild(id) {
+    return new Promise((resolve, reject) => {
+      const FormModel = new Form();
+
+      FormModel.insertFormBuild(id, (err, result) => {
         if (err) {
           reject({ error: err });
         }

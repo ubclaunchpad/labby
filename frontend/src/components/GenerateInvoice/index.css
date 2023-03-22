@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
   margin-top: 20px;
+  width: 200px;
 }
 
 .GenerateText {
@@ -15,4 +16,5 @@
   padding-right: 20px;
   border-radius: 15px;
   cursor: pointer;
+  width: 200px;
 }

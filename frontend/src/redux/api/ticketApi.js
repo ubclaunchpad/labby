@@ -197,7 +197,7 @@ export const postServiceCostApi = async (payload) => {
       completedTime: payload.completedTime,
       billed: payload.billed,
       billedTime: payload.billedTime,
-      createdBy: payload.createdBy,
+      createdBy: payload.created_by,
     });
 
     const billable = await axios.post(`billing/`, data, { headers: headers });

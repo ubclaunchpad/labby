@@ -1,0 +1,60 @@
+
+.clinicalBox {
+    display: flex;
+    flex-direction: column;
+}
+
+.clinicalInstruction {
+    display: flex;
+    flex: 1;
+}
+
+.clinicalHeader {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    display: flex;
+    flex: 1;
+    font-weight: bold;
+    flex-direction: row;
+}
+
+.headerLeft {
+    flex: 1;
+    width: 50%;
+    text-align: left;
+}
+
+.headerRight {
+    flex: 1;
+    width: 50%;
+    text-align: left;
+}
+
+.clinical {
+    display: flex;
+    flex: 1;
+}
+
+.clinicalInputView {
+    flex: 1;
+    width: 50%;
+    text-align: left;
+    margin-top: 5px;
+}
+
+.clinicalInput {
+    text-align: left;
+    width: 95%;
+    border-radius: 10px;
+    border: 2px solid #D9D9D9;
+}
+
+.clinicalAdd {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex: 1;
+    font-weight: 600;
+    color: #DEDEDE;
+    cursor: pointer;
+}

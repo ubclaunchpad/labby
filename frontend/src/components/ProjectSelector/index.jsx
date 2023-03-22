@@ -28,6 +28,7 @@ function ProjectSelector({ question }) {
         id: uuid(),
         response: selected.project_id,
         question: selected,
+        question_info: question,
       },
     });
     setSelectedValue(selected);
@@ -36,6 +37,7 @@ function ProjectSelector({ question }) {
   useEffect(() => {
     dispatch({ type: GET_PROJECT });
   }, [dispatch]);
+
 
   return (
     <div className="GlobalCustomerQuestionContainer">

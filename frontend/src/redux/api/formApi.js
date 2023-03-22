@@ -19,6 +19,19 @@ export const getForms = async () => {
   }
 };
 
+export const getPublishedForms = async () => {
+  try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const forms = await axios.get("form/published", { headers: headers });
+    return forms;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const saveFormsApi = async (payload) => {
   try {
     const token = JSON.parse(localStorage.getItem("currentUser")).token;
@@ -38,6 +51,23 @@ export const saveFormsApi = async (payload) => {
   }
 };
 
+export const saveBuildFormsApi = async (payload) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    var data = JSON.stringify({});
+    const form = await axios.post(`form/${payload.form_id}`, data, {
+      headers: headers,
+    });
+
+    return form;
+  } catch (err) {
+    return console.error(err);
+  }
+}
+
 export const createTicketApi = async (payload) => {
   try {
     const token = JSON.parse(localStorage.getItem("currentUser")).token;
@@ -46,6 +76,7 @@ export const createTicketApi = async (payload) => {
     };
     var data = JSON.stringify({
       task_id: payload.task_id,
+      fk_survey_id: payload.fk_survey_id,
       fk_form_id: payload.fk_form_id,
       fk_project_id: payload.fk_project_id,
       task_title: payload.task_title,

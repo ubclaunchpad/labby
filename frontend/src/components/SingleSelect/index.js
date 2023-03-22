@@ -12,11 +12,13 @@ import {
   REMOVE_SINGLE_RESPONSE,
 } from "../../redux/actions/formActions";
 import uuid from "react-uuid";
+import ClinicalBox from "../ClinicalBox";
 
 function SingleSelect({ question }) {
   const dispatch = useDispatch();
   const [options, setOptions] = useState([]);
   const answerList = useSelector((state) => state.questionReducer.answerList);
+  const [selectedAnswers, setSelectedAnswers] = useState([]);
 
   useEffect(() => {
     var optionList = answerList[question.question_id ?? ""] ?? [];
@@ -50,7 +52,8 @@ function SingleSelect({ question }) {
           >
             {options.map((option, index) => {
               return (
-                <div className="single-select-option" key={index}>
+                <div className="selectionBox" key={index}>
+                <div className="single-select-option">
                   <FormControlLabel
                     value={option.answer}
                     control={
@@ -71,6 +74,9 @@ function SingleSelect({ question }) {
                                 question: option,
                               },
                             });
+                            setSelectedAnswers([
+                              option.answer_id,
+                            ]);
                           }
                         }}
                       />
@@ -78,6 +84,11 @@ function SingleSelect({ question }) {
                   />
                   <div className="new-question-input">{option.answer}</div>
                 </div>
+                {selectedAnswers.includes(option.answer_id) &&
+                  question.clinical ? (
+                    <ClinicalBox question={question} option={option} />
+                  ) : null}
+                  </div>
               );
             })}
           </RadioGroup>

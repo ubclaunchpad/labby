@@ -12,7 +12,7 @@ CREATE TABLE `questions` (
   `question_id` VARCHAR(50) NOT NULL,
   `fk_form_id` VARCHAR(50),
   `question_type` VARCHAR(50),
-  `question` VARCHAR(50),
+  `question` VARCHAR(255),
   `position_index` INT,
   `mandatory` BOOLEAN,
   `clinical` BOOLEAN,
