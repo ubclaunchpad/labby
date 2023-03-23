@@ -159,24 +159,24 @@ const CostTable = () => {
     } else {
       const newDataInternal = {
         answer_id: row.key,
-        org_type: row.dataIndex.charAt(0).toUpperCase() + row.dataIndex.slice(1),
-        cost: row[row.dataIndex].slice(1),
+        org_type: "Internal",
+        cost: row["internal"].slice(1),
         cost_id: row.idMap["internal"],
         quantifiable: row.quantifiable,
         unit: row.unit
       };
       const newDataExternal = {
         answer_id: row.key,
-        org_type: row.dataIndex.charAt(0).toUpperCase() + row.dataIndex.slice(1),
-        cost: row[row.dataIndex].slice(1),
+        org_type: "External",
+        cost: row["external"].slice(1),
         cost_id: row.idMap["external"],
         quantifiable: row.quantifiable,
         unit: row.unit
       };
       const newDataIndustry = {
         answer_id: row.key,
-        org_type: row.dataIndex.charAt(0).toUpperCase() + row.dataIndex.slice(1),
-        cost: row[row.dataIndex].slice(1),
+        org_type: "Industry",
+        cost: row["industry"].slice(1),
         cost_id: row.idMap["industry"],
         quantifiable: row.quantifiable,
         unit: row.unit

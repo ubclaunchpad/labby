@@ -40,18 +40,18 @@ function MultiSelect({ question }) {
     setOptions(optionList);
   }, [answerList, question]);
 
-  function parseQuantity(quantity) {
+  function parseQuantity(quantity, unit) {
     let numbers = quantity.match(/\d+/g);
     if (numbers === null) {
-      return [1, `1 unit`];
+      return [1, `1 ${unit}`];
     }
     if (numbers.length === 1) {
-      return [parseInt(numbers[0]), `${parseInt(numbers[0])} units`];
+      return [parseInt(numbers[0]), `${parseInt(numbers[0])} ${unit}`];
     }
     let multiplied = parseInt(numbers[0]) * parseInt(numbers[1]);
     return [
       multiplied,
-      `${parseInt(numbers[0])} X ${parseInt(numbers[1])} = ${multiplied} units`,
+      `${parseInt(numbers[0])} X ${parseInt(numbers[1])} = ${multiplied} ${unit}`,
     ];
   }
 
@@ -111,7 +111,7 @@ function MultiSelect({ question }) {
                     <input
                       className="quantityInput"
                       onBlur={(e) => {
-                        let quantity = parseQuantity(e.target.value);
+                        let quantity = parseQuantity(e.target.value, option.unit);
                         setQuantityMap({
                           ...quantityMap,
                           [option.answer_id]: quantity,
