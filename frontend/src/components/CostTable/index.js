@@ -52,6 +52,13 @@ const CostTable = () => {
       width: "10%",
     },
     {
+      title: "Unit",
+      dataIndex: "unit",
+      key: "unit",
+      editable: true,
+      width: "10%",
+    },
+    {
       title: "Quantifiable",
       dataIndex: "quantifiable",
       key: "quantifiable",
@@ -115,6 +122,7 @@ const CostTable = () => {
         cost: 0,
         cost_id: uuid(),
         quantifiable: false,
+        unit: "Unit"
       };
       const newDataExternal = {
         answer_id: newService.answer_id,
@@ -122,6 +130,7 @@ const CostTable = () => {
         cost: 0,
         cost_id: uuid(),
         quantifiable: false,
+        unit: "Unit"
       };
       const newDataIndustry = {
         answer_id: newService.answer_id,
@@ -129,6 +138,7 @@ const CostTable = () => {
         cost: 0,
         cost_id: uuid(),
         quantifiable: false,
+        unit: "Unit"
       };
       dispatch({ type: UPDATE_COST, payload: newDataInternal });
       dispatch({ type: UPDATE_COST, payload: newDataExternal });
@@ -136,14 +146,45 @@ const CostTable = () => {
     }
   };
   const handleSave = (row) => {
-    const newData = {
-      answer_id: row.key,
-      org_type: row.dataIndex.charAt(0).toUpperCase() + row.dataIndex.slice(1),
-      cost: row[row.dataIndex].slice(1),
-      cost_id: row.idMap[row.dataIndex],
-      quantifiable: row.quantifiable,
-    };
-    dispatch({ type: UPDATE_COST, payload: newData });
+    if (row.dataIndex === "external" || row.dataIndex === "internal" || row.dataIndex === "industry") {
+      const newData = {
+        answer_id: row.key,
+        org_type: row.dataIndex.charAt(0).toUpperCase() + row.dataIndex.slice(1),
+        cost: row[row.dataIndex].slice(1),
+        cost_id: row.idMap[row.dataIndex],
+        quantifiable: row.quantifiable,
+        unit: row.unit
+      };
+      dispatch({ type: UPDATE_COST, payload: newData });
+    } else {
+      const newDataInternal = {
+        answer_id: row.key,
+        org_type: row.dataIndex.charAt(0).toUpperCase() + row.dataIndex.slice(1),
+        cost: row[row.dataIndex].slice(1),
+        cost_id: row.idMap["internal"],
+        quantifiable: row.quantifiable,
+        unit: row.unit
+      };
+      const newDataExternal = {
+        answer_id: row.key,
+        org_type: row.dataIndex.charAt(0).toUpperCase() + row.dataIndex.slice(1),
+        cost: row[row.dataIndex].slice(1),
+        cost_id: row.idMap["external"],
+        quantifiable: row.quantifiable,
+        unit: row.unit
+      };
+      const newDataIndustry = {
+        answer_id: row.key,
+        org_type: row.dataIndex.charAt(0).toUpperCase() + row.dataIndex.slice(1),
+        cost: row[row.dataIndex].slice(1),
+        cost_id: row.idMap["industry"],
+        quantifiable: row.quantifiable,
+        unit: row.unit
+      };
+      dispatch({ type: UPDATE_COST, payload: newDataInternal });
+      dispatch({ type: UPDATE_COST, payload: newDataExternal });
+      dispatch({ type: UPDATE_COST, payload: newDataIndustry });
+    }
   };
 
   const EditableContext = React.createContext(null);
