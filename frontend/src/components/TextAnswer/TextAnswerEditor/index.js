@@ -39,10 +39,29 @@ function TextAnswerEditor({ question }) {
 
   const onAddBtnClick = event => {
     setInputList(inputList.concat(<TextBox key={inputList.length} />));
+    dispatch({
+      type: SAVE_QUESTION,
+      payload: {
+        ...question,
+        form_id: question.fk_form_id,
+        question_index: question.position_index,
+        quantity: (inputList.length+2),
+      },
+    });
+    //dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
   };
 
   const onSubBtnClick = event => {
     setInputList(inputList.slice(0, inputList.length - 1));
+    dispatch({
+      type: SAVE_QUESTION,
+      payload: {
+        ...question,
+        form_id: question.fk_form_id,
+        question_index: question.position_index,
+        quantity: (inputList.length),
+      },
+    });
   };
 
   return (
@@ -71,6 +90,7 @@ function TextAnswerEditor({ question }) {
                 form_id: question.fk_form_id,
                 question_title: text.target.value,
                 question_index: question.position_index,
+                quantity: (inputList.length+1),
               },
             });
             dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
