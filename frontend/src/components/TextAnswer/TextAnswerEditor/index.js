@@ -35,6 +35,9 @@ function TextAnswerEditor({ question }) {
   useEffect(() => {
     setQuestionNum(`Q${question.position_index}`);
     setTitle(question.question);
+    for (let i = 1; i < question.quantity; i++) {
+      setInputList(inputList.concat(<TextBox key={inputList.length} />));
+    }
   }, [question]);
 
   const onAddBtnClick = event => {
