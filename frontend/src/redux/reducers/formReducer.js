@@ -220,7 +220,7 @@ const formSubmissions = (state = defaultFormSubmissions, action) => {
   switch (action.type) {
     case SUBMIT_FORM: {
       state.push(action.payload);
-      //defaultAnswerList = [];
+      // defaultAnswerList = [];
       // TODO: save submitted forms to backend
       return state;
     }
