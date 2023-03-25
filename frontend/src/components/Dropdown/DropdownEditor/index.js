@@ -163,7 +163,8 @@ function DropdownEditor({ question }) {
                 </div>
               );
             })}
-            <label>
+            <div className="dropdown-autogenerate">
+              <label>Autogenerate number options: </label>
               <input
                 type="number"
                 className="new-question-input"
@@ -202,8 +203,7 @@ function DropdownEditor({ question }) {
                   }
                 }}
               />
-              Autogenerate number options
-            </label>
+            </div>
           </RadioGroup>
         </FormControl>
       </div>
