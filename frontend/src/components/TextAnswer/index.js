@@ -20,8 +20,11 @@ function TextAnswer({ question }) {
       </div>
       <div className="text-box-container">
         <Input.TextArea
-          placeholder="User types here..."
-          rows={5}
+          placeholder="Type here..."
+          autoSize={{
+            minRows: 1,
+            maxRows: 5,
+          }}
           className="text-box"
           onBlur={(e) => {
             if (e.target.value !== "") {

@@ -21,6 +21,19 @@ export default class SurveyController {
     });
   }
 
+  loadSurvey(uid) {
+    return new Promise((resolve, reject) => {
+      const SurveyModel = new Survey();
+
+      SurveyModel.loadSurvey(uid, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+
   saveResponse(req) {
     return new Promise((resolve, reject) => {
       const SurveyModel = new Survey();

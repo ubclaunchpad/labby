@@ -13,6 +13,7 @@ import {
 } from "../../redux/actions/formActions";
 import uuid from "react-uuid";
 import ClinicalBox from "../ClinicalBox";
+import QuantityBox from "../QuantityBox";
 
 function SingleSelect({ question }) {
   const dispatch = useDispatch();
@@ -84,6 +85,10 @@ function SingleSelect({ question }) {
                   />
                   <div className="new-question-input">{option.answer}</div>
                 </div>
+                {selectedAnswers.includes(option.answer_id) &&
+                option.quantifiable ? (
+                  <QuantityBox option={option} />
+                ) : null}
                 {selectedAnswers.includes(option.answer_id) &&
                   question.clinical ? (
                     <ClinicalBox question={question} option={option} />

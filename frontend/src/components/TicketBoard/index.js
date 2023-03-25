@@ -60,7 +60,7 @@ const Task = (props) => {
   const tabColorNum = getColorNum(props?.task?.id, ticketsColors);
   const dispatch = useDispatch();
   return (
-    <Draggable draggableId={props.task.id} index={props.index}>
+    <Draggable draggableId={props.task.id.toString()} index={props.index}>
       {(provided, snapshot) => (
         <div
           className="task-card-container"
