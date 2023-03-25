@@ -58,6 +58,8 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
           ticketMap[ticket.task_id] = {
             id: ticket.task_id,
             code: ticket.task_id,
+            fk_survey_id: ticket.fk_survey_id,
+            fk_survey_id: ticket.fk_survey_id,
             form_id: ticket.fk_form_id,
             project_id: ticket.fk_project_id,
             title: ticket.task_title,
@@ -144,8 +146,10 @@ const currentTicketSubtasks = (state = [], action) => {
 
 // TODO: is it supposed to go through SET_ATTACHMENTS? seems to always go thorugh DEFAULT
 const currentTicketAttachments = (state = {}, action) => {
+  console.log(action);
   switch (action.type) {
     case SET_ATTACHMENTS: {
+      console.log(action.payload);
       const newMap = {
         ...state,
         [action.payload.key]: action.payload.value,

@@ -14,7 +14,9 @@ export const getQuestions = async (payload) => {
     };
     if (payload) {
       const formId = payload;
-      const questions = await axios.get(`question/${formId}`, { headers: headers });
+      const questions = await axios.get(`question/${formId}`, {
+        headers: headers,
+      });
       return questions;
     }
 
@@ -109,6 +111,7 @@ export const getAnswersBySurvey = async (payload) => {
     var headers = {
       Authorization: `Bearer ${token}`,
     };
+    console.log(payload);
     const answers = await axios.get(`answer/${payload.survey_id}`, {
       headers: headers,
     });

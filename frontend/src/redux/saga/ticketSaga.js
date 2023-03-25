@@ -125,11 +125,11 @@ export function* getAttachments(action) {
 
   // call martins endpoint
   const surveyAnswers = yield call(getAnswersBySurvey, action.payload);
-  console.log(`SURVEYANSWERS.DATA[0] => ${surveyAnswers.data[0]}`);
-  console.log(surveyAnswers.data[0]);
+  console.log(`SURVEYANSWERS.DATA => ${surveyAnswers.data}`);
+  console.log(surveyAnswers.data);
 
   // map / filter / reduce that list to only return just list of fileInputs
-  const filteredAnswers = surveyAnswers.data[0].filter((answer) => {
+  const filteredAnswers = surveyAnswers.data.filter((answer) => {
     return (
       answer.answerid != null && answer.answerid.startsWith("fileInput/", 0)
     );
@@ -138,8 +138,11 @@ export function* getAttachments(action) {
   console.log(`FILTERED ANSWERS => ${JSON.stringify(filteredAnswers)}`);
 
   // call s3 endpoints for each file inside the fileInput list
-  yield all(
-    filteredAnswers.map((answer) => {
+  // 1) create empty array
+  // 2) inside, about line 150~, add whatever we get back from S3 into the array
+  let finalList = [];
+  yield all([
+    (finalList = filteredAnswers.map((answer) => {
       AWS.config.update(config);
       const S3 = new AWS.S3({});
       const objParams = {
@@ -147,8 +150,9 @@ export function* getAttachments(action) {
         Key: answer.answerid,
         ResponseContentType: "application/pdf",
       };
+
       // TODO: Need to change where it only uploads to bucket upon form submission
-      return S3.getObject(objParams, function (err, data) {
+      S3.getObject(objParams, function (err, data) {
         if (err) {
           console.log("Issue in S3.getObject()");
           console.log(`Error Code: ${err.code}`);
@@ -158,17 +162,21 @@ export function* getAttachments(action) {
           const url = window.URL.createObjectURL(
             new Blob([data.Body], { type: "application/pdf" })
           );
-          return put({
-            type: SET_ATTACHMENTS,
-            payload: {
-              key: answer.answerid,
-              value: url,
-            },
-          });
+
+          // return put({
+          //   type: SET_ATTACHMENTS,
+          //   payload: {
+          //     key: answer.answerid,
+          //     value: url,
+          //   },
+          // });
+          tempArr.push(url);
         }
       });
-    })
-  );
+      console.log(tempArr);
+    })),
+    put(finalList),
+  ]);
 
   // store that all into a reducer
 }

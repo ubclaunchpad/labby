@@ -68,6 +68,7 @@ const Task = (props) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           onClick={() => {
+            console.log(props);
             dispatch({ type: SET_ACTIVE_TICKET, payload: props.task });
           }}
         >
@@ -205,7 +206,7 @@ export const TicketBoard = () => {
       });
       dispatch({
         type: GET_ATTACHMENTS,
-        payload: { survey_id: currentTicket.id },
+        payload: { survey_id: currentTicket.fk_survey_id },
       });
     }
   }, [dispatch, currentTicket]);
