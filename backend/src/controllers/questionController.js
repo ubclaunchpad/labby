@@ -4,7 +4,6 @@ export default class QuestionController {
   saveQuestion(req) {
     return new Promise((resolve, reject) => {
       const QuestionModel = new Question();
-      console.log(req.body);
       const question = {
         question_id: req.body.question_id,
         form_id: req.body.form_id,

@@ -42,6 +42,7 @@ const defaultFormSubmissions = [
   // },
 ];
 const defaultClinicalResponses = {};
+const defaultTextResponse = "";
 
 const formQuestions = (state = defaultQuestionlist, action) => {
   switch (action.type) {
@@ -64,11 +65,12 @@ const formResponses = (state = defaultAnswerList, action) => {
     case ADD_RESPONSE: {
       state = state.filter(
         (response) => (
-          response.question.question_id !==
+          (action.payload.id !== response.id) && (response.question.question_id !==
             action.payload.question.question_id ||
-          response.response !== action.payload.response)
+          response.response !== action.payload.response))
       );
       state.push(action.payload);
+      console.log(state);
       return [...state];
     }
     case REMOVE_RESPONSE: {

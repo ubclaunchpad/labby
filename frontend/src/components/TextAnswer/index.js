@@ -25,9 +25,10 @@ function TextAnswer({ question }) {
         setInputList(inputList.concat(<TextBox key={inputList.length} />));
       }
     }
-  });
+  }, [inputList, question.quantity]);
 
   const TextBox = () => {
+    const id = uuid();
     return <Input.TextArea
       placeholder="Type here..."
       autoSize={{
@@ -37,10 +38,17 @@ function TextAnswer({ question }) {
       className="text-box"
       onBlur={(e) => {
         if(e.target.value !== "") {
+            // dispatch({
+            //   type: REMOVE_SINGLE_RESPONSE,
+            //   payload: {
+            //     question: question,
+                
+            //   },
+            // });
             dispatch({
               type: ADD_RESPONSE,
               payload: {
-                id: uuid(),
+                id: id,
                 response: e.target.value,
                 question: question,
               },
