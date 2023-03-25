@@ -17,7 +17,7 @@ import {
   UNASSIGN_USER,
   UPDATE_TICKET_DESCRIPTION,
   UPDATE_TICKET_STATUS,
-  FILTER_TICKETS
+  FILTER_TICKETS,
 } from "../actions/ticketActions";
 import {
   assignUserApi,
@@ -110,7 +110,6 @@ export function* getSubtasks(action) {
   });
 }
 
-
 export function* addSubtask(action) {
   yield call(createSubtask, action.payload);
   yield call(getSubtasks, { payload: action.payload.task_id });
@@ -126,6 +125,7 @@ export function* getAttachments(action) {
 
   // call martins endpoint
   const surveyAnswers = yield call(getAnswersBySurvey, action.payload);
+  console.log(`SURVEYANSWERS.DATA[0] => ${surveyAnswers.data[0]}`);
   console.log(surveyAnswers.data[0]);
 
   // map / filter / reduce that list to only return just list of fileInputs
@@ -135,7 +135,7 @@ export function* getAttachments(action) {
     );
   });
 
-  console.log(filteredAnswers);
+  console.log(`FILTERED ANSWERS => ${JSON.stringify(filteredAnswers)}`);
 
   // call s3 endpoints for each file inside the fileInput list
   yield all(
@@ -143,7 +143,7 @@ export function* getAttachments(action) {
       AWS.config.update(config);
       const S3 = new AWS.S3({});
       const objParams = {
-        Bucket: "labby-app",
+        Bucket: process.env.REACT_APP_S3_BUCKET,
         Key: answer.answerid,
         ResponseContentType: "application/pdf",
       };
@@ -173,18 +173,18 @@ export function* getAttachments(action) {
   // store that all into a reducer
 }
 
-// Need to know why there is an infinite loop and how to connect the saga to call the API properly. 
+// Need to know why there is an infinite loop and how to connect the saga to call the API properly.
 export function* filterTickets(action) {
-  console.log("HIT THE SAGA FUNCTION")
+  console.log("HIT THE SAGA FUNCTION");
   const ticketList = yield call(getTickets);
   const subticketList = yield call(getSubTickets);
   const allTickets = ticketList.data.concat(subticketList.data);
-  console.log("THESE ARE ALL TICKETS --> ", allTickets)
+  console.log("THESE ARE ALL TICKETS --> ", allTickets);
   const filteredTickets = allTickets.filter((ticket) => {
-    console.log('These are the ticket status -->', ticket.task_state);
+    console.log("These are the ticket status -->", ticket.task_state);
     return ticket.task_state === action.payload;
   });
-  console.log(filteredTickets)
+  console.log(filteredTickets);
   yield put({
     type: FILTER_TICKETS,
     payload: {
@@ -192,8 +192,7 @@ export function* filterTickets(action) {
     },
   });
 
-  console.log("These are the new tickets -->",yield call(getTickets));
-
+  console.log("These are the new tickets -->", yield call(getTickets));
 }
 export default function* ticketSaga() {
   yield takeLatest(GET_TICKET_BOARD, fetchTickets);

@@ -188,7 +188,8 @@ export const TicketBoard = () => {
   const [filtering, setFiltering] = useState(false);
   const [filterTerm, setFilterTerm] = useState("Filter...");
 
-  console.log(currentTicketAttachments);
+  console.log("TESTING");
+  console.log(JSON.stringify(currentTicketAttachments));
 
   useEffect(() => {
     dispatch({ type: LOAD_EMPLOYEE });
@@ -514,13 +515,13 @@ export const TicketBoard = () => {
                 <div className="ticketAttachments">
                   <div className="ticketSectionTitle">Attachments</div>
                   <div className="attachmentsWrapper">
-                    {/* <button
+                    <button
                       onClick={() => {
-                        
+                        console.log(currentTicketAttachments);
                       }}
                     >
-                      testing
-                    </button> */}
+                      TESTING -- Keeps coming back an empty object...
+                    </button>
                     {/* <div className="addAttachment">
                       <img
                         className="Add"

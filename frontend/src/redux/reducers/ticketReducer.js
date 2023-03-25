@@ -21,8 +21,7 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
       let doneList = [];
       let blockedList = [];
       let assigneeMap = {};
-      
-      
+
       // Map Assignees
       action.payload.assigneeList.forEach((assignee) => {
         let assigneeList = assigneeMap[assignee.task_id] ?? [];
@@ -124,7 +123,7 @@ const currentTicket = (state = null, action) => {
 };
 
 const currentTicketServiceCosts = (state = [], action) => {
-  switch (action.type) { 
+  switch (action.type) {
     case SET_SERVICE_COST: {
       return action.payload;
     }
@@ -143,6 +142,7 @@ const currentTicketSubtasks = (state = [], action) => {
   }
 };
 
+// TODO: is it supposed to go through SET_ATTACHMENTS? seems to always go thorugh DEFAULT
 const currentTicketAttachments = (state = {}, action) => {
   switch (action.type) {
     case SET_ATTACHMENTS: {
