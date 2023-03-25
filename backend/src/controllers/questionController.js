@@ -4,7 +4,7 @@ export default class QuestionController {
   saveQuestion(req) {
     return new Promise((resolve, reject) => {
       const QuestionModel = new Question();
-
+      console.log(req.body);
       const question = {
         question_id: req.body.question_id,
         form_id: req.body.form_id,
@@ -13,6 +13,7 @@ export default class QuestionController {
         question_index: req.body.question_index,
         mandatory: req.body.mandatory,
         clinical: req.body.clinical,
+        quantity: req.body.quantity,
       };
 
       QuestionModel.insertQuestion(question, (err, result) => {
