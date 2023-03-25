@@ -30,7 +30,19 @@ function Dropdown({ question }) {
   };
 
   useEffect(() => {
-    const optionList = answerList[question.question_id ?? ""] ?? [];
+    let optionList = answerList[question.question_id ?? ""] ?? [];
+    optionList = optionList.sort((a, b) => {
+      let fa = a.answer;
+      let fb = b.answer;
+
+      if (fa < fb) {
+        return -1;
+      }
+      if (fa > fb) {
+        return 1;
+      }
+      return 0;
+    });
     setOptions(optionList);
   }, [answerList, question]);
 
