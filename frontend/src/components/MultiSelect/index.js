@@ -14,13 +14,14 @@ import {
 } from "../../redux/actions/formActions";
 import uuid from "react-uuid";
 import ClinicalBox from "../ClinicalBox";
+import QuantityBox from "../QuantityBox";
 
 function MultiSelect({ question }) {
   const dispatch = useDispatch();
   const [options, setOptions] = useState([]);
   const answerList = useSelector((state) => state.questionReducer.answerList);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
-  const [quantityMap, setQuantityMap] = useState({});
+  
 
   useEffect(() => {
     var optionList = answerList[question.question_id ?? ""] ?? [];
@@ -39,21 +40,6 @@ function MultiSelect({ question }) {
     optionList = optionList.filter((option) => option !== "");
     setOptions(optionList);
   }, [answerList, question]);
-
-  function parseQuantity(quantity) {
-    let numbers = quantity.match(/\d+/g);
-    if (numbers === null) {
-      return [1, `1 unit`];
-    }
-    if (numbers.length === 1) {
-      return [parseInt(numbers[0]), `${parseInt(numbers[0])} units`];
-    }
-    let multiplied = parseInt(numbers[0]) * parseInt(numbers[1]);
-    return [
-      multiplied,
-      `${parseInt(numbers[0])} X ${parseInt(numbers[1])} = ${multiplied} units`,
-    ];
-  }
 
   return (
     <div className="GlobalCustomerQuestionContainer">
@@ -107,32 +93,7 @@ function MultiSelect({ question }) {
                 </div>
                 {selectedAnswers.includes(option.answer_id) &&
                 option.quantifiable ? (
-                  <div className="quantityBox">
-                    <input
-                      className="quantityInput"
-                      onBlur={(e) => {
-                        let quantity = parseQuantity(e.target.value);
-                        setQuantityMap({
-                          ...quantityMap,
-                          [option.answer_id]: quantity,
-                        });
-                        dispatch({
-                          type: ADD_RESPONSE,
-                          payload: {
-                            id: uuid(),
-                            response: option.answer_id,
-                            question: option,
-                            quantity: quantity[0],
-                          },
-                        });
-                      }}
-                    />
-                    <div>
-                      {quantityMap[option.answer_id]
-                        ? quantityMap[option.answer_id][1]
-                        : ""}
-                    </div>
-                  </div>
+                  <QuantityBox option={option} />
                 ) : null}
                 {selectedAnswers.includes(option.answer_id) &&
                 question.clinical ? (

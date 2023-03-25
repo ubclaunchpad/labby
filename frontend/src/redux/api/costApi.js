@@ -43,6 +43,7 @@ export const postCosts = async (payload) => {
       org_type: payload.org_type,
       cost: payload.cost,
       cost_id: payload.cost_id,
+      unit: payload.unit
     });
 
     const costs = await axios.post(`quote/`, data, { headers: headers });

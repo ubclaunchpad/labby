@@ -22,6 +22,17 @@ router.post("/", authorize(), (req, res) => {
         });
 });
 
+router.get("/:userID", authorize(), (req, res) => {
+    surveyController
+        .loadSurvey(req.params.userID)
+        .then((response) => {
+            res.status(200).json(response);
+        })
+        .catch((err) => {
+            res.status(404).json(err);
+        });
+});
+
 router.post("/response", authorize(), (req, res) => {
     if(!req.body) {
         res.status(400).send({

@@ -18,6 +18,7 @@ import {
   ADD_OTHER_RESPONSE,
   REMOVE_OTHER_RESPONSE,
   ADD_CLINICAL_RESPONSE,
+  SET_PUBLISHED_FORMS,
 } from "../actions/formActions";
 
 const defaultQuestionlist = {
@@ -62,10 +63,10 @@ const formResponses = (state = defaultAnswerList, action) => {
   switch (action.type) {
     case ADD_RESPONSE: {
       state = state.filter(
-        (response) =>
+        (response) => (
           response.question.question_id !==
             action.payload.question.question_id ||
-          response.response !== action.payload.response
+          response.response !== action.payload.response)
       );
       state.push(action.payload);
       return [...state];
@@ -204,11 +205,22 @@ const formList = (state = defaultFormList, action) => {
   }
 };
 
+const publishedFormList = (state = defaultFormList, action) => {
+  switch (action.type) {
+    case SET_PUBLISHED_FORMS: {
+      return action.payload;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 const formSubmissions = (state = defaultFormSubmissions, action) => {
   switch (action.type) {
     case SUBMIT_FORM: {
       state.push(action.payload);
-      //defaultAnswerList = [];
+      // defaultAnswerList = [];
       // TODO: save submitted forms to backend
       return state;
     }
@@ -236,4 +248,5 @@ export default combineReducers({
   formList,
   formSubmissions,
   clinicalResponses,
+  publishedFormList,
 });

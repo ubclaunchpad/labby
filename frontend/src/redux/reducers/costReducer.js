@@ -64,6 +64,7 @@ const costTableServices = (state = defaultCostDataSourceData, action) => {
                 ? `$${item.cost}`
                 : price.industry,
             quantifiable: item.quantifiable,
+            unit: item.unit || "Unit",
           });
         } else {
           pricingMap.set(item.fk_answer_id, {
@@ -82,6 +83,7 @@ const costTableServices = (state = defaultCostDataSourceData, action) => {
             industry:
               item.price_category === "Industry" ? `$${item.cost}` : "$0",
             quantifiable: item.quantifiable,
+            unit: item.unit || "Unit",
           });
         }
       });

@@ -1,28 +1,25 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 import ExperimentIcon from "../../../assets/experiment.svg";
+import { LOAD_BILLABLE_BY_SOWID } from "../../../redux/actions/billingActions";
 import "./form-confirmation.css";
 
 function FormConfirmation() {
   const [loadProgressPage, setLoadProgressPage] = useState(false);
-  // const dispatch = useDispatch();
-  const formId = window.location.pathname.split("/")[2];
-  const allFormSubmissions = useSelector(
-    (state) => state.formReducer.formSubmissions
-  );
-  const currentFormSubmission = allFormSubmissions.filter(
-    (formSubmission) => formSubmission.formId === formId
-  )[0];
-  let billables;
-  if (currentFormSubmission) {
-    billables = currentFormSubmission.billables;
-  } else {
-    // if this page is not redirected to dynamically after form submission, but visited directly by url
-    billables = [];
-  }
-  console.log(billables);
+  const dispatch = useDispatch();
+  const billables = useSelector((state) => state.billingReducer.billablesBySOWIDMap);
+
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch({ type: LOAD_BILLABLE_BY_SOWID, payload: {
+        sowId: localStorage.getItem("currentSurveyId")
+      }})
+    }, 1000)
+  }, [dispatch]);
+  
   return (
     <div className="formConfirmationPage">
       <h4>Thank you!</h4>
@@ -36,11 +33,11 @@ function FormConfirmation() {
             <th>Quantity</th>
             <th>Estimated Cost</th>
           </tr>
-          {billables.length ? (
-            billables.map((billable) => {
+          {localStorage.getItem("currentSurveyId") && billables[localStorage.getItem("currentSurveyId")] != null ? (
+            billables[localStorage.getItem("currentSurveyId")].map((billable, idx) => {
               return (
-                <tr>
-                  <td>{billable.service}</td>
+                <tr key={idx}>
+                  <td>{billable.name}</td>
                   <td>{billable.quantity}</td>
                   <td>{billable.cost}</td>
                 </tr>
@@ -69,7 +66,7 @@ function FormConfirmation() {
         >
           View all my requests
         </div>
-        {loadProgressPage && <Navigate to={`/request-progress/${formId}`} />}
+        {loadProgressPage && <Navigate to={`/request-progress`} />}
       </div>
     </div>
   );
