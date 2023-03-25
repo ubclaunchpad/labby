@@ -42,6 +42,19 @@ export default class UserController {
     });
   }
 
+  // check if user is already in the database
+  checkUser(req) {
+    return new Promise((resolve, reject) => {
+      const UserModel = new User();
+      UserModel.getOneUser(req.body.email, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+
   approveUser(users) {
     return new Promise((resolve, reject) => {
       const UserModel = new User();
