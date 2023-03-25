@@ -63,10 +63,10 @@ const formResponses = (state = defaultAnswerList, action) => {
   switch (action.type) {
     case ADD_RESPONSE: {
       state = state.filter(
-        (response) =>
+        (response) => (
           response.question.question_id !==
             action.payload.question.question_id ||
-          response.response !== action.payload.response
+          response.response !== action.payload.response)
       );
       state.push(action.payload);
       return [...state];
