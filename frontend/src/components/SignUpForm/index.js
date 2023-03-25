@@ -130,45 +130,20 @@ function SignUpForm() {
               </ul>
             </div>
             <form onSubmit={handleUserSubmit}>
-              <input
-                className="SignUpInput"
-                placeholder="First Name*"
-                type={"firstName"}
-                onChange={handleFirstNameChange}
-                required
-              ></input>
+              <input className="SignUpInput" placeholder="First Name*" type={"firstName"} onChange={handleFirstNameChange} required > 
+              </input>
               <div className="ErrorMessage">{firstNameError}</div>
-              <input
-                className="SignUpInput"
-                placeholder="Last Name*"
-                type={"lastName"}
-                onChange={handleLastNameChange}
-                required
-              ></input>
+              <input className="SignUpInput" placeholder="Last Name*" type={"lastName"} onChange={handleLastNameChange} required > 
+              </input>
               <div className="ErrorMessage">{lastNameError}</div>
-              <input
-                className="SignUpInput"
-                placeholder="Email*"
-                type={"email"}
-                onChange={handleEmailChange}
-                required
-              ></input>
+              <input className="SignUpInput" placeholder="Email*" type={"email"} onChange={handleEmailChange} required >
+              </input>
               <div className="ErrorMessage">{emailError}</div>
-              <input
-                className="SignUpInput"
-                placeholder="Password*"
-                type={"password"}
-                onChange={handlePasswordChange}
-                required
-              ></input>
+              <input className="SignUpInput" placeholder="Password*" type={"password"} onChange={handlePasswordChange} required > 
+              </input>
               <div className="ErrorMessage">{passwordError}</div>
-              <input
-                className="SignUpInput"
-                placeholder="Verify New Password"
-                type={"VerifyPassword"}
-                onChange={handleVerifyPasswordChange}
-                required
-              ></input>
+              <input className="SignUpInput" placeholder="Verify New Password" type={"VerifyPassword"} onChange={handleVerifyPasswordChange} required > 
+              </input>
               <div className="ErrorMessage">{verifyPasswordError}</div>
               <br />
               {/* <div className="SignUpTerms">
