@@ -1,23 +1,23 @@
-.question-cancel-button {
-  font-size: 18px;
+.question-cancel-button{
+  font-size: 18px;     
   /* text-align: center;  */
   background: transparent;
-  border: none;
+  border: none; 
   align-self: right;
 }
 
-.single-select-option {
-  display: flex;
-  align-items: center;
+.single-select-option{
+  display: flex; 
+  align-items: center; 
   justify-content: space-between;
   width: 100%;
 }
-.single-select-option-delete {
+.single-select-option-delete{
   height: 50%;
 }
 
-.single-select-options-container {
-  display: flex;
+.single-select-options-container{
+  display: flex; 
   margin-top: 2%;
   margin-bottom: 2%;
   width: 100%;
@@ -26,28 +26,27 @@
 }
 
 .new-question-input-container {
-  display: flex;
-  margin: none;
-  padding: none;
+  display: flex; 
+  margin:none;
+  padding:none;
   justify-content: left;
   align-items: center;
   width: 100%;
 }
 
-.new-question-input {
-  display: flex;
+.new-question-input  {
+  display: flex; 
   border: none;
   width: 100%;
 }
 
-.new-question-input:focus {
+.new-question-input:focus{
   outline: none;
 }
 
-.new-question-checkbox {
+.new-question-checkbox{
   width: 30px;
 }
-
 .single-select-options-container .dropdown-autogenerate {
    
   text-align: left;
