@@ -32,6 +32,18 @@ function Urgent({ question }) {
       return 0;
     });
     optionList = optionList.filter((option) => option !== "");
+    optionList.unshift({question_id: question.question_id, 
+                        fk_form_id: question.fk_form_id, 
+                        question_type: 'urgent', 
+                        question: 'Is this request urgent?', 
+                        answer_id: uuid(), 
+                        answer: "No"});
+    optionList.unshift({question_id: question.question_id, 
+                        fk_form_id: question.fk_form_id, 
+                        question_type: 'urgent', 
+                        question: 'Is this request urgent?',
+                        answer_id: uuid(), 
+                        answer: "Yes"});
     setOptions(optionList);
   }, [answerList, question]);
 
@@ -62,6 +74,7 @@ function Urgent({ question }) {
                                 question: option,
                               },
                             });
+                            console.log(option)
                             dispatch({
                               type: ADD_RESPONSE,
                               payload: {

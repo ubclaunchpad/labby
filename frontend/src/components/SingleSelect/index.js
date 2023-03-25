@@ -63,6 +63,7 @@ function SingleSelect({ question }) {
                                 question: option,
                               },
                             });
+                            console.log(option)
                             dispatch({
                               type: ADD_RESPONSE,
                               payload: {
