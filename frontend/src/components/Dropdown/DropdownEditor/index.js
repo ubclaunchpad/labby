@@ -170,32 +170,24 @@ function DropdownEditor({ question }) {
                 className="new-question-input"
                 defaultValue="0"
                 placeholder="Click to add new option"
-                // onBlur={(e) => {
-                //   const answerVal = e.target.value;
-                //   if (answerVal.trim() !== "") {
-                //     dispatch({
-                //       type: SAVE_ANSWER,
-                //       payload: {
-                //         // answer_id: option.answer_id ?? uuid(),
-                //         answer_id: uuid(),
-                //         fk_question_id: question.question_id,
-                //         question_type: question.question_type,
-                //         answer: answerVal,
-                //         form_id: question.fk_form_id,
-                //       },
-                //     });
-                //   } else {
-                //     dispatch({
-                //       type: DELETE_ANSWER,
-                //       payload: {
-                //         // answer_id: option.answer_id,
-                //         answer_id: uuid(),
-                //         form_id: question.fk_form_id,
-                //       },
-                //     });
-                //   }
-                //   setOptions([]);
-                // }}
+                onBlur={(e) => {
+                  let autoNumVal = e.target.value;
+                  autoNumVal = +autoNumVal;
+                  if (autoNumVal > 0) {
+                    for (let i = 1; i <= autoNumVal; ++i) {
+                      dispatch({
+                        type: SAVE_ANSWER,
+                        payload: {
+                          answer_id:  uuid(),
+                          fk_question_id: question.question_id,
+                          question_type: question.question_type,
+                          answer: i,
+                          form_id: question.fk_form_id,
+                        },
+                      });
+                    }
+                  }
+                }} 
                 //   If we want to have key down functionality as well:
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
