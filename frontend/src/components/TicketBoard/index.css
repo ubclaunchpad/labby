@@ -320,6 +320,8 @@
   padding: 3px;
   display: flex;
   gap: 10px;
+  height: 95px;
+  overflow: scroll;
 }
 .addAttachment{
   padding: 12px 14px;
