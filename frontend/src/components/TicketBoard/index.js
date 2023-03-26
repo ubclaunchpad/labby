@@ -3,7 +3,6 @@ import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  ADD_SUBTASKS,
   ASSIGN_USER,
   GET_ATTACHMENTS,
   GET_SERVICE_COST,
@@ -24,11 +23,6 @@ import { ticketsColors } from "../../constants";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { LOAD_EMPLOYEE } from "../../redux/actions/userActions";
-import uuid from "react-uuid";
-import X from "../../assets/X.png";
-import FileDownload from "../FileDownload";
-import { LOAD_ANSWER_BY_SURVEY } from "../../redux/actions/questionActions";
-import Add from "../../assets/AddBlack.png";
 import Subtasks from "./Subtasks";
 import ServiceList from "./ServiceList";
 
@@ -172,12 +166,6 @@ export const TicketBoard = () => {
     (state) => state.ticketReducer.currentTicket
   );
   const employeeList = useSelector((state) => state.userReducer.employeeList);
-  const currentTicketServiceCosts = useSelector(
-    (state) => state.ticketReducer.currentTicketServiceCosts
-  );
-  const currentTicketSubtasks = useSelector(
-    (state) => state.ticketReducer.currentTicketSubtasks
-  );
   const currentTicketAttachments = useSelector(
     (state) => state.ticketReducer.currentTicketAttachments
   );

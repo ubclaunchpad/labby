@@ -167,13 +167,10 @@ export function* getAttachments(action) {
 
 // Need to know why there is an infinite loop and how to connect the saga to call the API properly.
 export function* filterTickets(action) {
-  console.log("HIT THE SAGA FUNCTION");
   const ticketList = yield call(getTickets);
   const subticketList = yield call(getSubTickets);
   const allTickets = ticketList.data.concat(subticketList.data);
-  console.log("THESE ARE ALL TICKETS --> ", allTickets);
   const filteredTickets = allTickets.filter((ticket) => {
-    console.log("These are the ticket status -->", ticket.task_state);
     return ticket.task_state === action.payload;
   });
   console.log(filteredTickets);
@@ -183,9 +180,8 @@ export function* filterTickets(action) {
       ticketList: filteredTickets,
     },
   });
-
-  console.log("These are the new tickets -->", yield call(getTickets));
 }
+
 export default function* ticketSaga() {
   yield takeLatest(GET_TICKET_BOARD, fetchTickets);
   yield takeLatest(UPDATE_TICKET_STATUS, updateTicketStatus);
