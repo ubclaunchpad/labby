@@ -189,7 +189,7 @@ function DropdownEditor({ question }) {
                       dispatch({
                         type: SAVE_ANSWER,
                         payload: {
-                          answer_id:  uuid(),
+                          answer_id: uuid(),
                           fk_question_id: question.question_id,
                           question_type: question.question_type,
                           answer: i,
@@ -198,7 +198,7 @@ function DropdownEditor({ question }) {
                       });
                     }
                   }
-                }} 
+                }}
                 //   If we want to have key down functionality as well:
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
@@ -207,6 +207,24 @@ function DropdownEditor({ question }) {
                 }}
               />
             </div>
+            <button
+              type="button"
+              className="dropdown-clear-btn"
+              onClick={() => {
+                const currentOptions = answerList[question.question_id];
+                for (let option of currentOptions){
+                  dispatch({
+                    type: DELETE_ANSWER,
+                    payload: {
+                      answer_id: option.answer_id,
+                      form_id: question.fk_form_id,
+                    },
+                  });
+                }
+              }}
+            >
+              Click to clear current options
+            </button>
           </RadioGroup>
         </FormControl>
       </div>

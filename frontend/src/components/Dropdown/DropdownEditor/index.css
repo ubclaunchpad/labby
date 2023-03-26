@@ -48,7 +48,6 @@
   width: 30px;
 }
 .single-select-options-container .dropdown-autogenerate {
-   
   text-align: left;
   padding-left: 48px;
   margin-top: 24px;
@@ -59,4 +58,13 @@
 }
 .dropdown-autogenerate > input {
   flex: 1;
+}
+.single-select-options-container .dropdown-clear-btn{
+  margin-left: 48px;
+  margin-top: 12px;
+  align-self: flex-start;
+  cursor: pointer;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 8px;
 }
