@@ -110,7 +110,6 @@ export const getAnswersBySurvey = async (payload) => {
     var headers = {
       Authorization: `Bearer ${token}`,
     };
-    console.log(payload);
     const answers = await axios.get(`answer/${payload.survey_id}`, {
       headers: headers,
     });

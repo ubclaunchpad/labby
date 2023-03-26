@@ -68,7 +68,6 @@ const Task = (props) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           onClick={() => {
-            console.log(props);
             dispatch({ type: SET_ACTIVE_TICKET, payload: props.task });
           }}
         >
@@ -188,9 +187,6 @@ export const TicketBoard = () => {
   const [sortedTasks, setSortedTasks] = useState(allTasks);
   const [filtering, setFiltering] = useState(false);
   const [filterTerm, setFilterTerm] = useState("Filter...");
-
-  console.log("TESTING");
-  console.log(JSON.stringify(currentTicketAttachments));
 
   useEffect(() => {
     dispatch({ type: LOAD_EMPLOYEE });
@@ -516,13 +512,20 @@ export const TicketBoard = () => {
                 <div className="ticketAttachments">
                   <div className="ticketSectionTitle">Attachments</div>
                   <div className="attachmentsWrapper">
-                    <button
-                      onClick={() => {
-                        console.log(currentTicketAttachments);
-                      }}
-                    >
-                      TESTING -- Keeps coming back an empty object...
-                    </button>
+                    {Object.entries(currentTicketAttachments).map(
+                      (attachment) => {
+                        return (
+                          <button
+                            key={attachment[0]}
+                            onClick={() => {
+                              window.open(attachment[1]);
+                            }}
+                          >
+                            {attachment[0].split("/")[2]}
+                          </button>
+                        );
+                      }
+                    )}
                     {/* <div className="addAttachment">
                       <img
                         className="Add"

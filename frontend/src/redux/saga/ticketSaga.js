@@ -125,8 +125,6 @@ export function* getAttachments(action) {
 
   // call martins endpoint
   const surveyAnswers = yield call(getAnswersBySurvey, action.payload);
-  console.log(`SURVEYANSWERS.DATA => ${surveyAnswers.data}`);
-  console.log(surveyAnswers.data);
 
   // map / filter / reduce that list to only return just list of fileInputs
   const filteredAnswers = surveyAnswers.data.filter((answer) => {
@@ -135,50 +133,36 @@ export function* getAttachments(action) {
     );
   });
 
-  console.log(`FILTERED ANSWERS => ${JSON.stringify(filteredAnswers)}`);
+  const blobList = yield all(
+    filteredAnswers.map((ans) => {
+      return call(async (answer) => {
+        AWS.config.update(config);
+        const S3 = new AWS.S3({});
+        const objParams = {
+          Bucket: process.env.REACT_APP_S3_BUCKET,
+          Key: answer.answerid,
+          ResponseContentType: "application/pdf",
+        };
 
-  // call s3 endpoints for each file inside the fileInput list
-  // 1) create empty array
-  // 2) inside, about line 150~, add whatever we get back from S3 into the array
-  let finalList = [];
-  yield all([
-    (finalList = filteredAnswers.map((answer) => {
-      AWS.config.update(config);
-      const S3 = new AWS.S3({});
-      const objParams = {
-        Bucket: process.env.REACT_APP_S3_BUCKET,
-        Key: answer.answerid,
-        ResponseContentType: "application/pdf",
-      };
+        const res = await S3.getObject(objParams).promise();
+        const url = window.URL.createObjectURL(
+          new Blob([res.Body], { type: "application/pdf" })
+        );
 
-      // TODO: Need to change where it only uploads to bucket upon form submission
-      S3.getObject(objParams, function (err, data) {
-        if (err) {
-          console.log("Issue in S3.getObject()");
-          console.log(`Error Code: ${err.code}`);
-          console.log(`Error Message: ${err.message}`);
-        } else {
-          console.log("Download completed in S3.getObject()");
-          const url = window.URL.createObjectURL(
-            new Blob([data.Body], { type: "application/pdf" })
-          );
+        return { key: answer.answerid, url };
+      }, ans);
+    })
+  );
 
-          // return put({
-          //   type: SET_ATTACHMENTS,
-          //   payload: {
-          //     key: answer.answerid,
-          //     value: url,
-          //   },
-          // });
-          tempArr.push(url);
-        }
-      });
-      console.log(tempArr);
-    })),
-    put(finalList),
-  ]);
-
-  // store that all into a reducer
+  for (const blob of blobList) {
+    yield put({
+      type: SET_ATTACHMENTS,
+      payload: {
+        key: blob.key,
+        value: blob.url,
+      },
+    });
+  }
 }
 
 // Need to know why there is an infinite loop and how to connect the saga to call the API properly.
