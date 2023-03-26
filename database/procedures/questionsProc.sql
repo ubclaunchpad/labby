@@ -2,9 +2,6 @@ USE `labby`;
 
 DROP procedure IF EXISTS `save_question`;
  
- CALL save_question("test", "45a0d693-43c4-41e6-7c5f-4d13124d9b26", "test", "test", 12, 12, 12);
-SELECT * from questions  where fk_form_id = "45a0d693-43c4-41e6-7c5f-4d13124d9b26";
-
 DELIMITER $$
 
 CREATE PROCEDURE `save_question` (
@@ -14,8 +11,7 @@ CREATE PROCEDURE `save_question` (
     IN `_question_type` VARCHAR(50),
     IN `_question_order` INT,
     IN `_mandatory` BOOLEAN,
-    IN `_clinical` BOOLEAN,
-    IN `_quantity` INT
+    IN `_clinical` BOOLEAN
  
 ) BEGIN INSERT INTO `questions` (
     `question_id`,
@@ -24,8 +20,7 @@ CREATE PROCEDURE `save_question` (
     `question_type`,
     `position_index`,
     `mandatory`,
-    `clinical`,
-    `quantity`
+    `clinical`
 )
 VALUES
     (
@@ -35,8 +30,7 @@ VALUES
     `_question_type`,
     `_question_order`,
     `_mandatory`,
-    `_clinical`,
-    `_quantity`
+    `_clinical`
     )
 ON DUPLICATE KEY UPDATE 
     questions.question_id=`_question_id`, 
@@ -45,8 +39,7 @@ ON DUPLICATE KEY UPDATE
     questions.question_type=`_question_type`,
     questions.position_index=`_question_order`,
     questions.mandatory=`_mandatory`,
-    questions.clinical=`_clinical`,
-    questions.quantity=`_quantity`
+    questions.clinical=`_clinical`;
   
 END $$
 

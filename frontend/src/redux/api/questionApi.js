@@ -41,7 +41,6 @@ export const saveQuestions = async (payload) => {
       question_index: payload.question_index,
       mandatory: payload.mandatory,
       clinical: payload.clinical,
-      quantity: payload.quantity,
     });
 
     const questions = await axios.post("question/", data, { headers: headers });
