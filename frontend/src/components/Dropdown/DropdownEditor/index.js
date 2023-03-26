@@ -131,49 +131,63 @@ function DropdownEditor({ question }) {
             defaultValue="female"
             name="radio-buttons-group"
           >
-            {options.map((option, index) => {
-              return (
-                <div className="single-select-option" key={index}>
+            {options.length-1 < 8 ? (
+              options.map((option, index) => {
+                return (
+                  <div className="single-select-option" key={index}>
+                    <FormControlLabel control={<Radio />} />
+                    <input
+                      type="text"
+                      className="new-question-input"
+                      defaultValue={option.answer}
+                      placeholder="Click to add new option"
+                      onBlur={(e) => {
+                        const answerVal = e.target.value;
+                        if (answerVal.trim() !== "") {
+                          dispatch({
+                            type: SAVE_ANSWER,
+                            payload: {
+                              answer_id: option.answer_id ?? uuid(),
+                              fk_question_id: question.question_id,
+                              question_type: question.question_type,
+                              answer: answerVal,
+                              form_id: question.fk_form_id,
+                            },
+                          });
+                        } else {
+                          dispatch({
+                            type: DELETE_ANSWER,
+                            payload: {
+                              answer_id: option.answer_id,
+                              form_id: question.fk_form_id,
+                            },
+                          });
+                        }
+                        setOptions([]);
+                      }}
+                      //   If we want to have key down functionality as well:
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.target.blur();
+                        }
+                      }}
+                    />
+                  </div>
+                );
+              })
+            ) : (
+              <>
+                <div className="single-select-option">
                   <FormControlLabel control={<Radio />} />
                   <input
                     type="text"
                     className="new-question-input"
-                    defaultValue={option.answer}
+                    value={`. . . ${options.length-1} options. Click preview to see them`}
                     placeholder="Click to add new option"
-                    onBlur={(e) => {
-                      const answerVal = e.target.value;
-                      if (answerVal.trim() !== "") {
-                        dispatch({
-                          type: SAVE_ANSWER,
-                          payload: {
-                            answer_id: option.answer_id ?? uuid(),
-                            fk_question_id: question.question_id,
-                            question_type: question.question_type,
-                            answer: answerVal,
-                            form_id: question.fk_form_id,
-                          },
-                        });
-                      } else {
-                        dispatch({
-                          type: DELETE_ANSWER,
-                          payload: {
-                            answer_id: option.answer_id,
-                            form_id: question.fk_form_id,
-                          },
-                        });
-                      }
-                      setOptions([]);
-                    }}
-                    //   If we want to have key down functionality as well:
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.target.blur();
-                      }
-                    }}
                   />
                 </div>
-              );
-            })}
+              </>
+            )}
             <div className="dropdown-autogenerate">
               <label>Autogenerate numerical options: </label>
               <input
@@ -212,7 +226,7 @@ function DropdownEditor({ question }) {
               className="dropdown-clear-btn"
               onClick={() => {
                 const currentOptions = answerList[question.question_id];
-                for (let option of currentOptions){
+                for (let option of currentOptions) {
                   dispatch({
                     type: DELETE_ANSWER,
                     payload: {
