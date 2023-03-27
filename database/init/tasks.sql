@@ -10,7 +10,8 @@ CREATE PROCEDURE `createTasks` ()
 BEGIN
 
 CREATE TABLE `tasks` (
-	task_id VARCHAR(50) NOT NULL,
+	task_id INT(10) NOT NULL AUTO_INCREMENT,
+	task_uuid VARCHAR(50),
 	fk_survey_id VARCHAR(50),
 	fk_form_id VARCHAR(50),
 	fk_project_id VARCHAR(50),

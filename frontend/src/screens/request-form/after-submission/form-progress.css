@@ -1,6 +1,8 @@
 .formProgressPage {
   padding: 32px 36px;
   text-align: left;
+  overflow-y: auto;
+  height: 100vh;
 }
 .formProgressPage .pageTitle{
   margin-top: 12px;

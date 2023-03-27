@@ -7,7 +7,7 @@ export class Task {
     con.query(
       "CALL save_task(?, ?, ?, ?, ?, ?, ?)",
       [
-        taskData.task_id,
+        taskData.task_uuid,
         taskData.fk_survey_id,
         taskData.fk_form_id,
         taskData.fk_project_id,
@@ -21,7 +21,7 @@ export class Task {
           result(error, null);
         } else {
           result(null, {
-            result: `Task of ${taskData.title} Saved Successfully for Task ID: ${taskData.task_id}`,
+            result: `Task of ${taskData.title} Saved Successfully for Task ID:`,
           });
         }
       }
@@ -85,7 +85,7 @@ export class Task {
     con.query(
       "CALL save_subtask(?, ?, ?, ?, ?)",
       [
-        subtaskData.subtask_id,
+        subtaskData.subtask_uuid,
         subtaskData.subtask_title,
         subtaskData.subtask_description,
         subtaskData.subtask_state,

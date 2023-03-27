@@ -18,7 +18,7 @@ DELIMITER $$
 CREATE PROCEDURE `save_assignment` (
     IN `_assignment_id` VARCHAR(50),
     IN `_fk_user_id` VARCHAR(50),
-    IN `_task_id` VARCHAR(50)
+    IN `_task_id` INT(10)
 ) BEGIN 
 INSERT INTO `assignment` (
     `assignment_id`,
@@ -42,7 +42,7 @@ DELETE FROM assignment WHERE assignment_id=_assignment_id;
 END $$
 
 CREATE PROCEDURE `load_assignees` (
-    IN `_task_id` VARCHAR(50)
+    IN `_task_id` INT(10)
 )
 
 BEGIN
