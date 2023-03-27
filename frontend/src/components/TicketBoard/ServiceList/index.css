@@ -12,73 +12,76 @@
   height: calc(100% - 50px);
 }
 
-.serviceTable .heading td {
-  font-weight: 600;
-  color: #a4a3a3;
-  padding: 10px 0px;
-  text-overflow: ellipsis;
-  text-align: center;
-}
-
-.serviceTable .heading td:last-child {
-  padding-left: 12px;
-  border: 12px solid #d9d9d9;
-}
-
 .serviceTable td {
   padding: 10px;
   text-overflow: ellipsis;
+}
+
+.serviceTableHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+.serviceTableCol {
+  display: flex;
+  flex: 1;
+}
+
+.serviceTableColHeading {
+  font-weight: 600;
+  color: #a4a3a3;
 }
 
 .serviceTable {
   width: 100%;
 }
 
+.deleteServiceSpace {
+  flex: 0.2;
+}
+
+.parentServiceRow {
+  margin-bottom: 10px;
+}
+
 .serviceTableRow {
   background-color: #d2d2d2;
-  border-bottom: 5px solid #d9d9d9;
-}
-.serviceTableRow td:first-child {
-  border-top-left-radius: 12px;
-  border-bottom-left-radius: 12px;
-  width: 40%;
-}
-.serviceTableRow td:nth-last-child(2) {
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-.serviceTableRow td:last-child {
-  padding: 0;
-  margin: 0;
-  padding-left: 12px;
-  border: 12px solid #d9d9d9;
-  border-radius: 80px;
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 5px;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
 .serviceNameInput {
-  width: 85%;
+  flex: 1;
   border-radius: 5px;
   border: none;
   background-color: #d2d2d2;
+  margin-left: 5px;
 }
 
 .serviceCostInput {
+  flex: 1;
   border-radius: 5px;
   border: none;
   background-color: #d2d2d2;
-  text-align: center;
 }
 
 .serviceCommentInput {
-  width: 250%;
-  border-radius: 5px;
+  width: 100%;
+  border-radius: 10px;
   border: none;
   background-color: #d2d2d2;
 }
 
 .serviceListRows {
   max-height: 95%;
-  overflow-y: overlay;
 }
 
 .serviceCostRow .deleteServiceItem {

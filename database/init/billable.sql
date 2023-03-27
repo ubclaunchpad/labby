@@ -10,7 +10,7 @@ BEGIN
 
 CREATE TABLE `billable` (
   `billable_id` VARCHAR(50) NOT NULL,
-  `fk_sow_id` VARCHAR(50) NOT NULL,
+  `task_uuid` VARCHAR(50) NOT NULL,
   `fk_project_id` VARCHAR(50) NOT NULL,
   `name` VARCHAR(50),
   `quantity` DOUBLE,

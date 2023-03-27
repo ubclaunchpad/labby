@@ -61,6 +61,7 @@ const Task = (props) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
+          key={props.task.code}
           onClick={() => {
             dispatch({ type: SET_ACTIVE_TICKET, payload: props.task });
           }}
@@ -147,7 +148,7 @@ const TicketBoardColumn = (props) => {
             {...provided.droppableProps}
           >
             {props.tasks.map((task, index) => {
-              return <Task key={task?.id} task={task} index={index} />;
+              return <Task key={task?.code} task={task} index={index} />;
             })}
             {provided.placeholder}
           </div>
@@ -182,7 +183,7 @@ export const TicketBoard = () => {
     if (currentTicket?.id) {
       dispatch({
         type: GET_SERVICE_COST,
-        payload: { sow_id: currentTicket?.id },
+        payload: { sow_id: currentTicket?.task_uuid },
       });
       dispatch({
         type: GET_SUBTASKS,

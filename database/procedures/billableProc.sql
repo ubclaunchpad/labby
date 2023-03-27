@@ -15,7 +15,7 @@ DELIMITER $$
 
 CREATE PROCEDURE `save_billable` (
     IN `_billable_id` VARCHAR(50),
-    IN `_fk_sow_id` VARCHAR(50),
+    IN `_task_uuid` VARCHAR(50),
     IN `_fk_project_id` VARCHAR(50),
     IN `_name` VARCHAR(50),
     IN `_quantity` DOUBLE,
@@ -29,7 +29,7 @@ CREATE PROCEDURE `save_billable` (
 ) BEGIN 
 INSERT INTO `billable` (
     `billable_id`,
-    `fk_sow_id`,
+    `task_uuid`,
     `fk_project_id`,
     `name`,
     `quantity`,
@@ -44,7 +44,7 @@ INSERT INTO `billable` (
 VALUES
    (
     `_billable_id`,
-    `_fk_sow_id`,
+    `_task_uuid`,
     `_fk_project_id`,
     `_name`,
     `_quantity`,
@@ -57,7 +57,7 @@ VALUES
     `_created_by`
    ) ON DUPLICATE KEY UPDATE
     billable.billable_id=_billable_id,
-    billable.fk_sow_id=_fk_sow_id,
+    billable.task_uuid=_task_uuid,
     billable.fk_project_id=_fk_project_id,
     billable.name=_name,
     billable.quantity=_quantity,
@@ -131,11 +131,11 @@ BEGIN
 END $$
 
 CREATE PROCEDURE `load_billable_by_sow` (
-    IN `_sow_id` VARCHAR(100)
+    IN `_task_uuid` VARCHAR(50)
 )
 
 BEGIN
-    SELECT * FROM billable WHERE fk_sow_id = _sow_id;
+    SELECT * FROM billable WHERE task_uuid = _task_uuid;
 END $$
 
 CREATE PROCEDURE `delete_billable`  (

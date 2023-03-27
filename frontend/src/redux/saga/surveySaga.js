@@ -8,9 +8,11 @@ import { LOAD_USER_SURVEY, SET_USER_SURVEY } from "../actions/userActions";
 
 export function* submitResponseSaga({ payload }) {
   const user = yield select((state) => state.userReducer.currentUser);
+  const task_uuid = uuid();
   const survey_id = uuid();
   yield call(saveSurvey, { survey_id: survey_id, user_id: user.user_id });
   yield call(createTicketApi, {
+    task_uuid: task_uuid,
     fk_survey_id: survey_id,
     fk_form_id:
       payload.formResponses[0].question.fk_form_id ??
@@ -24,8 +26,8 @@ export function* submitResponseSaga({ payload }) {
     payload.billables.map((billable) => {
       return put({ type: POST_SERVICE_COST, payload: {
         billable_id: uuid(),
-        sow_id: survey_id, // need to address this 
-        fk_project_id: payload.projectId,
+        sow_id: task_uuid,
+        project_id: payload.projectId,
         name: billable.service,
         quantity: billable.quantity,
         cost: billable.cost,
