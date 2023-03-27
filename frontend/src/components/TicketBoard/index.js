@@ -71,7 +71,7 @@ const Task = (props) => {
           />
           <div className="task-card-content">
             <div className="task-card__header">
-              <div className="task-card__code">{props.task.code}</div>
+              <div className="task-card__code">{`SOW-${props.task.code}`}</div>
               <div
                 className={clsx(
                   isReminder && "task-card__reminder--notify-true",
@@ -381,7 +381,7 @@ export const TicketBoard = () => {
             }}
           >
             <div className="ticketTitle">
-              <div className="ticketTitleId">{currentTicket.code}</div>
+              <div className="ticketTitleId">{`SOW-${currentTicket.code}`}</div>
               <div>{currentTicket.title}</div>
             </div>
             <div>
