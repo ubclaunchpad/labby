@@ -41,7 +41,7 @@ export default class UserController {
       });
     });
   }
-
+  
   // check if user is already in the database
   checkUser(req) {
     return new Promise((resolve, reject) => {

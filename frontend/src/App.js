@@ -66,7 +66,7 @@ function App() {
           <Route path="/pdf" element={(currentUser && currentUser.employee) ? <InvoicePreview /> : (currentUser ? <Setting /> : <LoginForm from={window.location.pathname} />)} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SignUpForm />} />
-          {/* <Route path="/forgotpassword" element={<ForgotPasswordForm />} /> */}
+          {/* <Route path="/forgotPassword" element={<ForgotPasswordForm />} /> */}
         </Routes>
       </BrowserRouter>
     </div>

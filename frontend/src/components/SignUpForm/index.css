@@ -54,24 +54,8 @@
 
 .SignUpTitle {
     display: flex;
-    font-style: bold;
-}
-
-.PasswordRequirements {
-    display: flex;
-    text-align: left;
-    justify-content: left;
-    flex-direction: column;
-    margin-top: 5px;
-
-}
-
-.PasswordRequirements ul {
-    text-align: left;
-    margin-top: 8px;
-    list-style-position: inside;
-    font-size: 11px;
-    padding-left: 0;
+    align-items: center;
+    justify-content: center;
 }
 
 .ForgotPassword {
@@ -80,33 +64,48 @@
 }
 
 .SignInBtn {
-    font-size: 15px;
     cursor: pointer;
+    width: 30%;
+    height: 30px;
+    margin-top: 20%;
+    align-self: center;
+    border: 0;
+    border-radius: 10px;
+    background-color: #5B73E8;
+    color: #fff;
+    font-size: 12px;
+    font-style: bold;
+}
+
+.LogInBtn {
+    cursor: pointer;
+    width: 15%;
+    height: 30px;
+    margin: 2% 2% 10% 2%;
     align-self: center;
     border: 0;
     border-radius: 10px;
     background-color: white;
-    color:#8A9DF8;
+    color: black;
+    font-size: 12px;
     font-style: bold;
+
 }
 
 .AlreadyUser {
-    color: black;
-    margin-top: 5px;
-    font-size: 14px;
-    display: inline-block;
+    color: white;
 }
 
 
 .SignUpBtn {
     cursor: pointer;
     width: 35%;
-    height: 35px;
+    height: 30px;
     margin: 2% 2% 10% 2%;
     align-self: center;
     border: 0;
     border-radius: 10px;
-    background-color: #627BF6;
+    background-color: #5B73E8;
     color: white;
     font-size: 15px;
     font-style: bold;
