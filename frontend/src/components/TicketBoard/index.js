@@ -3,8 +3,8 @@ import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  ADD_SUBTASKS,
   ASSIGN_USER,
+  GET_ATTACHMENTS,
   GET_SERVICE_COST,
   GET_SUBTASKS,
   GET_TICKET_BOARD,
@@ -23,7 +23,6 @@ import { ticketsColors } from "../../constants";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { LOAD_EMPLOYEE } from "../../redux/actions/userActions";
-import Add from "../../assets/AddBlack.png";
 import Subtasks from "./Subtasks";
 import ServiceList from "./ServiceList";
 
@@ -55,7 +54,7 @@ const Task = (props) => {
   const tabColorNum = getColorNum(props?.task?.id, ticketsColors);
   const dispatch = useDispatch();
   return (
-    <Draggable draggableId={props.task.id} index={props.index}>
+    <Draggable draggableId={props.task.id.toString()} index={props.index}>
       {(provided, snapshot) => (
         <div
           className="task-card-container"
@@ -72,7 +71,7 @@ const Task = (props) => {
           />
           <div className="task-card-content">
             <div className="task-card__header">
-              <div className="task-card__code">{props.task.code}</div>
+              <div className="task-card__code">{`SOW-${props.task.code}`}</div>
               <div
                 className={clsx(
                   isReminder && "task-card__reminder--notify-true",
@@ -167,6 +166,9 @@ export const TicketBoard = () => {
     (state) => state.ticketReducer.currentTicket
   );
   const employeeList = useSelector((state) => state.userReducer.employeeList);
+  const currentTicketAttachments = useSelector(
+    (state) => state.ticketReducer.currentTicketAttachments
+  );
 
   const [assigneeAddModal, setAssigneeAddModal] = useState(false);
   const allTasks = ticketBoardDndData.tasks;
@@ -185,6 +187,10 @@ export const TicketBoard = () => {
       dispatch({
         type: GET_SUBTASKS,
         payload: currentTicket?.id,
+      });
+      dispatch({
+        type: GET_ATTACHMENTS,
+        payload: { survey_id: currentTicket.fk_survey_id },
       });
     }
   }, [dispatch, currentTicket]);
@@ -375,7 +381,7 @@ export const TicketBoard = () => {
             }}
           >
             <div className="ticketTitle">
-              <div className="ticketTitleId">{currentTicket.code}</div>
+              <div className="ticketTitleId">{`SOW-${currentTicket.code}`}</div>
               <div>{currentTicket.title}</div>
             </div>
             <div>
@@ -494,7 +500,21 @@ export const TicketBoard = () => {
                 <div className="ticketAttachments">
                   <div className="ticketSectionTitle">Attachments</div>
                   <div className="attachmentsWrapper">
-                    <div className="addAttachment">
+                    {Object.entries(currentTicketAttachments).map(
+                      (attachment) => {
+                        return (
+                          <button
+                            key={attachment[0]}
+                            onClick={() => {
+                              window.open(attachment[1]);
+                            }}
+                          >
+                            {attachment[0].split("/")[2]}
+                          </button>
+                        );
+                      }
+                    )}
+                    {/* <div className="addAttachment">
                       <img
                         className="Add"
                         src={Add}
@@ -532,7 +552,7 @@ export const TicketBoard = () => {
                           });
                         }}
                       />
-                    </div>
+                      </div> */}
                   </div>
                 </div>
               </div>

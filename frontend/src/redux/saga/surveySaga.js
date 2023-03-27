@@ -1,16 +1,17 @@
 import uuid from "react-uuid";
 import { all, call, takeLatest, put, select } from "redux-saga/effects";
-import { SUBMIT_FORM } from "../actions/formActions";
+import { SUBMIT_SURVEY } from "../actions/formActions";
 import { createTicketApi } from "../api/formApi";
-import { saveClinical, saveResponse, saveSurvey } from "../api/surveyApi";
+import { loadSurvey, saveClinical, saveResponse, saveSurvey } from "../api/surveyApi";
 import {POST_SERVICE_COST } from "../../redux/actions/ticketActions";
+import { LOAD_USER_SURVEY, SET_USER_SURVEY } from "../actions/userActions";
 
 export function* submitResponseSaga({ payload }) {
   const user = yield select((state) => state.userReducer.currentUser);
   const survey_id = uuid();
-  yield call(saveSurvey, { survey_id: survey_id }); // need to address 
+  yield call(saveSurvey, { survey_id: survey_id, user_id: user.user_id });
   yield call(createTicketApi, {
-    // task_id: survey_id,
+    fk_survey_id: survey_id,
     fk_form_id:
       payload.formResponses[0].question.fk_form_id ??
       payload.formResponses[1].question.fk_form_id,
@@ -37,6 +38,7 @@ export function* submitResponseSaga({ payload }) {
       } });
     })
   );
+  
   yield all(
     payload.formResponses.map((response) => { 
       const isChoice =
@@ -73,6 +75,13 @@ export function* submitResponseSaga({ payload }) {
   );
 }
 
+export function* loadSurveySaga() {
+  const user = yield select((state) => state.userReducer.currentUser);
+  const surveys = yield call(loadSurvey, { user_id: user.user_id });
+  yield put({ type: SET_USER_SURVEY, payload: surveys.data[0] });
+}
+
 export default function* surveySaga() {
-  yield takeLatest(SUBMIT_FORM, submitResponseSaga);
+  yield takeLatest(SUBMIT_SURVEY, submitResponseSaga);
+  yield takeLatest(LOAD_USER_SURVEY, loadSurveySaga);
 }
