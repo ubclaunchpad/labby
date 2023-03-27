@@ -7,6 +7,7 @@
     width: 50%;
     background-image: url("../../assets/LoginBackground.png");
     background-size: cover;
+
 }
 
 .SignUpBackgroundImg {
@@ -17,13 +18,14 @@
     justify-content: flex-end;
     background-size: cover;
 }
+
 .LoginPage {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    width:  50%;
+    width: 50%;
 }
 
 .LoginContainer {
@@ -32,7 +34,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
     border-radius: 10px;
 }
 
@@ -57,7 +59,7 @@
 
 .LoginInput {
     width: 100%;
-    height: 50px; 
+    height: 50px;
     margin-top: 3%;
     outline: 0;
     border-width: 0 0 1px;
@@ -65,20 +67,13 @@
 
 .LoginTitle {
     display: flex;
-    align-items: right;
+    font-style: bold;
+    margin-bottom: 20px;
 }
 
-.ForgotPassword {
-    display: flex;
-    align-items: right;
-}
-
-.LoginText {
-    font-size: 10px;
-}
-
-.SignInBtn {
+.LogInBtn {
     cursor: pointer;
+    color: rgb(255, 255, 255);
     width: 30%;
     height: 30px;
     margin-top: 20%;
@@ -86,28 +81,28 @@
     border: 0;
     border-radius: 10px;
     background-color: #5B73E8;
-    color: #fff;
     font-size: 12px;
     font-style: bold;
-}
-
-.LogInBtn {
-    cursor: pointer;
-    width: 15%;
-    height: 30px;
-    margin: 2% 2% 10% 2%;
-    align-self: center;
-    border: 0;
-    border-radius: 10px;
-    background-color: white;
-    color: black;
-    font-size: 12px;
-    font-style: bold;
-
 }
 
 .AlreadyUser {
     color: white;
 }
 
+.RememberMe {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
 
+.RememberMe input[type="checkbox"] {
+    margin-right: 10px;
+    position: relative;
+}
+
+.ErrorMessage {
+    color: red;
+    margin-top: 10px;
+    text-align: left;
+    font-size: 12px
+}

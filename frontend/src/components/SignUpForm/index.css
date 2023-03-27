@@ -1,0 +1,121 @@
+.PageContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.BackgroundImg {
+    width: 50%;
+    background-image: url("../../assets/LoginBackground.png");
+    background-size: cover;
+}
+
+.SignUpBackgroundImg {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    background-image: url("../../assets/LoginBackground.png");
+    justify-content: flex-end;
+    background-size: cover;
+}
+.SignUpPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width:  50%;
+}
+
+.SignUp {
+    display: flex;
+    flex-direction: row;
+}
+
+.LogoImg {
+    width: 10%;
+    float: left;
+}
+
+.SignUpForm {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.SignUpInput {
+    width: 100%;
+    height: 50px; 
+    margin-top: 3%;
+    outline: 0;
+    border-width: 0 0 1px;
+}
+
+.SignUpTitle {
+    display: flex;
+    font-style: bold;
+}
+
+.PasswordRequirements {
+    display: flex;
+    text-align: left;
+    justify-content: left;
+    flex-direction: column;
+    margin-top: 5px;
+
+}
+
+.PasswordRequirements ul {
+    text-align: left;
+    margin-top: 8px;
+    list-style-position: inside;
+    font-size: 11px;
+    padding-left: 0;
+}
+
+.ForgotPassword {
+    display: flex;
+    align-items: right;
+}
+
+.SignInBtn {
+    font-size: 15px;
+    cursor: pointer;
+    align-self: center;
+    border: 0;
+    border-radius: 10px;
+    background-color: white;
+    color:#8A9DF8;
+    font-style: bold;
+}
+
+.AlreadyUser {
+    color: black;
+    margin-top: 5px;
+    font-size: 14px;
+    display: inline-block;
+}
+
+
+.SignUpBtn {
+    cursor: pointer;
+    width: 35%;
+    height: 35px;
+    margin: 2% 2% 10% 2%;
+    align-self: center;
+    border: 0;
+    border-radius: 10px;
+    background-color: #627BF6;
+    color: white;
+    font-size: 15px;
+    font-style: bold;
+    margin-top: 15px;
+}
+
+.ErrorMessage {
+    color: red;
+    margin-top: 10px;
+    text-align: left;
+    font-size: 12px
+  }
