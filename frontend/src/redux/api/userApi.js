@@ -81,7 +81,7 @@ export const saveUserApi = async (payload) => {
       organization_id: payload.fk_organization_id,
       username: payload.username,
       email: payload.email,
-      employee: payload.employee,
+      employee: (payload.employee || payload.employee === "1"),
       password: payload.password,
     });
 

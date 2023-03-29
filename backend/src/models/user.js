@@ -55,6 +55,29 @@ export class User {
     );
   }
 
+  updateUser(newUser, result) {
+    con.query(
+      "CALL updateUser(?, ?, ?, ?, ?)",
+      [
+        newUser.user_id,
+        newUser.organization_id,
+        newUser.username,
+        newUser.email,
+        newUser.employee
+      ],
+      function (error, _) {
+        if (error) {
+          console.log("error: ", error);
+          result(error, null);
+        } else {
+          result(null, {
+            result: `Response ${newUser.user_id} Saved Successfully`,
+          });
+        }
+      }
+    );
+  }
+
   getUser(result) {
     con.query(`CALL loadUser()`, (err, res) => {
       if (err) {
