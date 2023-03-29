@@ -74,7 +74,9 @@ export function* deleteUserSaga({ payload }) {
 
 export function* postUserSaga({ payload }) {
   yield call(saveUserApi, payload);
-  yield loadUserlistSaga();
+  if (!payload.noReload) {
+    yield loadUserlistSaga();
+  }
 }
 
 export function* authenticateUserSaga({ payload }) {

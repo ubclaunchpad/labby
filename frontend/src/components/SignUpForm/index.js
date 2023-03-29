@@ -42,6 +42,7 @@ function SignUpForm() {
               email: email,
               employee: false,
               password: password,
+              noReload: true
             },
           });
         if (response.payload.email) {
