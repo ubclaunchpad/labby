@@ -23,12 +23,21 @@ export const CostEstimateCollapsed = () => {
 };
 
 export const CostEstimateFull = () => {
+  var isUrgent = false;
+  var urgentMultiplier = 1.5;
   const dispatch = useDispatch();
   const costEstimateMap = useSelector(
     (state) => state.costEstimateReducer.costEstimateList
   );
   const formResponses = useSelector((state) => state.formReducer.formResponses);
   let costSum = 0;
+
+  formResponses.some((response) => {
+    if (response.question.question_type === "urgent") {
+      isUrgent = response.question.answer === "Yes" ? true : false;
+    }
+    return null;
+  });
 
   return (
     <div className="CostEstimateContainer" style={{ background: "#F5F5F5" }}>
@@ -49,7 +58,7 @@ export const CostEstimateFull = () => {
 
       <div className="CostEstimates">
         {formResponses.map((response) => {
-          const cost = costEstimateMap.get(response.question.answer_id);
+          const cost = isUrgent ? urgentMultiplier * costEstimateMap.get(response.question.answer_id) : costEstimateMap.get(response.question.answer_id);
           let quantity = response.quantity ?? 1;
           costSum += cost * quantity;
           return (
