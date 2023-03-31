@@ -37,13 +37,13 @@ function Urgent({ question }) {
                         question_type: 'urgent', 
                         question: 'Is this request urgent?', 
                         answer_id: uuid(), 
-                        answer: "Not Urgent"});
+                        answer: "No"});
     optionList.unshift({question_id: question.question_id, 
                         fk_form_id: question.fk_form_id, 
                         question_type: 'urgent', 
                         question: 'Is this request urgent?',
                         answer_id: uuid(), 
-                        answer: "Urgent"});
+                        answer: "Yes"});
     setOptions(optionList);
   }, [answerList, question]);
 

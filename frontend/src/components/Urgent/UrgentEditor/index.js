@@ -52,8 +52,8 @@ function UrgentEditor({ question }) {
     });
     optionList = optionList.filter((option) => option !== "");
     optionList.push("");
-    optionList.unshift({answer_id: uuid(), answer: "Not Urgent"});
-    optionList.unshift({answer_id: uuid(), answer: "Urgent"});
+    optionList.unshift({answer_id: uuid(), answer: "No"});
+    optionList.unshift({answer_id: uuid(), answer: "Yes"});
     setOptions(optionList);
   }, [answerList, question]);
 

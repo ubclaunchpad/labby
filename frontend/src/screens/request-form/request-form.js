@@ -108,7 +108,7 @@ function RequestForm() {
         const billableList = [];
         formResponses.some((response) => {
           if (response.question.question_type === "urgent") {
-            isUrgent = response.question.answer === "Urgent" ? true : false;
+            isUrgent = response.question.answer === "Yes" ? true : false;
           }
           return null;
         });
