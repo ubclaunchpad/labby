@@ -81,6 +81,8 @@ function RequestForm() {
   // Basic Form Validation and Submit
   function submitForm() {
     var filled = true;
+    var isUrgent = false;
+    var urgentMultiplier = 1.5;
     questions.forEach((question) => {
       if (
         question.mandatory &&
@@ -104,6 +106,12 @@ function RequestForm() {
           ? projectItem[0].response
           : "PROJECTID-A";
         const billableList = [];
+        formResponses.some((response) => {
+          if (response.question.question_type === "urgent") {
+            isUrgent = response.question.answer === "Urgent" ? true : false;
+          }
+          return null;
+        });
         formResponses.map((response) => {
           const cost = costEstimateMap.get(response.question.answer_id);
           let quantity = response.quantity ?? 1;
@@ -112,7 +120,7 @@ function RequestForm() {
             billableList.push({
               service: service,
               quantity: quantity,
-              cost: cost * quantity,
+              cost: isUrgent? cost * quantity * urgentMultiplier : cost * quantity,
             });
           } else {
             // This question's cost not in current stored cost estimate

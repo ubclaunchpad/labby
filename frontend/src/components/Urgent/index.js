@@ -37,20 +37,20 @@ function Urgent({ question }) {
                         question_type: 'urgent', 
                         question: 'Is this request urgent?', 
                         answer_id: uuid(), 
-                        answer: "No"});
+                        answer: "Not Urgent"});
     optionList.unshift({question_id: question.question_id, 
                         fk_form_id: question.fk_form_id, 
                         question_type: 'urgent', 
                         question: 'Is this request urgent?',
                         answer_id: uuid(), 
-                        answer: "Yes"});
+                        answer: "Urgent"});
     setOptions(optionList);
   }, [answerList, question]);
 
   return (
     <div className="GlobalCustomerQuestionContainer">
       <div className="GlobalQuestionTitle">
-        {question.question}{" "}
+        {"Is this request urgent?"}
         <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
       </div>
       <div className="single-select-options-container">
