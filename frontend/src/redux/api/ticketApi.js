@@ -20,6 +20,19 @@ export const getAssignees = async () => {
   }
 };
 
+export const getTaskLabels = async () => {
+  try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const taskLabelList = await axios.get("task/tasklabel", { headers: headers });
+    return taskLabelList;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const getTickets = async () => {
   try {
     const token = JSON.parse(localStorage.getItem("currentUser")).token;

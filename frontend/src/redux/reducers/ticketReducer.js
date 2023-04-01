@@ -20,6 +20,7 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
       let doneList = [];
       let blockedList = [];
       let assigneeMap = {};
+      let taskLabelMap = {};
       
       
       // Map Assignees
@@ -28,6 +29,13 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
         assigneeList.push(assignee);
         assigneeMap[assignee.task_id] = assigneeList;
       });
+
+      // Map Task Labels
+      action.payload.taskLabelList.forEach((taskLabel) => {
+        let taskLabelList = taskLabelMap[taskLabel.fk_task_id] ?? [];
+        taskLabelList.push(taskLabel);
+        taskLabelMap[taskLabel.fk_task_id] = taskLabelList;
+      })
 
       action.payload.ticketList.forEach((ticket) => {
         if (ticket.subtask_id) {
@@ -39,6 +47,7 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
             title: ticket.subtask_title,
             description: ticket.subtask_description,
             assignees: assigneeMap[ticket.subtask_id] ?? [],
+            taskLabels: taskLabelMap[ticket.subtask_id] ?? [],
             reminder: false,
           };
           if (ticket.subtask_state === "completed") {

@@ -20,6 +20,7 @@ import {
   assignUserApi,
   deleteServiceCost,
   getAssignees,
+  getTaskLabels,
   getServiceCostApi,
   getSubTickets,
   getTickets,
@@ -33,6 +34,7 @@ import {
 
 export function* fetchTickets() {
   const assigneeList = yield call(getAssignees);
+  const taskLabelList = yield call(getTaskLabels);
   const ticketList = yield call(getTickets);
   const subticketList = yield call(getSubTickets);
 
@@ -41,6 +43,7 @@ export function* fetchTickets() {
     payload: {
       ticketList: ticketList.data.concat(subticketList.data),
       assigneeList: assigneeList.data,
+      taskLabelList: taskLabelList.data,
     },
   });
 

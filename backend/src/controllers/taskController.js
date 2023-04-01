@@ -130,6 +130,19 @@ export default class TaskController {
     });
   }
 
+  loadTaskLabel() {
+    // added
+    return new Promise((resolve, reject) => {
+      const TaskModel = new Task();
+      TaskModel.loadTaskLabel((err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+
   loadTasks() {
     // added
     return new Promise((resolve, reject) => {
