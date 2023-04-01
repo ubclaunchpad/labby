@@ -68,6 +68,7 @@ router.post("/updateQuantifiable", authorize(), (req, res) => {
 });
 
 router.delete("/:answerId", authorize(), (req, res) => {
+  
   quoteController
     .deleteCost(req.params.answerId)
     .then((response) => {

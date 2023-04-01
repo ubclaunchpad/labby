@@ -7,6 +7,21 @@ describe("Test Question Route", function () {
   const app = new express();
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
+
+  const userCreds = {
+    email: "harinwu99@gmail.com",
+    password: "password",
+  }
+  let authToken;
+
+  beforeAll(async () => {
+    const response = await request(app)
+    .post("/user/login")
+    .send(userCreds)
+    .expect(200);
+    authToken = response.body.token;
+  })
+
   app.use("/", questionRouter);
 
   test("getQuestion", async () => {
@@ -27,6 +42,7 @@ describe("Test Question Route", function () {
     const res = await request(app)
       .post("/")
       .send(payload)
+      .set("Authorization", `Bearer ${authToken}`)
       .set("Content-Type", "application/json")
       .set("Accept", "application/json");
     expect(res.header["content-type"]).toBe("application/json; charset=utf-8");
@@ -42,6 +58,7 @@ describe("Test Question Route", function () {
       .delete("/")
       .send(deletePayload)
       .set("Content-Type", "application/json")
+      .set("Authorization", `Bearer ${authToken}`)
       .set("Accept", "application/json");
     expect(delRes.statusCode).toBe(200);
   });
