@@ -18,6 +18,8 @@ describe("Test Question Route", function () {
     const response = await request(app)
     .post("/user/login")
     .send(userCreds)
+    .set("Content-Type", "application/json")
+    .set("Accept", "application/json")
     .expect(200);
     authToken = response.body.token;
   })
@@ -58,8 +60,8 @@ describe("Test Question Route", function () {
       .delete("/")
       .send(deletePayload)
       .set("Content-Type", "application/json")
-      .set("Authorization", `Bearer ${authToken}`)
-      .set("Accept", "application/json");
+      .set("Accept", "application/json")
+      .set("Authorization", `Bearer ${authToken}`);
     expect(delRes.statusCode).toBe(200);
   });
 });
