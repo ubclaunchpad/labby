@@ -19,8 +19,8 @@ describe("Test Question Route", function () {
     .post("/user/login")
     .send(userCreds)
     .set("Content-Type", "application/json")
-    .set("Accept", "application/json")
-    .expect(200);
+    .set("Accept", "application/json");
+    expect(200);
     authToken = response.body.token;
   })
 
