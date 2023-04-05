@@ -1,0 +1,94 @@
+.settings-page {
+  height: 100vh;
+  display: flex;
+}
+
+.settings-content {
+  padding-left: 70px;
+  padding-right: 70px;
+  width: 100%;
+  /* background-color: red; */
+}
+
+.settings-header {
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: green; */
+}
+
+.settings-title {
+  width: 20%;
+  font-size: 32px;
+  font-weight: bold;
+  text-align: left;
+  /* padding-top: 22px; */
+  padding-bottom: 5px;
+  margin-top: 10px;
+}
+
+.sign-out-button {
+  cursor: pointer;
+  width: 150px;
+  height: 50px;
+  /* margin-top: 20%; */
+  align-self: center;
+  border: 0;
+  border-radius: 10px;
+  background-color: #8a9df8;
+  color: #fff;
+  margin-top: 5px;
+
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.settings-information__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  /* background-color: red; */
+  height: 60%;
+  margin-top: 2%;
+  margin-left: 50px;
+  width: 70%;
+}
+
+.settings-info__row {
+  text-align: left;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.settings-info__display-values {
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.settings-info__title {
+  font-family: inherit;
+  color: #666666;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.settings-info__value {
+  font-family: inherit;
+  color: #666666;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.settings-info__edit-row {
+}
+
+.settings-info__edit-button {
+  background-color: transparent;
+  border: none;
+  color: #8a9df8;
+}
