@@ -9,7 +9,8 @@ CREATE PROCEDURE `createLabel` ()
 BEGIN
 CREATE TABLE `label` (
 	label_name VARCHAR(50) NOT NULL,
-	PRIMARY KEY (`label_name`)
+	label_id VARCHAR(50) NOT NULL,
+	PRIMARY KEY (`label_id`)
 );
 END$$
 

@@ -11,10 +11,10 @@ BEGIN
 CREATE TABLE `task_label` (
   `ticket_label_id` VARCHAR(50) NOT NULL,
   `fk_task_id` VARCHAR(50) NOT NULL,
-  `fk_label_name` VARCHAR(50) NOT NULL,
+  `fk_label_id` VARCHAR(50) NOT NULL,
   PRIMARY KEY (`ticket_label_id`),
   FOREIGN KEY (fk_task_id) REFERENCES tasks(task_id)
-  FOREIGN KEY (fk_label_name) REFERENCES label(label_name)
+  FOREIGN KEY (fk_label_id) REFERENCES label(label_id)
 );
 
 END$$
