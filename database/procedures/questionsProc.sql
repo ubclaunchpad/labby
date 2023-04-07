@@ -7,7 +7,7 @@ DELIMITER $$
 CREATE PROCEDURE `save_question` (
     IN `_question_id` VARCHAR(50),
     IN `_fk_form_id` VARCHAR(50),
-    IN `_question` VARCHAR(255),
+    IN `_question` TEXT,
     IN `_question_type` VARCHAR(50),
     IN `_question_order` INT,
     IN `_mandatory` BOOLEAN,
