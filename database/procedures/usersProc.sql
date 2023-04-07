@@ -107,4 +107,26 @@ BEGIN
 	SELECT * FROM users WHERE email = _email;
 END $$
 
+CREATE PROCEDURE `updateUserName` (
+	IN `_user_id` VARCHAR(50),
+	IN `_username` VARCHAR(255)
+)
+BEGIN
+	UPDATE users SET
+		username = _username
+	WHERE user_id = _user_id;
+END $$
+
+CREATE PROCEDURE `updatePassword` (
+	IN `_user_id` VARCHAR(50),
+	IN `_salt` VARCHAR(255),
+	IN `_hashed_password` VARCHAR(255)
+)
+BEGIN
+	UPDATE users SET
+		salt = _salt,
+		hashed_password = _hashed_password
+	WHERE user_id = _user_id;
+END $$
+
 DELIMITER ;

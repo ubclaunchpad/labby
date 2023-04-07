@@ -78,6 +78,47 @@ export class User {
     );
   }
 
+  updateUserName(newUserName, user_id, result) {
+    con.query(
+      "CALL updateUserName(?, ?)",
+      [
+        newUserName,
+        user_id
+      ],
+      function (error, _) {
+        if (error) {
+          console.log("error: ", error);
+          result(error, null);
+        } else {
+          result(null, {
+            result: `Response ${newUserName} Saved Successfully`,
+          });
+        }
+      }
+    );
+  }
+
+  updatePassword(salt, hash, user_id, result) {
+    con.query(
+      "CALL updatePassword(?, ?, ?)",
+      [
+        salt,
+        hash,
+        user_id
+      ],
+      function (error, _) {
+        if (error) {
+          console.log("error: ", error);
+          result(error, null);
+        } else {
+          result(null, {
+            result: `Response ${newUserName} Saved Successfully`,
+          });
+        }
+      }
+    );
+  }
+
   getUser(result) {
     con.query(`CALL loadUser()`, (err, res) => {
       if (err) {

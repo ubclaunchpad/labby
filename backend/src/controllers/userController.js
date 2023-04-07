@@ -141,4 +141,32 @@ export default class UserController {
       });
     });
   }
+
+  updateUserName(req) {
+    return new Promise((resolve, reject) => {
+      const UserModel = new User();
+      UserModel.updateUserName(req.body.newUserName, req.body.user_id, (err, res) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(res);
+      });
+    })
+  }
+
+  updatePassword(req) {
+    return new Promise((resolve, reject) => {
+      const UserModel = new User();
+
+      let salt = genRandomString(16); /** Gives us salt of length 16 */
+      let hashedPassword = encrypt(req.body.password, salt);
+
+      UserModel.updatePassword(salt, hashedPassword, req.body.user_id, (err, res) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(res);
+      });
+    })
+  }
 }
