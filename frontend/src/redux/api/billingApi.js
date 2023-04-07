@@ -46,3 +46,19 @@ export const getBillableByFilter = async (payload) => {
     return console.error(err);
   }
 };
+
+export const saveClick = async (payload) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    var data = JSON.stringify(payload);
+
+    const clicks = await axios.post("clicks/", data, { headers: headers });
+
+    return clicks;
+  } catch (err) {
+    return console.error(err);
+  }
+};

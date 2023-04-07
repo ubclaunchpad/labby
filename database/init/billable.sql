@@ -25,7 +25,6 @@ CREATE TABLE `billable` (
   FOREIGN KEY (fk_project_id) REFERENCES projects(project_id) ON DELETE CASCADE,
   FOREIGN KEY (created_by) REFERENCES users(user_id) ON DELETE CASCADE
 );
-
 END$$
 
 DELIMITER ;
