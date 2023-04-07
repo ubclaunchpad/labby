@@ -97,7 +97,7 @@ router.get("/assignee", authorize(), (_, res) => {
     });
 });
 
-router.get("/tasklabel", authorize(), (_, res) => {
+router.get("/assignedtasklabels", authorize(), (_, res) => {
   taskController
     .loadTaskLabel()
     .then((response) => {
