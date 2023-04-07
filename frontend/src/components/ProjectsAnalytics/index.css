@@ -1,0 +1,81 @@
+.project-modal {
+    position: fixed;
+    z-index: 20;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 30px;
+  }
+  
+  .project-modal-content {
+    
+    position: relative;
+    background-color: #fff;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    /* overflow: auto; */
+    border-radius: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 15px;
+  }
+  
+  .modalClose {
+    margin-top: 5px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+  }
+  
+  .charts {
+    height: 400px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  
+  /* Antd global styling messing with our desired styling
+  So try and beat it with CSS specificity */
+  .ant-table-container,
+  .ant-table-content>table>thead>tr>th {
+    background-color: #fff;
+  }
+  
+  
+  .projectAnalyticsTitle {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-left: 30px;
+    padding-right: 20px;
+  
+  }
+  
+  .projectAnalyticsTitle h2 {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: left;
+    
+  }
+  
+  .apexcharts-canvas {
+    filter: none;
+  }
+
+  .pieChart {
+    margin: auto;
+    padding-top: 5px;
+    padding-bottom: 2px;
+  }
+
+  .align {
+    flex-direction: row;
+  }

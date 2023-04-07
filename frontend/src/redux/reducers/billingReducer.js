@@ -1,9 +1,17 @@
 import { combineReducers } from "redux";
-import { SET_BILLABLE, SET_INVOICE_LIST, SET_OG_BILLABLE, SET_ACTIVE_ANALYTICS } from "../actions/billingActions";
+import { SET_BILLABLE, 
+         SET_INVOICE_LIST, 
+         SET_OG_BILLABLE, 
+         SET_ACTIVE_ANALYTICS, 
+         SET_ACTIVE_PROJECT_ANALYTICS,
+         SET_ACTIVE_SOW_ANALYTICS
+        } from "../actions/billingActions";
 
 const defaultBillingList = [];
 const defaultInvoiceList = [];
 const defaultServiceAnalytics = false;
+const defaultProjectAnalytics = false;
+const defaultSowAnalytics = false;
 
 const billingList = (state = defaultBillingList, action) => {
   switch (action.type) {
@@ -49,9 +57,32 @@ const servicesAnalytics = (state = defaultServiceAnalytics, action) => {
   }
 };
 
+const projectsAnalytics = (state = defaultProjectAnalytics, action) => {
+  switch (action.type) {
+    case SET_ACTIVE_PROJECT_ANALYTICS: {
+      return !state;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
+const sowAnalytics = (state = defaultSowAnalytics, action) => {
+  switch (action.type) {
+    case SET_ACTIVE_SOW_ANALYTICS: {
+      return !state;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 export default combineReducers({
   billingList,
-  invoiceList,
   billingListOG,
-  servicesAnalytics
+  servicesAnalytics,
+  projectsAnalytics,
+  sowAnalytics
 });

@@ -11,10 +11,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 300px;
 }
 
 .modal-content {
-  top: 20%;
+  
   position: relative;
   background-color: #fff;
   width: 70%;
@@ -40,7 +41,7 @@
 }
 
 .service-details-table {
-  height: 50%;
+  height: 400px;
   overflow: auto;
   padding-bottom: 30px;
 }

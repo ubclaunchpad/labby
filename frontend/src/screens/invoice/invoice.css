@@ -29,8 +29,6 @@
   .generate-invoice-button{
     width: 200px;
   }
-  
-
   /* CSS For widgets containers and items inside:  */
 
   .widgets-container{ 
@@ -59,15 +57,13 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-
   }
 
   .searchInvoiceSection {
     display: flex;
     align-items: center;
     /* gap: 12px; */
-    margin-bottom: 24px;
-    
+    margin-bottom: 24px;  
   }
 
   .invoiceTableSearch {
@@ -158,9 +154,7 @@
   }
   .rdrDateDisplayWrapper{
     background-color: #f5f5f5 !important;
-
   }
-
   .InvoiceTotal {
     cursor: pointer;
   }

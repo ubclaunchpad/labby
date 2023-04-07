@@ -11,7 +11,6 @@ function ServicesAnalytics() {
   const dataSource = useSelector(
     (state) => state.billingReducer.billingList
   ).filter((item) => item.cost > 0);
-
   const columns = [
     {
       title: "Service",
@@ -20,8 +19,8 @@ function ServicesAnalytics() {
     },
     {
       title: "Project",
-      dataIndex: "billable_id",
-      key: "billable_id",
+      dataIndex: "fk_project_id",
+      key: "fk_project_id",
     },
     {
       title: "Created Date",
@@ -55,17 +54,11 @@ function ServicesAnalytics() {
   //get costs in descending order
   const uniqueServices = Object.entries(serviceCostsSum)
     .map(([name, cost]) => ({ serviceName: name, cost }))
-    .sort((a, b) => b.cost - a.cost);
+    .sort((a, b) => b.cost - a.cost)
+    .slice(0, 5);
   const categories = uniqueServices.map(service => service.serviceName);
-  for (let i = 0; i < categories.length; i++) {
-    if (categories[i].length > 15) {
-      categories[i] = [      categories[i].substring(0, 15),
-        categories[i].substring(15)
-      ];
-    }
-  }
   const costData = uniqueServices.map(service => service.cost);
-  const graph = {
+  const servicesChart = {
     options: {
       chart: {
         dropShadow: {
@@ -86,6 +79,7 @@ function ServicesAnalytics() {
           horizontal: true,
         }
       },
+      colors: ['#8A9DF8'],
       dataLabels: {
         enabled: true,
         enabledOnSeries: true,
@@ -124,9 +118,6 @@ function ServicesAnalytics() {
           }
         },
       },
-      fill: {
-        colors: ['#8A9DF8']
-      }
     },
     series: [{
       name: "Total Cost",
@@ -138,7 +129,7 @@ function ServicesAnalytics() {
     <div className="modal">
       <div className="modal-content">
         <div className="serviceAnalyticsTitle">
-          <h2 style={{ color: appColor.gray }}>Services: Total Cost Analysis</h2>
+          <h2 style={{ color: appColor.gray }}>Top Services Cost Breakdown</h2>
           <img
             className="modalClose"
             src={X}
@@ -150,8 +141,8 @@ function ServicesAnalytics() {
         </div>
         <div className = "chart">
           <Chart 
-              options={graph.options}
-              series={graph.series}
+              options={servicesChart.options}
+              series={servicesChart.series}
               type="bar"
               width="90%"
           />
@@ -170,4 +161,4 @@ function ServicesAnalytics() {
   );
 }
   
-  export default ServicesAnalytics;
+export default ServicesAnalytics;

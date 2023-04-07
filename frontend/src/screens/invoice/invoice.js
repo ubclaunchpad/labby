@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import InvoiceTable from "../../components/InvoiceTable";
 import InvoiceTotal from "../../components/InvoiceTotal";
 import ServicesAnalytics from "../../components/ServicesAnalytics";
+import ProjectsAnalytics from "../../components/ProjectsAnalytics";
+import SowAnalytics from "../../components/SowAnalytics";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,7 +16,6 @@ import {
   GET_PROJECT,
   LOAD_BILLABLE,
   SET_BILLABLE,
-  SET_ACTIVE_ANALYTICS
 } from "../../redux/actions/billingActions";
 import GenerateInvoice from "../../components/GenerateInvoice";
 import { Chart } from "../../components/Chart/Chart";
@@ -60,6 +61,12 @@ function Invoice() {
   const servicesAnalytics = useSelector(
     (state) => state.billingReducer.servicesAnalytics
   );
+  const projectsAnalytics = useSelector(
+    (state) => state.billingReducer.projectsAnalytics
+  );
+  const sowAnalytics = useSelector(
+    (state) => state.billingReducer.sowAnalytics
+  );
   const usersData = useSelector((state) => state?.userReducer?.userList);
   const onSubmit = (data) => {
     const startDate = new Date(dateRange.startDate);
@@ -100,6 +107,8 @@ function Invoice() {
   <div className="invoicePageContainer">
     <div>
       {servicesAnalytics ? <ServicesAnalytics/> : null}
+      {projectsAnalytics ? <ProjectsAnalytics/> : null}
+      {sowAnalytics ? <SowAnalytics/> : null}
     </div>
     <div className="invoicePage">
       <div className="headerComponent">
@@ -122,9 +131,7 @@ function Invoice() {
             </div>
             <div className="InvoiceTotal" 
                  style={{ color: appColor.gray }}
-                 onClick={() => {
-                    dispatch({ type: SET_ACTIVE_ANALYTICS });
-                 }}>
+                 >
               <InvoiceTotal  />
             </div>
           </div>
