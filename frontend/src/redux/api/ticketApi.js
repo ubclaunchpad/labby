@@ -26,7 +26,7 @@ export const getTaskLabels = async () => {
     var headers = {
       Authorization: `Bearer ${token}`,
     };
-    const taskLabelList = await axios.get("task/tasklabel", { headers: headers });
+    const taskLabelList = await axios.get("task/assignedtasklabels", { headers: headers });
     return taskLabelList;
   } catch (err) {
     return console.error(err);

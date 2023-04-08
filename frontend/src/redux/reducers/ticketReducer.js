@@ -72,6 +72,7 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
             title: ticket.task_title,
             description: ticket.task_description,
             assignees: assigneeMap[ticket.task_id] ?? [],
+            taskLabels: taskLabelMap[ticket.task_id] ?? [],
             reminder: false,
           };
           if (ticket.task_state === "completed") {

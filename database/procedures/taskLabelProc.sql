@@ -35,10 +35,9 @@ END $$
 CREATE PROCEDURE `load_all_task_labels` (
     IN `_fk_task_id` VARCHAR(50)
 )
-
 BEGIN
     SELECT * FROM task_label 
-    LEFT JOIN tasks ON task_label.fk_task_id = tasks.task_id
+    LEFT JOIN label ON task_label.fk_label_id = label.label_id;
 END $$
 
 DELIMITER ;
