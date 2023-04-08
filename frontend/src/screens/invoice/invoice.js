@@ -16,6 +16,7 @@ import {
   GET_PROJECT,
   LOAD_BILLABLE,
   SET_BILLABLE,
+  UPDATE_CLICKS
 } from "../../redux/actions/billingActions";
 import GenerateInvoice from "../../components/GenerateInvoice";
 import { Chart } from "../../components/Chart/Chart";
@@ -31,6 +32,8 @@ import { LOAD_QUESTION } from "../../redux/actions/questionActions";
 
 
 function Invoice() {
+  const currentDate = new Date();
+  const timestamp = currentDate.getTime();  
   const dispatch = useDispatch();
   const invoiceTableRef = useRef(null);
   const { register, handleSubmit } = useForm();
@@ -102,6 +105,24 @@ function Invoice() {
     }
     dispatch({ type: LOAD_QUESTION });
   }, [dispatch, usersData, organizationData, projectData, costCenterData]);
+
+  useEffect(() => {
+    const storedTime = JSON.parse(localStorage.getItem("lastMountTime"));
+    const currentTime = new Date().getTime();
+    {console.log(storedTime)}
+    {console.log(currentTime)}
+  
+    if (!storedTime || currentTime - storedTime > 60000) {
+      {console.log("update")}
+      dispatch({
+        type: UPDATE_CLICKS,
+        payload: {
+          component_name: "billing_page"
+        },
+      });
+      localStorage.setItem("lastMountTime", JSON.stringify(currentTime));
+    }
+  }, []);
 
   return (
   <div className="invoicePageContainer">
