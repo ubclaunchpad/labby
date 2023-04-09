@@ -1,8 +1,11 @@
+
+
+
 import "./index.css";
 // import Hide from "../../assets/hide.png";
 import Logo from "../../assets/LogoIcon.png";
 import { useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { AUTHENTICATE_USER } from "../../redux/actions/userActions";
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -13,7 +16,6 @@ function LoginForm({ from }) {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-
   const [rememberMe, setRememberMe] = useState(false);
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -27,7 +29,6 @@ function LoginForm({ from }) {
   const handleUserSubmit = (e) => {
     e.preventDefault();
     let errors = false;
-
     if (rememberMe) {
       localStorage.setItem("loginEmail", email);
       localStorage.setItem("rememberMe", rememberMe);
@@ -55,74 +56,82 @@ function LoginForm({ from }) {
           password: password,
         },
       });
+      if (from === "/settings") {
+        from = "/";
+      }
       navigate(from);
     }
-  };
-  useEffect(() => {
-    const storedEmail = localStorage.getItem("loginEmail");
-    const storedRememberMe = localStorage.getItem("rememberMe");
 
-    if (storedEmail) {
-      setEmail(storedEmail);
-    }
+    useEffect(() => {
+      const storedEmail = localStorage.getItem("loginEmail");
+      const storedRememberMe = localStorage.getItem("rememberMe");
 
-    if (storedRememberMe === "true") {
-      setRememberMe(true);
-    }
-  }, []);
+      if (storedEmail) {
+        setEmail(storedEmail);
+      }
 
-  return (
-    <div className="PageContainer">
-      <div className="LoginPage">
-        <img src={Logo} className="LogoImg" alt="Labby Logo"></img>
+      if (storedRememberMe === "true") {
+        setRememberMe(true);
+      }
+    }, []);
 
-        <div className="LoginContainer">
-          <div className="LoginForm">
-            <div className="LoginTitle">
-              <h2>Log in</h2>
-            </div>
-            <form onSubmit={handleUserSubmit}>
-              <input
-                className="LoginInput"
-                placeholder="Email"
-                type={"email"}
-                onChange={handleEmailChange}
-              ></input>
-              <div className="ErrorMessage">{emailError}</div>
-              <input
-                className="LoginInput"
-                placeholder="Password"
-                type={"password"}
-                onChange={handlePasswordChange}
-              ></input>
-              <div className="ErrorMessage">{passwordError}</div>
-              <div className="RememberMe">
-                <input type="checkbox" id="rememberMe" name="rememberMe" />
-                <label htmlFor="rememberMe">Remember me</label>
+    return (
+      <div className="PageContainer">
+        <div className="LoginPage">
+          <img src={Logo} className="LogoImg" alt="Labby Logo"></img>
+
+          <div className="LoginContainer">
+            <div className="LoginForm">
+              <div className="LoginTitle">
+                <h2>Log in</h2>
               </div>
-              <button className="LogInBtn" onClick={handleUserSubmit}>
-                Log in
-              </button>
-            </form>
-          </div>
-          <div className="CreateAccount">
-            <div>Don't have an account yet?&nbsp;</div>
-            <NavLink to={`/signup`}>Create Account</NavLink>
-          </div>
-          <br></br>
+              <form onSubmit={handleUserSubmit}>
+                <input
+                  className="LoginInput"
+                  placeholder="Email"
+                  type={"email"}
+                  onChange={handleEmailChange}
+                ></input>
+                <div className="ErrorMessage">{emailError}</div>
+                <input
+                  className="LoginInput"
+                  placeholder="Password"
+                  type={"password"}
+                  onChange={handlePasswordChange}
+                ></input>
+                <button
+                  className="SignInBtn"
+                  onClick={handleUserSubmit}
+                ></button>
+                <div className="ErrorMessage">{passwordError}</div>
+                <div className="RememberMe">
+                  <input type="checkbox" id="rememberMe" name="rememberMe" />
+                  <label htmlFor="rememberMe">Remember me</label>
+                </div>
+                <button className="LogInBtn" onClick={handleUserSubmit}>
+                  Log in
+                </button>
+              </form>
+            </div>
+            <div className="CreateAccount">
+              <div>Not a user? Create an account&nbsp;</div>
+              <NavLink to={`/signup`}>Create Account</NavLink>
+            </div>
+            <br></br>
 
-          {/* <div className="ForgotPassword">
+            {/* <div className="ForgotPassword">
                         <NavLink
                         to={`/forgotpassword`}
                         >
                         Forgot your password?
                         </NavLink>
                     </div> */}
+          </div>
         </div>
+        <div className="BackgroundImg"></div>
       </div>
-      <div className="BackgroundImg"></div>
-    </div>
-  );
+    );
+  };
 }
-
 export default LoginForm;
+

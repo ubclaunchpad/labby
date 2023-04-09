@@ -1,3 +1,4 @@
+
 import "./index.css";
 import uuid from "react-uuid";
 import { useDispatch } from "react-redux";
@@ -43,6 +44,7 @@ function SignUpForm() {
   const handleUserSubmit = (e) => {
     e.preventDefault();
     let errors = false;
+    
     if (firstName === "") {
       setFirstNameError("First Name Required");
       errors = true;
@@ -66,6 +68,7 @@ function SignUpForm() {
     } else {
       setEmailError("");
     }
+    
     if (password === "") {
       setPasswordError("Please enter a valid password");
       errors = true;
@@ -78,6 +81,7 @@ function SignUpForm() {
     } else {
       setPasswordError("");
     }
+    
     if (password !== verifyPassword) {
       setVerifyPasswordError("Passwords do not match");
       errors = true;
