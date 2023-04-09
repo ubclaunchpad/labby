@@ -1,20 +1,9 @@
 USE `labby`;
 
-DROP PROCEDURE IF EXISTS `createClickAnalytics`;
 DROP PROCEDURE IF EXISTS `update_count`;
 DROP PROCEDURE IF EXISTS `initialize_count`;
 
 DELIMITER $$
-
-CREATE PROCEDURE `createClickAnalytics` ()
-BEGIN
-
-CREATE TABLE `click_analytics` (
-  `component` VARCHAR(50) NOT NULL,
-  `click_count` INT
-);
-
-END$$
 
 CREATE PROCEDURE `update_count`(IN component_name VARCHAR(50))
 BEGIN
@@ -33,11 +22,3 @@ BEGIN
 END$$
 
 DELIMITER ;
-
-USE `labby`;
-
-CALL initialize_count('billing_page');
-CALL initialize_count('sow_chart');
-CALL initialize_count('services_chart');
-CALL initialize_count('projects_chart');
-SELECT*from click_analytics
