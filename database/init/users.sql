@@ -16,6 +16,7 @@ CREATE TABLE `users` (
 	email VARCHAR(255),
 	employee BOOLEAN,
 	is_approved BOOLEAN,
+	bio VARCHAR(255),
 	salt VARCHAR(255),
 	hashed_password VARCHAR(255),
 	PRIMARY KEY (`user_id`),

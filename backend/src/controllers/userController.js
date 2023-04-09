@@ -169,4 +169,16 @@ export default class UserController {
       });
     })
   }
+
+  updateBio(req) {
+    return new Promise((resolve, reject) => {
+      const UserModel = new User();
+      UserModel.updateBio(req.body.bio, req.body.user_id, (err, res) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(res);
+      });
+    })
+  }
 }

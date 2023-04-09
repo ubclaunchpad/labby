@@ -112,7 +112,27 @@ export class User {
           result(error, null);
         } else {
           result(null, {
-            result: `Response ${newUserName} Saved Successfully`,
+            result: `Response Password Saved Successfully`,
+          });
+        }
+      }
+    );
+  }
+
+  updateBio(bio, user_id, result) {
+    con.query(
+      "CALL updateBio(?, ?)",
+      [
+        bio,
+        user_id
+      ],
+      function (error, _) {
+        if (error) {
+          console.log("error: ", error);
+          result(error, null);
+        } else {
+          result(null, {
+            result: `Response Bio Saved Successfully`,
           });
         }
       }

@@ -156,4 +156,22 @@ router.post("/settings/changePassword", authorize(), (req, res) => {
     });
 });
 
+router.post("/settings/changeEmail", authorize(), (req, res) => {
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!",
+    });
+    return;
+  }
+  userController
+    .changeEmail(req)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(404).json(err);
+    });
+})
+
 export default router;
