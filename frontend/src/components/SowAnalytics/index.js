@@ -3,7 +3,7 @@ import X from "../../assets/X.png";
 import { SET_ACTIVE_SOW_ANALYTICS } from "../../redux/actions/billingActions";
 import { useDispatch, useSelector } from "react-redux";
 import Chart from "react-apexcharts";
-import { appColor } from "../../constants";
+import { appColor, ticketsColors } from "../../constants";
 
 function SowAnalytics() {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ function SowAnalytics() {
             type: 'polarArea',
           },
           labels: categories,
-          colors: [ "#5976E1", "#4E3340", "#CF6973", "#D4D145","#ECCC4C",],
+          colors: [ ticketsColors[0], ticketsColors[1], ticketsColors[2], ticketsColors[3], ticketsColors[4] ],
           stroke: {
             colors: ['#fff']
           },

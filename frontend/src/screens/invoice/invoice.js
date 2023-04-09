@@ -32,8 +32,6 @@ import { LOAD_QUESTION } from "../../redux/actions/questionActions";
 
 
 function Invoice() {
-  const currentDate = new Date();
-  const timestamp = currentDate.getTime();  
   const dispatch = useDispatch();
   const invoiceTableRef = useRef(null);
   const { register, handleSubmit } = useForm();
@@ -113,7 +111,6 @@ function Invoice() {
     {console.log(currentTime)}
   
     if (!storedTime || currentTime - storedTime > 60000) {
-      {console.log("update")}
       dispatch({
         type: UPDATE_CLICKS,
         payload: {
