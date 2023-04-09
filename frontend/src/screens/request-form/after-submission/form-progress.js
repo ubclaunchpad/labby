@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 import FormImg from "../../../assets/Form.png";
 import { LOAD_PUBLISHED_FORMS } from "../../../redux/actions/formActions";
-import { LOAD_USER_SURVEY } from "../../../redux/actions/userActions";
+import { LOAD_USER_SURVEY, SET_CURRENT_USER } from "../../../redux/actions/userActions";
 
 import "./form-progress.css";
 
@@ -32,10 +32,19 @@ function FormProgress() {
     }
   }
 
+  const handleSignout = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("currentUser");
+    dispatch({
+      type: SET_CURRENT_USER,
+      payload: null,
+    });
+  };
+
   return (
     <div className="formProgressPage">
       <div className="signout">
-        <button className="signoutBtn" type="button">
+        <button className="signoutBtn" type="button" onClick={handleSignout}>
           Sign out
         </button>
       </div>

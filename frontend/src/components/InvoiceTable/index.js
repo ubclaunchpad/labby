@@ -14,8 +14,8 @@ const InvoiceTable = () => {
   const columns = [
     {
       title: "SOW #",
-      dataIndex: "fk_sow_id",
-      key: "fk_sow_id",
+      dataIndex: "task_uuid",
+      key: "task_uuid",
       editable: false,
     },
     {

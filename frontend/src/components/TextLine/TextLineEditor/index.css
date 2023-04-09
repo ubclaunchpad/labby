@@ -16,3 +16,18 @@
 .LogicPadding {
   margin-top: 20px;
 }
+
+/* Question Title (input) */
+.TextLineTitleInput {
+  height: 45px;
+  border: 0;
+  background-color: #ECEDF3;
+  width: 80%;
+  border-radius: 15px;
+  margin-left: 10px;
+  font-size: 18px;
+  padding: 10px;
+}
+.TextLineTitleInput:focus {
+  outline: none;
+}

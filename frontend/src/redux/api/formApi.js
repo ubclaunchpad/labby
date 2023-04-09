@@ -75,7 +75,7 @@ export const createTicketApi = async (payload) => {
       Authorization: `Bearer ${token}`,
     };
     var data = JSON.stringify({
-      task_id: payload.task_id,
+      task_uuid: payload.task_uuid,
       fk_survey_id: payload.fk_survey_id,
       fk_form_id: payload.fk_form_id,
       fk_project_id: payload.fk_project_id,

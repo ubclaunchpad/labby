@@ -14,6 +14,7 @@ import {
   SET_LOGIC_VIEW_QUESTION,
 } from "../../../redux/actions/logicActions";
 import { TOGGLE_LOGIC } from "../../../redux/actions/uiActions";
+import { Input } from "antd";
 
 function TextLineEditor({ question }) {
   const dispatch = useDispatch();
@@ -22,11 +23,9 @@ function TextLineEditor({ question }) {
     (state) => state.questionReducer.questionList
   );
   const [questionNum, setQuestionNum] = useState("");
-  const [title, setTitle] = useState("");
 
   useEffect(() => {
     setQuestionNum(`Q${question.position_index}`);
-    setTitle(question.question);
   }, [question]);
 
   return (
@@ -50,10 +49,14 @@ function TextLineEditor({ question }) {
         >
           {questionNum}
         </div>
-        <input
-          className="GlobalEditorQuestionTitleInput"
-          defaultValue={title}
+        <Input.TextArea
+          className="TextLineTitleInput"
+          defaultValue={question.question}
           placeholder="Type your text line here..."
+          autoSize={{
+            minRows: 1,
+            maxRows: 5,
+          }}
           onBlur={(text) => {
             dispatch({
               type: SAVE_QUESTION,

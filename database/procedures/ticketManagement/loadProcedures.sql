@@ -34,7 +34,7 @@ SELECT tasks.*, subtasks.*
 
 END $$
 
-CREATE PROCEDURE `load_subtasks_by_taskId` (IN `task_id` VARCHAR(50))
+CREATE PROCEDURE `load_subtasks_by_taskId` (IN `task_id` INT(10))
 BEGIN
 SELECT * FROM subtasks
             WHERE subtasks.fk_task_id = `task_id`;

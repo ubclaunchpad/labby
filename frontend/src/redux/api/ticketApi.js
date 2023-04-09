@@ -68,7 +68,7 @@ export const createSubtask = async (payload) => {
       Authorization: `Bearer ${token}`,
     };
     var data = JSON.stringify({
-      subtask_id: uuid(),
+      subtask_uuid: uuid(),
       subtask_title: `Subtask ${uuid().substring(0, 5)}`,
       subtask_description: `Subtask for ${payload.task_id}`,
       subtask_state: "open",
@@ -185,10 +185,11 @@ export const postServiceCostApi = async (payload) => {
     var headers = {
       Authorization: `Bearer ${token}`,
     };
+    console.log(payload);
     var data = JSON.stringify({
       billable_id: payload.billable_id,
       sow_id: payload.sow_id,
-      project_id: payload.project_id,
+      project_id: payload.project_id ?? payload.fk_project_id,
       name: payload.name,
       quantity: payload.quantity,
       cost: payload.cost,

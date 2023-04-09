@@ -37,9 +37,10 @@ function MultiSelectEditor({ question }) {
 
   useEffect(() => {
     var optionList = answerList[question.question_id ?? ""] ?? [];
+    console.log(optionList);
     optionList = optionList.sort((a, b) => {
-      let fa = a.answer;
-      let fb = b.answer;
+      let fa = a.added_on;
+      let fb = b.added_on;
 
       if (fa < fb) {
         return -1;
