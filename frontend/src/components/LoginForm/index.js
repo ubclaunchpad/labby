@@ -1,11 +1,8 @@
-
-
-
 import "./index.css";
 // import Hide from "../../assets/hide.png";
 import Logo from "../../assets/LogoIcon.png";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AUTHENTICATE_USER } from "../../redux/actions/userActions";
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -17,6 +14,7 @@ function LoginForm({ from }) {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -56,13 +54,14 @@ function LoginForm({ from }) {
           password: password,
         },
       });
+
       if (from === "/settings") {
         from = "/";
       }
       navigate(from);
     }
-
-    useEffect(() => {
+  };
+  useEffect(() => {
       const storedEmail = localStorage.getItem("loginEmail");
       const storedRememberMe = localStorage.getItem("rememberMe");
 
@@ -115,7 +114,7 @@ function LoginForm({ from }) {
             </div>
             <div className="CreateAccount">
               <div>Not a user? Create an account&nbsp;</div>
-              <NavLink to={`/signup`}>Create Account</NavLink>
+              <NavLink to={`/signup`}>here</NavLink>
             </div>
             <br></br>
 
@@ -132,5 +131,4 @@ function LoginForm({ from }) {
       </div>
     );
   };
-}
 export default LoginForm;

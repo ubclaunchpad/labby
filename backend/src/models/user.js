@@ -89,6 +89,18 @@ export class User {
     });
   }
 
+  // check if email already exists in the database
+  checkEmail(email, result) {
+    con.query("CALL loadSingleUser(?)", [email], (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res[0]);
+      }
+    });
+  }
+
   getEmployee(result) {
     con.query(`CALL loadEmployee()`, (err, res) => {
       if (err) {

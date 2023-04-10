@@ -45,22 +45,6 @@ export default class UserController {
     });
   }
 
-  // check if user is already in the database or not
-  checkUser(req) {
-    return new Promise((resolve, reject) => {
-      const UserModel = new User();
-      UserModel.getOneUser(req.body.email, (err, res) => {
-        if (err) {
-          reject({ error: err });
-        }
-        if (res && res.length > 0 && res[0].email === req.body.email) {
-          reject({ error: "Email already exists" });
-        }
-        resolve(res);
-      });
-    });
-  }
-
   approveUser(users) {
     return new Promise((resolve, reject) => {
       const UserModel = new User();
@@ -74,6 +58,19 @@ export default class UserController {
         });
       }
       resolve(res.length);
+    });
+  }
+
+// check if email already exists in database
+  checkEmail(email) {
+    return new Promise((resolve, reject) => {
+      const UserModel = new User();
+      UserModel.checkEmail(email, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
     });
   }
 

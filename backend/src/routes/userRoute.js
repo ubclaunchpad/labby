@@ -51,6 +51,18 @@ router.get("/", authorize(), (_, res) => {
     });
 });
 
+router.get("/checkEmail", authorize(), (req, res) => {
+  userController
+    .checkEmail(req.params.email)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
+
+
 router.get("/pending", authorize(), (_, res) => {
   userController
     .getPendingUsers()
