@@ -9,7 +9,8 @@ DROP procedure IF EXISTS `update_subtask_status`;
 DELIMITER $$
 
 CREATE PROCEDURE `save_task` (
-   IN `_task_id` VARCHAR(50),
+   IN `_task_uuid` VARCHAR(50),
+   IN `_fk_survey_id` VARCHAR(50),
    IN `_fk_form_id` VARCHAR(50),
    IN `_fk_project_id` VARCHAR(50),
    IN `_task_title` VARCHAR(100),
@@ -17,7 +18,8 @@ CREATE PROCEDURE `save_task` (
    IN `_task_state` VARCHAR(50)
  
 ) BEGIN INSERT INTO `tasks` (
-   `task_id`,
+   `task_uuid`,
+   `fk_survey_id`,
    `fk_form_id`,
    `fk_project_id`,
    `task_title`,
@@ -26,7 +28,8 @@ CREATE PROCEDURE `save_task` (
 )
 VALUES
    (
-   `_task_id`,
+   `_task_uuid`,
+   `_fk_survey_id`,
    `_fk_form_id`,
    `_fk_project_id`,
    `_task_title`,
@@ -37,7 +40,7 @@ VALUES
 END $$
 
 CREATE PROCEDURE `update_task_status` (
-   IN `_task_id` VARCHAR(50),
+   IN `_task_id` INT(10),
    IN `_task_state` VARCHAR(50)
  
 ) BEGIN 
@@ -47,7 +50,7 @@ UPDATE `subtasks` SET `subtask_state`=`_task_state` WHERE `subtask_id`=`_task_id
 END $$
 
 CREATE PROCEDURE `update_task_description` (
-   IN `_task_id` VARCHAR(50),
+   IN `_task_id` INT(10),
    IN `_task_description` VARCHAR(250)
  
 ) BEGIN 
@@ -57,15 +60,15 @@ UPDATE `subtasks` SET `subtask_description`=`_task_description` WHERE `subtask_i
 END $$
 
 CREATE PROCEDURE `save_subtask` (
-   IN `_subtask_id` VARCHAR(50),
+   IN `_subtask_uuid` VARCHAR(50),
    IN `_subtask_title` VARCHAR(100),
    IN `_subtask_description` VARCHAR(250),
    IN `_subtask_state` VARCHAR(50),
-   IN `_fk_task_id` VARCHAR(50)
+   IN `_fk_task_id` INT(10)
 
  
 ) BEGIN INSERT INTO `subtasks` (
-   `subtask_id`,
+   `subtask_uuid`,
    `subtask_title`,
    `subtask_description`,
    `subtask_state`,
@@ -73,7 +76,7 @@ CREATE PROCEDURE `save_subtask` (
 )
 VALUES
    (
-   `_subtask_id`,
+   `_subtask_uuid`,
    `_subtask_title`,
    `_subtask_description`,
    `_subtask_state`,
@@ -83,7 +86,7 @@ VALUES
 END $$
 
 CREATE PROCEDURE `update_subtask_status` (
-   IN `_subtask_id` VARCHAR(50),
+   IN `_subtask_id` INT(10),
    IN `_subtask_state` VARCHAR(50)
  
 ) BEGIN 

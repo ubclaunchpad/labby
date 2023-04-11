@@ -12,6 +12,8 @@ function SignUpForm() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -20,6 +22,15 @@ function SignUpForm() {
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
     }
+
+    const handleFirstNameChange = (e) => {
+        setFirstName(e.target.value);
+    }
+
+    const handleLastNameChange = (e) => {
+        setLastName(e.target.value);
+    }
+
     const handleUserSubmit = (e) => {
         e.preventDefault();
         const response = dispatch({   // do we have to wait for this to complete?
@@ -27,9 +38,11 @@ function SignUpForm() {
             payload: {
               user_id: uuid(),
               fk_organization_id: null,
-              username: null,
+              username: firstName + " " + lastName,
               email: email,
+              employee: false,
               password: password,
+              noReload: true
             },
           });
         if (response.payload.email) {
@@ -65,9 +78,9 @@ function SignUpForm() {
                         <form onSubmit={handleUserSubmit}>
                             <input  className="LoginInput" placeholder="Email" type={"email"} onChange={handleEmailChange}>
                             </input>
-                            <input  className="LoginInput" placeholder="First Name" type={"text"}> 
+                            <input  className="LoginInput" placeholder="First Name" type={"text"} onChange={handleFirstNameChange}> 
                             </input>
-                            <input  className="LoginInput" placeholder="Last Name" type={"text"}> 
+                            <input  className="LoginInput" placeholder="Last Name" type={"text"} onChange={handleLastNameChange}> 
                             </input>
                             <input  className="LoginInput" placeholder="Password" type={"password"} onChange={handlePasswordChange}>
                             </input>

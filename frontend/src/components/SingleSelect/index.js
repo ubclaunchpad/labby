@@ -13,6 +13,7 @@ import {
 } from "../../redux/actions/formActions";
 import uuid from "react-uuid";
 import ClinicalBox from "../ClinicalBox";
+import QuantityBox from "../QuantityBox";
 
 function SingleSelect({ question }) {
   const dispatch = useDispatch();
@@ -23,8 +24,8 @@ function SingleSelect({ question }) {
   useEffect(() => {
     var optionList = answerList[question.question_id ?? ""] ?? [];
     optionList = optionList.sort((a, b) => {
-      let fa = a.answer;
-      let fb = b.answer;
+      let fa = a.added_on;
+      let fb = b.added_on;
 
       if (fa < fb) {
         return -1;
@@ -84,6 +85,10 @@ function SingleSelect({ question }) {
                   />
                   <div className="new-question-input">{option.answer}</div>
                 </div>
+                {selectedAnswers.includes(option.answer_id) &&
+                option.quantifiable ? (
+                  <QuantityBox option={option} />
+                ) : null}
                 {selectedAnswers.includes(option.answer_id) &&
                   question.clinical ? (
                     <ClinicalBox question={question} option={option} />

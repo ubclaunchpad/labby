@@ -33,7 +33,7 @@ END $$
  
 CREATE PROCEDURE `save_answer` (
    IN `_answer_id` VARCHAR(50),
-   IN `_answer` VARCHAR(50),
+   IN `_answer` TEXT,
    IN `_question_type` VARCHAR(50),
    IN `_fk_question_id` VARCHAR(50)
  
@@ -41,20 +41,23 @@ CREATE PROCEDURE `save_answer` (
    `answer_id`,
    `answer`,
    `question_type`,
-   `fk_question_id`
+   `fk_question_id`,
+   `added_on`
 )
 VALUES
    (
   `_answer_id`,
    `_answer`,
    `_question_type`,
-  `_fk_question_id`
+  `_fk_question_id`,
+   now()
    )
 ON DUPLICATE KEY UPDATE 
    questions_answer.answer_id=`_answer_id`, 
    questions_answer.answer=`_answer`, 
    questions_answer.question_type=`_question_type`,
-   questions_answer.fk_question_id=`_fk_question_id`;
+   questions_answer.fk_question_id=`_fk_question_id`,
+   questions_answer.added_on=now();
   
 END $$
  

@@ -16,123 +16,107 @@ function ServiceList() {
   const currentTicketServiceCosts = useSelector(
     (state) => state.ticketReducer.currentTicketServiceCosts
   );
+  const currentUser = useSelector((state) => state.userReducer.currentUser);
   return (
     <div className="ticketCosts">
       <div className="contentList">
         <div className="ticketSectionTitle">Service & Costs</div>
-        <table className="serviceTable">
-          <thead>
-            <tr className="heading">
-              <td>Service</td>
-              <td>Quantity</td>
-              <td>Cost ($)</td>
-              <td></td>
-            </tr>
-          </thead>
-        </table>
+        <div className="serviceTableHeader">
+          <div className="serviceTableCol serviceTableColHeading">Service</div>
+          <div className="serviceTableCol serviceTableColHeading">Quantity</div>
+          <div className="serviceTableCol serviceTableColHeading">Cost ($)</div>
+          <div className="deleteServiceSpace"></div>
+        </div>
         <div className="serviceListRows">
-          <table className="serviceTable">
-            <tbody>
-              {currentTicketServiceCosts.map((serviceCost) => {
-                return (
-                  <div>
-                    <tr
-                      className="serviceTableRow"
-                      key={serviceCost.billable_id}
-                    >
-                      <td className="serviceTableRow">
-                        <input
-                          className="serviceNameInput"
-                          defaultValue={serviceCost.name}
-                          onBlur={(text) => {
-                            console.log(serviceCost);
-                            dispatch({
-                              type: POST_SERVICE_COST,
-                              payload: {
-                                ...serviceCost,
-                                sow_id: serviceCost.fk_sow_id,
-                                name: text.target.value,
-                              },
-                            });
-                          }}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          className="serviceCostInput"
-                          defaultValue={serviceCost.quantity}
-                          onBlur={(text) => {
-                            dispatch({
-                              type: POST_SERVICE_COST,
-                              payload: {
-                                ...serviceCost,
-                                sow_id: serviceCost.fk_sow_id,
-                                quantity: text.target.value,
-                              },
-                            });
-                          }}
-                        />
-                      </td>
-                      <td>
-                        <input
-                          className="serviceCostInput"
-                          defaultValue={serviceCost.cost}
-                          onBlur={(text) => {
-                            dispatch({
-                              type: POST_SERVICE_COST,
-                              payload: {
-                                ...serviceCost,
-                                sow_id: serviceCost.fk_sow_id,
-                                cost: text.target.value,
-                              },
-                            });
-                          }}
-                        />
-                      </td>
+          {currentTicketServiceCosts.map((serviceCost) => {
+            return (
+              <div key={serviceCost.billable_id} className="parentServiceRow">
+                <div className="serviceTableRow">
+                  <input
+                    className="serviceNameInput"
+                    defaultValue={serviceCost.name}
+                    onBlur={(text) => {
+                      console.log(serviceCost);
+                      dispatch({
+                        type: POST_SERVICE_COST,
+                        payload: {
+                          ...serviceCost,
+                          sow_id: serviceCost.task_uuid,
+                          name: text.target.value,
+                        },
+                      });
+                    }}
+                  />
+                  <input
+                    className="serviceCostInput"
+                    defaultValue={serviceCost.quantity}
+                    onBlur={(text) => {
+                      dispatch({
+                        type: POST_SERVICE_COST,
+                        payload: {
+                          ...serviceCost,
+                          sow_id: serviceCost.task_uuid,
+                          quantity: text.target.value,
+                        },
+                      });
+                    }}
+                  />
+                  <input
+                    className="serviceCostInput"
+                    defaultValue={serviceCost.cost}
+                    onBlur={(text) => {
+                      dispatch({
+                        type: POST_SERVICE_COST,
+                        payload: {
+                          ...serviceCost,
+                          sow_id: serviceCost.task_uuid,
+                          cost: text.target.value,
+                        },
+                      });
+                    }}
+                  />
 
-                      <td>
-                        <div>
-                          <img
-                            className="delete-service"
-                            src={X}
-                            alt="Delete Service"
-                            onClick={() => {
-                              dispatch({
-                                type: REMOVE_SERVICE_COST,
-                                payload: {
-                                  billable_id: serviceCost.billable_id,
-                                  sow_id: serviceCost.fk_sow_id,
-                                },
-                              });
-                            }}
-                          />
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <input
-                          className="serviceCommentInput"
-                          defaultValue={serviceCost.comment ?? ""}
-                          placeholder="Comment"
-                          onBlur={(text) => {
-                            dispatch({
-                              type: POST_SERVICE_COST,
-                              payload: {
-                                ...serviceCost,
-                                sow_id: serviceCost.fk_sow_id,
-                                comment: text.target.value,
-                              },
-                            });
-                          }}
-                        />
-                      </td>
-                    </tr>
+                  <div>
+                    <div>
+                      <img
+                        className="delete-service"
+                        src={X}
+                        alt="Delete Service"
+                        onClick={() => {
+                          dispatch({
+                            type: REMOVE_SERVICE_COST,
+                            payload: {
+                              billable_id: serviceCost.billable_id,
+                              sow_id: serviceCost.task_uuid,
+                            },
+                          });
+                        }}
+                      />
+                    </div>
                   </div>
-                );
-              })}
-            </tbody>
-          </table>
+                </div>
+                <div>
+                  <div>
+                    <input
+                      className="serviceCommentInput"
+                      defaultValue={serviceCost.comment ?? ""}
+                      placeholder="Comment"
+                      onBlur={(text) => {
+                        dispatch({
+                          type: POST_SERVICE_COST,
+                          payload: {
+                            ...serviceCost,
+                            sow_id: serviceCost.task_uuid,
+                            comment: text.target.value,
+                          },
+                        });
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
       <div
@@ -142,7 +126,7 @@ function ServiceList() {
             type: POST_SERVICE_COST,
             payload: {
               billable_id: uuid(),
-              sow_id: currentTicket.code,
+              sow_id: currentTicket.task_uuid,
               fk_project_id: currentTicket.project_id,
               name: "New Service",
               quantity: 1,
@@ -152,7 +136,7 @@ function ServiceList() {
               completedTime: null,
               billed: false,
               billedTime: null,
-              created_by: "USER-A",
+              created_by: currentUser.user_id,
             },
           });
         }}

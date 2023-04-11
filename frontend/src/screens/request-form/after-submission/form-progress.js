@@ -1,14 +1,50 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 import FormImg from "../../../assets/Form.png";
+import { LOAD_PUBLISHED_FORMS } from "../../../redux/actions/formActions";
+import { LOAD_USER_SURVEY, SET_CURRENT_USER } from "../../../redux/actions/userActions";
 
 import "./form-progress.css";
 
 function FormProgress() {
+  const dispatch = useDispatch();
+  const publishedForms = useSelector(
+    (state) => state.formReducer.publishedFormList
+  );
+  const userRequestList = useSelector(
+    (state) => state.userReducer.userRequestList
+  );
+
+  useEffect(() => {
+    dispatch({ type: LOAD_PUBLISHED_FORMS });
+    dispatch({ type: LOAD_USER_SURVEY });
+  }, [dispatch]);
+
+  function progressToNum(progress) {
+    if (progress === "open") {
+      return 0;
+    } else if (progress === "blocked") {
+      return 25;
+    } else if (progress === "progress") {
+      return 50;
+    }
+  }
+
+  const handleSignout = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("currentUser");
+    dispatch({
+      type: SET_CURRENT_USER,
+      payload: null,
+    });
+  };
+
   return (
     <div className="formProgressPage">
       <div className="signout">
-        <button className="signoutBtn" type="button">
+        <button className="signoutBtn" type="button" onClick={handleSignout}>
           Sign out
         </button>
       </div>
@@ -18,24 +54,42 @@ function FormProgress() {
         <div className="newServices">
           <h3>Request a new service</h3>
           <div className="newServicesWrapper">
-            <NewService serviceForm="MAPCore Service Request Form" />
-            <NewService serviceForm="MAPCore Clinical Service Request Form" />
-            <NewService serviceForm="MAPCore Consultation Request Form" />
+            {publishedForms.map((form, idx) => {
+              return <NewService key={idx} serviceForm={form} />;
+            })}
           </div>
         </div>
 
         <div className="requestedServices">
           <h3>Your requested services</h3>
-          <ProgressItem
-            code="SOW123"
-            progress={25}
-            comments="Lorem ipsum dolor sit amet, et paulo voluptatum pro, erat delenit posidonium est in. Ut iisque ornatus eam, ei "
-          />
-          <ProgressItem code="SOW121" progress={50} />
+          {userRequestList
+            .filter((item) => item.task_state !== "completed")
+            .map((request, idx) => {
+              const progress = progressToNum(request.task_state);
+              return (
+                <ProgressItem
+                  key={idx}
+                  code={`SOW${request.task_id}`}
+                  progress={progress}
+                  comments={request.task_description}
+                />
+              );
+            })}
 
           <hr />
           <h4>Completed Requests</h4>
-          <ProgressItem code="SOW115" progress={100} />
+          {userRequestList
+            .filter((item) => item.task_state === "completed")
+            .map((request, idx) => {
+              return (
+                <ProgressItem
+                  key={idx}
+                  code={`SOW${request.task_id}`}
+                  progress={100}
+                  comments={request.task_description}
+                />
+              );
+            })}
         </div>
       </div>
     </div>
@@ -63,10 +117,10 @@ function ProgressBar({ completed }) {
 
 function NewService({ serviceForm }) {
   return (
-    <div className="newService">
+    <NavLink className="newService" to={`/request/${serviceForm.form_id}`}>
       <img src={FormImg} alt="formIcon" className="formIcon" />
-      {serviceForm}
-    </div>
+      {serviceForm.form_name}
+    </NavLink>
   );
 }
 

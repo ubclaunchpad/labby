@@ -1,15 +1,18 @@
 import uuid from "react-uuid";
-import { all, call, takeLatest, put } from "redux-saga/effects";
-import { SUBMIT_FORM } from "../actions/formActions";
+import { all, call, takeLatest, put, select } from "redux-saga/effects";
+import { SUBMIT_SURVEY } from "../actions/formActions";
 import { createTicketApi } from "../api/formApi";
-import { saveClinical, saveResponse, saveSurvey } from "../api/surveyApi";
+import { loadSurvey, saveClinical, saveResponse, saveSurvey } from "../api/surveyApi";
 import {POST_SERVICE_COST } from "../../redux/actions/ticketActions";
+import { LOAD_USER_SURVEY, SET_USER_SURVEY } from "../actions/userActions";
 
 export function* submitResponseSaga({ payload }) {
-  const survey_id = uuid();
-  yield call(saveSurvey, { survey_id: survey_id });
+  const user = yield select((state) => state.userReducer.currentUser);
+  const task_uuid = uuid();
+  yield call(saveSurvey, { survey_id: payload.sowId, user_id: user.user_id });
   yield call(createTicketApi, {
-    task_id: survey_id,
+    task_uuid: task_uuid,
+    fk_survey_id: payload.sowId,
     fk_form_id:
       payload.formResponses[0].question.fk_form_id ??
       payload.formResponses[1].question.fk_form_id,
@@ -22,8 +25,8 @@ export function* submitResponseSaga({ payload }) {
     payload.billables.map((billable) => {
       return put({ type: POST_SERVICE_COST, payload: {
         billable_id: uuid(),
-        sow_id: survey_id,
-        fk_project_id: payload.projectId,
+        sow_id: payload.sowId,
+        project_id: payload.projectId,
         name: billable.service,
         quantity: billable.quantity,
         cost: billable.cost,
@@ -32,10 +35,11 @@ export function* submitResponseSaga({ payload }) {
         completedTime: null,
         billed: false,
         billedTime: null,
-        created_by: "USER-A"
+        created_by: user.user_id
       } });
     })
   );
+  
   yield all(
     payload.formResponses.map((response) => { 
       const isChoice =
@@ -43,7 +47,7 @@ export function* submitResponseSaga({ payload }) {
         response.question.type === "single";
       const responseBody = {
         answer_id: response.id,
-        fk_survey_id: survey_id,
+        fk_survey_id: payload.sowId,
         fk_question_id: response.question.question_id,
         fk_questions_answer_id: isChoice
           ? response.response
@@ -58,7 +62,7 @@ export function* submitResponseSaga({ payload }) {
       if (response.sample_id !== "") {
         const clinicalBody = {
           clinical_id: response.clinical_id,
-          fk_survey_id: survey_id,
+          fk_survey_id: payload.sowId,
           fk_question_id: response.question,
           fk_questions_answer_id: response.answer,
           sample_id: response.sample_id,
@@ -72,6 +76,13 @@ export function* submitResponseSaga({ payload }) {
   );
 }
 
+export function* loadSurveySaga() {
+  const user = yield select((state) => state.userReducer.currentUser);
+  const surveys = yield call(loadSurvey, { user_id: user.user_id });
+  yield put({ type: SET_USER_SURVEY, payload: surveys.data[0] });
+}
+
 export default function* surveySaga() {
-  yield takeLatest(SUBMIT_FORM, submitResponseSaga);
+  yield takeLatest(SUBMIT_SURVEY, submitResponseSaga);
+  yield takeLatest(LOAD_USER_SURVEY, loadSurveySaga);
 }

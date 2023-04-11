@@ -1,12 +1,15 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import AWS from "aws-sdk";
+import { all, call, put, takeLatest } from "redux-saga/effects";
 import {
   ADD_SUBTASKS,
   ASSIGN_USER,
+  GET_ATTACHMENTS,
   GET_SERVICE_COST,
   GET_SUBTASKS,
   GET_TICKET_BOARD,
   POST_SERVICE_COST,
   REMOVE_SERVICE_COST,
+  SET_ATTACHMENTS,
   // SET_ACTIVE_TICKET,
   SET_SERVICE_COST,
   SET_SUBTASKS,
@@ -14,7 +17,7 @@ import {
   UNASSIGN_USER,
   UPDATE_TICKET_DESCRIPTION,
   UPDATE_TICKET_STATUS,
-  FILTER_TICKETS
+  FILTER_TICKETS,
 } from "../actions/ticketActions";
 import {
   assignUserApi,
@@ -30,6 +33,8 @@ import {
   getSubTicketsById,
   createSubtask,
 } from "../api/ticketApi";
+
+import { getAnswersBySurvey } from "../api/questionApi";
 
 export function* fetchTickets() {
   const assigneeList = yield call(getAssignees);
@@ -105,34 +110,78 @@ export function* getSubtasks(action) {
   });
 }
 
-
 export function* addSubtask(action) {
   yield call(createSubtask, action.payload);
   yield call(getSubtasks, { payload: action.payload.task_id });
 }
 
-// Need to know why there is an infinite loop and how to connect the saga to call the API properly. 
+export function* getAttachments(action) {
+  const config = new AWS.Config({
+    // Deprecated method of passing accessKeyId and secretAccessKey -- could not get new method to work
+    accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
+    region: "ca-central-1",
+  });
+
+  // call martins endpoint
+  const surveyAnswers = yield call(getAnswersBySurvey, action.payload);
+
+  // map / filter / reduce that list to only return just list of fileInputs
+  const filteredAnswers = surveyAnswers.data.filter((answer) => {
+    return (
+      answer.answerid != null && answer.answerid.startsWith("fileInput/", 0)
+    );
+  });
+
+  const blobList = yield all(
+    filteredAnswers.map((ans) => {
+      return call(async (answer) => {
+        AWS.config.update(config);
+        const S3 = new AWS.S3({});
+        const objParams = {
+          Bucket: process.env.REACT_APP_S3_BUCKET,
+          Key: answer.answerid,
+          ResponseContentType: "application/pdf",
+        };
+
+        const res = await S3.getObject(objParams).promise();
+        const url = window.URL.createObjectURL(
+          new Blob([res.Body], { type: "application/pdf" })
+        );
+
+        return { key: answer.answerid, url };
+      }, ans);
+    })
+  );
+
+  for (const blob of blobList) {
+    yield put({
+      type: SET_ATTACHMENTS,
+      payload: {
+        key: blob.key,
+        value: blob.url,
+      },
+    });
+  }
+}
+
+// Need to know why there is an infinite loop and how to connect the saga to call the API properly.
 export function* filterTickets(action) {
-  console.log("HIT THE SAGA FUNCTION")
   const ticketList = yield call(getTickets);
   const subticketList = yield call(getSubTickets);
   const allTickets = ticketList.data.concat(subticketList.data);
-  console.log("THESE ARE ALL TICKETS --> ", allTickets)
   const filteredTickets = allTickets.filter((ticket) => {
-    console.log('These are the ticket status -->', ticket.task_state);
     return ticket.task_state === action.payload;
   });
-  console.log(filteredTickets)
+  console.log(filteredTickets);
   yield put({
     type: FILTER_TICKETS,
     payload: {
       ticketList: filteredTickets,
     },
   });
-
-  console.log("These are the new tickets -->",yield call(getTickets));
-
 }
+
 export default function* ticketSaga() {
   yield takeLatest(GET_TICKET_BOARD, fetchTickets);
   yield takeLatest(UPDATE_TICKET_STATUS, updateTicketStatus);
@@ -144,5 +193,6 @@ export default function* ticketSaga() {
   yield takeLatest(GET_SERVICE_COST, getServiceCost);
   yield takeLatest(ADD_SUBTASKS, addSubtask);
   yield takeLatest(GET_SUBTASKS, getSubtasks);
+  yield takeLatest(GET_ATTACHMENTS, getAttachments);
   yield takeLatest(FILTER_TICKETS, filterTickets);
 }

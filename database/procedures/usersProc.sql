@@ -1,6 +1,7 @@
 USE `labby`;
 
 DROP PROCEDURE IF EXISTS `addUser`;
+DROP PROCEDURE IF EXISTS `updateUser`;
 DROP PROCEDURE IF EXISTS `deleteUser`;
 DROP PROCEDURE IF EXISTS `loadUser`;
 DROP PROCEDURE IF EXISTS `loadEmployee`;
@@ -45,6 +46,22 @@ VALUES (
     users.email=_email,
     users.employee=_employee,
 	users.is_approved=0;
+END $$
+
+CREATE PROCEDURE `updateUser` (
+	IN `_user_id` VARCHAR(50),
+	IN `_fk_organization_id` VARCHAR(50),
+	IN `_username` VARCHAR(255),
+	IN `_email` VARCHAR(255),
+	IN `_employee` BOOLEAN
+)
+BEGIN
+	UPDATE users SET
+		fk_organization_id = _fk_organization_id,
+		username = _username,
+		email = _email,
+		employee = _employee
+	WHERE user_id = _user_id;
 END $$
 
 CREATE PROCEDURE `deleteUser`  (

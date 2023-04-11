@@ -1,6 +1,7 @@
 .FormTitleInput {
     flex: 1;
     border-radius: 15px;
+    height: 45px;
 }
 
 .FormTitleTextInput {
@@ -8,6 +9,8 @@
     border: 0;
     background-color: transparent;
     width: 95%;
+    padding: 10px;
+    padding-bottom: 15px;
 }
 
 .FormTitleTextInput:focus {

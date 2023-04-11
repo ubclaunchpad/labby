@@ -24,6 +24,19 @@ const billingList = (state = defaultBillingList, action) => {
   }
 };
 
+// reducer with map of  sowid to billables
+const billablesBySOWIDMap = (state = defaultBillablesBySOWID, action) => {
+  switch (action.type) {
+    case SET_BILLABLE_BY_SOWID: { 
+      state[action.payload.sowId] = action.payload.data;
+      return {...state};
+    }
+    default: {
+      return state; 
+    }
+  }
+}
+
 const billingListOG = (state = defaultBillingList, action) => {
   switch (action.type) {
     case SET_OG_BILLABLE: {
@@ -81,6 +94,7 @@ const sowAnalytics = (state = defaultSowAnalytics, action) => {
 
 export default combineReducers({
   billingList,
+  billablesBySOWIDMap,
   billingListOG,
   servicesAnalytics,
   projectsAnalytics,

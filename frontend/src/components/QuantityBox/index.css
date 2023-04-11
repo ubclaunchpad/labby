@@ -1,0 +1,33 @@
+.quantityBox {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    margin-bottom: 30px;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.quantityImage {
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+.quantityHeader {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+
+.quantityInputBox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.quantityInput {
+    width: 50%;
+    margin-right: 10px;
+    margin-left: 50px;
+}
