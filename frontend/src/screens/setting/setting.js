@@ -8,6 +8,10 @@ import Header from "../../components/Header";
 import { useEffect, useState } from "react";
 import { appColor } from "../../constants";
 import { startOfQuarter } from "date-fns";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import { useForm } from "react-hook-form";
+import { AssigneeIcon } from "../../components/Icons/AssigneeIcon";
 
 function Setting() {
   const dispatch = useDispatch();
@@ -21,52 +25,39 @@ function Setting() {
     });
   };
 
+  const onSubmit = (e) => {
+    console.log(e.target.value);
+  };
+
+  const currentUser = useSelector((state) => state.userReducer.currentUser);
+  console.log(currentUser);
+
   const userList = useSelector((state) => state?.userReducer?.userList);
-  // console.log(userList);
-  // const getData = useEffect(() => getUserData, []);
   // const usersData = useSelector((state) => state?.userReducer?.userList);
-  const [userData, setUserData] = useState("");
-  // const isUser = userData?.user == "user";
-  const [test, setTest] = useState();
-
-  useEffect(() => {
-    dispatch({ type: LOAD_USERLIST });
-  }, []);
-
-  async function logJSONData() {
-    const response = await fetch("https://swapi.dev/api/people/1");
-    const jsonData = await response.json();
-    console.log(jsonData);
-    return jsonData;
-  }
-  useEffect(() => {
-    fetch("https://swapi.dev/api/people/1")
-      .then((res) => res.json())
-      .then((val) => {
-        setTest(val);
-      });
-  }, []);
-
-  // async function getUserData() {
-  //   const response = await fetch("https://swapi.dev/api/people/3")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //     });
-  // }
-
-  // getUserData();
+  const [userSettings, setUserSettings] = useState("");
 
   // Move this to constants:
   const userFieldLabels = {
     firstName: "First Name",
     lastName: "Last Name",
+    userName: "User Name",
     email: "Email",
     bio: "Bio Statement ",
     role: "Role",
   };
 
+  // Move this to constants:
+  const userFieldEditable = {
+    firstName: false,
+    lastName: false,
+    userName: true,
+    email: true,
+    bio: true,
+    role: false,
+  };
+
   const fakeUserSettings = {
+    userName: "Miyato9232",
     firstName: "Miyato",
     lastName: "Kurachenova",
     email: "Mknova@gmail.com",
@@ -82,30 +73,89 @@ function Setting() {
     costCenter: "metroville",
     role: "customer",
   };
+
+  const SettingsPopup = ({ field, initValue, onChange }) => {
+    // console.log(initValue);
+    return (
+      <Popup
+        trigger={
+          <button
+            className="settings-info__edit-button"
+            onClick={() => {
+              console.log("Clicked Button", field);
+            }}
+          >
+            Edit {">"}
+          </button>
+        }
+        modal
+      >
+        {(close) => (
+          <div className="settings-popup__container">
+            <div className="settings-popup__title">{`Edit ${userFieldLabels[field]}`}</div>
+            <label className="settings-popup__label">
+              {userFieldLabels[field]}
+              <input
+                className="settings-popup__input"
+                type="text"
+                name="field"
+                defaultValue={initValue}
+              />
+            </label>
+            <div className="settings-popup__button-row">
+              <button
+                className="settings-popup__cancel"
+                onClick={() => {
+                  close();
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                className="settings-popup__submit"
+                onClick={(e) => {
+                  console.log(e.target.value);
+                }}
+              >
+                Submit
+              </button>
+            </div>
+
+            {/* <div className="settings-popup__label">{userFieldLabels[field]}</div> */}
+          </div>
+        )}
+      </Popup>
+    );
+  };
+
   const UserSettingsInfo = ({ settings }) => {
     const array = Object.entries(settings);
     // console.log(array);
     return array.map(([field, value]) => {
       // Need a way to determine if value is editable
-      const editable = true;
+      const editable = userFieldEditable[field];
       return (
-        <div className="settings-info__row">
+        <div className="settings-info__row" key={field}>
           <div className="settings-info__display-values">
             <div className="settings-info__title">{userFieldLabels[field]}</div>
-            <div className="settings-info__value">{value}</div>
+            <div className="settings-info__value">
+              <div>{value}</div>
+              {editable && (
+                // <button
+                //   className="settings-info__edit-button"
+                //   onClick={() => {
+                //     console.log("Clicked Button", field);
+                //   }}
+                // >
+                //   Edit {">"}
+                // </button>
+                <SettingsPopup field={field} initValue={value} />
+              )}
+            </div>
           </div>
 
-          {editable && (
-            <div className="settings-info__edit-row">
-              <button
-                className="settings-info__edit-button"
-                // onChange={console.log("clicked")}
-              >
-                Edit
-              </button>
-            </div>
-          )}
-          <hr></hr>
+          {editable && <div className="settings-info__edit-row"></div>}
+          <hr className="settings-info-rule"></hr>
         </div>
       );
     });
@@ -128,6 +178,14 @@ function Setting() {
           </button>
         </div>
         <div className="settings-information__container">
+          <div className="settings-information__profile">
+            <div class="settings-information__square">
+              <div>{currentUser?.username[0]}</div>
+            </div>
+            <div className="settings-information__greeting">{`Hello, ${currentUser?.username}`}</div>
+          </div>
+          <hr className="settings-info-rule"></hr>
+
           <UserSettingsInfo settings={fakeUserSettings} />
         </div>
       </div>
