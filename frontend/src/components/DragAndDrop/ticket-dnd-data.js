@@ -1,7 +1,7 @@
 const initialTasks = {}
 
-// leave here as for reference expected structure of data
-const initialTasksStructureDemo = {
+// leave here as reference for expected structure of data
+const initialTasksStructure = {
   "task-1": {
     id: "task-1",
     code: "SOW123",
