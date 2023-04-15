@@ -25,7 +25,7 @@ export function* submitResponseSaga({ payload }) {
     payload.billables.map((billable) => {
       return put({ type: POST_SERVICE_COST, payload: {
         billable_id: uuid(),
-        sow_id: payload.sowId,
+        sow_id: task_uuid,
         project_id: payload.projectId,
         name: billable.service,
         quantity: billable.quantity,
