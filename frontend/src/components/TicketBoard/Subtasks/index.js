@@ -4,7 +4,6 @@ import FormControl from "@mui/material/FormControl";
 import { Checkbox } from "@mui/material";
 import "./index.css";
 import Add from "../../../assets/AddBlack.png";
-import Rectangle from "../../../assets/Rectangle.png";
 import { ADD_SUBTASKS } from "../../../redux/actions/ticketActions";
 
 function Subtasks() {

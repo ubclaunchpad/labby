@@ -338,7 +338,8 @@
 }
 
 .additionBar {
-  background-color: #b4b4b4;
+  background-color: #d9d9d9;
+  color: #666;
   height: 40px;
   width: 100%;
   padding-left: 15px;
