@@ -5,6 +5,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import InvoiceTable from "../../components/InvoiceTable";
 import InvoiceTotal from "../../components/InvoiceTotal";
+import ServicesAnalytics from "../../components/ServicesAnalytics";
+import ProjectsAnalytics from "../../components/ProjectsAnalytics";
+import SowAnalytics from "../../components/SowAnalytics";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,6 +16,7 @@ import {
   GET_PROJECT,
   LOAD_BILLABLE,
   SET_BILLABLE,
+  UPDATE_CLICKS
 } from "../../redux/actions/billingActions";
 import GenerateInvoice from "../../components/GenerateInvoice";
 import { Chart } from "../../components/Chart/Chart";
@@ -25,6 +29,7 @@ import {
   LOAD_USERLIST,
 } from "../../redux/actions/userActions";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
+
 
 function Invoice() {
   const dispatch = useDispatch();
@@ -53,6 +58,15 @@ function Invoice() {
   );
   const organizationData = useSelector(
     (state) => state?.userReducer?.organizationList
+  );
+  const servicesAnalytics = useSelector(
+    (state) => state.billingReducer.servicesAnalytics
+  );
+  const projectsAnalytics = useSelector(
+    (state) => state.billingReducer.projectsAnalytics
+  );
+  const sowAnalytics = useSelector(
+    (state) => state.billingReducer.sowAnalytics
   );
   const usersData = useSelector((state) => state?.userReducer?.userList);
   const onSubmit = (data) => {
@@ -90,7 +104,28 @@ function Invoice() {
     dispatch({ type: LOAD_QUESTION });
   }, [dispatch, usersData, organizationData, projectData, costCenterData]);
 
+  useEffect(() => {
+    const storedTime = JSON.parse(localStorage.getItem("lastMountTime"));
+    const currentTime = new Date().getTime();
+  
+    if (!storedTime || currentTime - storedTime > 60000) {
+      dispatch({
+        type: UPDATE_CLICKS,
+        payload: {
+          component_name: "billing_page"
+        },
+      });
+      localStorage.setItem("lastMountTime", JSON.stringify(currentTime));
+    }
+  }, []);
+
   return (
+  <div className="invoicePageContainer">
+    <div>
+      {servicesAnalytics ? <ServicesAnalytics/> : null}
+      {projectsAnalytics ? <ProjectsAnalytics/> : null}
+      {sowAnalytics ? <SowAnalytics/> : null}
+    </div>
     <div className="invoicePage">
       <div className="headerComponent">
         <Header />
@@ -110,8 +145,10 @@ function Invoice() {
             <div className="invoices-chart-container">
               <Chart />
             </div>
-            <div className="InvoiceTotal" style={{ color: appColor.gray }}>
-              <InvoiceTotal />
+            <div className="InvoiceTotal" 
+                 style={{ color: appColor.gray }}
+                 >
+              <InvoiceTotal  />
             </div>
           </div>
           <div className="search-invoices-container">
@@ -268,6 +305,7 @@ function Invoice() {
         </div>
       </div>
     </div>
+  </div>
   );
 }
 

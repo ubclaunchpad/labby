@@ -1,13 +1,18 @@
 import { combineReducers } from "redux";
-import {
-  SET_BILLABLE,
-  SET_INVOICE_LIST,
-  SET_OG_BILLABLE,
-  SET_BILLABLE_BY_SOWID
-} from "../actions/billingActions";
+import { SET_BILLABLE, 
+         SET_INVOICE_LIST, 
+         SET_OG_BILLABLE, 
+         SET_ACTIVE_ANALYTICS, 
+         SET_ACTIVE_PROJECT_ANALYTICS,
+         SET_ACTIVE_SOW_ANALYTICS,
+         SET_BILLABLE_BY_SOWID
+        } from "../actions/billingActions";
 
 const defaultBillingList = [];
 const defaultInvoiceList = [];
+const defaultServiceAnalytics = false;
+const defaultProjectAnalytics = false;
+const defaultSowAnalytics = false;
 const defaultBillablesBySOWID = {};
 
 const billingList = (state = defaultBillingList, action) => {
@@ -56,9 +61,45 @@ const invoiceList = (state = defaultInvoiceList, action) => {
   }
 };
 
+const servicesAnalytics = (state = defaultServiceAnalytics, action) => {
+  switch (action.type) {
+    case SET_ACTIVE_ANALYTICS: {
+      return !state;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
+const projectsAnalytics = (state = defaultProjectAnalytics, action) => {
+  switch (action.type) {
+    case SET_ACTIVE_PROJECT_ANALYTICS: {
+      return !state;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
+const sowAnalytics = (state = defaultSowAnalytics, action) => {
+  switch (action.type) {
+    case SET_ACTIVE_SOW_ANALYTICS: {
+      return !state;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 export default combineReducers({
   billingList,
-  invoiceList,
   billablesBySOWIDMap,
   billingListOG,
+  servicesAnalytics,
+  projectsAnalytics,
+  sowAnalytics,
+  invoiceList
 });
