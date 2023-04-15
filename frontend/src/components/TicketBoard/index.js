@@ -271,7 +271,7 @@ export const TicketBoard = () => {
       const filteredTasksArray = Object.entries(allTasks).filter(
         ([key, value]) => {
           const lowerCaseSearchTerm = searchTerm.toLowerCase();
-          const matchedId = value?.id
+          const matchedId =`SOW-${value?.id}`
             ?.toLowerCase()
             .includes(lowerCaseSearchTerm);
           const matchedDescription = value?.description
