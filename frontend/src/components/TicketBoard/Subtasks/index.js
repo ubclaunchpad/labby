@@ -1,4 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import { Checkbox } from "@mui/material";
 import "./index.css";
 import Add from "../../../assets/AddBlack.png";
 import Rectangle from "../../../assets/Rectangle.png";
@@ -22,12 +25,18 @@ function Subtasks() {
               return (
                 <div className="subtaskCostRow" key={subtasks.subtask_id}>
                   <div className="subtaskInputContainer">
-                    <img
-                      className="Rectangle"
-                      src={Rectangle}
-                      alt="Rectangle"
-                    />
-                    <div>{subtasks.subtask_title}</div>
+                    <FormControl style={{width:"100%"}}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            onClick={() =>
+                              console.log("TODO: Mark subtask as complete")
+                            }
+                          />
+                        }
+                        label={subtasks.subtask_title}
+                      />
+                    </FormControl>
                   </div>
                 </div>
               );
