@@ -33,7 +33,7 @@ function Subtasks() {
                             }
                           />
                         }
-                        label={subtasks.subtask_title}
+                        label={<span className="subtasksLabel">{subtasks.subtask_title}</span>}
                       />
                     </FormControl>
                   </div>

@@ -46,3 +46,7 @@
   cursor: pointer;
   margin-right: 15px;
 }
+
+.subtasksLabel{
+  font-size: 14px;
+}
