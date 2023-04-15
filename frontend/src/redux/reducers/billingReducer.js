@@ -4,7 +4,8 @@ import { SET_BILLABLE,
          SET_OG_BILLABLE, 
          SET_ACTIVE_ANALYTICS, 
          SET_ACTIVE_PROJECT_ANALYTICS,
-         SET_ACTIVE_SOW_ANALYTICS
+         SET_ACTIVE_SOW_ANALYTICS,
+         SET_BILLABLE_BY_SOWID
         } from "../actions/billingActions";
 
 const defaultBillingList = [];
@@ -12,6 +13,7 @@ const defaultInvoiceList = [];
 const defaultServiceAnalytics = false;
 const defaultProjectAnalytics = false;
 const defaultSowAnalytics = false;
+const defaultBillablesBySOWID = {};
 
 const billingList = (state = defaultBillingList, action) => {
   switch (action.type) {
@@ -98,5 +100,6 @@ export default combineReducers({
   billingListOG,
   servicesAnalytics,
   projectsAnalytics,
-  sowAnalytics
+  sowAnalytics,
+  invoiceList
 });

@@ -107,8 +107,6 @@ function Invoice() {
   useEffect(() => {
     const storedTime = JSON.parse(localStorage.getItem("lastMountTime"));
     const currentTime = new Date().getTime();
-    {console.log(storedTime)}
-    {console.log(currentTime)}
   
     if (!storedTime || currentTime - storedTime > 60000) {
       dispatch({

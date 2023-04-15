@@ -45,7 +45,7 @@ function ServicesAnalytics() {
     if (acc[name]) {
       acc[name] += cost;
     } else {
-      if (cost != 0) {
+      if (cost !== 0) {
         acc[name] = cost;
       }
     }
@@ -89,9 +89,6 @@ function ServicesAnalytics() {
           },
         style: {
           colors: ['#fff']
-        },
-        formatter: function(value) {
-          return "$" + value
         },
         dropShadow: {
           enabled: false

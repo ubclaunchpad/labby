@@ -14,7 +14,7 @@ function ProjectsAnalytics() {
     if (acc[fk_project_id]) {
       acc[fk_project_id] += cost;
     } else {
-      if (cost != 0) {
+      if (cost !== 0) {
         acc[fk_project_id] = cost;
       }
     }
