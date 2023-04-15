@@ -15,7 +15,6 @@ import { AssigneeIcon } from "../../components/Icons/AssigneeIcon";
 
 function Setting() {
   const dispatch = useDispatch();
-
   const handleSignout = (e) => {
     e.preventDefault();
     localStorage.removeItem("currentUser");
@@ -30,7 +29,7 @@ function Setting() {
   };
 
   const currentUser = useSelector((state) => state.userReducer.currentUser);
-  console.log(currentUser);
+  // console.log(currentUser);
 
   const userList = useSelector((state) => state?.userReducer?.userList);
   // const usersData = useSelector((state) => state?.userReducer?.userList);
@@ -40,24 +39,28 @@ function Setting() {
   const userFieldLabels = {
     firstName: "First Name",
     lastName: "Last Name",
-    userName: "User Name",
+    username: "User Name",
     email: "Email",
     bio: "Bio Statement ",
     role: "Role",
+  };
+
+  const userRoles = {
+    lab_assistant: "Lab Assistant",
   };
 
   // Move this to constants:
   const userFieldEditable = {
     firstName: false,
     lastName: false,
-    userName: true,
-    email: true,
+    username: true,
+    email: false,
     bio: true,
     role: false,
   };
 
   const fakeUserSettings = {
-    userName: "Miyato9232",
+    username: "Miyato9232",
     firstName: "Miyato",
     lastName: "Kurachenova",
     email: "Mknova@gmail.com",
@@ -74,8 +77,11 @@ function Setting() {
     role: "customer",
   };
 
-  const SettingsPopup = ({ field, initValue, onChange }) => {
-    // console.log(initValue);
+  const SettingsPopup = ({ field, onChange, userSettings }) => {
+    // const currentUser = useSelector((state) => state.userReducer.currentUser);
+    const currentUser = fakeUserSettings;
+    const [mutateUser, setMutateUser] = useState({});
+    const [settingsInput, setSettingsInput] = useState(currentUser[field]);
     return (
       <Popup
         trigger={
@@ -99,29 +105,37 @@ function Setting() {
                 className="settings-popup__input"
                 type="text"
                 name="field"
-                defaultValue={initValue}
+                value={settingsInput}
+                // defaultValue={mutateUser[field]}
+                onChange={(e) => {
+                  let tempUserSettings = { ...currentUser };
+                  tempUserSettings[field] = e.target.value;
+                  setSettingsInput(e.target.value);
+                  setMutateUser(tempUserSettings);
+                }}
               />
             </label>
             <div className="settings-popup__button-row">
               <button
                 className="settings-popup__cancel"
                 onClick={() => {
+                  setSettingsInput(currentUser[field]);
+                  setMutateUser({});
                   close();
                 }}
               >
                 Cancel
               </button>
               <button
+                type="submit"
                 className="settings-popup__submit"
                 onClick={(e) => {
-                  console.log(e.target.value);
+                  console.log(mutateUser);
                 }}
               >
-                Submit
+                Confirm
               </button>
             </div>
-
-            {/* <div className="settings-popup__label">{userFieldLabels[field]}</div> */}
           </div>
         )}
       </Popup>
@@ -139,18 +153,8 @@ function Setting() {
           <div className="settings-info__display-values">
             <div className="settings-info__title">{userFieldLabels[field]}</div>
             <div className="settings-info__value">
-              <div>{value}</div>
-              {editable && (
-                // <button
-                //   className="settings-info__edit-button"
-                //   onClick={() => {
-                //     console.log("Clicked Button", field);
-                //   }}
-                // >
-                //   Edit {">"}
-                // </button>
-                <SettingsPopup field={field} initValue={value} />
-              )}
+              <div>{field !== "role" ? value : userRoles[value]}</div>
+              {editable && <SettingsPopup field={field} />}
             </div>
           </div>
 
@@ -179,7 +183,7 @@ function Setting() {
         </div>
         <div className="settings-information__container">
           <div className="settings-information__profile">
-            <div class="settings-information__square">
+            <div className="settings-information__square">
               <div>{currentUser?.username[0]}</div>
             </div>
             <div className="settings-information__greeting">{`Hello, ${currentUser?.username}`}</div>
