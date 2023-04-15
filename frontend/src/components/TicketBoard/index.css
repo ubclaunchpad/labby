@@ -301,6 +301,7 @@
 }
 
 .ticketInfo .subtasksColumn {
+  gap: 36px;
   flex: 3;
   min-width: 25%;
 }
@@ -313,7 +314,8 @@
   margin-top: 12px;
   padding: 5px 15px;
   height: 20%;
-  background-color: #d9d9d9;
+  /* background-color: #d9d9d9; */
+  background-color: #ecedf3;
   border-radius: 10px;
 }
 .attachmentsWrapper{
