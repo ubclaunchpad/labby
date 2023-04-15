@@ -70,10 +70,10 @@ function Invoice() {
   );
   const usersData = useSelector((state) => state?.userReducer?.userList);
   const onSubmit = (data) => {
-    const startDate = new Date(dateRange.startDate);
-    const endDate = new Date(dateRange.endDate);
-    const start = startDate.toISOString();
-    const end = endDate.toISOString();
+    const startDate = dateRange.startDate ? new Date(dateRange.startDate) : null;
+    const endDate = dateRange.endDate ? new Date(dateRange.endDate) : null;
+    const start = startDate ? startDate.toISOString() : null;
+    const end = endDate ? endDate.toISOString() : null;
     const filters = {
       ...data,
       start_date: start,
@@ -117,7 +117,7 @@ function Invoice() {
       });
       localStorage.setItem("lastMountTime", JSON.stringify(currentTime));
     }
-  }, []);
+  }, [dispatch]);
 
   return (
   <div className="invoicePageContainer">
