@@ -18,14 +18,14 @@ function TextAnswer({ question }) {
         {question.question}{" "}
         <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
       </div>
-      <div className="text-box-container">
+      <div className="text-box-container-ta-cust">
         <Input.TextArea
           placeholder="Type here..."
           autoSize={{
             minRows: 1,
-            maxRows: 5,
+            maxRows: 20,
           }}
-          className="text-box"
+          className="text-box-ta-cust"
           onBlur={(e) => {
             if (e.target.value !== "") {
               dispatch({
