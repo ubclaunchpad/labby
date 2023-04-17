@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { NavLink, Navigate } from "react-router-dom";
 import uuid from "react-uuid";
 import "./request-form.css";
 import { appColor } from "../../constants";
@@ -24,8 +24,9 @@ import { TOGGLE_COST_ESTIMATE } from "../../redux/actions/uiActions";
 import ProjectSelector from "../../components/ProjectSelector";
 import { ToastContainer } from "react-toastify";
 import { WarningToast } from "../../components/Toasts";
+import SideArrow from "../../assets/SideArrow.png";
 
-function RequestForm() {
+function RequestForm({ origin }) {
   const dispatch = useDispatch();
   const [submissionSuccessful, setSubmissionSuccessful] = useState(false);
   const formId = window.location.pathname.split("/")[2];
@@ -189,8 +190,16 @@ function RequestForm() {
         />
         <div className="requestFormContainer">
           <div id="progressBar" style={{ zIndex: 2 }} />
-          <div className="formTitle" style={{ color: appColor.primaryBlack }}>
-            {questions[0].question}
+          <div className="requestTitleContainer">
+            <NavLink
+              className="requestBackArrowContainer"
+              to={origin ?? "/request-progress"}
+            >
+              <img className="requestBackArrow" src={SideArrow} alt="Back" />
+            </NavLink>
+            <div className="formTitle" style={{ color: appColor.primaryBlack }}>
+              {questions[0].question}
+            </div>
           </div>
           {questions.slice(1).map((question) => {
             const logicNeeded = logicList[question.question_id] ?? [];

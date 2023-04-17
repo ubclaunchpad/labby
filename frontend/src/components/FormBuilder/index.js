@@ -89,27 +89,30 @@ function FormBuilder() {
           {FormTitle()}
           <div className="FormSubmitT">
             <button
-                className="FormPreviewButton"
-                style={{
-                  backgroundColor: appColor.primaryLight,
-                  color: appColor.white,
-                }}
-                onMouseOver={(e) => {
-                  e.target.style.backgroundColor = appColor.primary;
-                }}
-                onMouseOut={(e) => {
-                  e.target.style.backgroundColor = appColor.primaryLight;
-                }}
-                onClick={() => {
-                  SuccessToast("Form Submitted!");
-                  dispatch({ type: SAVE_FORM_BUILD, payload: { form_id: formId }});
-                }}
+              className="FormPreviewButton"
+              style={{
+                backgroundColor: appColor.primaryLight,
+                color: appColor.white,
+              }}
+              onMouseOver={(e) => {
+                e.target.style.backgroundColor = appColor.primary;
+              }}
+              onMouseOut={(e) => {
+                e.target.style.backgroundColor = appColor.primaryLight;
+              }}
+              onClick={() => {
+                SuccessToast("Form Submitted!");
+                dispatch({
+                  type: SAVE_FORM_BUILD,
+                  payload: { form_id: formId },
+                });
+              }}
             >
               Publish Form
             </button>
-          </div> 
+          </div>
           <div className="FormPreview">
-            <NavLink to={`/request/${formId}`}>
+            <NavLink to={`/preview-request/${formId}`}>
               <button
                 className="FormPreviewButton"
                 style={{
@@ -126,6 +129,30 @@ function FormBuilder() {
                 Preview
               </button>
             </NavLink>
+          </div>
+          <div className="FormSubmitT">
+            <button
+              className="FormPreviewButton"
+              style={{
+                backgroundColor: appColor.primaryLight,
+                color: appColor.white,
+              }}
+              onMouseOver={(e) => {
+                e.target.style.backgroundColor = appColor.primary;
+              }}
+              onMouseOut={(e) => {
+                e.target.style.backgroundColor = appColor.primaryLight;
+              }}
+              onClick={() => {
+                SuccessToast("Form Link Copied to Clipboard!");
+                // copy text to clipboard
+                navigator.clipboard.writeText(
+                  `https://labby.harinwu.com/request/${formId}`
+                );
+              }}
+            >
+              Share
+            </button>
           </div>
         </div>
       </div>

@@ -3,6 +3,29 @@
   display: flex;
 }
 
+.requestTitleContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 25px;
+  padding-bottom: 50px;
+}
+
+.requestBackArrowContainer {
+  width: 30px;
+  height: 30px;
+  margin-left: -70px;
+  margin-right: 40px;
+}
+
+.requestBackArrow {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  transform: rotate(180deg);
+  cursor: pointer;
+}
+
 .requestFormContainer {
   flex: 1;
   padding-left: 200px;
@@ -18,8 +41,6 @@
   font-size: 32px;
   font-weight: bold;
   text-align: left;
-  padding-top: 25px;
-  padding-bottom: 50px;
 }
 
 .FormRequestQuestion {
