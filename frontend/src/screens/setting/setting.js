@@ -127,10 +127,14 @@ function Setting() {
                 Cancel
               </button>
               <button
-                type="submit"
                 className="settings-popup__submit"
-                onClick={(e) => {
-                  console.log(mutateUser);
+                onClick={() => {
+                  if (mutateUser === {}) {
+                    // Should make button greyed out if this is the case.
+                    return;
+                  } else {
+                    console.log(mutateUser);
+                  }
                 }}
               >
                 Confirm
