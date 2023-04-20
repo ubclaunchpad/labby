@@ -12,9 +12,16 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import { useForm } from "react-hook-form";
 import { AssigneeIcon } from "../../components/Icons/AssigneeIcon";
+import AWS from "aws-sdk";
 
 function Setting() {
   const dispatch = useDispatch();
+  const config = new AWS.Config({
+    accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
+    region: "ca-central-1",
+  })
+
   const handleSignout = (e) => {
     e.preventDefault();
     localStorage.removeItem("currentUser");
@@ -23,6 +30,39 @@ function Setting() {
       payload: null,
     });
   };
+
+  const getPhotoFromS3 = async (e) => {
+    // get object from s3
+    const S3 = new AWS.S3(config);
+    const objParams = {
+      Bucket: process.env.REACT_APP_S3_BUCKET,
+      Key: JSON.parse(localStorage.getItem("currentUser")).user_id,
+      ResponseContentType: "image/jpeg",
+    }
+
+    const res = await S3.getObject(objParams).promise();
+    const profilePhoto = URL.createObjectURL(new Blob([res.Body], { type: "image/jpeg" }));
+    return profilePhoto;
+  }
+  
+  const uploadPhoto = async ({ file }) => {
+    const S3 = new AWS.S3(config);
+    const fileName = "ProfilePicture-" + JSON.parse(localStorage.getItem("currentUser")).user_id;
+    const objParams = {
+      Bucket: process.env.REACT_APP_S3_BUCKET,
+      Key: `profilePictures/${fileName}`,
+      Body: file, 
+      ContentType: file.type
+    }
+
+    S3.putObject(objParams, (err, data) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(data);
+      }
+    });
+  }
 
   const onSubmit = (e) => {
     console.log(e.target.value);
