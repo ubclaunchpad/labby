@@ -59,6 +59,21 @@ function ContactInfo({ question }) {
     });
   }, [currentUser, orgList]);
 
+  const [selectedValue, setSelectedValue] = useState(null);
+  const handleChange = (event) => {
+    const selected = JSON.parse(event.target.value);
+    setSelectedValue(selected);
+
+    dispatch({
+      type: ADD_INSTITUTION_RESPONSE,
+      payload: {
+        id: institutionAnswerId,
+        response: "INSTITUTION_" + selected.organization_name,
+        question: question,
+      },
+    });
+  };
+
   return (
     <div className="GlobalCustomerQuestionContainer">
       <div className="GlobalQuestionTitle">
@@ -96,7 +111,18 @@ function ContactInfo({ question }) {
             <span className="contact-info-field-label-customer">
               Institution
             </span>
-            <input
+            <select className="select" onChange={handleChange}>
+              {selectedValue === null && <option key={"Default"} value={""} />}
+              {orgList.map((option) => (
+                <option key={option.organization_id} value={JSON.stringify(option)}>
+                  {option.organization_name}
+                </option>
+              ))}
+              <option key={"Other"} value={JSON.stringify("Other")}>
+                {"Other"}
+              </option>
+            </select>
+            {selectedValue === "Other" ? <input
               className="contact-info-user-input-customer"
               type="text"
               placeholder="Type Here... "
@@ -117,7 +143,7 @@ function ContactInfo({ question }) {
                   });
                 }
               }}
-            ></input>
+            /> : null}
           </div>
           <div className="contact-info-row-customer">
             <span className="contact-info-field-label-customer">Email</span>

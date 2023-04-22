@@ -159,9 +159,8 @@ function RequestForm({ origin }) {
     requestFormContainer.addEventListener("scroll", () => {
       let maxPageHeight =
         requestFormContainer.scrollHeight - window.innerHeight;
-      progressBar.style.width = `${
-        (requestFormContainer.scrollTop / maxPageHeight) * 100
-      }%`;
+      progressBar.style.width = `${(requestFormContainer.scrollTop / maxPageHeight) * 100
+        }%`;
     });
   }
 
@@ -196,8 +195,10 @@ function RequestForm({ origin }) {
           {questions.slice(1).map((question) => {
             const logicNeeded = logicList[question.question_id] ?? [];
             var show = true;
+            var orShow = null;
             logicNeeded.forEach((logic) => {
               if (
+                logic.condition_type === "2" &&
                 formResponses.findIndex(
                   (response) =>
                     response.question.answer_id === logic.fk_answer_id
@@ -205,9 +206,25 @@ function RequestForm({ origin }) {
               ) {
                 show = false;
               }
+
+              if (logic.condition_type === "6" && orShow === null && formResponses.findIndex(
+                (response) =>
+                  response.question.answer_id === logic.fk_answer_id
+              ) === -1) {
+                orShow = false;
+              } else if (logic.condition_type === "6" && formResponses.findIndex(
+                (response) =>
+                  response.question.answer_id === logic.fk_answer_id
+              ) !== -1) {
+                orShow = true;
+              }
             });
 
-            if (!show) {
+            if (orShow === null) {
+              orShow = true;
+            }
+
+            if (!show || !orShow) {
               return null;
             }
 

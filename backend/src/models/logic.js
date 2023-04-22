@@ -7,6 +7,7 @@ const Strategy = {
   NotAnswered: 3,
   NotSingleSelect: 4,
   NotMultiSelect: 5,
+  ORAnswered: 6,
 };
 
 export class Logic {
@@ -55,6 +56,10 @@ export class Logic {
           condition.parameters = "";
           this.makeQuery(condition, result);
           break;
+        case Strategy.ORAnswered:
+          condition.parameters = "";
+          this.makeQuery(condition, result);
+          break;
         case Strategy.NotAnswered:
           condition.parameters = "";
           this.makeQuery(condition, result);
@@ -86,6 +91,10 @@ export class Logic {
           this.insertLogic(condition, result);
           break;
         case Strategy.Answered:
+          condition.condition_type = 3;
+          this.insertLogic(condition, result);
+          break;
+        case Strategy.ORAnswered:
           condition.condition_type = 3;
           this.insertLogic(condition, result);
           break;

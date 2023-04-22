@@ -3,7 +3,9 @@ import { TOGGLE_LOGIC } from "../../redux/actions/uiActions";
 import SideArrow from "../../assets/SideArrow.png";
 import "./index.css";
 import { appColor } from "../../constants";
-import { DELETE_LOGIC } from "../../redux/actions/logicActions";
+import { DELETE_LOGIC, SAVE_LOGIC } from "../../redux/actions/logicActions";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { SuccessToast } from "../Toasts";
 
 function LogicView() {
   const dispatch = useDispatch();
@@ -69,6 +71,28 @@ function LogicView() {
                     alt="Side Arrow"
                   />
                   <div className="LogicText">is selected</div>
+                  <ToggleButtonGroup
+                    value={logic.condition_type}
+                    exclusive
+                    onChange={(e) => {
+                      dispatch({
+                        type: SAVE_LOGIC,
+                        payload: {
+                          condition_id: logic.condition_id,
+                          question_id: logic.fk_question_id,
+                          answer_id: logic.fk_answer_id,
+                          condition_type: parseInt(e.target.value),
+                          parameters: logic.condition_parameter,
+                          result: true,
+                          form_id: selectedQuestion.fk_form_id,
+                        },
+                      });
+                      SuccessToast("Logic Added!");
+                    }}
+                  >
+                    <ToggleButton value="2">AND</ToggleButton>
+                    <ToggleButton value="6">OR</ToggleButton>
+                  </ToggleButtonGroup>
                   <button
                     className="LogicDeleteButton"
                     style={{
