@@ -20,16 +20,6 @@ function ContactInfoEditor({ question }) {
   const [questionNum, setQuestionNum] = useState("");
   const [title, setTitle] = useState("");
 
-  const [fullName, setFullName] = useState("");
-  const [institution, setInstitution] = useState("");
-  const [email, setEmail] = useState("");
-  const [telephone, setTelephone] = useState("");
-
-  useEffect(() => {
-    const fields = { fullName, institution, email, telephone };
-    console.log(fields);
-  }, [fullName, institution, email, telephone]);
-
   useEffect(() => {
     setQuestionNum(`Q${question.position_index}`);
     setTitle(question.question);
@@ -97,45 +87,70 @@ function ContactInfoEditor({ question }) {
             <span className="contact-info-field-label">Full Name</span>
             <input
               className="contact-info-user-input"
-              type="text"
               placeholder="User Types Here... "
-              onBlur={(e) => {
-                setFullName(e.target.value);
-              }}
-            ></input>
+            />
           </div>
           <div className="contact-info-row">
             <span className="contact-info-field-label">Institution</span>
             <input
               className="contact-info-user-input"
-              type="text"
               placeholder="User Types Here... "
-              onBlur={(e) => {
-                setInstitution(e.target.value);
-              }}
-            ></input>
+            />
           </div>
           <div className="contact-info-row">
             <span className="contact-info-field-label">Email</span>
             <input
               className="contact-info-user-input"
-              type="email"
               placeholder="User Types Here... "
-              onBlur={(e) => {
-                setEmail(e.target.value);
-              }}
-            ></input>
+            />
           </div>
           <div className="contact-info-row">
             <span className="contact-info-field-label">Telephone</span>
             <input
               className="contact-info-user-input"
-              type="number"
               placeholder="User Types Here... "
-              onBlur={(e) => {
-                setTelephone(e.target.value);
-              }}
-            ></input>
+            />
+          </div>
+          <div className="contact-info-row">
+            <span className="contact-info-field-label">Financial Contact</span>
+            <input
+              className="contact-info-user-input"
+              placeholder="User Types Here... "
+            />
+          </div>
+          <div className="contact-info-row">
+            <span className="contact-info-field-label">Additional Fields For Internal Customers</span>
+          </div>
+          <div className="contact-info-row">
+            <span className="contact-info-field-label">Investigator(s)</span>
+            <input
+              className="contact-info-user-input"
+              placeholder="User Types Here... "
+            />
+          </div>
+          <div className="contact-info-row">
+            <span className="contact-info-field-label">UBC Worktag (XX###)</span>
+            <input
+              className="contact-info-user-input"
+              placeholder="User Types Here... "
+            />
+          </div>
+          <div className="contact-info-row">
+            <span className="contact-info-field-label">Additional Fields For External Customers</span>
+          </div>
+          <div className="contact-info-row">
+            <span className="contact-info-field-label">Address</span>
+            <input
+              className="contact-info-user-input"
+              placeholder="User Types Here... "
+            />
+          </div>
+          <div className="contact-info-row">
+            <span className="contact-info-field-label">Account Information</span>
+            <input
+              className="contact-info-user-input"
+              placeholder="User Types Here... "
+            />
           </div>
         </div>
       </div>
