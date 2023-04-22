@@ -35,6 +35,7 @@ function FormConfirmation() {
           </tr>
           {localStorage.getItem("currentSurveyId") && billables[localStorage.getItem("currentSurveyId")] != null ? (
             billables[localStorage.getItem("currentSurveyId")].map((billable, idx) => {
+              console.log(billable);
               return (
                 <tr key={idx}>
                   <td>{billable.name}</td>

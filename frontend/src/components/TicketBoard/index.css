@@ -235,6 +235,8 @@
   font-weight: 500;
   transition-duration: 0.4s;
   cursor: pointer;
+  width: 120px;
+  margin-top: 10px;
 }
 
 .ticketTitleId {
@@ -246,6 +248,14 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.ticketTitleText {
+  width: 90%;
+  border-radius: 10px;
+  border: 0px solid #AEAEAE;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .assignees-title{

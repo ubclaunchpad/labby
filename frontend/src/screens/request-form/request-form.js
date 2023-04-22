@@ -122,17 +122,11 @@ function RequestForm({ origin }) {
             let quantity = response.quantity ?? 1;
             let service = response.question.answer;
             if (cost) {
+              // This question's is in current stored cost estimate
               billableList.push({
                 service: service,
                 quantity: quantity,
                 cost: cost * quantity,
-              });
-            } else if (service !== "" && service !== undefined) {
-              // This question's cost not in current stored cost estimate
-              billableList.push({
-                service,
-                quantity,
-                cost: response.question.cost ?? "N/A",
               });
             }
             return null;
@@ -151,8 +145,6 @@ function RequestForm({ origin }) {
             },
           });
           setSubmissionSuccessful(true);
-          // SuccessToast("Form Submitted!");
-          // window.location.href = `/request-confirmation/${formId}`;
         }
       }
     } else {

@@ -13,6 +13,7 @@ import {
   UPDATE_TICKET_BOARD,
   UPDATE_TICKET_DESCRIPTION,
   UPDATE_TICKET_STATUS,
+  UPDATE_TICKET_TITLE,
 } from "../../redux/actions/ticketActions";
 import "./index.css";
 import { clsx } from "clsx";
@@ -271,7 +272,7 @@ export const TicketBoard = () => {
       const filteredTasksArray = Object.entries(allTasks).filter(
         ([key, value]) => {
           const lowerCaseSearchTerm = searchTerm.toLowerCase();
-          const matchedId =`SOW-${value?.id}`
+          const matchedId = `SOW-${value?.id}`
             ?.toLowerCase()
             .includes(lowerCaseSearchTerm);
           const matchedDescription = value?.description
@@ -383,12 +384,23 @@ export const TicketBoard = () => {
           >
             <div className="ticketTitle">
               <div className="ticketTitleId">{`SOW-${currentTicket.code}`}</div>
-              <div>{currentTicket.title}</div>
+              <input
+                className="ticketTitleText"
+                defaultValue={currentTicket.title}
+                onBlur={(e) => {
+                  dispatch({
+                    type: UPDATE_TICKET_TITLE,
+                    payload: {
+                      ticketId: currentTicket.code,
+                      title: e.target.value,
+                    },
+                  });
+                }}
+              />
             </div>
-            <div>
+            <div className="TicketPreviewButton">
               <NavLink to={`/preview/${currentTicket.id}`}>
                 <p
-                  className="TicketPreviewButton"
                   style={{
                     color: "grey",
                   }}

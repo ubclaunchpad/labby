@@ -143,6 +143,27 @@ export const updateSubticketStatusApi = async (payload) => {
   }
 };
 
+export const updateTicketTitleApi = async (payload) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    var data = JSON.stringify({
+      title: payload.title,
+    });
+
+    const tickets = await axios.post(
+      `task/title/${payload.ticketId}`,
+      data,
+      { headers: headers }
+    );
+    return tickets;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const updateTicketDescriptionApi = async (payload) => {
   try {
     const token = JSON.parse(localStorage.getItem("currentUser")).token;

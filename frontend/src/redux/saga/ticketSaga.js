@@ -18,6 +18,7 @@ import {
   UPDATE_TICKET_DESCRIPTION,
   UPDATE_TICKET_STATUS,
   FILTER_TICKETS,
+  UPDATE_TICKET_TITLE,
 } from "../actions/ticketActions";
 import {
   assignUserApi,
@@ -32,6 +33,7 @@ import {
   updateTicketStatusApi,
   getSubTicketsById,
   createSubtask,
+  updateTicketTitleApi,
 } from "../api/ticketApi";
 
 import { getAnswersBySurvey } from "../api/questionApi";
@@ -65,6 +67,12 @@ export function* fetchTickets() {
 export function* updateTicketStatus(action) {
   const { ticketId, status } = action.payload;
   yield call(updateTicketStatusApi, { ticketId, status });
+  yield call(fetchTickets);
+}
+
+export function* updateTicketTitle(action) {
+  const { ticketId, title } = action.payload;
+  yield call(updateTicketTitleApi, { ticketId, title });
   yield call(fetchTickets);
 }
 
@@ -185,6 +193,7 @@ export function* filterTickets(action) {
 export default function* ticketSaga() {
   yield takeLatest(GET_TICKET_BOARD, fetchTickets);
   yield takeLatest(UPDATE_TICKET_STATUS, updateTicketStatus);
+  yield takeLatest(UPDATE_TICKET_TITLE, updateTicketTitle);
   yield takeLatest(UPDATE_TICKET_DESCRIPTION, updateTicketDescription);
   yield takeLatest(ASSIGN_USER, assignUser);
   yield takeLatest(UNASSIGN_USER, unassignUser);
