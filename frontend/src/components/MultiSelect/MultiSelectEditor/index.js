@@ -29,10 +29,12 @@ function MultiSelectEditor({ question }) {
 
   const [questionNum, setQuestionNum] = useState("");
   const [title, setTitle] = useState("");
+  const [note, setNote] = useState("");
 
   useEffect(() => {
     setQuestionNum(`Q${question.position_index ?? 0}`);
     setTitle(question.question ?? "");
+    setNote(question.question_note ?? "");
   }, [question]);
 
   useEffect(() => {
@@ -109,6 +111,25 @@ function MultiSelectEditor({ question }) {
           }}
         />
       </div>
+      <input
+        className="GlobalEditorQuestionNoteInput"
+        defaultValue={note}
+        placeholder="Type question note here..."
+        onBlur={(text) => {
+          console.log(question);
+          dispatch({
+            type: SAVE_QUESTION,
+            payload: {
+              ...question,
+              form_id: question.fk_form_id,
+              question_title: question.question,
+              question_note: text.target.value,
+              question_index: question.position_index,
+            },
+          });
+          dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
+        }}
+      />
       {/* Copy Everything Except Content Below For Reusability */}
       <div className="single-select-options-container">
         <img className="GlobalDragDot" src={DragDots} alt="DragDots" />

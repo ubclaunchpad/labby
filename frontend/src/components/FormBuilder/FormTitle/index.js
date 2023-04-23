@@ -47,6 +47,7 @@ function FormTitle() {
               question_index: 0,
               mandatory: false,
               clinical: false,
+              question_note: "",
             },
           });
           dispatch({ type: LOAD_QUESTION, payload: formId });

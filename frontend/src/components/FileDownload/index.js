@@ -28,6 +28,7 @@ function FileDownload({ question }) {
         {question.question}{" "}
         <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
       </div>
+      <div className="customer__component__subtitle">{question.question_note}</div>
       {options.map((option) => (
         <div
           className="download-file-container-customer"

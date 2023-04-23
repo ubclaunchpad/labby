@@ -47,6 +47,7 @@ function MultiSelect({ question }) {
         {question.question}{" "}
         <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
       </div>
+      <div className="customer__component__subtitle">{question.question_note}</div>
       <div className="customer__component__subtitle">Select all that apply</div>
       <div className="single-select-options-container">
         <FormControl style={{ width: "100%" }}>

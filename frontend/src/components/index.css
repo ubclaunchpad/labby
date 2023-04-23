@@ -48,6 +48,22 @@
     outline: none;
 }
 
+/* Question Note (input) */
+.GlobalEditorQuestionNoteInput {
+    height: 45px;
+    border: 0;
+    background-color: #ECEDF3;
+    width: 100%;
+    border-radius: 15px;
+    margin-top: 10px;
+    font-size: 18px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.GlobalEditorQuestionNoteInput:focus {
+    outline: none;
+}
+
 .GlobalDragDot {
     width: 5px;
     height: 15px;

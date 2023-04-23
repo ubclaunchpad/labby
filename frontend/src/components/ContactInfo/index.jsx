@@ -80,6 +80,7 @@ function ContactInfo({ question }) {
         {question.question}{" "}
         <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
       </div>
+      <div className="customer__component__subtitle">{question.question_note}</div>
       <div className="contact-info-container">
         <div className="contact-info-container-inner">
           <div className="contact-info-row-customer">

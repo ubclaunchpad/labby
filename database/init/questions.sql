@@ -16,6 +16,7 @@ CREATE TABLE `questions` (
   `position_index` INT,
   `mandatory` BOOLEAN,
   `clinical` BOOLEAN,
+  `question_note` TEXT,
   PRIMARY KEY (`question_id`),
   FOREIGN KEY (fk_form_id) REFERENCES forms(form_id) ON DELETE CASCADE  
 );

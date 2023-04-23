@@ -21,11 +21,13 @@ function ProjectSelectorEditor({ question }) {
   );
   const [questionNum, setQuestionNum] = useState("");
   const [title, setTitle] = useState("");
+  const [note, setNote] = useState("");
 
   useEffect(() => {
     console.log(question);
     setQuestionNum(`Q${question.position_index}`);
     setTitle("User will select a project here...");
+    setNote(question.question_note);
   }, [question]);
 
   return (
@@ -81,6 +83,24 @@ function ProjectSelectorEditor({ question }) {
           }}
         />
       </div>
+      <input
+        className="GlobalEditorQuestionNoteInput"
+        defaultValue={note}
+        placeholder="Type question note here..."
+        onBlur={(text) => {
+          dispatch({
+            type: SAVE_QUESTION,
+            payload: {
+              ...question,
+              form_id: question.fk_form_id,
+              question_title: question.question,
+              question_note: text.target.value,
+              question_index: question.position_index,
+            },
+          });
+          dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
+        }}
+      />
       {/* Copy Everything Except Content Below For Reusability */}
       <div className="project-options-container">
         <img className="GlobalDragDot" src={DragDots} alt="DragDots" />

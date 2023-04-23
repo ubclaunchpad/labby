@@ -18,6 +18,7 @@ function TextAnswer({ question }) {
         {question.question}{" "}
         <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
       </div>
+      <div className="customer__component__subtitle">{question.question_note}</div>
       <div className="text-box-container-ta-cust">
         <Input.TextArea
           placeholder="Type here..."

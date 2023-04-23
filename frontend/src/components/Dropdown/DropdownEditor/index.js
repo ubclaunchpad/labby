@@ -28,6 +28,7 @@ function DropdownEditor({ question }) {
   );
   const [questionNum, setQuestionNum] = useState("");
   const [title, setTitle] = useState("");
+  const [note, setNote] = useState("");
 
   const [options, setOptions] = useState([]);
   const answerList = useSelector((state) => state.questionReducer.answerList);
@@ -36,6 +37,7 @@ function DropdownEditor({ question }) {
     console.log(question);
     setQuestionNum(`Q${question.position_index}`);
     setTitle(question.question);
+    setNote(question.question_note);
   }, [question]);
 
   useEffect(() => {
@@ -122,6 +124,24 @@ function DropdownEditor({ question }) {
           }}
         />
       </div>
+      <input
+        className="GlobalEditorQuestionNoteInput"
+        defaultValue={note}
+        placeholder="Type question note here..."
+        onBlur={(text) => {
+          dispatch({
+            type: SAVE_QUESTION,
+            payload: {
+              ...question,
+              form_id: question.fk_form_id,
+              question_title: question.question,
+              question_note: text.target.value,
+              question_index: question.position_index,
+            },
+          });
+          dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
+        }}
+      />
       {/* Copy Everything Except Content Below For Reusability */}
       <div className="single-select-options-container">
         <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
@@ -131,7 +151,7 @@ function DropdownEditor({ question }) {
             defaultValue="female"
             name="radio-buttons-group"
           >
-            {options.length-1 < 8 ? (
+            {options.length - 1 < 8 ? (
               options.map((option, index) => {
                 return (
                   <div className="single-select-option" key={index}>
@@ -182,7 +202,7 @@ function DropdownEditor({ question }) {
                   <input
                     type="text"
                     className="new-question-input"
-                    value={`. . . ${options.length-1} options. Click preview to see them`}
+                    value={`. . . ${options.length - 1} options. Click preview to see them`}
                     placeholder="Click to add new option"
                   />
                 </div>
