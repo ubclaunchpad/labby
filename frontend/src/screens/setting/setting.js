@@ -15,6 +15,7 @@ import { AssigneeIcon } from "../../components/Icons/AssigneeIcon";
 import AWS from "aws-sdk";
 
 function Setting() {
+  const [profileUrl, setProfileUrl] = useState("");
   const dispatch = useDispatch();
   const config = new AWS.Config({
     accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
@@ -34,15 +35,34 @@ function Setting() {
   const getPhotoFromS3 = async (e) => {
     // get object from s3
     const S3 = new AWS.S3(config);
-    const objParams = {
+    const signedUrlExpireSeconds = 60 * 1;
+    const url = await S3.getSignedUrl("getObject", {
       Bucket: process.env.REACT_APP_S3_BUCKET,
-      Key: JSON.parse(localStorage.getItem("currentUser")).user_id,
-      ResponseContentType: "image/jpeg",
+      Key: `profilePictures/ProfilePicture-${JSON.parse(localStorage.getItem("currentUser")).user_id}`,
+      Expires: signedUrlExpireSeconds,
+    });
+    setProfileUrl(url)
+  }
+
+  // use to delete photo from s3 before uploading a new one
+  const deletePhoto = async(e) => {
+    const S3 = new AWS.S3(config);
+    const params = {
+      Bucket: process.env.REACT_APP_S3_BUCKET,
+      Key: `profilePictures/ProfilePicture-${JSON.parse(localStorage.getItem("currentUser")).user_id}`,
     }
 
-    const res = await S3.getObject(objParams).promise();
-    const profilePhoto = URL.createObjectURL(new Blob([res.Body], { type: "image/jpeg" }));
-    return profilePhoto;
+    const profilePhotoExists = await S3.headObject(params).promise().then(() => true).catch(() => false);
+
+    if (profilePhotoExists) {
+      S3.deleteObject(params, (err, data) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(data);
+        }
+      });
+    }
   }
   
   const uploadPhoto = async ({ file }) => {
@@ -63,7 +83,7 @@ function Setting() {
       }
     });
   }
-
+  
   const onSubmit = (e) => {
     console.log(e.target.value);
   };
