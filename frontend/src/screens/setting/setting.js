@@ -13,6 +13,7 @@ import "reactjs-popup/dist/index.css";
 import { useForm } from "react-hook-form";
 import { AssigneeIcon } from "../../components/Icons/AssigneeIcon";
 import AWS from "aws-sdk";
+import Dropzone  from "react-dropzone";
 
 function Setting() {
   const [profileUrl, setProfileUrl] = useState("");
@@ -21,7 +22,7 @@ function Setting() {
     accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
     secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
     region: "ca-central-1",
-  })
+  });
 
   const handleSignout = (e) => {
     e.preventDefault();
@@ -32,20 +33,23 @@ function Setting() {
     });
   };
 
-  const getPhotoFromS3 = async (e) => {
+  // handles the photo change - we don't call this directly using onclick, rather, the dropzone component calls this function
+  const setProfilePictureFromS3 = async () => {
     // get object from s3
     const S3 = new AWS.S3(config);
     const signedUrlExpireSeconds = 60 * 1;
     const url = await S3.getSignedUrl("getObject", {
       Bucket: process.env.REACT_APP_S3_BUCKET,
-      Key: `profilePictures/ProfilePicture-${JSON.parse(localStorage.getItem("currentUser")).user_id}`,
+      Key: `profilePictures/ProfilePicture-${
+        JSON.parse(localStorage.getItem("currentUser")).user_id
+      }`,
       Expires: signedUrlExpireSeconds,
     });
-    setProfileUrl(url)
-  }
+    setProfileUrl(url);
+  };
 
-  // use to delete photo from s3 before uploading a new one
-  const deletePhoto = async(e) => {
+  // delete photo function if ever needed
+  const deletePhoto = async () => {
     const S3 = new AWS.S3(config);
     const params = {
       Bucket: process.env.REACT_APP_S3_BUCKET,
@@ -65,23 +69,25 @@ function Setting() {
     }
   }
   
-  const uploadPhoto = async ({ file }) => {
+  // takes list of accepted files and uploads newest file to S3
+  const uploadPhoto = async (acceptedFiles) => {
     const S3 = new AWS.S3(config);
     const fileName = "ProfilePicture-" + JSON.parse(localStorage.getItem("currentUser")).user_id;
+    const file = acceptedFiles[0];
     const objParams = {
       Bucket: process.env.REACT_APP_S3_BUCKET,
       Key: `profilePictures/${fileName}`,
-      Body: file, 
-      ContentType: file.type
-    }
+      Body: file,
+      ContentType: file.type,
+    };
 
     S3.putObject(objParams, (err, data) => {
       if (err) {
         console.log(err);
       } else {
-        console.log(data);
+        setProfilePictureFromS3();
       }
-    });
+    })
   }
   
   const onSubmit = (e) => {
@@ -229,6 +235,21 @@ function Setting() {
     });
   };
 
+  const UploadComponent = () => {
+    return (
+      <Dropzone onDrop={(acceptedFiles) => uploadPhoto(acceptedFiles)}>
+        {({ getRootProps, getInputProps }) => (
+          <section>
+            <div {...getRootProps()}>
+              <input {...getInputProps()} />
+              <p>Drag 'n' drop some files here, or click to select files</p>
+            </div>
+          </section>
+        )}
+      </Dropzone>
+    );
+  }
+
   return (
     <div className="settings-page">
       <div className="headerComponent">
@@ -248,7 +269,7 @@ function Setting() {
         <div className="settings-information__container">
           <div className="settings-information__profile">
             <div className="settings-information__square">
-              <div>{currentUser?.username[0]}</div>
+              {profileUrl === "" ? <div>{currentUser?.username[0]}</div> : <img alt="profilePicture" src={profileUrl} />}
             </div>
             <div className="settings-information__greeting">{`Hello, ${currentUser?.username}`}</div>
           </div>
