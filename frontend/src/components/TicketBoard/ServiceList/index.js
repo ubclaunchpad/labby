@@ -7,8 +7,10 @@ import {
   POST_SERVICE_COST,
   REMOVE_SERVICE_COST,
 } from "../../../redux/actions/ticketActions";
+import { SuccessToast } from "../../Toasts";
+import { ToastContainer } from "react-toastify";
 
-function ServiceList() {
+function ServiceList({ readOnly }) {
   const dispatch = useDispatch();
   const currentTicket = useSelector(
     (state) => state.ticketReducer.currentTicket
@@ -37,42 +39,51 @@ function ServiceList() {
                     defaultValue={serviceCost.name}
                     onBlur={(text) => {
                       console.log(serviceCost);
-                      dispatch({
-                        type: POST_SERVICE_COST,
-                        payload: {
-                          ...serviceCost,
-                          sow_id: serviceCost.task_uuid,
-                          name: text.target.value,
-                        },
-                      });
+                      if (!readOnly) {
+                        dispatch({
+                          type: POST_SERVICE_COST,
+                          payload: {
+                            ...serviceCost,
+                            sow_id: serviceCost.task_uuid,
+                            name: text.target.value,
+                          },
+                        });
+                        SuccessToast("Service Modification Saved!");
+                      }
                     }}
                   />
                   <input
                     className="serviceCostInput"
                     defaultValue={serviceCost.quantity}
                     onBlur={(text) => {
-                      dispatch({
-                        type: POST_SERVICE_COST,
-                        payload: {
-                          ...serviceCost,
-                          sow_id: serviceCost.task_uuid,
-                          quantity: text.target.value,
-                        },
-                      });
+                      if (!readOnly) {
+                        dispatch({
+                          type: POST_SERVICE_COST,
+                          payload: {
+                            ...serviceCost,
+                            sow_id: serviceCost.task_uuid,
+                            quantity: text.target.value,
+                          },
+                        });
+                        SuccessToast("Service Modification Saved!");
+                      }
                     }}
                   />
                   <input
                     className="serviceCostInput"
                     defaultValue={serviceCost.cost}
                     onBlur={(text) => {
-                      dispatch({
-                        type: POST_SERVICE_COST,
-                        payload: {
-                          ...serviceCost,
-                          sow_id: serviceCost.task_uuid,
-                          cost: text.target.value,
-                        },
-                      });
+                      if (!readOnly) {
+                        dispatch({
+                          type: POST_SERVICE_COST,
+                          payload: {
+                            ...serviceCost,
+                            sow_id: serviceCost.task_uuid,
+                            cost: text.target.value,
+                          },
+                        });
+                        SuccessToast("Service Modification Saved!");
+                      }
                     }}
                   />
 
@@ -83,13 +94,16 @@ function ServiceList() {
                         src={X}
                         alt="Delete Service"
                         onClick={() => {
-                          dispatch({
-                            type: REMOVE_SERVICE_COST,
-                            payload: {
-                              billable_id: serviceCost.billable_id,
-                              sow_id: serviceCost.task_uuid,
-                            },
-                          });
+                          if (!readOnly) {
+                            dispatch({
+                              type: REMOVE_SERVICE_COST,
+                              payload: {
+                                billable_id: serviceCost.billable_id,
+                                sow_id: serviceCost.task_uuid,
+                              },
+                            });
+                            SuccessToast("Service Removed!");
+                          }
                         }}
                       />
                     </div>
@@ -102,14 +116,17 @@ function ServiceList() {
                       defaultValue={serviceCost.comment ?? ""}
                       placeholder="Comment"
                       onBlur={(text) => {
-                        dispatch({
-                          type: POST_SERVICE_COST,
-                          payload: {
-                            ...serviceCost,
-                            sow_id: serviceCost.task_uuid,
-                            comment: text.target.value,
-                          },
-                        });
+                        if (!readOnly) {
+                          dispatch({
+                            type: POST_SERVICE_COST,
+                            payload: {
+                              ...serviceCost,
+                              sow_id: serviceCost.task_uuid,
+                              comment: text.target.value,
+                            },
+                          });
+                          SuccessToast("Service Modification Saved!");
+                        }
                       }}
                     />
                   </div>
@@ -119,7 +136,7 @@ function ServiceList() {
           })}
         </div>
       </div>
-      <div
+      {!readOnly ? <div
         className="additionBar"
         onClick={() => {
           dispatch({
@@ -139,11 +156,24 @@ function ServiceList() {
               created_by: currentUser.user_id,
             },
           });
+          SuccessToast("Service Created!");
         }}
       >
         <img className="Add" src={Add} alt="Add" />
         <div className="ticketSectionTitle">Add Service</div>
-      </div>
+      </div> : null}
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={true}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }

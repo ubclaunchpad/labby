@@ -175,7 +175,6 @@ function ContactInfo({ question }) {
             <span className="contact-info-field-label-customer">Telephone</span>
             <input
               className="contact-info-user-input-customer"
-              type="number"
               placeholder="Type Here... "
               onBlur={(e) => {
                 if (e.target.value !== "") {

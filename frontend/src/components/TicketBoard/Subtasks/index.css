@@ -1,8 +1,8 @@
 .ticketSubtasks {
   background-color: #ecedf3;
   flex-grow: 1;
-  border-top-right-radius: 5%;
-  border-top-left-radius: 5%;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
   max-height: 70%;
   display: flex;
   flex-direction: column;
@@ -13,6 +13,7 @@
   flex: 1;
   max-height: 100%;
   border-radius: 10px;
+  background-color: #ecedf3;
 }
 .subtaskCostRows {
   height: 100%;

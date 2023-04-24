@@ -37,6 +37,7 @@ function RequestForm({ origin }) {
   const clinicalList = useSelector(
     (state) => state.formReducer.clinicalResponses
   );
+  let noShowList = [];
 
   const costEstimateMap = useSelector(
     (state) => state.costEstimateReducer.costEstimateList
@@ -88,7 +89,8 @@ function RequestForm({ origin }) {
         question.mandatory &&
         formResponses.filter(
           (response) => response.question.question_id === question.question_id
-        ).length === 0
+        ).length === 0 &&
+        !noShowList.includes(question.question_id)
       ) {
         filled = false;
         return;
@@ -165,6 +167,7 @@ function RequestForm({ origin }) {
   }
 
   if (questions.length !== 0 && logicList.length !== 0) {
+    noShowList = [];
     return (
       <div className="requestFormPage">
         <ToastContainer
@@ -225,6 +228,7 @@ function RequestForm({ origin }) {
             }
 
             if (!show || !orShow) {
+              noShowList.push(question.question_id);
               return null;
             }
 

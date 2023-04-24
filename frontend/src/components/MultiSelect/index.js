@@ -92,16 +92,7 @@ function MultiSelect({ question }) {
                   />
                   <div className="new-question-input">{option.answer}</div>
                 </div>
-                {selectedAnswers.includes(option.answer_id) &&
-                option.quantifiable ? (
-                  <QuantityBox option={option} />
-                ) : null}
-                {selectedAnswers.includes(option.answer_id) &&
-                question.clinical ? (
-                  <ClinicalBox question={question} option={option} />
-                ) : null}
-                {selectedAnswers.includes(option.answer_id) &&
-                option.answer === "Other" ? (
+                {option.answer.toLowerCase().includes("other") ? (
                   <div className="quantityBox">
                     <input
                       className="quantityInput"
@@ -137,6 +128,14 @@ function MultiSelect({ question }) {
                       }}
                     />
                   </div>
+                ) : null}
+                {selectedAnswers.includes(option.answer_id) &&
+                option.quantifiable ? (
+                  <QuantityBox option={option} />
+                ) : null}
+                {selectedAnswers.includes(option.answer_id) &&
+                question.clinical ? (
+                  <ClinicalBox question={question} option={option} />
                 ) : null}
               </div>
             );

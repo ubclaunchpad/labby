@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import { ticketBoardData } from "../../components/DragAndDrop/ticket-dnd-data";
 import {
   SET_ACTIVE_TICKET,
+  SET_ACTIVE_USER_TICKET,
   SET_ATTACHMENTS,
   SET_SERVICE_COST,
   SET_SUBTASKS,
@@ -126,6 +127,16 @@ const currentTicket = (state = null, action) => {
   }
 };
 
+const currentUserTicket = (state = null, action) => {
+  switch (action.type) {
+    case SET_ACTIVE_USER_TICKET: {
+      return action.payload;
+    }
+    default:
+      return state;
+  }
+};
+
 const currentTicketServiceCosts = (state = [], action) => {
   switch (action.type) {
     case SET_SERVICE_COST: {
@@ -167,4 +178,5 @@ export default combineReducers({
   currentTicketServiceCosts,
   currentTicketSubtasks,
   currentTicketAttachments,
+  currentUserTicket,
 });

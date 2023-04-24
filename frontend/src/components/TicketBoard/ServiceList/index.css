@@ -97,6 +97,7 @@
 
 .serviceListRows {
   max-height: 95%;
+  overflow: scroll;
 }
 
 .serviceCostRow .deleteServiceItem {

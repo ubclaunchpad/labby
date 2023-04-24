@@ -7,6 +7,8 @@ import { LOAD_PUBLISHED_FORMS } from "../../../redux/actions/formActions";
 import { LOAD_USER_SURVEY, SET_CURRENT_USER } from "../../../redux/actions/userActions";
 
 import "./form-progress.css";
+import { SET_ACTIVE_USER_TICKET } from "../../../redux/actions/ticketActions";
+import { TicketInfoUser } from "../../../components/TicketBoard/TicketInfoUser";
 
 function FormProgress() {
   const dispatch = useDispatch();
@@ -15,6 +17,9 @@ function FormProgress() {
   );
   const userRequestList = useSelector(
     (state) => state.userReducer.userRequestList
+  );
+  const currentUserTicket = useSelector(
+    (state) => state.ticketReducer.currentUserTicket
   );
 
   useEffect(() => {
@@ -69,6 +74,7 @@ function FormProgress() {
               return (
                 <ProgressItem
                   key={idx}
+                  value={request}
                   code={`SOW${request.task_id}`}
                   progress={progress}
                   comments={request.task_description}
@@ -84,6 +90,7 @@ function FormProgress() {
               return (
                 <ProgressItem
                   key={idx}
+                  value={request}
                   code={`SOW${request.task_id}`}
                   progress={100}
                   comments={request.task_description}
@@ -92,13 +99,18 @@ function FormProgress() {
             })}
         </div>
       </div>
+      {currentUserTicket ? (<TicketInfoUser />) : null}
     </div>
   );
 }
 
-const ProgressItem = ({ code, progress, comments = "" }) => {
+
+const ProgressItem = ({ value, code, progress, comments = "" }) => {
+  const dispatch = useDispatch();
   return (
-    <div className="progressItem">
+    <div className="progressItem" onClick={(e) => {
+      dispatch({ type: SET_ACTIVE_USER_TICKET, payload: value });
+    }}>
       <h3>{code}</h3>
       <ProgressBar completed={progress} />
       <p className="commentTitle">Comments: </p>

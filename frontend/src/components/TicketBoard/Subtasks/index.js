@@ -6,7 +6,7 @@ import "./index.css";
 import Add from "../../../assets/AddBlack.png";
 import { ADD_SUBTASKS } from "../../../redux/actions/ticketActions";
 
-function Subtasks() {
+function Subtasks({ readOnly }) {
   const dispatch = useDispatch();
   const currentTicket = useSelector(
     (state) => state.ticketReducer.currentTicket
@@ -15,7 +15,7 @@ function Subtasks() {
     (state) => state.ticketReducer.currentTicketSubtasks
   );
   return (
-    <div className="ticketSubtasks">
+    <div className="ticketSubtasks" style={{ borderRadius: readOnly ? 10 : null }}>
       <div className="ticketSubtasksContainer">
         <div className="contentList">
           <div className="ticketSectionTitle">Subtasks</div>
@@ -24,7 +24,7 @@ function Subtasks() {
               return (
                 <div className="subtaskCostRow" key={subtasks.subtask_id}>
                   <div className="subtaskInputContainer">
-                    <FormControl style={{width:"100%"}}>
+                    <FormControl style={{ width: "100%" }}>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -43,7 +43,7 @@ function Subtasks() {
           </div>
         </div>
 
-        <div
+        {!readOnly ? <div
           className="additionBar"
           onClick={() => {
             dispatch({
@@ -54,7 +54,7 @@ function Subtasks() {
         >
           <img className="Add" src={Add} alt="Add" />
           <div className="ticketSectionTitle">Add Subtask</div>
-        </div>
+        </div> : null}
       </div>
     </div>
   );
