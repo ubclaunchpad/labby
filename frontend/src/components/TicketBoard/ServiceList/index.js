@@ -9,6 +9,10 @@ import {
 } from "../../../redux/actions/ticketActions";
 import { SuccessToast } from "../../Toasts";
 import { ToastContainer } from "react-toastify";
+import { Button, Divider, Input, Select, Space } from "antd";
+import { useEffect, useState } from "react";
+import { LOAD_ALL_COST } from "../../../redux/actions/costActions";
+import { GET_PROJECT } from "../../../redux/actions/billingActions";
 
 function ServiceList({ readOnly }) {
   const dispatch = useDispatch();
@@ -19,102 +23,110 @@ function ServiceList({ readOnly }) {
     (state) => state.ticketReducer.currentTicketServiceCosts
   );
   const currentUser = useSelector((state) => state.userReducer.currentUser);
+  const billables = useSelector(
+    (state) => state.costReducer.costTableServices
+  );
+  const projectList = useSelector((state) => state.projectReducer.projectList);
+
+  // Use the projectList to determine the customer type (Not most efficient, but it works)
+  let customerType = "external";
+  const projects = projectList.filter((item) => (item.project_id === currentTicket.project_id));
+  if (projects.length > 0) {
+    const costCenters = projects[0].costcenter;
+    if (costCenters.length > 0) {
+      const costCenter = costCenters[0];
+      if (costCenter.cost_center_type) {
+        customerType = costCenter.cost_center_type.toLowerCase();
+      }
+    }
+  }
+
+  const [newService, setNewService] = useState('');
+  const [tempEntry, setTempEntry] = useState([]);
+
+  useEffect(() => {
+    dispatch({ type: LOAD_ALL_COST });
+    dispatch({ type: GET_PROJECT });
+  }, [dispatch]);
+
   return (
     <div className="ticketCosts">
-      <div className="contentList">
+      <div className="serviceContentList">
         <div className="ticketSectionTitle">Service & Costs</div>
         <div className="serviceTableHeader">
-          <div className="serviceTableCol serviceTableColHeading">Service</div>
-          <div className="serviceTableCol serviceTableColHeading">Quantity</div>
-          <div className="serviceTableCol serviceTableColHeading">Cost ($)</div>
-          <div className="deleteServiceSpace"></div>
+          <div className="serviceTableColHeading">Service</div>
+          <div className="serviceTableColHeading">Quantity</div>
+          <div className="serviceTableColHeading">Unit Cost</div>
+          <div className="deleteServiceSpace" />
         </div>
         <div className="serviceListRows">
           {currentTicketServiceCosts.map((serviceCost) => {
             return (
               <div key={serviceCost.billable_id} className="parentServiceRow">
                 <div className="serviceTableRow">
-                  <input
-                    className="serviceNameInput"
-                    defaultValue={serviceCost.name}
-                    onBlur={(text) => {
-                      console.log(serviceCost);
-                      if (!readOnly) {
-                        dispatch({
-                          type: POST_SERVICE_COST,
-                          payload: {
-                            ...serviceCost,
-                            sow_id: serviceCost.task_uuid,
-                            name: text.target.value,
-                          },
-                        });
-                        SuccessToast("Service Modification Saved!");
-                      }
-                    }}
-                  />
-                  <input
-                    className="serviceCostInput"
-                    defaultValue={serviceCost.quantity}
-                    onBlur={(text) => {
-                      if (!readOnly) {
-                        dispatch({
-                          type: POST_SERVICE_COST,
-                          payload: {
-                            ...serviceCost,
-                            sow_id: serviceCost.task_uuid,
-                            quantity: text.target.value,
-                          },
-                        });
-                        SuccessToast("Service Modification Saved!");
-                      }
-                    }}
-                  />
-                  <input
-                    className="serviceCostInput"
-                    defaultValue={serviceCost.cost}
-                    onBlur={(text) => {
-                      if (!readOnly) {
-                        dispatch({
-                          type: POST_SERVICE_COST,
-                          payload: {
-                            ...serviceCost,
-                            sow_id: serviceCost.task_uuid,
-                            cost: text.target.value,
-                          },
-                        });
-                        SuccessToast("Service Modification Saved!");
-                      }
-                    }}
-                  />
-
-                  <div>
-                    <div>
-                      <img
-                        className="delete-service"
-                        src={X}
-                        alt="Delete Service"
-                        onClick={() => {
+                  <div className="serviceEntryValueRow">
+                    <div className="serviceInputBox">
+                      <Select
+                        className="serviceNameInputSelect"
+                        showSearch
+                        defaultValue={serviceCost.name}
+                        showArrow={false}
+                        bordered={false}
+                        style={{ width: "90%", marginRight: "10%", textAlign: "left", color: '#666666' }}
+                        placeholder="Select a Service"
+                        onSelect={(text) => {
                           if (!readOnly) {
-                            dispatch({
-                              type: REMOVE_SERVICE_COST,
-                              payload: {
-                                billable_id: serviceCost.billable_id,
-                                sow_id: serviceCost.task_uuid,
-                              },
-                            });
-                            SuccessToast("Service Removed!");
+                            const billMatch = billables.filter((item) => item.service === text);
+                            if (billMatch.length > 0) {
+                              dispatch({
+                                type: POST_SERVICE_COST,
+                                payload: {
+                                  ...serviceCost,
+                                  sow_id: serviceCost.task_uuid,
+                                  cost: billMatch[0][customerType].substring(1),
+                                  name: text,
+                                },
+                              });
+                            } else {
+                              dispatch({
+                                type: POST_SERVICE_COST,
+                                payload: {
+                                  ...serviceCost,
+                                  sow_id: serviceCost.task_uuid,
+                                  name: text,
+                                },
+                              });
+                            }
+                            SuccessToast("Service Name Saved!");
                           }
                         }}
+                        dropdownRender={(menu) => (
+                          <>
+                            {menu}
+                            <Divider style={{ margin: '8px 0' }} />
+                            <Space style={{ padding: '0 8px 4px' }}>
+                              <Input
+                                placeholder="Custom..."
+                                value={newService}
+                                onChange={(e) => {
+                                  setNewService(e.target.value)
+                                }}
+                              />
+                              <Button type="text" onClick={() => {
+                                setTempEntry([{ key: newService, service: newService }])
+                                setNewService('')
+                              }}>
+                                Add item
+                              </Button>
+                            </Space>
+                          </>
+                        )}
+                        options={billables.concat(tempEntry).map((item) => ({ label: item.service, value: item.service }))}
                       />
                     </div>
-                  </div>
-                </div>
-                <div>
-                  <div>
                     <input
-                      className="serviceCommentInput"
-                      defaultValue={serviceCost.comment ?? ""}
-                      placeholder="Comment"
+                      className="serviceInputBox"
+                      defaultValue={serviceCost.quantity}
                       onBlur={(text) => {
                         if (!readOnly) {
                           dispatch({
@@ -122,14 +134,72 @@ function ServiceList({ readOnly }) {
                             payload: {
                               ...serviceCost,
                               sow_id: serviceCost.task_uuid,
-                              comment: text.target.value,
+                              quantity: text.target.value,
                             },
                           });
-                          SuccessToast("Service Modification Saved!");
+                          SuccessToast("Service Quantity Saved!");
+                        }
+                      }}
+                    />
+                    <input
+                      key={serviceCost.billable_id + serviceCost.cost}
+                      className="serviceInputBox"
+                      defaultValue={serviceCost.cost}
+                      onBlur={(text) => {
+                        if (!readOnly) {
+                          dispatch({
+                            type: POST_SERVICE_COST,
+                            payload: {
+                              ...serviceCost,
+                              sow_id: serviceCost.task_uuid,
+                              cost: text.target.value,
+                            },
+                          });
+                          SuccessToast("Service Cost Saved!");
                         }
                       }}
                     />
                   </div>
+
+                  <div className="deleteServiceSpace">
+                    <img
+                      className="delete-service"
+                      src={X}
+                      alt="Delete Service"
+                      onClick={() => {
+                        if (!readOnly) {
+                          dispatch({
+                            type: REMOVE_SERVICE_COST,
+                            payload: {
+                              billable_id: serviceCost.billable_id,
+                              sow_id: serviceCost.task_uuid,
+                            },
+                          });
+                          SuccessToast("Service Removed!");
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <input
+                    className="serviceCommentInput"
+                    defaultValue={serviceCost.comment ?? ""}
+                    placeholder="Add Comment..."
+                    onBlur={(text) => {
+                      if (!readOnly) {
+                        dispatch({
+                          type: POST_SERVICE_COST,
+                          payload: {
+                            ...serviceCost,
+                            sow_id: serviceCost.task_uuid,
+                            comment: text.target.value,
+                          },
+                        });
+                        SuccessToast("Service Modification Saved!");
+                      }
+                    }}
+                  />
                 </div>
               </div>
             );

@@ -206,7 +206,6 @@ export const postServiceCostApi = async (payload) => {
     var headers = {
       Authorization: `Bearer ${token}`,
     };
-    console.log(payload);
     var data = JSON.stringify({
       billable_id: payload.billable_id,
       sow_id: payload.sow_id,

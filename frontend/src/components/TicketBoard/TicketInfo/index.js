@@ -108,7 +108,7 @@ export const TicketInfo = () => {
                                 color: "grey",
                             }}
                         >
-                            View Original Request Form
+                            View Summary
                         </p>
                     </NavLink>
                 </div>
