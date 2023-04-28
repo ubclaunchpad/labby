@@ -109,7 +109,23 @@ function TextAnswerEditor({ question }) {
           <FormControlLabel
             control={
               <Checkbox
-                onClick={() => setNumericalAnsOnly(!numericalAnsOnly)}
+                onClick={() => {
+                  dispatch({
+                    type: SAVE_QUESTION,
+                    payload: {
+                      ...question,
+                      form_id: question.fk_form_id,
+                      question_title: question.question,
+                      question_index: question.position_index,
+                      numerical_only: !numericalAnsOnly,
+                    },
+                  });
+                  dispatch({
+                    type: LOAD_QUESTION,
+                    payload: question.fk_form_id,
+                  });
+                  setNumericalAnsOnly(!numericalAnsOnly);
+                }}
               />
             }
             label={<span className="">Only allow numerical answers</span>}
@@ -120,7 +136,7 @@ function TextAnswerEditor({ question }) {
         <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
         {!numericalAnsOnly ? (
           <Input.TextArea
-            placeholder="[Height of input automatically adjusts based on content] User types here..."
+            placeholder="[Height of input automatically adjusts based on content] User types alphanumeric answer here..."
             autoSize={{
               minRows: 1,
               maxRows: 5,
