@@ -1,6 +1,9 @@
 import { Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import { Checkbox } from "@mui/material";
 import X from "../../../assets/X.png";
 import DragDots from "../../../assets/DragDots.png";
 import "./index.css";
@@ -21,6 +24,7 @@ function TextAnswerEditor({ question }) {
   const [questionNum, setQuestionNum] = useState("");
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
+  const [numericalAnsOnly, setNumericalAnsOnly] = useState(false);
 
   useEffect(() => {
     setQuestionNum(`Q${question.position_index}`);
@@ -82,34 +86,54 @@ function TextAnswerEditor({ question }) {
           }}
         />
       </div>
-      <input
-        className="GlobalEditorQuestionNoteInput"
-        defaultValue={note}
-        placeholder="Type question note here..."
-        onBlur={(text) => {
-          dispatch({
-            type: SAVE_QUESTION,
-            payload: {
-              ...question,
-              form_id: question.fk_form_id,
-              question_title: question.question,
-              question_note: text.target.value,
-              question_index: question.position_index,
-            },
-          });
-          dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
-        }}
-      />
+      <div className="editorInstructions">
+        <input
+          className="GlobalEditorQuestionNoteInput"
+          defaultValue={note}
+          placeholder="Type question note here..."
+          onBlur={(text) => {
+            dispatch({
+              type: SAVE_QUESTION,
+              payload: {
+                ...question,
+                form_id: question.fk_form_id,
+                question_title: question.question,
+                question_note: text.target.value,
+                question_index: question.position_index,
+              },
+            });
+            dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
+          }}
+        />
+        <FormControl>
+          <FormControlLabel
+            control={
+              <Checkbox
+                onClick={() => setNumericalAnsOnly(!numericalAnsOnly)}
+              />
+            }
+            label={<span className="">Only allow numerical answers</span>}
+          />
+        </FormControl>
+      </div>
       <div className="text-box-container">
         <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
-        <Input.TextArea
-          placeholder="[Height of input automatically adjusts based on content] User types here..."
-          autoSize={{
-            minRows: 1,
-            maxRows: 5,
-          }}
-          className="text-box"
-        />
+        {!numericalAnsOnly ? (
+          <Input.TextArea
+            placeholder="[Height of input automatically adjusts based on content] User types here..."
+            autoSize={{
+              minRows: 1,
+              maxRows: 5,
+            }}
+            className="text-box"
+          />
+        ) : (
+          <Input
+            placeholder="User types numerical answer here..."
+            className="text-box"
+            type="number"
+          />
+        )}
       </div>
       <EditComponentFooter question={question} />
     </div>
