@@ -19,6 +19,7 @@ import {
   UPDATE_TICKET_STATUS,
   FILTER_TICKETS,
   UPDATE_TICKET_TITLE,
+  CLEAR_ATTACHMENTS,
 } from "../actions/ticketActions";
 import {
   assignUserApi,
@@ -161,6 +162,8 @@ export function* getAttachments(action) {
       }, ans);
     })
   );
+
+  yield put({ type: CLEAR_ATTACHMENTS });
 
   for (const blob of blobList) {
     yield put({

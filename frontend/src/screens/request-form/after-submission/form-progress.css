@@ -120,3 +120,9 @@
 .progressBar progress {
   flex: 1;
 }
+.statusText {
+  font-size: 14px;
+  margin-top: 10px;
+  font-weight: 600;
+  color: #627BF6;
+}

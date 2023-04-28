@@ -4,7 +4,7 @@ import {
     GET_SERVICE_COST,
     GET_SUBTASKS,
     GET_TICKET_BOARD,
-    SET_ACTIVE_USER_TICKET,
+    SET_ACTIVE_TICKET,
 } from "../../../redux/actions/ticketActions";
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
@@ -15,7 +15,7 @@ import ServiceList from "../ServiceList";
 export const TicketInfoUser = () => {
     const dispatch = useDispatch();
     const currentTicket = useSelector(
-        (state) => state.ticketReducer.currentUserTicket
+        (state) => state.ticketReducer.currentTicket
     );
     console.log(currentTicket)
     const currentTicketAttachments = useSelector(
@@ -46,7 +46,7 @@ export const TicketInfoUser = () => {
         <div
             className="ticketDetailBackground"
             onClick={() => {
-                dispatch({ type: SET_ACTIVE_USER_TICKET, payload: null });
+                dispatch({ type: SET_ACTIVE_TICKET, payload: null });
             }}
         >
             <div
