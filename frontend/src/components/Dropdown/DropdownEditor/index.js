@@ -219,7 +219,7 @@ function DropdownEditor({ question }) {
                   let autoNumVal = e.target.value;
                   autoNumVal = +autoNumVal;
                   if (autoNumVal > 0) {
-                    for (let i = 1; i <= autoNumVal; ++i) {
+                    for (let i = 0; i <= autoNumVal; ++i) {
                       dispatch({
                         type: SAVE_ANSWER,
                         payload: {
