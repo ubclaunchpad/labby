@@ -1,25 +1,21 @@
 .chart {
-    /* flex: 2; */
-    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
-    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-    padding: 25px;
-    color: gray;
-    border-radius: 15px;
-    margin-left:0%;
+  padding: 25px;
+  background-color: #F5F5F5;
+  border-radius: 15px;
+  margin-left: 0%;
+}
 
-  }
-  
-    
-  .title {
-    text-align: left;
-    font-size: 14px;
-    font-family: 'Open Sans', sans-serif;    
-    color: #808199; 
-    font-weight: 600;
-    margin-bottom: 20px;
-  }
 
-  .chartGrid {
-    margin-left: 10%;
-    stroke: rgb(228, 225, 225);
-  }
+.title {
+  text-align: left;
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  color: #808199;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.chartGrid {
+  margin-left: 10%;
+  stroke: rgb(228, 225, 225);
+}
