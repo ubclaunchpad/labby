@@ -327,11 +327,10 @@ const CostTable = () => {
         </button>
       </div>
       <Table
-        className="table"
+        className="costTable"
         pagination={false}
         components={components}
-        rowClassName={() => "editable-row"}
-        bordered
+        rowClassName={(_, index) => index % 2 === 0 ? "editable-row" : "editable-row-dark"}
         dataSource={dataSource}
         columns={renderedColumns}
       />

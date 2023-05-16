@@ -1,6 +1,24 @@
-.table {
+.costTable .ant-table-thead .ant-table-cell {
+  background-color: #ECEDF3;
+  border: none;
+}
+
+.costTable .ant-table-tbody > tr > td {
+  border: none
+}
+
+.costTable {
   margin-top: 30px;
 }
+
+.costTable .editable-row-dark {
+  background-color: #F6F6F6;
+}
+
+.costTable .ant-table-container {
+  border: none;
+}
+
 .addService {
   display: flex;
   align-items: center;

@@ -11,13 +11,13 @@ import "./Chart.css";
 import { useSelector } from "react-redux";
 
 export const Chart = ({ data }) => {
-  const invoiceDataSourceOG = useSelector(
-    (state) => state.billingReducer.billingListOG
+  const invoiceDataSource = useSelector(
+    (state) => state.billingReducer.billingList
   );
 
   let billingMapping = {};
 
-  invoiceDataSourceOG.forEach((invoice) => {
+  invoiceDataSource.forEach((invoice) => {
     const invoiceDate = invoice.createdDate;
     if (invoiceDate) {
       const date = new Date(invoiceDate);
