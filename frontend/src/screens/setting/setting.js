@@ -13,7 +13,7 @@ import "reactjs-popup/dist/index.css";
 import { useForm } from "react-hook-form";
 import { AssigneeIcon } from "../../components/Icons/AssigneeIcon";
 import AWS from "aws-sdk";
-import Dropzone  from "react-dropzone";
+import Dropzone from "react-dropzone";
 
 function Setting() {
   const [profileUrl, setProfileUrl] = useState("");
@@ -53,10 +53,15 @@ function Setting() {
     const S3 = new AWS.S3(config);
     const params = {
       Bucket: process.env.REACT_APP_S3_BUCKET,
-      Key: `profilePictures/ProfilePicture-${JSON.parse(localStorage.getItem("currentUser")).user_id}`,
-    }
+      Key: `profilePictures/ProfilePicture-${
+        JSON.parse(localStorage.getItem("currentUser")).user_id
+      }`,
+    };
 
-    const profilePhotoExists = await S3.headObject(params).promise().then(() => true).catch(() => false);
+    const profilePhotoExists = await S3.headObject(params)
+      .promise()
+      .then(() => true)
+      .catch(() => false);
 
     if (profilePhotoExists) {
       S3.deleteObject(params, (err, data) => {
@@ -67,12 +72,14 @@ function Setting() {
         }
       });
     }
-  }
-  
+  };
+
   // takes list of accepted files and uploads newest file to S3
   const uploadPhoto = async (acceptedFiles) => {
     const S3 = new AWS.S3(config);
-    const fileName = "ProfilePicture-" + JSON.parse(localStorage.getItem("currentUser")).user_id;
+    const fileName =
+      "ProfilePicture-" +
+      JSON.parse(localStorage.getItem("currentUser")).user_id;
     const file = acceptedFiles[0];
     const objParams = {
       Bucket: process.env.REACT_APP_S3_BUCKET,
@@ -87,9 +94,9 @@ function Setting() {
       } else {
         setProfilePictureFromS3();
       }
-    })
-  }
-  
+    });
+  };
+
   const onSubmit = (e) => {
     console.log(e.target.value);
   };
@@ -235,21 +242,6 @@ function Setting() {
     });
   };
 
-  const UploadComponent = () => {
-    return (
-      <Dropzone onDrop={(acceptedFiles) => uploadPhoto(acceptedFiles)}>
-        {({ getRootProps, getInputProps }) => (
-          <section>
-            <div {...getRootProps()}>
-              <input {...getInputProps()} />
-              <p>Drag 'n' drop some files here, or click to select files</p>
-            </div>
-          </section>
-        )}
-      </Dropzone>
-    );
-  }
-
   return (
     <div className="settings-page">
       <div className="headerComponent">
@@ -269,8 +261,30 @@ function Setting() {
         <div className="settings-information__container">
           <div className="settings-information__profile">
             <div className="settings-information__square">
-              {profileUrl === "" ? <div>{currentUser?.username[0]}</div> : <img alt="profilePicture" src={profileUrl} />}
+              <Dropzone onDrop={(acceptedFiles) => uploadPhoto(acceptedFiles)}>
+                {({ getRootProps, getInputProps }) => (
+                  <section>
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      {profileUrl === "" ? (
+                        <div className="settings-information__add-photo">
+                          {currentUser?.username[0]}
+                        </div>
+                      ) : (
+                        <img
+                          className="settings-information__profile-image"
+                          alt="profilePicture"
+                          src={profileUrl}
+                        />
+                      )}
+                    </div>
+                  </section>
+                )}
+              </Dropzone>
+
+              {/* <UploadComponent /> */}
             </div>
+
             <div className="settings-information__greeting">{`Hello, ${currentUser?.username}`}</div>
           </div>
           <hr className="settings-info-rule"></hr>
