@@ -3,6 +3,7 @@ USE `labby`;
 DROP procedure IF EXISTS `save_task`;
 DROP procedure IF EXISTS `save_subtask`;
 DROP procedure IF EXISTS `update_task_status`;
+DROP procedure IF EXISTS `update_task_title`;
 DROP procedure IF EXISTS `update_task_description`;
 DROP procedure IF EXISTS `update_subtask_status`;
 
@@ -46,6 +47,16 @@ CREATE PROCEDURE `update_task_status` (
 ) BEGIN 
 UPDATE `tasks` SET `task_state`=`_task_state` WHERE `task_id`=`_task_id`;
 UPDATE `subtasks` SET `subtask_state`=`_task_state` WHERE `subtask_id`=`_task_id`;
+  
+END $$
+
+CREATE PROCEDURE `update_task_title` (
+   IN `_task_id` INT(10),
+   IN `_task_title` VARCHAR(250)
+ 
+) BEGIN 
+UPDATE `tasks` SET `task_title`=`_task_title` WHERE `task_id`=`_task_id`;
+UPDATE `subtasks` SET `subtask_title`=`_task_title` WHERE `subtask_id`=`_task_id`;
   
 END $$
 

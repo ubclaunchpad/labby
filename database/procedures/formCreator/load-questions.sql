@@ -50,7 +50,7 @@ END $$
 CREATE PROCEDURE `load_questions_by_form` (IN `_form_id` VARCHAR(50))
 
 BEGIN
-    SELECT questions.*, questions_answer.answer_id, questions_answer.fk_question_id, questions_answer.answer, questions_cost.*
+    SELECT questions.*, questions_answer.answer_id, questions_answer.fk_question_id, questions_answer.answer, questions_answer.added_on, questions_cost.*
     FROM
         questions
     

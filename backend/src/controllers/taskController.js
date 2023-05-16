@@ -53,6 +53,26 @@ export default class TaskController {
     });
   }
 
+  updateTaskTitle(req) {
+    return new Promise((resolve, reject) => {
+      if (!req.body.title) {
+        return reject({ error: "Error with request body." });
+      }
+      const TaskModel = new Task();
+      TaskModel.updateTitle(
+        req.params.taskId,
+        req.body.title,
+        (err, result) => {
+          if (err) {
+            reject({ error: err });
+          }
+          this.isTaskLoaded = false;
+          resolve(result);
+        }
+      );
+    });
+  }
+
   updateTaskDescription(req) {
     return new Promise((resolve, reject) => {
       if (!req.body.description) {

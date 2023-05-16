@@ -235,6 +235,8 @@
   font-weight: 500;
   transition-duration: 0.4s;
   cursor: pointer;
+  width: 220px;
+  margin-top: 10px;
 }
 
 .ticketTitleId {
@@ -248,6 +250,14 @@
   text-overflow: ellipsis;
 }
 
+.ticketTitleText {
+  width: 90%;
+  border-radius: 10px;
+  border: 0px solid #AEAEAE;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .assignees-title{
   font-size: 11px; 
   font-weight: 600; 
@@ -258,8 +268,9 @@
 
 .ticketSectionTitle {
   font-weight: 600;
-  font-size: 14px;
+  font-size: 16px;
   text-align: left;
+  color: #666666;
 }
 
 .ticketDescriptionInput {
@@ -301,10 +312,11 @@
 }
 
 .ticketInfo .subtasksColumn {
+  gap: 36px;
   flex: 3;
   min-width: 25%;
 }
-.ticketInfo .servicesColumn {
+.servicesColumn {
   flex: 7;
   min-width: 65%;
 }
@@ -313,7 +325,7 @@
   margin-top: 12px;
   padding: 5px 15px;
   height: 20%;
-  background-color: #d9d9d9;
+  background-color: #F9FAFF;
   border-radius: 10px;
 }
 .attachmentsWrapper{
@@ -338,7 +350,8 @@
 }
 
 .additionBar {
-  background-color: #b4b4b4;
+  background-color: #d9d9d9;
+  color: #666;
   height: 40px;
   width: 100%;
   padding-left: 15px;

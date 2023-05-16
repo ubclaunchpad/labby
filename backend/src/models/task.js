@@ -62,8 +62,24 @@ export class Task {
       }
     );
   }
-  
 
+  updateTitle(taskId, taskTitle, result) {
+    con.query(
+      "CALL update_task_title(?, ?)",
+      [taskId, taskTitle],
+      function (error, _) {
+        if (error) {
+          console.log("error: ", error);
+          result(error, null);
+        } else {
+          result(null, {
+            result: `Task Title of ${taskId} Saved Successfully with: ${taskTitle}`,
+          });
+        }
+      }
+    );
+  }
+  
   updateDescription(taskId, taskDescription, result) {
     con.query(
       "CALL update_task_description(?, ?)",

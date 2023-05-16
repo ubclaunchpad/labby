@@ -12,3 +12,14 @@
   border-radius: 20px;
   padding: 20px
 }
+
+.editorInstructions{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.editorInstructions > input{
+  flex: 1;
+}
+

@@ -19,6 +19,16 @@ import {
   REMOVE_OTHER_RESPONSE,
   ADD_CLINICAL_RESPONSE,
   SET_PUBLISHED_FORMS,
+  ADD_FINANCIAL_RESPONSE,
+  REMOVE_FINANCIAL_RESPONSE,
+  ADD_INVESTIGATOR_RESPONSE,
+  REMOVE_INVESTIGATOR_RESPONSE,
+  ADD_WORKTAG_RESPONSE,
+  REMOVE_WORKTAG_RESPONSE,
+  ADD_ADDRESS_RESPONSE,
+  REMOVE_ADDRESS_RESPONSE,
+  ADD_ACCOUNT_RESPONSE,
+  REMOVE_ACCOUNT_RESPONSE,
 } from "../actions/formActions";
 
 const defaultQuestionlist = {
@@ -34,13 +44,7 @@ const defaultQuestionlist = {
 };
 const defaultFormList = [];
 const defaultAnswerList = [];
-const defaultFormSubmissions = [
-  // {
-  //   formResponses: [],
-  //   projectId: "",
-  //   billables: [],
-  // },
-];
+const defaultFormSubmissions = [];
 const defaultClinicalResponses = {};
 
 const formQuestions = (state = defaultQuestionlist, action) => {
@@ -166,6 +170,101 @@ const formResponses = (state = defaultAnswerList, action) => {
           response.question.question_id !==
             action.payload.question.question_id ||
           response.response.split("_")[0] !== "PHONE"
+      );
+      return [...state];
+    }
+    case ADD_FINANCIAL_RESPONSE: {
+      state = state.filter(
+        (response) =>
+          response.question.question_id !==
+            action.payload.question.question_id ||
+          response.response.split("_")[0] !== "FINANCIAL"
+      );
+      state.push(action.payload);
+      return [...state];
+    }
+    case REMOVE_FINANCIAL_RESPONSE: {
+      state = state.filter(
+        (response) =>
+          response.question.question_id !==
+            action.payload.question.question_id ||
+          response.response.split("_")[0] !== "FINANCIAL"
+      );
+      return [...state];
+    }
+    case ADD_INVESTIGATOR_RESPONSE: {
+      state = state.filter(
+        (response) =>
+          response.question.question_id !==
+            action.payload.question.question_id ||
+          response.response.split("_")[0] !== "INVESTIGATOR"
+      );
+      state.push(action.payload);
+      return [...state];
+    }
+    case REMOVE_INVESTIGATOR_RESPONSE: {
+      state = state.filter(
+        (response) =>
+          response.question.question_id !==
+            action.payload.question.question_id ||
+          response.response.split("_")[0] !== "INVESTIGATOR"
+      );
+      return [...state];
+    }
+    case ADD_WORKTAG_RESPONSE: {
+      state = state.filter(
+        (response) =>
+          response.question.question_id !==
+            action.payload.question.question_id ||
+          response.response.split("_")[0] !== "WORKTAG"
+      );
+      state.push(action.payload);
+      return [...state];
+    }
+    case REMOVE_WORKTAG_RESPONSE: {
+      state = state.filter(
+        (response) =>
+          response.question.question_id !==
+            action.payload.question.question_id ||
+          response.response.split("_")[0] !== "WORKTAG"
+      );
+      return [...state];
+    }
+    case ADD_ADDRESS_RESPONSE: {
+      state = state.filter(
+        (response) =>
+          response.question.question_id !==
+            action.payload.question.question_id ||
+          response.response.split("_")[0] !== "ADDRESS"
+      );
+      state.push(action.payload);
+      return [...state];
+    }
+    case REMOVE_ADDRESS_RESPONSE: {
+      state = state.filter(
+        (response) =>
+          response.question.question_id !==
+            action.payload.question.question_id ||
+          response.response.split("_")[0] !== "ADDRESS"
+      );
+      return [...state];
+    }
+    case ADD_ACCOUNT_RESPONSE: {
+      state = state.filter(
+        (response) =>
+          response.question.question_id !==
+            action.payload.question.question_id ||
+          response.response.split("_")[0] !== "ACCOUNT"
+      );
+      state.push(action.payload);
+      return [...state];
+    }
+    case REMOVE_ACCOUNT_RESPONSE: {
+      state = state.filter(
+        (response) =>
+          response.question.question_id !==
+            action.payload.question.question_id ||
+          response.response.split("_")[0] !== "ACCOUNT"
       );
       return [...state];
     }

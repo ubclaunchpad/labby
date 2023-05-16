@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { ticketBoardData } from "../../components/DragAndDrop/ticket-dnd-data";
 import {
+  CLEAR_ATTACHMENTS,
   SET_ACTIVE_TICKET,
   SET_ATTACHMENTS,
   SET_SERVICE_COST,
@@ -146,7 +147,6 @@ const currentTicketSubtasks = (state = [], action) => {
   }
 };
 
-// TODO: is it supposed to go through SET_ATTACHMENTS? seems to always go thorugh DEFAULT
 const currentTicketAttachments = (state = {}, action) => {
   switch (action.type) {
     case SET_ATTACHMENTS: {
@@ -155,6 +155,9 @@ const currentTicketAttachments = (state = {}, action) => {
         [action.payload.key]: action.payload.value,
       };
       return newMap;
+    }
+    case CLEAR_ATTACHMENTS: {
+      return {};
     }
     default:
       return state;
@@ -166,5 +169,5 @@ export default combineReducers({
   currentTicket,
   currentTicketServiceCosts,
   currentTicketSubtasks,
-  currentTicketAttachments,
+  currentTicketAttachments
 });

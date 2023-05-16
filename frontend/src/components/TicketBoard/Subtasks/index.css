@@ -1,8 +1,8 @@
 .ticketSubtasks {
-  background-color: #d9d9d9;
+  background-color: #F9FAFF;
   flex-grow: 1;
-  border-top-right-radius: 5%;
-  border-top-left-radius: 5%;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
   max-height: 70%;
   display: flex;
   flex-direction: column;
@@ -13,12 +13,8 @@
   flex: 1;
   max-height: 100%;
   border-radius: 10px;
+  background-color: #F9FAFF;
 }
-.subtaskCostRows {
-  height: 100%;
-  overflow-y: auto;
-}
-
 .subtaskCostRows {
   height: 100%;
   overflow-y: auto;
@@ -28,9 +24,10 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 15px;
+  margin-top: 12px;
   flex: 1;
-  background-color: #b4b4b4;
+  background-color: #fcfcfc;
+  color: #666666;
   border-radius: 10px;
   margin-right: 7px;
 }
@@ -38,7 +35,8 @@
 .subtaskInputContainer {
   display: flex;
   flex-direction: row;
-  height: 7vh;
+  /* height: 7vh; */
+  height: 40px;
   align-items: center;
   padding-left: 15px;
 }
@@ -48,4 +46,8 @@
   width: 25px;
   cursor: pointer;
   margin-right: 15px;
+}
+
+.subtasksLabel{
+  font-size: 14px;
 }

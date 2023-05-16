@@ -85,6 +85,8 @@ function EditRequest() {
       question_index: destination.index + 1,
       mandatory: false,
       clinical: false,
+      question_note: "",
+      numerical_only: false,
     };
 
     dispatch({ type: SAVE_QUESTION, payload: newQuestion });

@@ -14,9 +14,14 @@ const InvoiceTable = () => {
   const columns = [
     {
       title: "SOW #",
-      dataIndex: "task_uuid",
-      key: "task_uuid",
+      dataIndex: "task_id",
+      key: "task_id",
       editable: false,
+      render: (_, record) =>
+        dataSource.length >= 1 ? (
+          <div>SOW-{record.task_id ?? record.fk_task_id ?? record.task_uuid}</div>
+        ) : null,
+      sorter: (a, b) => (a.task_id ?? a.fk_task_id ?? 0) - (b.task_id ?? b.fk_task_id ?? 0)
     },
     {
       title: "Service",

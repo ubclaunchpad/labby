@@ -26,8 +26,10 @@ function FileInput({ question }) {
         {question.question}{" "}
         <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
       </div>
+      <div className="customer__component__subtitle">{question.question_note}</div>
       <div className="upload-file-container-inner">
         <Dragger
+          accept=".pdf"
           multiple
           style={{ borderRadius: 10 }}
           customRequest={({ file, onError, onProgress, onSuccess }) => {

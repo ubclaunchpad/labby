@@ -33,6 +33,17 @@ router.post("/status/:taskId", authorize(), (req, res) => {
     });
 });
 
+router.post("/title/:taskId", authorize(), (req, res) => {
+  taskController
+    .updateTaskTitle(req)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
+
 router.post("/description/:taskId", authorize(), (req, res) => {
   taskController
     .updateTaskDescription(req)

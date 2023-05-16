@@ -26,8 +26,8 @@ function MultiSelect({ question }) {
   useEffect(() => {
     var optionList = answerList[question.question_id ?? ""] ?? [];
     optionList = optionList.sort((a, b) => {
-      let fa = a.answer;
-      let fb = b.answer;
+      let fa = a.added_on;
+      let fb = b.added_on;
 
       if (fa < fb) {
         return -1;
@@ -47,6 +47,7 @@ function MultiSelect({ question }) {
         {question.question}{" "}
         <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
       </div>
+      <div className="customer__component__subtitle">{question.question_note}</div>
       <div className="customer__component__subtitle">Select all that apply</div>
       <div className="single-select-options-container">
         <FormControl style={{ width: "100%" }}>
@@ -91,16 +92,7 @@ function MultiSelect({ question }) {
                   />
                   <div className="new-question-input">{option.answer}</div>
                 </div>
-                {selectedAnswers.includes(option.answer_id) &&
-                option.quantifiable ? (
-                  <QuantityBox option={option} />
-                ) : null}
-                {selectedAnswers.includes(option.answer_id) &&
-                question.clinical ? (
-                  <ClinicalBox question={question} option={option} />
-                ) : null}
-                {selectedAnswers.includes(option.answer_id) &&
-                option.answer === "Other" ? (
+                {option.answer.toLowerCase().includes("other") ? (
                   <div className="quantityBox">
                     <input
                       className="quantityInput"
@@ -136,6 +128,14 @@ function MultiSelect({ question }) {
                       }}
                     />
                   </div>
+                ) : null}
+                {selectedAnswers.includes(option.answer_id) &&
+                option.quantifiable ? (
+                  <QuantityBox option={option} />
+                ) : null}
+                {selectedAnswers.includes(option.answer_id) &&
+                question.clinical ? (
+                  <ClinicalBox question={question} option={option} />
                 ) : null}
               </div>
             );

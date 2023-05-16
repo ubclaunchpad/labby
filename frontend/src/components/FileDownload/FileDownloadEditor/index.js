@@ -36,11 +36,13 @@ function FileDownloadEditor({ question }) {
   const [title, setTitle] = useState("");
   const answerList = useSelector((state) => state.questionReducer.answerList);
   const [options, setOptions] = useState([]);
+  const [note, setNote] = useState("");
 
   useEffect(() => {
     console.log(question);
     setQuestionNum(`Q${question.position_index}`);
     setTitle(question.question);
+    setNote(question.question_note);
   }, [question]);
 
   useEffect(() => {
@@ -149,6 +151,24 @@ function FileDownloadEditor({ question }) {
           }}
         />
       </div>
+      <input
+        className="GlobalEditorQuestionNoteInput"
+        defaultValue={note}
+        placeholder="Type question note here..."
+        onBlur={(text) => {
+          dispatch({
+            type: SAVE_QUESTION,
+            payload: {
+              ...question,
+              form_id: question.fk_form_id,
+              question_title: question.question,
+              question_note: text.target.value,
+              question_index: question.position_index,
+            },
+          });
+          dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
+        }}
+      />
       <div className="download-file-container">
         <img className="GlobalDragDot" src={DragDots} alt="DragDots" />
         <div className="download-file-container-inner">

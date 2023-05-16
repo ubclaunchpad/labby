@@ -74,7 +74,9 @@ END $$
 CREATE PROCEDURE `load_billable` ()
 
 BEGIN
-    SELECT * FROM billable;
+    SELECT billable.*, t.task_id, st.fk_task_id FROM billable
+    LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
+    LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid;
 END $$
 
 CREATE PROCEDURE `load_billable_by_service` (
@@ -82,7 +84,10 @@ CREATE PROCEDURE `load_billable_by_service` (
 )
 
 BEGIN
-    SELECT * FROM billable WHERE name = _service_name;
+    SELECT billable.*, t.task_id, st.fk_task_id FROM billable
+    LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
+    LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
+    WHERE name = _service_name;
 END $$
 
 CREATE PROCEDURE `load_billable_by_costcenter_id` (
@@ -90,7 +95,9 @@ CREATE PROCEDURE `load_billable_by_costcenter_id` (
 )
 
 BEGIN
-    SELECT * FROM billable
+    SELECT billable.*, t.task_id, st.fk_task_id FROM billable
+    LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
+    LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
     LEFT JOIN costcenter_assignments ca on ca.fk_project_id = billable.fk_project_id
     WHERE ca.fk_cost_center_id = _costcenter_id;
 END $$
@@ -100,7 +107,10 @@ CREATE PROCEDURE `load_billable_by_project_id` (
 )
 
 BEGIN
-    SELECT * FROM billable where fk_project_id = _project_id;
+    SELECT billable.*, t.task_id, st.fk_task_id FROM billable
+    LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
+    LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
+    where fk_project_id = _project_id;
 END $$
 
 CREATE PROCEDURE `load_billable_by_organization_id` (
@@ -108,7 +118,9 @@ CREATE PROCEDURE `load_billable_by_organization_id` (
 )
 
 BEGIN
-    SELECT * FROM billable
+    SELECT billable.*, t.task_id, st.fk_task_id FROM billable
+    LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
+    LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
     LEFT JOIN project_assignments pa on pa.fk_project_id = billable.fk_project_id
     WHERE pa.fk_organization_id = _organization_id;
 END $$
@@ -118,7 +130,10 @@ CREATE PROCEDURE `load_billable_by_user_id` (
 )
 
 BEGIN
-    SELECT * FROM billable where created_by = _user_id;
+    SELECT billable.*, t.task_id, st.fk_task_id FROM billable
+    LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
+    LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid 
+    where created_by = _user_id;
 END $$
 
 CREATE PROCEDURE `load_billable_by_date` (
@@ -127,7 +142,10 @@ CREATE PROCEDURE `load_billable_by_date` (
 )
 
 BEGIN
-    SELECT * FROM billable where createdDate BETWEEN _start_date AND _end_date;
+    SELECT billable.*, t.task_id, st.fk_task_id FROM billable
+    LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
+    LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
+    where createdDate BETWEEN _start_date AND _end_date;
 END $$
 
 CREATE PROCEDURE `load_billable_by_sow` (
@@ -135,7 +153,10 @@ CREATE PROCEDURE `load_billable_by_sow` (
 )
 
 BEGIN
-    SELECT * FROM billable WHERE task_uuid = _task_uuid;
+    SELECT billable.*, t.task_id, st.fk_task_id FROM billable
+    LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
+    LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
+    WHERE billable.task_uuid = _task_uuid;
 END $$
 
 CREATE PROCEDURE `delete_billable`  (

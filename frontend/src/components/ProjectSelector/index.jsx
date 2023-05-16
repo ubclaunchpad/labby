@@ -45,6 +45,7 @@ function ProjectSelector({ question }) {
         Please select your project
         <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
       </div>
+      <div className="customer__component__subtitle">{question.question_note}</div>
       <select className="select" onChange={handleChange}>
         {selectedValue === null && <option key={"Default"} value={""} />}
         <option key={"NO-PROJECT"} value={JSON.stringify({ project_id: null })}>

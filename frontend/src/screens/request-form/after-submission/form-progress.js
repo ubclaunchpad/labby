@@ -7,6 +7,8 @@ import { LOAD_PUBLISHED_FORMS } from "../../../redux/actions/formActions";
 import { LOAD_USER_SURVEY, SET_CURRENT_USER } from "../../../redux/actions/userActions";
 
 import "./form-progress.css";
+import { SET_ACTIVE_TICKET } from "../../../redux/actions/ticketActions";
+import { TicketInfoUser } from "../../../components/TicketBoard/TicketInfoUser";
 
 function FormProgress() {
   const dispatch = useDispatch();
@@ -15,6 +17,9 @@ function FormProgress() {
   );
   const userRequestList = useSelector(
     (state) => state.userReducer.userRequestList
+  );
+  const currentTicket = useSelector(
+    (state) => state.ticketReducer.currentTicket
   );
 
   useEffect(() => {
@@ -69,7 +74,9 @@ function FormProgress() {
               return (
                 <ProgressItem
                   key={idx}
+                  value={request}
                   code={`SOW${request.task_id}`}
+                  status={request.task_state}
                   progress={progress}
                   comments={request.task_description}
                 />
@@ -84,7 +91,9 @@ function FormProgress() {
               return (
                 <ProgressItem
                   key={idx}
+                  value={request}
                   code={`SOW${request.task_id}`}
+                  status={request.task_state}
                   progress={100}
                   comments={request.task_description}
                 />
@@ -92,15 +101,21 @@ function FormProgress() {
             })}
         </div>
       </div>
+      {currentTicket ? (<TicketInfoUser />) : null}
     </div>
   );
 }
 
-const ProgressItem = ({ code, progress, comments = "" }) => {
+
+const ProgressItem = ({ value, code, status, progress, comments = "" }) => {
+  const dispatch = useDispatch();
   return (
-    <div className="progressItem">
+    <div className="progressItem" onClick={(e) => {
+      dispatch({ type: SET_ACTIVE_TICKET, payload: value });
+    }}>
       <h3>{code}</h3>
       <ProgressBar completed={progress} />
+      <div className="statusText">{status.toUpperCase()}</div>
       <p className="commentTitle">Comments: </p>
       <p className="comments">{comments}</p>
     </div>

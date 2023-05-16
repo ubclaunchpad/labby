@@ -56,6 +56,7 @@ function App() {
           <Route path="/users" element={(currentUser && currentUser.employee) ? <UserManagement /> : (currentUser ? <FormProgress /> : <LoginForm from={window.location.pathname} />)} />
           <Route path="/edit-request" element={(currentUser && currentUser.employee) ? <FormLibrary /> : (currentUser ? <FormProgress /> : <LoginForm from={window.location.pathname} />)} />
           <Route path="/request/:formId" element={currentUser ? <RequestForm /> : <LoginForm from={window.location.pathname} />} />
+          <Route path="/preview-request/:formId" element={currentUser ? <RequestForm origin={-1} /> : <LoginForm from={window.location.pathname} />} />
           <Route path="/request-confirmation/:formId" element={currentUser ? <FormConfirmation /> : <LoginForm from={window.location.pathname} />} />
           <Route path="/request-progress" element={currentUser ? <FormProgress /> : <LoginForm from={window.location.pathname} />} />
           <Route path="/preview/:surveyId" element={(currentUser && currentUser.employee) ? <PreviewForm /> : (currentUser ? <FormProgress /> : <LoginForm from={window.location.pathname} />)} />

@@ -1,14 +1,17 @@
-.text-box-container {
+.text-box-container-ta-cust {
   display: flex;
   align-items: center;
   width: 100%;
   justify-content: center;
   padding-top: 2%;
   padding-bottom: 2%;
-  min-height: 200px;
 }
 
-.text-box {
+.text-box-ta-cust {
   border-radius: 20px;
-  padding: 20px
+  padding: 20px;
+}
+
+.text-box-ta-cust::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }

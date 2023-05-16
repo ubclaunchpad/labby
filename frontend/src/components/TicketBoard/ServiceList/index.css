@@ -1,5 +1,5 @@
 .ticketCosts {
-  background-color: #d9d9d9;
+  background-color: #F9FAFF;
   border-radius: 10px;
   flex-grow: 1;
   max-height: 100%;
@@ -8,13 +8,9 @@
   justify-content: space-between;
 }
 
-.ticketCosts .contentList {
-  height: calc(100% - 50px);
-}
-
-.serviceTable td {
-  padding: 10px;
-  text-overflow: ellipsis;
+.serviceContentList {
+  height: 100%;
+  padding: 15px;
 }
 
 .serviceTableHeader {
@@ -22,16 +18,16 @@
   display: flex;
   flex-direction: row;
   margin-top: 10px;
-}
-
-.serviceTableCol {
-  display: flex;
-  flex: 1;
+  padding-left: 7px;
+  padding-right: 7px;
 }
 
 .serviceTableColHeading {
+  display: flex;
+  flex: 1;
   font-weight: 600;
-  color: #a4a3a3;
+  font-size: 16px;
+  color: #9D9D9D;
 }
 
 .serviceTable {
@@ -42,46 +38,62 @@
   flex: 0.2;
 }
 
+.serviceListRows {
+  max-height: 95%;
+  overflow-y: auto;
+}
+
+.serviceNameInputSelect:focus {
+  outline: none;
+  border: none;
+}
+
 .parentServiceRow {
   margin-bottom: 10px;
 }
 
 .serviceTableRow {
-  background-color: #d2d2d2;
   display: flex;
   flex-direction: row;
   margin-top: 5px;
   margin-bottom: 5px;
-  padding: 5px;
-  border-radius: 10px;
-  justify-content: center;
   align-items: center;
 }
 
-.serviceNameInput {
-  flex: 1;
+.serviceEntryValueRow {
+  background-color: #ECEDF3;
+  display: flex;
+  flex-direction: row;
   border-radius: 5px;
-  border: none;
-  background-color: #d2d2d2;
-  margin-left: 5px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 7px;
+  flex: 3;
 }
 
-.serviceCostInput {
+.serviceInputBox {
   flex: 1;
-  border-radius: 5px;
   border: none;
-  background-color: #d2d2d2;
+  background-color: transparent;
+  color: #666666;
+}
+
+.serviceInputBox:focus {
+  outline: none;
 }
 
 .serviceCommentInput {
   width: 100%;
-  border-radius: 10px;
   border: none;
-  background-color: #d2d2d2;
+  background-color: transparent;
+  margin-bottom: 20px;
+  padding-left: 10px;
 }
 
-.serviceListRows {
-  max-height: 95%;
+.serviceCommentInput:focus,
+.serviceInputBox:focus {
+  outline: none;
 }
 
 .serviceCostRow .deleteServiceItem {
@@ -97,10 +109,11 @@
 }
 
 .delete-service {
-  height: 16px;
-  width: 16px;
+  height: 30px;
+  width: 30px;
   object-fit: contain;
-  margin-right: 25px;
-  margin-left: 10px;
+  padding: 7px;
   cursor: pointer;
+  border-radius: 10px;
+  background-color: #ECEDF3;
 }
