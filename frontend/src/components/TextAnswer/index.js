@@ -18,41 +18,76 @@ function TextAnswer({ question }) {
         {question.question}{" "}
         <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
       </div>
-      <div className="customer__component__subtitle">{question.question_note}</div>
+      <div className="customer__component__subtitle">
+        {question.question_note}
+      </div>
       <div className="text-box-container-ta-cust">
-        <Input.TextArea
-          placeholder="Type here..."
-          autoSize={{
-            minRows: 1,
-            maxRows: 20,
-          }}
-          className="text-box-ta-cust"
-          onBlur={(e) => {
-            if (e.target.value !== "") {
-              dispatch({
-                type: REMOVE_SINGLE_RESPONSE,
-                payload: {
-                  question: question,
-                },
-              });
-              dispatch({
-                type: ADD_RESPONSE,
-                payload: {
-                  id: uuid(),
-                  response: e.target.value,
-                  question: question,
-                },
-              });
-            } else {
-              dispatch({
-                type: REMOVE_SINGLE_RESPONSE,
-                payload: {
-                  question: question,
-                },
-              });
-            }
-          }}
-        />
+        {question.numerical_only ? (
+          <Input
+            placeholder="Type numerical answer here..."
+            className="text-box-ta-cust"
+            type="number"
+            onBlur={(e) => {
+              if (e.target.value !== "") {
+                dispatch({
+                  type: REMOVE_SINGLE_RESPONSE,
+                  payload: {
+                    question: question,
+                  },
+                });
+                dispatch({
+                  type: ADD_RESPONSE,
+                  payload: {
+                    id: uuid(),
+                    response: e.target.value,
+                    question: question,
+                  },
+                });
+              } else {
+                dispatch({
+                  type: REMOVE_SINGLE_RESPONSE,
+                  payload: {
+                    question: question,
+                  },
+                });
+              }
+            }}
+          />
+        ) : (
+          <Input.TextArea
+            placeholder="Type alphanumeric answer here..."
+            autoSize={{
+              minRows: 1,
+              maxRows: 20,
+            }}
+            className="text-box-ta-cust"
+            onBlur={(e) => {
+              if (e.target.value !== "") {
+                dispatch({
+                  type: REMOVE_SINGLE_RESPONSE,
+                  payload: {
+                    question: question,
+                  },
+                });
+                dispatch({
+                  type: ADD_RESPONSE,
+                  payload: {
+                    id: uuid(),
+                    response: e.target.value,
+                    question: question,
+                  },
+                });
+              } else {
+                dispatch({
+                  type: REMOVE_SINGLE_RESPONSE,
+                  payload: {
+                    question: question,
+                  },
+                });
+              }
+            }}
+          />
+        )}
       </div>
       <Divider />
     </div>

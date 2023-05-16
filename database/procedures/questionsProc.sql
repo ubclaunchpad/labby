@@ -12,7 +12,8 @@ CREATE PROCEDURE `save_question` (
     IN `_question_order` INT,
     IN `_mandatory` BOOLEAN,
     IN `_clinical` BOOLEAN,
-    IN `_question_note` TEXT
+    IN `_question_note` TEXT,
+    IN `_numerical_only` BOOLEAN
  
 ) BEGIN INSERT INTO `questions` (
     `question_id`,
@@ -22,7 +23,8 @@ CREATE PROCEDURE `save_question` (
     `position_index`,
     `mandatory`,
     `clinical`,
-    `question_note`
+    `question_note`,
+    `numerical_only`
 )
 VALUES
     (
@@ -33,7 +35,8 @@ VALUES
     `_question_order`,
     `_mandatory`,
     `_clinical`,
-    `_question_note`
+    `_question_note`,
+    `_numerical_only`
     )
 ON DUPLICATE KEY UPDATE 
     questions.question_id=`_question_id`, 
@@ -43,7 +46,8 @@ ON DUPLICATE KEY UPDATE
     questions.position_index=`_question_order`,
     questions.mandatory=`_mandatory`,
     questions.clinical=`_clinical`,
-    questions.question_note=`_question_note`;
+    questions.question_note=`_question_note`,
+    questions.numerical_only=`_numerical_only`;
   
 END $$
 
