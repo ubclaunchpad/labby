@@ -46,7 +46,7 @@ ON DUPLICATE KEY UPDATE
     questions.position_index=`_question_order`,
     questions.mandatory=`_mandatory`,
     questions.clinical=`_clinical`,
-    questions.question_note=`_question_note`;
+    questions.question_note=`_question_note`,
     questions.numerical_only=`_numerical_only`;
   
 END $$
