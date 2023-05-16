@@ -157,7 +157,6 @@ function Invoice() {
                 type="text"
                 placeholder="Search..."
                 className="invoiceTableSearch"
-                // NEED TO ADD ONCHANGE FOR SEARCHING
                 onBlur={(text) => {
                   const searchTerm = text.target.value;
 
@@ -186,7 +185,7 @@ function Invoice() {
                   className="search-invoices-form"
                 >
                   <label>
-                    Service:
+                    Service
                     <select
                       className="search-invoices-form--input"
                       {...register("service")}
@@ -226,7 +225,7 @@ function Invoice() {
                     </select>
                   </label>
                   <label>
-                    Project:
+                    Project
                     <select
                       className="search-invoices-form--input"
                       {...register("project_id")}
@@ -289,10 +288,13 @@ function Invoice() {
                 >
                   <DateRange
                     editableDateInputs={true}
+                    rangeColors={["#CAD3FF"]}
                     ranges={[dateRange]}
                     onChange={({ selection }) => {
                       setDateRange(selection);
                     }}
+                    startDatePlaceholder="Select Date"
+                    endDatePlaceholder="Select Date"
                   />
                 </div>
               </div>
