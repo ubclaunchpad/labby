@@ -110,7 +110,7 @@ BEGIN
     SELECT billable.*, t.task_id, st.fk_task_id FROM billable
     LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
     LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
-    where fk_project_id = _project_id;
+    where billable.fk_project_id = _project_id;
 END $$
 
 CREATE PROCEDURE `load_billable_by_organization_id` (

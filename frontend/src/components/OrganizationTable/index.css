@@ -1,6 +1,24 @@
-.table {
+.orgTable .ant-table-thead .ant-table-cell {
+  background-color: #ECEDF3;
+  border: none;
+}
+
+.orgTable .ant-table-tbody > tr > td {
+  border: none
+}
+
+.orgTable {
   margin-top: 30px;
 }
+
+.orgTable .editable-row-dark {
+  background-color: #F6F6F6;
+}
+
+.orgTable .ant-table-container {
+  border: none;
+}
+
 .addService {
   display: flex;
   align-items: center;

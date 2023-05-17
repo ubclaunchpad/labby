@@ -230,12 +230,11 @@ const OrganizationTable = () => {
         </button>
       </div>
       <Table
-        className="table"
+        className="orgTable"
         pagination={false}
         components={components}
         rowKey={(record) => record.organization_id}
-        rowClassName={() => "editable-row"}
-        bordered
+        rowClassName={(_, index) => index % 2 === 0 ? "editable-row" : "editable-row-dark"}
         dataSource={dataSource}
         columns={renderedColumns}
       />

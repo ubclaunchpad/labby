@@ -12,8 +12,12 @@ const InvoiceTotal = () => {
   const dispatch = useDispatch();
   const dataSource = useSelector((state) => state.billingReducer.billingList);
   const totalServices = dataSource.length.toString().padStart(1, "0");
-  const totalSows = dataSource.filter((item) => item.type === "SOW #").length;
-  const totalProjects = dataSource.filter((item) => item.type === "Project").length;
+  let sowMap = {};
+  let projectMap = {};
+  dataSource.forEach((item) => {
+    sowMap[item.task_uuid] = true;
+    projectMap[item.fk_project_id] = true;
+  });
 
   return (
     <div className="InvoiceTotal">
@@ -40,7 +44,7 @@ const InvoiceTotal = () => {
                     },
                   });
                 }}>
-          <span className="total-number">{totalSows}</span> Total SOWs
+          <span className="total-number">{Object.keys(sowMap).length}</span> Total SOWs
         </div>
         <div className="TotalProjects"
                 onClick={() => {
@@ -52,7 +56,7 @@ const InvoiceTotal = () => {
                     },
                   });
                }}>
-          <span className="total-number">{totalProjects}</span> Total Projects
+          <span className="total-number">{Object.keys(projectMap).length}</span> Total Projects
         </div>
       </div>
     </div>

@@ -210,12 +210,11 @@ const CostCenterTable = () => {
         </button>
       </div>
       <Table
-        className="table"
+        className="costCenterTable"
         pagination={false}
         components={components}
         rowKey={(record) => record.cost_center_id}
-        rowClassName={() => "editable-row"}
-        bordered
+        rowClassName={(_, index) => index % 2 === 0 ? "editable-row" : "editable-row-dark"}
         dataSource={dataSource}
         columns={renderedColumns}
       />

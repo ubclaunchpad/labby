@@ -40,6 +40,12 @@ const InvoiceTable = () => {
       dataIndex: "createdDate",
       key: "createdDate",
       editable: false,
+      render: (_, record) => {
+        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const date = new Date(record.createdDate);
+        return dataSource.length >= 1 ? (
+          <div>{date.toLocaleDateString("en-US", options)}</div>
+        ) : null },
     },
     {
       title: "Cost",

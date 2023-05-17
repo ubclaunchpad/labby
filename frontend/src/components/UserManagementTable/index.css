@@ -1,6 +1,24 @@
+.userTable .ant-table-thead .ant-table-cell {
+  background-color: #ECEDF3;
+  border: none;
+}
+
+.userTable .ant-table-tbody > tr > td {
+  border: none
+}
+
 .userTable {
   margin-top: 30px;
 }
+
+.userTable .editable-row-dark {
+  background-color: #F6F6F6;
+}
+
+.userTable .ant-table-container {
+  border: none;
+}
+
 .addService {
   display: flex;
   align-items: center;

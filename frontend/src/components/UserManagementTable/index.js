@@ -169,8 +169,7 @@ const UserManagementTable = () => {
       pagination={false}
       components={components}
       rowKey={(record) => record.user_id}
-      rowClassName={() => "editable-row"}
-      bordered
+      rowClassName={(_, index) => index % 2 === 0 ? "editable-row" : "editable-row-dark"}
       dataSource={dataSource}
       columns={renderedColumns}
     />

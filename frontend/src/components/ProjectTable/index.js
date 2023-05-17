@@ -235,12 +235,11 @@ const ProjectTable = () => {
         </button>
       </div>
       <Table
-        className="table"
+        className="projectTable"
         pagination={false}
         components={components}
         rowKey={(record) => record.project_id}
-        rowClassName={() => "editable-row"}
-        bordered
+        rowClassName={(_, index) => index % 2 === 0 ? "editable-row" : "editable-row-dark"}
         dataSource={dataSource}
         columns={renderedColumns}
       />
