@@ -24,7 +24,7 @@
   align-items: center;
   gap: 12px;
 }
-.ServiceQuestionSelect {
+.ServiceQuestionSelectCostTable {
   border: 0;
   background-color: #eeeeee;
   border-radius: 10px;
@@ -33,7 +33,7 @@
   padding-right: 16px;
   display: flex;
   flex-direction: row;
-  flex-basis: 100%;
+  flex-basis: 50%;
   -webkit-appearance: none;
   appearance: none;
   background-image: url("../../assets/DropdownArrow.svg");
@@ -41,22 +41,8 @@
   background-repeat: no-repeat;
   background-position: calc(100% - 16px) center;
 }
-.ServiceQuestionSelect:focus {
+.ServiceQuestionSelectCostTable:focus {
   outline: none;
-}
-.BillingAddButton {
-  height: 45px;
-  width: 150px;
-  border: 0;
-  border-radius: 20px;
-  font-size: 18px;
-  font-weight: 600;
-  transition-duration: 0.4s;
-  cursor: pointer;
-}
-.BillingAddButton:hover {
-  background-color: #4caf50;
-  color: white;
 }
 
 /* Antd global styling messing with our desired styling

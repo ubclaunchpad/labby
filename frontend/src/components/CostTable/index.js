@@ -7,12 +7,13 @@ import {
   UPDATE_QUANTIFIABLE,
 } from "../../redux/actions/costActions";
 import { Table, Form, Popconfirm, Input, Checkbox } from "antd";
-import { appColor } from "../../constants";
 import "antd/dist/antd.min.css";
 import "./index.css";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
 import uuid from "react-uuid";
 import X from "../../assets/X.png";
+import AddButton from "../Button/AddButton";
+import { LOAD_FORMS } from "../../redux/actions/formActions";
 
 const CostTable = () => {
   const columns = [
@@ -101,14 +102,19 @@ const CostTable = () => {
   const dataSource = useSelector(
     (state) => state.costReducer.costTableServices
   );
+  const formList = useSelector(
+    (state) => state.formReducer.formList
+  );
   const serviceOptions = useSelector(
     (state) => state.questionReducer.answerList
   );
+  const [newServiceForm, setNewServiceForm] = useState(null);
   const [newService, setNewService] = useState(null);
 
   useEffect(() => {
     dispatch({ type: LOAD_ALL_COST });
     dispatch({ type: LOAD_QUESTION });
+    dispatch({ type: LOAD_FORMS });
   }, [dispatch]);
 
   const handleDelete = (key) => {
@@ -287,7 +293,28 @@ const CostTable = () => {
     <div>
       <div className="addService">
         <select
-          className="ServiceQuestionSelect"
+          className="ServiceQuestionSelectCostTable"
+          defaultValue={"Select your request form here..."}
+          onChange={(event) => {
+            const selected = JSON.parse(event.target.value);
+            setNewServiceForm(selected);
+          }}
+        >
+          {newServiceForm === null && (
+            <option value="Select your request form here..." disabled>
+              Select your request form here...
+            </option>
+          )}
+          {Object.values(formList)
+            .flat()
+            .map((form) => (
+              <option key={form.form_id} value={JSON.stringify(form)}>
+                {form.form_name}
+              </option>
+            ))}
+        </select>
+        <select
+          className="ServiceQuestionSelectCostTable"
           defaultValue={"Select your service question here..."}
           onChange={(event) => {
             const selected = JSON.parse(event.target.value);
@@ -301,30 +328,19 @@ const CostTable = () => {
           )}
           {Object.values(serviceOptions)
             .flat()
-            .map((question) => (
-              <option key={question.answer_id} value={JSON.stringify(question)}>
-                {question.question}-{question.answer}
-              </option>
-            ))}
+            .map((question) => {
+              if (newServiceForm !== null && question.fk_form_id === newServiceForm.form_id) {
+                return (
+                  <option key={question.answer_id} value={JSON.stringify(question)}>
+                    {question.question}-{question.answer}
+                  </option>
+                )
+              } else {
+                return null;
+              }
+            })}
         </select>
-        <button
-          className="BillingAddButton"
-          style={{
-            backgroundColor: appColor.lightGray,
-            color: appColor.gray,
-          }}
-          onMouseOver={(e) => {
-            e.target.style.backgroundColor = "#4CAF50";
-            e.target.style.color = "#FFFFFF";
-          }}
-          onMouseOut={(e) => {
-            e.target.style.backgroundColor = appColor.lightGray;
-            e.target.style.color = appColor.gray;
-          }}
-          onClick={handleAdd}
-        >
-          Add
-        </button>
+        <AddButton handleAdd={handleAdd} />
       </div>
       <Table
         className="costTable"

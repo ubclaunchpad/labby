@@ -107,7 +107,7 @@ function Invoice() {
   useEffect(() => {
     const storedTime = JSON.parse(localStorage.getItem("lastMountTime"));
     const currentTime = new Date().getTime();
-  
+
     if (!storedTime || currentTime - storedTime > 60000) {
       dispatch({
         type: UPDATE_CLICKS,
@@ -120,194 +120,198 @@ function Invoice() {
   }, [dispatch]);
 
   return (
-  <div className="invoicePageContainer">
-    <div>
-      {servicesAnalytics ? <ServicesAnalytics/> : null}
-      {projectsAnalytics ? <ProjectsAnalytics/> : null}
-      {sowAnalytics ? <SowAnalytics/> : null}
-    </div>
-    <div className="invoicePage">
-      <div className="headerComponent">
-        <Header />
+    <div className="invoicePageContainer">
+      <div>
+        {servicesAnalytics ? <ServicesAnalytics /> : null}
+        {projectsAnalytics ? <ProjectsAnalytics /> : null}
+        {sowAnalytics ? <SowAnalytics /> : null}
       </div>
-      <div className="invoicePageContent">
-        <div className="invoice-page-header">
-          <div className="InvoiceTitle" style={{ color: appColor.gray }}>
-            Billing & Invoicing
-          </div>
-          <div className="generate-invoice-button">
-            <GenerateInvoice />
-          </div>
+      <div className="invoicePage">
+        <div className="headerComponent">
+          <Header />
         </div>
-
-        <div className="widgets-container">
-          <div className="invoices-statistics-container">
-            <div className="invoices-chart-container">
-              <Chart />
+        <div className="invoicePageContent">
+          <div className="invoice-page-header">
+            <div className="InvoiceTitle" style={{ color: appColor.gray }}>
+              Billing & Invoicing
             </div>
-            <div className="InvoiceTotal" 
-                 style={{ color: appColor.gray }}
-                 >
-              <InvoiceTotal  />
+            <div className="generate-invoice-button">
+              <GenerateInvoice />
             </div>
           </div>
-          <div className="search-invoices-container">
-            <div className="searchInvoiceSection">
-              <input
-                type="text"
-                placeholder="Search..."
-                className="invoiceTableSearch"
-                onBlur={(text) => {
-                  const searchTerm = text.target.value;
 
-                  if (searchTerm === "") {
-                    dispatch({
-                      type: SET_BILLABLE,
-                      payload: invoiceDataSourceOG,
-                    });
-                  } else {
-                    const filteredData = invoiceDataSourceOG.filter((item) => {
-                      const objectString = Object.values(item).join(" ");
-
-                      return objectString
-                        .toLowerCase()
-                        .includes(searchTerm.toLowerCase());
-                    });
-                    dispatch({ type: SET_BILLABLE, payload: filteredData });
-                  }
-                }}
-              />
-            </div>
-            <div className="form-calender-container">
-              <div className="search-invoices-form-container">
-                <form
-                  onSubmit={handleSubmit(onSubmit)}
-                  className="search-invoices-form"
-                >
-                  <label>
-                    Service
-                    <select
-                      className="search-invoices-form--input"
-                      {...register("service")}
-                      onBlur={handleSubmit(onSubmit)}
-                    >
-                      <option value="">Select service...</option>
-                      {serviceData.map((service) => {
-                        return (
-                          <option
-                            key={service?.answer_id}
-                            value={service?.answer}
-                          >
-                            {service.answer}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </label>
-                  <label>
-                    Cost Center
-                    <select
-                      className="search-invoices-form--input"
-                      {...register("costcenter_id")}
-                      onBlur={handleSubmit(onSubmit)}
-                    >
-                      <option value="">Select cost center... </option>
-                      {costCenterData.map((costCenter) => {
-                        return (
-                          <option
-                            key={costCenter?.cost_center_id}
-                            value={costCenter?.cost_center_id}
-                          >
-                            {costCenter?.cost_center_name}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </label>
-                  <label>
-                    Project
-                    <select
-                      className="search-invoices-form--input"
-                      {...register("project_id")}
-                      onBlur={handleSubmit(onSubmit)}
-                    >
-                      <option value="">Select project... </option>
-                      {projectData.map((project) => {
-                        return (
-                          <option
-                            key={project?.project_id}
-                            value={project?.project_id}
-                          >
-                            {project?.project_name}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </label>
-                  <label>
-                    Organization
-                    <select
-                      className="search-invoices-form--input"
-                      {...register("organization_id")}
-                      onBlur={handleSubmit(onSubmit)}
-                    >
-                      <option value="">Select organization... </option>
-                      {organizationData.map((organization) => {
-                        return (
-                          <option
-                            key={organization.organization_id}
-                            value={organization.organization_id}
-                          >
-                            {organization.organization_name}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </label>
-                  <label>
-                    User
-                    <select
-                      className="search-invoices-form--input"
-                      {...register("user_id")}
-                      onBlur={handleSubmit(onSubmit)}
-                    >
-                      <option value="">Select user... </option>
-                      {usersData.map((user) => (
-                        <option key={user.user_id} value={user.user_id}>
-                          {user.username}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                </form>
+          <div className="widgets-container">
+            <div className="invoices-statistics-container">
+              <div className="invoices-chart-container">
+                <Chart />
               </div>
-              <div className="search-invoices-calendar-container">
-                <div
-                  className="search-invoices-calendar"
-                  onBlur={handleSubmit(onSubmit)}
-                >
-                  <DateRange
-                    editableDateInputs={true}
-                    rangeColors={["#CAD3FF"]}
-                    ranges={[dateRange]}
-                    onChange={({ selection }) => {
-                      setDateRange(selection);
-                    }}
-                    startDatePlaceholder="Select Date"
-                    endDatePlaceholder="Select Date"
-                  />
+              <div className="InvoiceTotal"
+                style={{ color: appColor.gray }}
+              >
+                <InvoiceTotal />
+              </div>
+            </div>
+            <div className="search-invoices-container">
+              <div className="searchInvoiceSection">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className="invoiceTableSearch"
+                  onBlur={(text) => {
+                    const searchTerm = text.target.value;
+
+                    if (searchTerm === "") {
+                      dispatch({
+                        type: SET_BILLABLE,
+                        payload: invoiceDataSourceOG,
+                      });
+                    } else {
+                      const filteredData = invoiceDataSourceOG.filter((item) => {
+                        const objectString = Object.values(item).join(" ") + " SOW-" + item.task_id;
+
+                        return objectString
+                          .toLowerCase()
+                          .includes(searchTerm.toLowerCase());
+                      });
+                      dispatch({ type: SET_BILLABLE, payload: filteredData });
+                    }
+                  }}
+                />
+              </div>
+              <div className="form-calender-container">
+                <div className="search-invoices-form-container">
+                  <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="search-invoices-form"
+                  >
+                    <label>
+                      Service
+                      <select
+                        className="search-invoices-form--input"
+                        {...register("service")}
+                        onBlur={handleSubmit(onSubmit)}
+                      >
+                        <option value="">Select service...</option>
+                        {serviceData.map((service) => {
+                          if (invoiceDataSourceOG.some((item) => item.name === service?.answer)) {
+                            return (
+                              <option
+                                key={service?.answer_id}
+                                value={service?.answer}
+                              >
+                                {service.answer}
+                              </option>
+                            );
+                          } else {
+                            return null;
+                          }
+                        })}
+                      </select>
+                    </label>
+                    <label>
+                      Cost Center
+                      <select
+                        className="search-invoices-form--input"
+                        {...register("costcenter_id")}
+                        onBlur={handleSubmit(onSubmit)}
+                      >
+                        <option value="">Select cost center... </option>
+                        {costCenterData.map((costCenter) => {
+                          return (
+                            <option
+                              key={costCenter?.cost_center_id}
+                              value={costCenter?.cost_center_id}
+                            >
+                              {costCenter?.cost_center_name}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </label>
+                    <label>
+                      Project
+                      <select
+                        className="search-invoices-form--input"
+                        {...register("project_id")}
+                        onBlur={handleSubmit(onSubmit)}
+                      >
+                        <option value="">Select project... </option>
+                        {projectData.map((project) => {
+                          return (
+                            <option
+                              key={project?.project_id}
+                              value={project?.project_id}
+                            >
+                              {project?.project_name}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </label>
+                    <label>
+                      Organization
+                      <select
+                        className="search-invoices-form--input"
+                        {...register("organization_id")}
+                        onBlur={handleSubmit(onSubmit)}
+                      >
+                        <option value="">Select organization... </option>
+                        {organizationData.map((organization) => {
+                          return (
+                            <option
+                              key={organization.organization_id}
+                              value={organization.organization_id}
+                            >
+                              {organization.organization_name}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </label>
+                    <label>
+                      User
+                      <select
+                        className="search-invoices-form--input"
+                        {...register("user_id")}
+                        onBlur={handleSubmit(onSubmit)}
+                      >
+                        <option value="">Select user... </option>
+                        {usersData.map((user) => (
+                          <option key={user.user_id} value={user.user_id}>
+                            {user.username}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  </form>
+                </div>
+                <div className="search-invoices-calendar-container">
+                  <div
+                    className="search-invoices-calendar"
+                    onBlur={handleSubmit(onSubmit)}
+                  >
+                    <DateRange
+                      editableDateInputs={true}
+                      rangeColors={["#CAD3FF"]}
+                      ranges={[dateRange]}
+                      onChange={({ selection }) => {
+                        setDateRange(selection);
+                      }}
+                      startDatePlaceholder="Select Date"
+                      endDatePlaceholder="Select Date"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="InvoiceTable" ref={invoiceTableRef}>
-          <InvoiceTable />
+          <div className="InvoiceTable" ref={invoiceTableRef}>
+            <InvoiceTable />
+          </div>
         </div>
       </div>
     </div>
-  </div>
   );
 }
 
