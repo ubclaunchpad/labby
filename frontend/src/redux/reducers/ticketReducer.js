@@ -20,7 +20,7 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
       let openList = [];
       let inProgressList = [];
       let doneList = [];
-      let blockedList = [];
+      let todoList = [];
       let assigneeMap = {};
 
       // Map Assignees
@@ -33,7 +33,7 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
       action.payload.ticketList.forEach((ticket) => {
         if (ticket.subtask_id) {
           ticketMap[ticket.subtask_uuid] = {
-            id: ticket.subtask_id,
+            id: ticket.fk_task_id + "-" + ticket.subtask_id,
             task_uuid: ticket.subtask_uuid,
             form_id: ticket.fk_form_id,
             project_id: ticket.fk_project_id,
@@ -53,8 +53,8 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
           if (ticket.subtask_state === "progress") {
             inProgressList.push(ticket.subtask_uuid);
           }
-          if (ticket.subtask_state === "blocked") {
-            blockedList.push(ticket.subtask_uuid);
+          if (ticket.subtask_state === "todo") {
+            todoList.push(ticket.subtask_uuid);
           }
         } else if (ticket.subtask_id !== null) {
           // NULL means duplicate from subtask join, undefined means main task ticket
@@ -79,8 +79,8 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
           if (ticket.task_state === "progress") {
             inProgressList.push(ticket.task_id);
           }
-          if (ticket.task_state === "blocked") {
-            blockedList.push(ticket.task_id);
+          if (ticket.task_state === "todo") {
+            todoList.push(ticket.task_id);
           }
         }
       });
@@ -88,14 +88,14 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
       return {
         ...state,
         columns: {
-          blocked: {
-            id: "blocked",
-            title: "Blocked",
-            taskIds: blockedList,
+          todo: {
+            id: "todo",
+            title: "Todo",
+            taskIds: todoList,
           },
           open: {
             id: "open",
-            title: "Open",
+            title: "Adopt Me",
             taskIds: openList,
           },
           progress: {

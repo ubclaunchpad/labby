@@ -30,7 +30,7 @@ function FormProgress() {
   function progressToNum(progress) {
     if (progress === "open") {
       return 0;
-    } else if (progress === "blocked") {
+    } else if (progress === "todo") {
       return 25;
     } else if (progress === "progress") {
       return 50;
