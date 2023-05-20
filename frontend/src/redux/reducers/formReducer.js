@@ -29,6 +29,7 @@ import {
   REMOVE_ADDRESS_RESPONSE,
   ADD_ACCOUNT_RESPONSE,
   REMOVE_ACCOUNT_RESPONSE,
+  REMOVE_ALL_RESPONSE,
 } from "../actions/formActions";
 
 const defaultQuestionlist = {
@@ -286,6 +287,10 @@ const formResponses = (state = defaultAnswerList, action) => {
           response.response.split("_")[0] !== "OTHER"
       );
       return [...state];
+    }
+    case REMOVE_ALL_RESPONSE: {
+      state = [];
+      return state;
     }
     default: {
       return state;

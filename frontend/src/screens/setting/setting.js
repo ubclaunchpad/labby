@@ -1,17 +1,13 @@
 import "./setting.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  LOAD_USERLIST,
   SET_CURRENT_USER,
 } from "../../redux/actions/userActions";
 import Header from "../../components/Header";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { appColor } from "../../constants";
-import { startOfQuarter } from "date-fns";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import { useForm } from "react-hook-form";
-import { AssigneeIcon } from "../../components/Icons/AssigneeIcon";
 import AWS from "aws-sdk";
 import Dropzone from "react-dropzone";
 
@@ -49,30 +45,30 @@ function Setting() {
   };
 
   // delete photo function if ever needed
-  const deletePhoto = async () => {
-    const S3 = new AWS.S3(config);
-    const params = {
-      Bucket: process.env.REACT_APP_S3_BUCKET,
-      Key: `profilePictures/ProfilePicture-${
-        JSON.parse(localStorage.getItem("currentUser")).user_id
-      }`,
-    };
+  // const deletePhoto = async () => {
+  //   const S3 = new AWS.S3(config);
+  //   const params = {
+  //     Bucket: process.env.REACT_APP_S3_BUCKET,
+  //     Key: `profilePictures/ProfilePicture-${
+  //       JSON.parse(localStorage.getItem("currentUser")).user_id
+  //     }`,
+  //   };
 
-    const profilePhotoExists = await S3.headObject(params)
-      .promise()
-      .then(() => true)
-      .catch(() => false);
+  //   const profilePhotoExists = await S3.headObject(params)
+  //     .promise()
+  //     .then(() => true)
+  //     .catch(() => false);
 
-    if (profilePhotoExists) {
-      S3.deleteObject(params, (err, data) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(data);
-        }
-      });
-    }
-  };
+  //   if (profilePhotoExists) {
+  //     S3.deleteObject(params, (err, data) => {
+  //       if (err) {
+  //         console.log(err);
+  //       } else {
+  //         console.log(data);
+  //       }
+  //     });
+  //   }
+  // };
 
   // takes list of accepted files and uploads newest file to S3
   const uploadPhoto = async (acceptedFiles) => {
@@ -97,16 +93,11 @@ function Setting() {
     });
   };
 
-  const onSubmit = (e) => {
-    console.log(e.target.value);
-  };
+  // const onSubmit = (e) => {
+  //   console.log(e.target.value);
+  // };
 
   const currentUser = useSelector((state) => state.userReducer.currentUser);
-  // console.log(currentUser);
-
-  const userList = useSelector((state) => state?.userReducer?.userList);
-  // const usersData = useSelector((state) => state?.userReducer?.userList);
-  const [userSettings, setUserSettings] = useState("");
 
   // Move this to constants:
   const userFieldLabels = {
@@ -141,16 +132,16 @@ function Setting() {
     role: "lab_assistant",
   };
 
-  const fakeCustomerSettings = {
-    firstName: "Sakura",
-    lastName: "Yamamotonova",
-    email: "Synova@gmail.com",
-    phoneNumber: "7782345801",
-    costCenter: "metroville",
-    role: "customer",
-  };
+  // const fakeCustomerSettings = {
+  //   firstName: "Sakura",
+  //   lastName: "Yamamotonova",
+  //   email: "Synova@gmail.com",
+  //   phoneNumber: "7782345801",
+  //   costCenter: "metroville",
+  //   role: "customer",
+  // };
 
-  const SettingsPopup = ({ field, onChange, userSettings }) => {
+  const SettingsPopup = ({ field }) => {
     // const currentUser = useSelector((state) => state.userReducer.currentUser);
     const currentUser = fakeUserSettings;
     const [mutateUser, setMutateUser] = useState({});
@@ -221,7 +212,6 @@ function Setting() {
 
   const UserSettingsInfo = ({ settings }) => {
     const array = Object.entries(settings);
-    // console.log(array);
     return array.map(([field, value]) => {
       // Need a way to determine if value is editable
       const editable = userFieldEditable[field];
@@ -253,7 +243,6 @@ function Setting() {
           <div className="settings-title" style={{ color: appColor.gray }}>
             User Settings
           </div>
-          {/* <div className="LoginContainer"> */}
           <button className="sign-out-button" onClick={handleSignout}>
             Sign Out
           </button>
@@ -281,8 +270,6 @@ function Setting() {
                   </section>
                 )}
               </Dropzone>
-
-              {/* <UploadComponent /> */}
             </div>
 
             <div className="settings-information__greeting">{`Hello, ${currentUser?.username}`}</div>
@@ -292,7 +279,6 @@ function Setting() {
           <UserSettingsInfo settings={fakeUserSettings} />
         </div>
       </div>
-      {/* </div> */}
     </div>
   );
 }

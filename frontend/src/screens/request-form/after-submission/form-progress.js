@@ -113,11 +113,13 @@ const ProgressItem = ({ value, code, status, progress, comments = "" }) => {
     <div className="progressItem" onClick={(e) => {
       dispatch({ type: SET_ACTIVE_TICKET, payload: value });
     }}>
-      <h3>{code}</h3>
+      <h3>{code + " - " + value.task_title}</h3>
       <ProgressBar completed={progress} />
       <div className="statusText">{status.toUpperCase()}</div>
       <p className="commentTitle">Comments: </p>
       <p className="comments">{comments}</p>
+      <p className="commentTitle">Ticket Created On: </p>
+      <p className="comments">{value.date_created}</p>
     </div>
   );
 };

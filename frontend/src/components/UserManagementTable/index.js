@@ -1,9 +1,9 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Table, Form, Popconfirm, Input } from "antd";
+import { Table, Form, Popconfirm, Input, Select } from "antd";
 import "antd/dist/antd.min.css";
 import "./index.css";
-import { DELETE_USER, LOAD_USERLIST, POST_USER } from "../../redux/actions/userActions";
+import { DELETE_USER, GET_ORGANIZATION, LOAD_USERLIST, POST_USER } from "../../redux/actions/userActions";
 import X from "../../assets/X.png";
 
 const UserManagementTable = () => {
@@ -24,7 +24,30 @@ const UserManagementTable = () => {
       title: "Organization",
       dataIndex: "fk_organization_id",
       key: "fk_organization_id",
-      editable: true,
+      render: (_, record) =>
+        dataSource.length >= 1 ? (
+          <Select
+            allowClear
+            style={{ width: "100%" }}
+            placeholder="Please select"
+            defaultValue={[]}
+            value={orgList.filter((item) => item.organization_id === record.fk_organization_id).map((org) => {
+              return {
+                label: org.organization_name,
+                value: org.organization_id,
+              };
+            })}
+            onChange={(newList) => {
+              dispatch({ type: POST_USER, payload: { ...record, fk_organization_id: newList } });
+            }}
+            options={orgList.map((org) => {
+              return {
+                label: org.organization_name,
+                value: org.organization_id,
+              };
+            })}
+          />
+        ) : null,
     },
     {
       title: "MAPcore Employee",
@@ -46,15 +69,17 @@ const UserManagementTable = () => {
             <img className="GlobalEditorDelete" src={X} alt="Delete" />
           </Popconfirm>
         ) : null,
-        width: "1%",
+      width: "1%",
     },
   ];
 
   const dispatch = useDispatch();
   const dataSource = useSelector((state) => state.userReducer.userList);
+  const orgList = useSelector((state) => state.userReducer.organizationList);
 
   useEffect(() => {
     dispatch({ type: LOAD_USERLIST });
+    dispatch({ type: GET_ORGANIZATION });
   }, [dispatch]);
 
   const handleDelete = (key) => {

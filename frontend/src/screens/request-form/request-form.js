@@ -19,7 +19,7 @@ import {
   CostEstimateCollapsed,
   CostEstimateFull,
 } from "../../components/CostEstimate";
-import { SUBMIT_SURVEY } from "../../redux/actions/formActions";
+import { REMOVE_ALL_RESPONSE, SUBMIT_SURVEY } from "../../redux/actions/formActions";
 import { TOGGLE_COST_ESTIMATE } from "../../redux/actions/uiActions";
 import ProjectSelector from "../../components/ProjectSelector";
 import { ToastContainer } from "react-toastify";
@@ -84,6 +84,7 @@ function RequestForm({ origin }) {
   // Basic Form Validation and Submit
   function submitForm() {
     var filled = true;
+    var unfilledQuestion = "";
     questions.forEach((question) => {
       if (
         question.mandatory &&
@@ -93,6 +94,7 @@ function RequestForm({ origin }) {
         !noShowList.includes(question.question_id)
       ) {
         filled = false;
+        unfilledQuestion = question.question;
         return;
       }
     });
@@ -146,11 +148,13 @@ function RequestForm({ origin }) {
               sowId: survey_id,
             },
           });
+          // Clear data
+          dispatch({ type: REMOVE_ALL_RESPONSE });
           setSubmissionSuccessful(true);
         }
       }
     } else {
-      WarningToast("Please fill out all mandatory fields");
+      WarningToast(`Please fill out all mandatory fields: (${unfilledQuestion})`);
     }
   }
 
