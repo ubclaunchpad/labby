@@ -29,6 +29,7 @@ import {
   LOAD_USERLIST,
 } from "../../redux/actions/userActions";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
+import { Checkbox } from "antd";
 
 
 function Invoice() {
@@ -41,33 +42,16 @@ function Invoice() {
     key: "selection",
   });
 
-  const invoiceDataSourceOG = useSelector(
-    (state) => state.billingReducer.billingListOG
-  );
-
-  const servicesObject = useSelector(
-    (state) => state?.questionReducer?.answerList
-  );
+  const invoiceDataSourceOG = useSelector((state) => state.billingReducer.billingListOG);
+  const servicesObject = useSelector((state) => state?.questionReducer?.answerList);
   const serviceData = Object.values(servicesObject).flat();
 
-  const costCenterData = useSelector(
-    (state) => state?.costCenterReducer?.costcenterList
-  );
-  const projectData = useSelector(
-    (state) => state?.projectReducer?.projectList
-  );
-  const organizationData = useSelector(
-    (state) => state?.userReducer?.organizationList
-  );
-  const servicesAnalytics = useSelector(
-    (state) => state.billingReducer.servicesAnalytics
-  );
-  const projectsAnalytics = useSelector(
-    (state) => state.billingReducer.projectsAnalytics
-  );
-  const sowAnalytics = useSelector(
-    (state) => state.billingReducer.sowAnalytics
-  );
+  const costCenterData = useSelector((state) => state?.costCenterReducer?.costcenterList);
+  const projectData = useSelector((state) => state?.projectReducer?.projectList);
+  const organizationData = useSelector((state) => state?.userReducer?.organizationList);
+  const servicesAnalytics = useSelector((state) => state.billingReducer.servicesAnalytics);
+  const projectsAnalytics = useSelector((state) => state.billingReducer.projectsAnalytics);
+  const sowAnalytics = useSelector((state) => state.billingReducer.sowAnalytics);
   const usersData = useSelector((state) => state?.userReducer?.userList);
   const onSubmit = (data) => {
     const startDate = dateRange.startDate ? new Date(dateRange.startDate) : null;
@@ -282,6 +266,28 @@ function Invoice() {
                           </option>
                         ))}
                       </select>
+                    </label>
+                    <label>
+                      Show:
+                      <div>
+                        <Checkbox
+                          onClick={(e) => {
+                            console.log(e);
+                          }}
+                        >
+                          Archived
+                        </Checkbox>
+                        <Checkbox
+                          onClick={(e) => {
+                            console.log(e);
+                          }}
+                        >Billed</Checkbox>
+                        <Checkbox
+                          onClick={(e) => {
+                            console.log(e);
+                          }}
+                        >Ready to Bill</Checkbox>
+                      </div>
                     </label>
                   </form>
                 </div>

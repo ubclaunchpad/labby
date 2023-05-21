@@ -18,7 +18,7 @@ router.get("/", authorize(), (_, res) => {
 
   router.post("/filter", authorize(), (req, res) => {
     billingController
-      .loadBillableByFilter(req)
+      .loadBillableWithFilter(req)
       .then((response) => {
         res.status(200).json(response);
       })

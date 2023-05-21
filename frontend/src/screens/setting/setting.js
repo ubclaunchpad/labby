@@ -124,11 +124,11 @@ function Setting() {
   };
 
   const fakeUserSettings = {
-    username: "Miyato9232",
-    firstName: "Miyato",
-    lastName: "Kurachenova",
-    email: "Mknova@gmail.com",
-    bio: "I am half russian, half japanese",
+    username: "Demo",
+    firstName: "Demo",
+    lastName: "User",
+    email: "demo@gmail.com",
+    bio: "This is a demo account",
     role: "lab_assistant",
   };
 
