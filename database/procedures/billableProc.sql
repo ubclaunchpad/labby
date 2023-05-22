@@ -1,6 +1,7 @@
 USE `labby`;
 
 DROP procedure IF EXISTS `save_billable`;
+DROP procedure IF EXISTS `bill_billable`;
 DROP procedure IF EXISTS `load_billable`;
 DROP procedure IF EXISTS `load_billable_with_filter`;
 DROP procedure IF EXISTS `load_billable_by_sow`;
@@ -66,12 +67,19 @@ VALUES
   
 END $$
 
+CREATE PROCEDURE `bill_billable` (
+    IN `_billable_id` VARCHAR(50)
+) BEGIN
+UPDATE billable SET billed = 1, billedTime = NOW() WHERE billable_id = _billable_id;
+END $$
+
 CREATE PROCEDURE `load_billable` ()
 
 BEGIN
     SELECT billable.*, t.task_id, st.fk_task_id FROM billable
     LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
-    LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid;
+    LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
+    WHERE billable.billed = 0;
 END $$
 
 CREATE PROCEDURE `load_billable_with_filter` (
@@ -93,14 +101,14 @@ BEGIN
     LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
     LEFT JOIN costcenter_assignments ca on ca.fk_project_id = billable.fk_project_id
     LEFT JOIN project_assignments pa on pa.fk_project_id = billable.fk_project_id
-    WHERE (name = _service_name OR _service_name IS NULL)
+    WHERE (name = _service_name OR _service_name IS NULL OR _service_name = '')
     AND (ca.fk_cost_center_id = _costcenter_id OR _costcenter_id IS NULL OR _costcenter_id = '')
     AND (billable.fk_project_id = _project_id OR _project_id IS NULL OR _project_id = '')
     AND (pa.fk_organization_id = _organization_id OR _organization_id IS NULL OR _organization_id = '')
     AND (created_by = _user_id OR _user_id IS NULL OR _user_id = '')
     AND ((createdDate BETWEEN _start_date AND _end_date) OR (_start_date IS NULL OR _end_date IS NULL))
     AND (((t.task_state != "archived" OR t.task_state IS NULL) and (st.subtask_state != "archived" OR st.subtask_state IS NULL) and (_archive IS NULL OR _archive = 0)) OR _archive = 1)
-    AND (billable.billed = _billed OR _billed IS NULL)
+    AND (_billed OR ((_billed IS NULL OR _billed = 0) AND billable.billed = 0))
     AND (((t.task_state = "completed" OR st.subtask_state = "completed") AND _ready_to_bill = 1) OR _ready_to_bill = 0 OR _ready_to_bill IS NULL);
 
 END $$

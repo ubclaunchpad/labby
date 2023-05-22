@@ -6,7 +6,6 @@ const router = Router();
 const clicksController = new ClicksController();
 
 router.post("/", authorize(), (req, res) => {
-    {console.log(req.body)}
   if(!req.body) {
       res.status(400).send({
           message: "Content can not be empty!"

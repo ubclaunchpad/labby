@@ -51,7 +51,7 @@ export default class BillingController {
       });
     });
   }
-  
+
   deleteBillable(billableId) {
     return new Promise((resolve, reject) => {
       const BillableModel = new Billable();
@@ -84,6 +84,19 @@ export default class BillingController {
       };
 
       BillableModel.saveBillable(billableData, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+
+  billBillable(billableId) {
+    return new Promise((resolve, reject) => {
+      const BillableModel = new Billable();
+
+      BillableModel.billBillable(billableId, (err, result) => {
         if (err) {
           reject({ error: err });
         }

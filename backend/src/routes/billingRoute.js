@@ -6,58 +6,69 @@ const router = Router();
 const billingController = new BillingController();
 
 router.get("/", authorize(), (_, res) => {
-    billingController
-      .loadBillable()
-      .then((response) => {
-        res.status(200).json(response);
-      })
-      .catch((err) => {
-        res.status(404).json(err);
-      });
-  });
+  billingController
+    .loadBillable()
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
 
-  router.post("/filter", authorize(), (req, res) => {
-    billingController
-      .loadBillableWithFilter(req)
-      .then((response) => {
-        res.status(200).json(response);
-      })
-      .catch((err) => {
-        res.status(404).json(err);
-      });
-  });
+router.post("/filter", authorize(), (req, res) => {
+  billingController
+    .loadBillableWithFilter(req)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
 
-  router.get("/:sowId", authorize(), (req, res) => {
-    billingController
-      .loadBillableBySowId(req)
-      .then((response) => {
-        res.status(200).json(response);
-      })
-      .catch((err) => {
-        res.status(404).json(err);
-      });
-  });
+router.get("/:sowId", authorize(), (req, res) => {
+  billingController
+    .loadBillableBySowId(req)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
 
 router.post("/", authorize(), (req, res) => {
-    billingController
-      .saveBillable(req)
-      .then((response) => {
-        res.status(200).json(response);
-      })
-      .catch((err) => {
-        res.status(404).json(err);
-      });
-  });
+  billingController
+    .saveBillable(req)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
+
+router.post("/bill/:billableId", authorize(), (req, res) => {
+  billingController
+    .billBillable(req.params.billableId)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
 
 router.delete("/:id", authorize(), (req, res) => {
-    billingController
-      .deleteBillable(req.params.id)
-      .then((response) => {
-        res.status(200).json(response);
-      })
-      .catch((err) => {
-        res.status(404).json(err);
-      });
-  });
+  billingController
+    .deleteBillable(req.params.id)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
 
 export default router;

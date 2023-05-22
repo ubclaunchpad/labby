@@ -45,13 +45,24 @@ const InvoiceTable = () => {
         const date = new Date(record.createdDate);
         return dataSource.length >= 1 ? (
           <div>{date.toLocaleDateString("en-US", options)}</div>
-        ) : null },
+        ) : null
+      },
     },
     {
       title: "Cost",
       dataIndex: "cost",
       key: "cost",
       editable: false,
+    },
+    {
+      title: "Billed",
+      dataIndex: "billed",
+      key: "billed",
+      render: (_, record) => {
+        return dataSource.length >= 1 ? (
+          <div>{record.billed ? "Yes" : "No"}</div>
+        ) : null
+      },
     },
     {
       title: "Select",

@@ -1,7 +1,7 @@
 import { appColor } from "../../constants";
 import Header from "../../components/Header";
 import "./invoice.css";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import InvoiceTable from "../../components/InvoiceTable";
 import InvoiceTotal from "../../components/InvoiceTotal";
@@ -53,7 +53,10 @@ function Invoice() {
   const projectsAnalytics = useSelector((state) => state.billingReducer.projectsAnalytics);
   const sowAnalytics = useSelector((state) => state.billingReducer.sowAnalytics);
   const usersData = useSelector((state) => state?.userReducer?.userList);
-  const onSubmit = (data) => {
+  const [archived, setArchived] = useState(false);
+  const [billed, setBilled] = useState(false);
+  const [readyToBill, setReadyToBill] = useState(false);
+  const onSubmit = useCallback((data) => {
     const startDate = dateRange.startDate ? new Date(dateRange.startDate) : null;
     const endDate = dateRange.endDate ? new Date(dateRange.endDate) : null;
     const start = startDate ? startDate.toISOString() : null;
@@ -62,6 +65,9 @@ function Invoice() {
       ...data,
       start_date: start,
       end_date: end,
+      archived: archived,
+      billed: billed,
+      ready_to_bill: readyToBill,
     };
     const emptyValues = Object.values(filters).every((value) => !value);
     if (emptyValues) {
@@ -69,7 +75,11 @@ function Invoice() {
     } else {
       dispatch({ type: FILTER_BILLABLE, payload: filters });
     }
-  };
+  }, [archived, billed, readyToBill, dateRange, dispatch, invoiceDataSourceOG]);
+
+  useEffect(() => {
+    handleSubmit(onSubmit)();
+  }, [archived, billed, readyToBill, handleSubmit, onSubmit]);
 
   useEffect(() => {
     dispatch({ type: LOAD_BILLABLE });
@@ -270,23 +280,21 @@ function Invoice() {
                     <label>
                       Show:
                       <div>
-                        <Checkbox
-                          onClick={(e) => {
-                            console.log(e);
-                          }}
-                        >
+                        <Checkbox onChange={(e) => {
+                          setArchived(e.target.checked);
+                        }}>
                           Archived
                         </Checkbox>
-                        <Checkbox
-                          onClick={(e) => {
-                            console.log(e);
-                          }}
-                        >Billed</Checkbox>
-                        <Checkbox
-                          onClick={(e) => {
-                            console.log(e);
-                          }}
-                        >Ready to Bill</Checkbox>
+                        <Checkbox onChange={(e) => {
+                          setBilled(e.target.checked);
+                        }}>
+                          Billed
+                        </Checkbox>
+                        <Checkbox onChange={(e) => {
+                          setReadyToBill(e.target.checked);
+                        }}>
+                          Ready to Bill
+                        </Checkbox>
                       </div>
                     </label>
                   </form>
