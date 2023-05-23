@@ -76,10 +76,12 @@ END $$
 CREATE PROCEDURE `load_billable` ()
 
 BEGIN
-    SELECT billable.*, t.task_id, st.fk_task_id FROM billable
+    SELECT billable.*, t.task_id, st.fk_task_id, t.task_state, st.subtask_state FROM billable
     LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
     LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
-    WHERE billable.billed = 0;
+    WHERE billable.billed = 0
+    AND (t.task_state != "archived" OR t.task_state IS NULL)
+    AND (st.subtask_state != "archived" OR st.subtask_state IS NULL);
 END $$
 
 CREATE PROCEDURE `load_billable_with_filter` (
@@ -96,7 +98,7 @@ CREATE PROCEDURE `load_billable_with_filter` (
 )
 
 BEGIN
-    SELECT billable.*, t.task_id, st.fk_task_id, t.task_state FROM billable
+    SELECT billable.*, t.task_id, st.fk_task_id, t.task_state, st.subtask_state FROM billable
     LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
     LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
     LEFT JOIN costcenter_assignments ca on ca.fk_project_id = billable.fk_project_id

@@ -41,32 +41,32 @@ VALUES
 END $$
 
 CREATE PROCEDURE `update_task_status` (
-   IN `_task_id` INT(10),
+   IN `_task_uuid` VARCHAR(50),
    IN `_task_state` VARCHAR(50)
  
 ) BEGIN 
-UPDATE `tasks` SET `task_state`=`_task_state` WHERE `task_id`=`_task_id`;
-UPDATE `subtasks` SET `subtask_state`=`_task_state` WHERE `subtask_id`=`_task_id`;
+UPDATE `tasks` SET `task_state`=`_task_state` WHERE `task_uuid`=`_task_uuid`;
+UPDATE `subtasks` SET `subtask_state`=`_task_state` WHERE `subtask_uuid`=`_task_uuid`;
   
 END $$
 
 CREATE PROCEDURE `update_task_title` (
-   IN `_task_id` INT(10),
+   IN `_task_uuid` VARCHAR(50),
    IN `_task_title` VARCHAR(250)
  
 ) BEGIN 
-UPDATE `tasks` SET `task_title`=`_task_title` WHERE `task_id`=`_task_id`;
-UPDATE `subtasks` SET `subtask_title`=`_task_title` WHERE `subtask_id`=`_task_id`;
+UPDATE `tasks` SET `task_title`=`_task_title` WHERE `task_uuid`=`_task_uuid`;
+UPDATE `subtasks` SET `subtask_title`=`_task_title` WHERE `subtask_uuid`=`_task_uuid`;
   
 END $$
 
 CREATE PROCEDURE `update_task_description` (
-   IN `_task_id` INT(10),
+   IN `_task_uuid` VARCHAR(50),
    IN `_task_description` VARCHAR(250)
  
 ) BEGIN 
-UPDATE `tasks` SET `task_description`=`_task_description` WHERE `task_id`=`_task_id`;
-UPDATE `subtasks` SET `subtask_description`=`_task_description` WHERE `subtask_id`=`_task_id`;
+UPDATE `tasks` SET `task_description`=`_task_description` WHERE `task_uuid`=`_task_uuid`;
+UPDATE `subtasks` SET `subtask_description`=`_task_description` WHERE `subtask_uuid`=`_task_uuid`;
   
 END $$
 
@@ -97,11 +97,11 @@ VALUES
 END $$
 
 CREATE PROCEDURE `update_subtask_status` (
-   IN `_subtask_id` INT(10),
+   IN `_task_uuid` VARCHAR(50),
    IN `_subtask_state` VARCHAR(50)
  
 ) BEGIN 
-UPDATE `subtasks` SET `subtask_state`=`_subtask_state` WHERE `subtask_id`=`_subtask_id`;
+UPDATE `subtasks` SET `subtask_state`=`_subtask_state` WHERE `subtask_uuid`=`_task_uuid`;
   
 END $$
 

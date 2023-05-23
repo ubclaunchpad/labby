@@ -9,6 +9,7 @@ import {
     SET_ACTIVE_TICKET,
     UNASSIGN_USER,
     UPDATE_TICKET_DESCRIPTION,
+    UPDATE_TICKET_STATUS,
     UPDATE_TICKET_TITLE,
 } from "../../../redux/actions/ticketActions";
 import { AssigneeIcon } from "../../Icons/AssigneeIcon";
@@ -18,6 +19,7 @@ import { NavLink } from "react-router-dom";
 import { LOAD_EMPLOYEE } from "../../../redux/actions/userActions";
 import Subtasks from "../Subtasks";
 import ServiceList from "../ServiceList";
+import { SuccessToast } from "../../Toasts";
 
 export const getColorNum = (id, colorArray) => {
     if (colorArray) {
@@ -36,6 +38,9 @@ export const TicketInfo = () => {
     const dispatch = useDispatch();
     const currentTicket = useSelector(
         (state) => state.ticketReducer.currentTicket
+    );
+    const currentTicketSubtasks = useSelector(
+        (state) => state.ticketReducer.currentTicketSubtasks
     );
     const employeeList = useSelector((state) => state.userReducer.employeeList);
     const currentTicketAttachments = useSelector(
@@ -94,7 +99,7 @@ export const TicketInfo = () => {
                             dispatch({
                                 type: UPDATE_TICKET_TITLE,
                                 payload: {
-                                    ticketId: currentTicket.code,
+                                    ticketId: currentTicket.task_uuid,
                                     title: e.target.value,
                                 },
                             });
@@ -105,12 +110,34 @@ export const TicketInfo = () => {
                     <NavLink to={`/preview/${currentTicket.fk_survey_id}`}>
                         <p
                             style={{
-                                color: "grey",
+                                color: "#5976E1",
                             }}
                         >
                             View Summary
                         </p>
                     </NavLink>
+                </div>
+                <div className="TicketArchiveButton">
+                    <p style={{ color: "red" }}
+                        onClick={() => {
+                            currentTicketSubtasks.forEach((subtask) => {
+                                if (subtask.subtask_uuid) {
+                                    dispatch({
+                                        type: UPDATE_TICKET_STATUS,
+                                        payload: { ticketId: subtask.subtask_uuid, status: "archived" },
+                                    });
+                                }
+                            });
+                            dispatch({
+                                type: UPDATE_TICKET_STATUS,
+                                payload: { ticketId: currentTicket.task_uuid, status: "archived" },
+                            });
+                            dispatch({ type: SET_ACTIVE_TICKET, payload: null });
+                            SuccessToast("Ticket Archived!");
+                        }}
+                    >
+                        Archive Ticket
+                    </p>
                 </div>
                 <div className="assignees-title">Assignees</div>
                 <div className="ticketTags">
@@ -170,9 +197,9 @@ export const TicketInfo = () => {
                                                         type: ASSIGN_USER,
                                                         payload: {
                                                             assignment_id:
-                                                                assignee.user_id + currentTicket.code,
+                                                                assignee.user_id + currentTicket.task_uuid,
                                                             user_id: assignee.user_id,
-                                                            task_id: currentTicket.code,
+                                                            task_id: currentTicket.task_uuid,
                                                         },
                                                     });
                                                 }}
@@ -202,7 +229,7 @@ export const TicketInfo = () => {
                             dispatch({
                                 type: UPDATE_TICKET_DESCRIPTION,
                                 payload: {
-                                    ticketId: currentTicket.code,
+                                    ticketId: currentTicket.task_uuid,
                                     description: e.target.value,
                                 },
                             });
@@ -238,7 +265,7 @@ export const TicketInfo = () => {
                         onClick={() => {
                           dispatch({
                             type: ADD_SUBTASKS,
-                            payload: { task_id: currentTicket.code },
+                            payload: { task_id: currentTicket.task_uuid },
                           });
                         }}
                       />
@@ -251,7 +278,7 @@ export const TicketInfo = () => {
                         onClick={() => {
                           dispatch({
                             type: ADD_SUBTASKS,
-                            payload: { task_id: currentTicket.code },
+                            payload: { task_id: currentTicket.task_uuid },
                           });
                         }}
                       />
@@ -264,7 +291,7 @@ export const TicketInfo = () => {
                         onClick={() => {
                           dispatch({
                             type: ADD_SUBTASKS,
-                            payload: { task_id: currentTicket.code },
+                            payload: { task_id: currentTicket.task_uuid },
                           });
                         }}
                       />

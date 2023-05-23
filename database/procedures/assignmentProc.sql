@@ -18,21 +18,21 @@ DELIMITER $$
 CREATE PROCEDURE `save_assignment` (
     IN `_assignment_id` VARCHAR(50),
     IN `_fk_user_id` VARCHAR(50),
-    IN `_task_id` INT(10)
+    IN `_task_uuid` VARCHAR(50)
 ) BEGIN 
 INSERT INTO `assignment` (
     `assignment_id`,
     `fk_user_id`,
-    `task_id`
+    `task_uuid`
 )
 VALUES
    (
     `_assignment_id`,
     `_fk_user_id`,
-    `_task_id`
+    `_task_uuid`
    ) ON DUPLICATE KEY UPDATE
     assignment.fk_user_id=_fk_user_id,
-    assignment.task_id=_task_id;
+    assignment.task_uuid=_task_uuid;
 END $$
 
 CREATE PROCEDURE `delete_assignment` (
@@ -42,13 +42,13 @@ DELETE FROM assignment WHERE assignment_id=_assignment_id;
 END $$
 
 CREATE PROCEDURE `load_assignees` (
-    IN `_task_id` INT(10)
+    IN `_task_uuid` VARCHAR(50)
 )
 
 BEGIN
     SELECT * FROM assignment 
     LEFT JOIN users ON assignment.fk_user_id = users.user_id
-    WHERE assignment.task_id = `_task_id`;
+    WHERE assignment.task_id = `_task_uuid`;
 END $$
 
 CREATE PROCEDURE `load_all_assignees` ()

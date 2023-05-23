@@ -20,6 +20,7 @@ import { ticketsColors } from "../../constants";
 import { useEffect, useState } from "react";
 import { LOAD_EMPLOYEE } from "../../redux/actions/userActions";
 import { TicketInfo } from "./TicketInfo";
+import { ToastContainer } from "react-toastify";
 
 export const getColorNum = (id, colorArray) => {
   if (colorArray) {
@@ -45,11 +46,11 @@ const Task = (props) => {
   const subtasks = props?.task?.subtasks;
   const { totalSubtasks, completedSubtasks } = getCompletedSubtasks(subtasks);
   const assignees = props?.task?.assignees;
-  const isReminder = props?.task.reminder;
+  const isReminder = props?.task?.reminder;
   const tabColorNum = getColorNum(props?.task?.id, ticketsColors);
   const dispatch = useDispatch();
   return (
-    <Draggable draggableId={props.task.id.toString()} index={props.index}>
+    <Draggable draggableId={props.task.task_uuid.toString()} index={props.index}>
       {(provided, snapshot) => (
         <div
           className="task-card-container"
@@ -355,6 +356,18 @@ export const TicketBoard = () => {
         </DragDropContext>
       </div>
       {currentTicket ? (<TicketInfo />) : null}
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={true}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

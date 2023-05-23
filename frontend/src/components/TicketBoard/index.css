@@ -239,6 +239,14 @@
   margin-top: 10px;
 }
 
+.TicketArchiveButton {
+  text-align: left; 
+  font-weight: 500;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  width: 220px;
+}
+
 .ticketTitleId {
   font-weight: bold;
   font-size: 20px;

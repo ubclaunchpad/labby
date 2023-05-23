@@ -11,8 +11,8 @@ export const appColor = {
   darkGray: "#909090",
 };
 
-// export const backend = process.env.REACT_APP_BACKEND;
-export const backend = "http://localhost:8080/";
+export const backend = process.env.REACT_APP_BACKEND;
+// export const backend = "http://localhost:8080/";
 
 export const ticketsColors = {
   0: "#5976E1",
