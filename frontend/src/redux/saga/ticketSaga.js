@@ -20,6 +20,7 @@ import {
   FILTER_TICKETS,
   UPDATE_TICKET_TITLE,
   CLEAR_ATTACHMENTS,
+  DELETE_VIEW_SUMMARY,
 } from "../actions/ticketActions";
 import {
   assignUserApi,
@@ -124,14 +125,14 @@ export function* addSubtask(action) {
   yield call(getSubtasks, { payload: action.payload.task_id });
 }
 
-export function* getAttachments(action) {
-  const config = new AWS.Config({
-    // Deprecated method of passing accessKeyId and secretAccessKey -- could not get new method to work
-    accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
-    region: "ca-central-1",
-  });
+const config = new AWS.Config({
+  // Deprecated method of passing accessKeyId and secretAccessKey -- could not get new method to work
+  accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
+  secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
+  region: "ca-central-1",
+});
 
+export function* getAttachments(action) {
   // call martins endpoint
   const surveyAnswers = yield call(getAnswersBySurvey, action.payload);
 
@@ -176,6 +177,19 @@ export function* getAttachments(action) {
   }
 }
 
+export function* deleteViewSummary(action) {
+  yield call(async () => {
+    AWS.config.update(config);
+    const S3 = new AWS.S3({});
+    const objParams = {
+      Bucket: process.env.REACT_APP_S3_BUCKET,
+      Key: `requestSummary/${action.payload.ticket_id}`
+    };
+
+    await S3.deleteObject(objParams).promise();
+  });
+}
+
 // Need to know why there is an infinite loop and how to connect the saga to call the API properly.
 export function* filterTickets(action) {
   const ticketList = yield call(getTickets);
@@ -207,4 +221,5 @@ export default function* ticketSaga() {
   yield takeLatest(GET_SUBTASKS, getSubtasks);
   yield takeLatest(GET_ATTACHMENTS, getAttachments);
   yield takeLatest(FILTER_TICKETS, filterTickets);
+  yield takeLatest(DELETE_VIEW_SUMMARY, deleteViewSummary);
 }

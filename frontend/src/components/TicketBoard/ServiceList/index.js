@@ -72,6 +72,7 @@ function ServiceList({ readOnly }) {
                         defaultValue={serviceCost.name}
                         showArrow={false}
                         bordered={false}
+                        disabled={readOnly}
                         style={{ width: "90%", marginRight: "10%", textAlign: "left", color: '#666666' }}
                         placeholder="Select a Service"
                         onSelect={(text) => {
@@ -127,6 +128,7 @@ function ServiceList({ readOnly }) {
                     <input
                       className="serviceInputBox"
                       defaultValue={serviceCost.quantity}
+                      disabled={readOnly}
                       onBlur={(text) => {
                         if (!readOnly) {
                           dispatch({
@@ -145,6 +147,7 @@ function ServiceList({ readOnly }) {
                       key={serviceCost.billable_id + serviceCost.cost}
                       className="serviceInputBox"
                       defaultValue={serviceCost.cost}
+                      disabled={readOnly}
                       onBlur={(text) => {
                         if (!readOnly) {
                           dispatch({
@@ -162,12 +165,12 @@ function ServiceList({ readOnly }) {
                   </div>
 
                   <div className="deleteServiceSpace">
-                    <img
-                      className="delete-service"
-                      src={X}
-                      alt="Delete Service"
-                      onClick={() => {
-                        if (!readOnly) {
+                    {!readOnly ?
+                      <img
+                        className="delete-service"
+                        src={X}
+                        alt="Delete Service"
+                        onClick={() => {
                           dispatch({
                             type: REMOVE_SERVICE_COST,
                             payload: {
@@ -176,18 +179,17 @@ function ServiceList({ readOnly }) {
                             },
                           });
                           SuccessToast("Service Removed!");
-                        }
-                      }}
-                    />
+                        }}
+                      /> : null}
                   </div>
                 </div>
                 <div>
-                  <input
-                    className="serviceCommentInput"
-                    defaultValue={serviceCost.comment ?? ""}
-                    placeholder="Add Comment..."
-                    onBlur={(text) => {
-                      if (!readOnly) {
+                  {!readOnly ?
+                    <input
+                      className="serviceCommentInput"
+                      defaultValue={serviceCost.comment ?? ""}
+                      placeholder="Add Comment..."
+                      onBlur={(text) => {
                         dispatch({
                           type: POST_SERVICE_COST,
                           payload: {
@@ -197,9 +199,8 @@ function ServiceList({ readOnly }) {
                           },
                         });
                         SuccessToast("Service Modification Saved!");
-                      }
-                    }}
-                  />
+                      }}
+                    /> : null}
                 </div>
               </div>
             );

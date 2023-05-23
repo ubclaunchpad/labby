@@ -25,6 +25,8 @@ import ProjectSelector from "../../components/ProjectSelector";
 import { ToastContainer } from "react-toastify";
 import { WarningToast } from "../../components/Toasts";
 import SideArrow from "../../assets/SideArrow.png";
+import html2canvas from "html2canvas";
+import AWS from "aws-sdk";
 
 function RequestForm({ origin }) {
   const dispatch = useDispatch();
@@ -38,7 +40,6 @@ function RequestForm({ origin }) {
     (state) => state.formReducer.clinicalResponses
   );
   let noShowList = [];
-
   const costEstimateMap = useSelector(
     (state) => state.costEstimateReducer.costEstimateList
   );
@@ -81,6 +82,43 @@ function RequestForm({ origin }) {
     }
   }
 
+  const config = new AWS.Config({
+    accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
+    region: "ca-central-1",
+  });
+
+  function saveFormToS3(survey_id) {
+    document.getElementById("requestFormContainer").scrollTo(0, 0);
+    html2canvas(document.getElementById("requestFormContainer"), {
+      height: document.getElementById("requestFormContainer").scrollHeight,
+      windowHeight: document.getElementById("requestFormContainer").scrollHeight,
+    }).then(function (canvas) {
+      canvas.toBlob((blob) => {
+        if (blob === null) return;
+        AWS.config.update(config);
+        const S3 = new AWS.S3({});
+        const objParams = {
+          Bucket: process.env.REACT_APP_S3_BUCKET,
+          Key: `requestSummary/${survey_id}`,
+          Body: blob,
+          ContentType: "image/png",
+        };
+
+        S3.putObject(objParams)
+          .send(function (err, data) {
+            if (err) {
+              console.log("Issue in S3.putObject.send()");
+              console.log(`Error Code: ${err.code}`);
+              console.log(`Error Message: ${err.message}`);
+            } else {
+              console.log("Send completed in S3.putObject.send()");
+            }
+          });
+      }, "image/png");
+    });
+  }
+
   // Basic Form Validation and Submit
   function submitForm() {
     var filled = true;
@@ -114,6 +152,9 @@ function RequestForm({ origin }) {
           dispatch({ type: TOGGLE_COST_ESTIMATE });
           WarningToast("Please Review Your Cost Estimate and Submit!");
         } else {
+          const survey_id = uuid();
+          saveFormToS3(survey_id);
+
           const projectItem = formResponses.filter(
             (response) => response.question.project_id !== undefined
           );
@@ -135,7 +176,6 @@ function RequestForm({ origin }) {
             }
             return null;
           });
-          const survey_id = uuid();
           localStorage.setItem("currentSurveyId", survey_id);
           dispatch({
             type: SUBMIT_SURVEY,
@@ -186,7 +226,7 @@ function RequestForm({ origin }) {
           pauseOnHover
           theme="light"
         />
-        <div className="requestFormContainer">
+        <div className="requestFormContainer" id="requestFormContainer">
           <div id="progressBar" style={{ zIndex: 2 }} />
           <div className="requestTitleContainer">
             <NavLink
