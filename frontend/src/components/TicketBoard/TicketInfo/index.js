@@ -50,6 +50,8 @@ export const TicketInfo = () => {
 
     const [assigneeAddModal, setAssigneeAddModal] = useState(false);
 
+    console.log(currentTicket)
+
     useEffect(() => {
         dispatch({ type: LOAD_EMPLOYEE });
         dispatch({ type: GET_TICKET_BOARD });
@@ -72,6 +74,7 @@ export const TicketInfo = () => {
     return (
         <div
             className="ticketDetailBackground"
+            key={currentTicket.task_uuid}
             onClick={() => {
                 if (assigneeAddModal) {
                     setAssigneeAddModal(false);
