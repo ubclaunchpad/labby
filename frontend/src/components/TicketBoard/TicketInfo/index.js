@@ -72,6 +72,7 @@ export const TicketInfo = () => {
     return (
         <div
             className="ticketDetailBackground"
+            key={currentTicket.task_uuid}
             onClick={() => {
                 if (assigneeAddModal) {
                     setAssigneeAddModal(false);
