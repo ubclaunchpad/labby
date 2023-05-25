@@ -29,7 +29,10 @@ function MultiSelect({ question }) {
 
   useEffect(() => {
     setOptions(getQuestionOptions(answerList, question));
-    draftList.forEach((draft) => {
+    const draftAnswer = draftList.filter(
+      (draft) => draft.question_id === question.question_id
+    );
+    draftAnswer.forEach((draft) => {
       dispatch({
         type: ADD_RESPONSE,
         payload: {

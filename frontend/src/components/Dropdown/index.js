@@ -87,12 +87,11 @@ function Dropdown({ question }) {
       </div>
       <select
         className="select"
-        defaultValue={selectedValue}
         onChange={handleChange}
       >
         {selectedValue === null && <option key={"Default"} value={""} />}
         {options.map((option) => (
-          <option key={option.answer_id} value={JSON.stringify(option)}>
+          <option key={option.answer_id} value={JSON.stringify(option)} selected={selectedValue && option.answer_id === selectedValue.answer_id}>
             {option.answer}
           </option>
         ))}
