@@ -293,7 +293,7 @@ function Invoice() {
                         <Checkbox onChange={(e) => {
                           setReadyToBill(e.target.checked);
                         }}>
-                          Ready to Bill
+                          To Bill
                         </Checkbox>
                       </div>
                     </label>

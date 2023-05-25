@@ -15,6 +15,7 @@ import {
 import uuid from "react-uuid";
 import ClinicalBox from "../ClinicalBox";
 import QuantityBox from "../QuantityBox";
+import { getQuestionOptions } from "../../utils/componentUtils";
 
 function SingleSelect({ question }) {
   const dispatch = useDispatch();
@@ -26,27 +27,18 @@ function SingleSelect({ question }) {
   const [selectedValue, setSelectedValue] = useState("");
 
   useEffect(() => {
-    var optionList = answerList[question.question_id ?? ""] ?? [];
-    optionList = optionList.sort((a, b) => {
-      let fa = a.added_on;
-      let fb = b.added_on;
-
-      if (fa < fb) {
-        return -1;
-      }
-      if (fa > fb) {
-        return 1;
-      }
-      return 0;
-    });
-    optionList = optionList.filter((option) => option !== "");
+    var optionList = getQuestionOptions(answerList, question);
     setOptions(optionList);
-    const draftAnswer = draftList.filter((draft) => draft.question_id === question.question_id)
+    const draftAnswer = draftList.filter(
+      (draft) => draft.question_id === question.question_id
+    );
     if (draftAnswer.length > 0) {
-      setSelectedAnswers([draftAnswer[0].answer])
-      const value = optionList.filter((option) => option.answer_id === draftAnswer[0].answer)
+      setSelectedAnswers([draftAnswer[0].answer]);
+      const value = optionList.filter(
+        (option) => option.answer_id === draftAnswer[0].answer
+      );
       if (value.length > 0) {
-        setSelectedValue(value[0].answer)
+        setSelectedValue(value[0].answer);
 
         dispatch({
           type: REMOVE_SINGLE_RESPONSE,
@@ -72,7 +64,9 @@ function SingleSelect({ question }) {
         {question.question}{" "}
         <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
       </div>
-      <div className="customer__component__subtitle">{question.question_note}</div>
+      <div className="customer__component__subtitle">
+        {question.question_note}
+      </div>
       <div className="single-select-options-container">
         <FormControl style={{ width: "100%" }}>
           <RadioGroup
@@ -105,19 +99,18 @@ function SingleSelect({ question }) {
                                 },
                               });
                               const draftObj = {
-                                draft_id: option.question_id + currentUser.user_id,
+                                draft_id:
+                                  option.question_id + currentUser.user_id,
                                 fk_user_id: currentUser.user_id,
                                 fk_form_id: option.fk_form_id,
                                 fk_question_id: option.question_id,
                                 answer: option.answer_id,
-                              }
+                              };
                               dispatch({
                                 type: ADD_DRAFT,
                                 payload: draftObj,
-                              })
-                              setSelectedAnswers([
-                                option.answer_id,
-                              ]);
+                              });
+                              setSelectedAnswers([option.answer_id]);
                               setSelectedValue(option.answer);
                             }
                           }}
@@ -127,11 +120,11 @@ function SingleSelect({ question }) {
                     <div className="new-question-input">{option.answer}</div>
                   </div>
                   {selectedAnswers.includes(option.answer_id) &&
-                    option.quantifiable ? (
+                  option.quantifiable ? (
                     <QuantityBox option={option} />
                   ) : null}
                   {selectedAnswers.includes(option.answer_id) &&
-                    question.clinical ? (
+                  question.clinical ? (
                     <ClinicalBox question={question} option={option} />
                   ) : null}
                 </div>

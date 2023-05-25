@@ -18,6 +18,7 @@ import {
 } from "../../../redux/actions/questionActions";
 import { SET_LOGIC_QUESTION } from "../../../redux/actions/logicActions";
 import EditComponentFooter from "../../EditComponentFooter";
+import { getQuestionOptions } from "../../../utils/componentUtils";
 
 function SingleSelectEditor({ question }) {
   const dispatch = useDispatch();
@@ -39,20 +40,7 @@ function SingleSelectEditor({ question }) {
   }, [question]);
 
   useEffect(() => {
-    var optionList = answerList[question.question_id ?? ""] ?? [];
-    optionList = optionList.sort((a, b) => {
-      let fa = a.added_on;
-      let fb = b.added_on;
-
-      if (fa < fb) {
-        return -1;
-      }
-      if (fa > fb) {
-        return 1;
-      }
-      return 0;
-    });
-    optionList = optionList.filter((option) => option !== "");
+    var optionList = getQuestionOptions(answerList, question);
     optionList.push("");
     setOptions(optionList);
   }, [answerList, question]);

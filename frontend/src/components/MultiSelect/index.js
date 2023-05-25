@@ -17,6 +17,7 @@ import {
 import uuid from "react-uuid";
 import ClinicalBox from "../ClinicalBox";
 import QuantityBox from "../QuantityBox";
+import { getQuestionOptions } from "../../utils/componentUtils";
 
 function MultiSelect({ question }) {
   const dispatch = useDispatch();
@@ -27,21 +28,7 @@ function MultiSelect({ question }) {
   const [selectedAnswers, setSelectedAnswers] = useState([]);
 
   useEffect(() => {
-    var optionList = answerList[question.question_id ?? ""] ?? [];
-    optionList = optionList.sort((a, b) => {
-      let fa = a.added_on;
-      let fb = b.added_on;
-
-      if (fa < fb) {
-        return -1;
-      }
-      if (fa > fb) {
-        return 1;
-      }
-      return 0;
-    });
-    optionList = optionList.filter((option) => option !== "");
-    setOptions(optionList);
+    setOptions(getQuestionOptions(answerList, question));
     draftList.forEach((draft) => {
       dispatch({
         type: ADD_RESPONSE,
@@ -60,7 +47,9 @@ function MultiSelect({ question }) {
         {question.question}{" "}
         <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
       </div>
-      <div className="customer__component__subtitle">{question.question_note}</div>
+      <div className="customer__component__subtitle">
+        {question.question_note}
+      </div>
       <div className="customer__component__subtitle">Select all that apply</div>
       <div className="single-select-options-container">
         <FormControl style={{ width: "100%" }}>
@@ -71,7 +60,9 @@ function MultiSelect({ question }) {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        defaultChecked={draftList.some((draft) => draft.answer === option.answer_id)}
+                        defaultChecked={draftList.some(
+                          (draft) => draft.answer === option.answer_id
+                        )}
                         onClick={(e) => {
                           if (e.target.checked) {
                             dispatch({
@@ -83,16 +74,17 @@ function MultiSelect({ question }) {
                               },
                             });
                             const draftObj = {
-                              draft_id: option.question_id + currentUser.user_id,
+                              draft_id:
+                                option.question_id + currentUser.user_id,
                               fk_user_id: currentUser.user_id,
                               fk_form_id: option.fk_form_id,
                               fk_question_id: option.question_id,
                               answer: option.answer_id,
-                            }
+                            };
                             dispatch({
                               type: ADD_DRAFT,
                               payload: draftObj,
-                            })
+                            });
                             setSelectedAnswers([
                               ...selectedAnswers,
                               option.answer_id,
@@ -108,7 +100,7 @@ function MultiSelect({ question }) {
                             dispatch({
                               type: DELETE_DRAFT,
                               payload: option.question_id + currentUser.user_id,
-                            })
+                            });
                             setSelectedAnswers(
                               selectedAnswers.filter(
                                 (answer) => answer !== option.answer_id
@@ -159,11 +151,11 @@ function MultiSelect({ question }) {
                   </div>
                 ) : null}
                 {selectedAnswers.includes(option.answer_id) &&
-                  option.quantifiable ? (
+                option.quantifiable ? (
                   <QuantityBox option={option} />
                 ) : null}
                 {selectedAnswers.includes(option.answer_id) &&
-                  question.clinical ? (
+                question.clinical ? (
                   <ClinicalBox question={question} option={option} />
                 ) : null}
               </div>
