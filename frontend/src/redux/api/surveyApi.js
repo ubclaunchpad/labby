@@ -76,3 +76,53 @@ export const saveClinical = async (payload) => {
     return console.error(err);
   }
 };
+
+export const addDraft = async (payload) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    var data = JSON.stringify(payload);
+
+    const draftResponse = await axios.post("draft/", data, {
+      headers: headers,
+    });
+
+    return draftResponse;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const deleteDraft = async (payload) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const draftResponse = await axios.delete(`draft/${payload}`, {
+      headers: headers,
+    });
+
+    return draftResponse;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const loadDraft = async (payload) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const draftList = await axios.get(`draft/${payload.user_id}/${payload.form_id}`, { headers: headers });
+
+    return draftList;
+  } catch (err) {
+    return console.error(err);
+  }
+};

@@ -19,6 +19,7 @@ const config = new AWS.Config({
 
 function FileInput({ question }) {
   const dispatch = useDispatch();
+  // const currentUser = useSelector((state) => state.userReducer.currentUser);
 
   return (
     <div className="GlobalCustomerQuestionContainer">
@@ -72,6 +73,17 @@ function FileInput({ question }) {
                       question: question,
                     },
                   });
+                  // const draftObj = {
+                  //   draft_id: question.question_id + currentUser.user_id,
+                  //   fk_user_id: currentUser.user_id,
+                  //   fk_form_id: question.fk_form_id,
+                  //   fk_question_id: question.question_id,
+                  //   answer: objParams.Key,
+                  // }
+                  // dispatch({
+                  //   type: ADD_DRAFT,
+                  //   payload: draftObj,
+                  // })
                 }
               });
           }}

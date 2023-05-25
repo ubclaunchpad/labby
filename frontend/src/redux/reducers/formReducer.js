@@ -30,6 +30,7 @@ import {
   ADD_ACCOUNT_RESPONSE,
   REMOVE_ACCOUNT_RESPONSE,
   REMOVE_ALL_RESPONSE,
+  SET_DRAFTS,
 } from "../actions/formActions";
 
 const defaultQuestionlist = {
@@ -70,7 +71,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response !== action.payload.response
       );
       state.push(action.payload);
@@ -80,7 +81,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.question.answer_id !== action.payload.question.answer_id
       );
       return [...state];
@@ -102,7 +103,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response.split("_")[0] !== "FULLNAME"
       );
       state.push(action.payload);
@@ -112,7 +113,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response.split("_")[0] !== "FULLNAME"
       );
       return [...state];
@@ -121,7 +122,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response.split("_")[0] !== "INSTITUTION"
       );
       state.push(action.payload);
@@ -131,7 +132,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response.split("_")[0] !== "INSTITUTION"
       );
       return [...state];
@@ -140,7 +141,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response.split("_")[0] !== "EMAIL"
       );
       state.push(action.payload);
@@ -150,7 +151,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response.split("_")[0] !== "EMAIL"
       );
       return [...state];
@@ -159,7 +160,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response.split("_")[0] !== "PHONE"
       );
       state.push(action.payload);
@@ -169,7 +170,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response.split("_")[0] !== "PHONE"
       );
       return [...state];
@@ -178,7 +179,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response.split("_")[0] !== "FINANCIAL"
       );
       state.push(action.payload);
@@ -188,7 +189,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response.split("_")[0] !== "FINANCIAL"
       );
       return [...state];
@@ -197,7 +198,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response.split("_")[0] !== "INVESTIGATOR"
       );
       state.push(action.payload);
@@ -207,7 +208,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response.split("_")[0] !== "INVESTIGATOR"
       );
       return [...state];
@@ -216,7 +217,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response.split("_")[0] !== "WORKTAG"
       );
       state.push(action.payload);
@@ -226,7 +227,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response.split("_")[0] !== "WORKTAG"
       );
       return [...state];
@@ -235,7 +236,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response.split("_")[0] !== "ADDRESS"
       );
       state.push(action.payload);
@@ -245,7 +246,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response.split("_")[0] !== "ADDRESS"
       );
       return [...state];
@@ -254,7 +255,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response.split("_")[0] !== "ACCOUNT"
       );
       state.push(action.payload);
@@ -264,7 +265,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response.split("_")[0] !== "ACCOUNT"
       );
       return [...state];
@@ -273,7 +274,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.question.answer_id !== action.payload.question.answer_id
       );
       state.push(action.payload);
@@ -283,7 +284,7 @@ const formResponses = (state = defaultAnswerList, action) => {
       state = state.filter(
         (response) =>
           response.question.question_id !==
-            action.payload.question.question_id ||
+          action.payload.question.question_id ||
           response.response.split("_")[0] !== "OTHER"
       );
       return [...state];
@@ -346,6 +347,17 @@ const clinicalResponses = (state = defaultClinicalResponses, action) => {
   }
 };
 
+const draftList = (state = [], action) => {
+  switch (action.type) {
+    case SET_DRAFTS: {
+      return action.payload;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 export default combineReducers({
   formQuestions,
   formResponses,
@@ -353,4 +365,5 @@ export default combineReducers({
   formSubmissions,
   clinicalResponses,
   publishedFormList,
+  draftList,
 });

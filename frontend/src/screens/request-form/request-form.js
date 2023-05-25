@@ -19,7 +19,7 @@ import {
   CostEstimateCollapsed,
   CostEstimateFull,
 } from "../../components/CostEstimate";
-import { REMOVE_ALL_RESPONSE, SUBMIT_SURVEY } from "../../redux/actions/formActions";
+import { DELETE_DRAFT, LOAD_DRAFT, REMOVE_ALL_RESPONSE, SET_DRAFTS, SUBMIT_SURVEY } from "../../redux/actions/formActions";
 import { TOGGLE_COST_ESTIMATE } from "../../redux/actions/uiActions";
 import ProjectSelector from "../../components/ProjectSelector";
 import { ToastContainer } from "react-toastify";
@@ -36,6 +36,8 @@ function RequestForm({ origin }) {
   const formResponses = useSelector((state) => state.formReducer.formResponses);
   const logicList = useSelector((state) => state.logicReducer.logicList);
   const hideCost = useSelector((state) => state.costEstimateReducer.hideCost);
+  const currentUser = useSelector((state) => state.userReducer.currentUser);
+  const draftList = useSelector((state) => state.formReducer.draftList);
   const clinicalList = useSelector(
     (state) => state.formReducer.clinicalResponses
   );
@@ -47,7 +49,13 @@ function RequestForm({ origin }) {
   // Load Form Questions
   useEffect(() => {
     dispatch({ type: LOAD_QUESTION, payload: formId });
-  }, [dispatch, formId]);
+    dispatch({
+      type: LOAD_DRAFT, payload: {
+        user_id: currentUser.user_id,
+        form_id: formId,
+      }
+    })
+  }, [dispatch, formId, currentUser]);
 
   // Load Cost Estimate
   useEffect(() => {
@@ -189,6 +197,10 @@ function RequestForm({ origin }) {
             },
           });
           // Clear data
+          draftList.forEach((draft) => {
+            dispatch({ type: DELETE_DRAFT, payload: draft.question_id + currentUser.user_id });
+          });
+          dispatch({ type: SET_DRAFTS, payload: [] });
           dispatch({ type: REMOVE_ALL_RESPONSE });
           setSubmissionSuccessful(true);
         }
