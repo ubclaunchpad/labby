@@ -23,6 +23,7 @@ import ProjectSelectorEditor from "../ProjectSelector/ProjectSelectorEditor";
 
 import { SuccessToast } from "../../components/Toasts";
 import { SAVE_FORM_BUILD } from "../../redux/actions/formActions";
+import FormInfoEditor from "../FormInfo/FormInfoEditor";
 
 const QuestionContainer = styled.div`
   border: ${(props) =>
@@ -59,6 +60,8 @@ function renderQuestion(question) {
       return <FileDownloadEditor question={question} />;
     case "contact":
       return <ContactInfoEditor question={question} />;
+    case "form":
+      return <FormInfoEditor question={question} />;
     case "project":
       return <ProjectSelectorEditor question={question} />;
     default:

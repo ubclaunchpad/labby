@@ -80,7 +80,7 @@ export const TicketInfoUser = () => {
 
                     const link = document.createElement('a');
                     link.href = url;
-                    link.download = `SOW-${currentTicket.code}.png`;
+                    link.download = `SOW-${currentTicket.task_id}.png`;
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);

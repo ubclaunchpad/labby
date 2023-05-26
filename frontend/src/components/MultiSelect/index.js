@@ -26,6 +26,7 @@ function MultiSelect({ question }) {
   const currentUser = useSelector((state) => state.userReducer.currentUser);
   const draftList = useSelector((state) => state.formReducer.draftList);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
+  const [idPrefix, setIdPrefix] = useState("");
 
   useEffect(() => {
     setOptions(getQuestionOptions(answerList, question));
@@ -37,11 +38,12 @@ function MultiSelect({ question }) {
         type: ADD_RESPONSE,
         payload: {
           id: uuid(),
-          response: draft.answer_id,
+          response: draft.answer,
           question: question,
         },
       });
     });
+    setIdPrefix(uuid());
   }, [answerList, question, dispatch, draftList]);
 
   return (
@@ -57,15 +59,15 @@ function MultiSelect({ question }) {
       <div className="single-select-options-container">
         <FormControl style={{ width: "100%" }}>
           {options.map((option, index) => {
+            const isChecked = draftList.some((draft) => draft.answer === option.answer_id)
             return (
               <div className="selectionBox" key={index}>
                 <div className="single-select-option">
                   <FormControlLabel
                     control={
                       <Checkbox
-                        defaultChecked={draftList.some(
-                          (draft) => draft.answer === option.answer_id
-                        )}
+                        key={idPrefix + option.answer_id}
+                        defaultChecked={isChecked}
                         onClick={(e) => {
                           if (e.target.checked) {
                             dispatch({
@@ -154,11 +156,11 @@ function MultiSelect({ question }) {
                   </div>
                 ) : null}
                 {selectedAnswers.includes(option.answer_id) &&
-                option.quantifiable ? (
+                  option.quantifiable ? (
                   <QuantityBox option={option} />
                 ) : null}
                 {selectedAnswers.includes(option.answer_id) &&
-                question.clinical ? (
+                  question.clinical ? (
                   <ClinicalBox question={question} option={option} />
                 ) : null}
               </div>

@@ -27,6 +27,7 @@ import { WarningToast } from "../../components/Toasts";
 import SideArrow from "../../assets/SideArrow.png";
 import html2canvas from "html2canvas";
 import AWS from "aws-sdk";
+import FormInfo from "../../components/FormInfo";
 
 function RequestForm({ origin }) {
   const dispatch = useDispatch();
@@ -83,6 +84,8 @@ function RequestForm({ origin }) {
         return <FileDownload question={question} />;
       case "contact":
         return <ContactInfo question={question} />;
+      case "form":
+        return <FormInfo question={question} />;
       case "project":
         return <ProjectSelector question={question} />;
       default:

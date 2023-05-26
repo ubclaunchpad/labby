@@ -96,6 +96,15 @@ export const ContactInfoCard = () => {
   );
 };
 
+export const FormInfoCard = () => {
+  return (
+    <DraggableCard>
+      <img className="iconImage" src={ContactIcon} alt="Contact Information" />
+      Form Information
+    </DraggableCard>
+  );
+};
+
 export const ProjectSelectorCard = () => {
   return (
     <DraggableCard>
@@ -143,6 +152,10 @@ export const componentsSideViewData = {
       id: "contact",
       component: ContactInfoCard,
     },
+    form: {
+      id: "form",
+      component: FormInfoCard,
+    },
     project: {
       id: "project",
       component: ProjectSelectorCard,
@@ -167,7 +180,7 @@ export const componentsSideViewData = {
     "billing-elements": {
       id: "billing-elements",
       title: "Billing Elements",
-      componentIds: ["contact", "project"],
+      componentIds: ["contact", "form", "project"],
     },
   },
   //For reordering the sections

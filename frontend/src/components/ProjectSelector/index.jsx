@@ -70,6 +70,7 @@ function ProjectSelector({ question }) {
             id: uuid(),
             response: value.project_id,
             question: value,
+            question_info: question,
           },
         });
       }
