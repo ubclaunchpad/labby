@@ -52,3 +52,8 @@
 .subtasksLabel{
   font-size: 14px;
 }
+
+.subtasksStateLabel {
+  margin-right: 10px;
+  font-weight: 600;
+}

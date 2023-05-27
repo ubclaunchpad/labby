@@ -47,6 +47,7 @@ const InvoiceTable = () => {
           <div>{date.toLocaleDateString("en-US", options)}</div>
         ) : null
       },
+      sorter: (a, b) => (new Date(a.createdDate).getTime() ?? 0) - (new Date(b.createdDate).getTime() ?? 0),
     },
     {
       title: "Cost",

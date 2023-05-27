@@ -5,6 +5,7 @@ import {
   ADD_SUBTASKS,
   SET_ACTIVE_TICKET
 } from "../../../redux/actions/ticketActions";
+import { useEffect, useState } from "react";
 
 function Subtasks({ readOnly }) {
   const dispatch = useDispatch();
@@ -18,6 +19,12 @@ function Subtasks({ readOnly }) {
     (state) => state.ticketReducer.currentTicketSubtasks
   );
   const allTasks = ticketBoardData.tasks;
+  const [isSubtask, setIsSubtask] = useState(false);
+
+  useEffect(() => {
+    setIsSubtask(currentTicketSubtasks.some((subtask) => subtask.subtask_uuid === currentTicket.task_uuid));
+  }, [currentTicketSubtasks, currentTicket]);
+
   return (
     <div
       className="ticketSubtasks"
@@ -25,9 +32,12 @@ function Subtasks({ readOnly }) {
     >
       <div className="ticketSubtasksContainer">
         <div className="contentList">
-          <div className="ticketSectionTitle">Subtasks</div>
+          <div className="ticketSectionTitle">{isSubtask ? "Related Subtasks" : "Subtasks"}</div>
           <div className="subtaskCostRows">
             {currentTicketSubtasks.map((subtasks) => {
+              if (subtasks.subtask_uuid === currentTicket.task_uuid) {
+                return null;
+              }
               return (
                 <div
                   className="subtaskCostRow"
@@ -41,6 +51,9 @@ function Subtasks({ readOnly }) {
                   }}
                 >
                   <div className="subtaskInputContainer">
+                    <span className="subtasksStateLabel">
+                      {subtasks.subtask_state.toUpperCase()}
+                    </span>
                     <span className="subtasksLabel">
                       {subtasks.subtask_title}
                     </span>
@@ -51,7 +64,7 @@ function Subtasks({ readOnly }) {
           </div>
         </div>
 
-        {!readOnly ? (
+        {(!readOnly && !isSubtask) ? (
           <div
             className="additionBar"
             onClick={() => {

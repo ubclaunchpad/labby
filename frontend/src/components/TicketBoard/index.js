@@ -143,7 +143,7 @@ const TicketBoardColumn = (props) => {
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {props.tasks.map((task, index) => {
+            {props.tasks.sort((task1, task2) => new Date(task1.last_updated).getTime() - new Date(task2.last_updated).getTime()).map((task, index) => {
               return <Task key={task?.code} task={task} index={index} />;
             })}
             {provided.placeholder}

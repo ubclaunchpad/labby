@@ -43,6 +43,7 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
             description: ticket.subtask_description,
             assignees: assigneeMap[ticket.subtask_uuid] ?? [],
             reminder: false,
+            last_updated: ticket.subtask_updated,
           };
           if (ticket.subtask_state === "completed") {
             doneList.push(ticket.subtask_uuid);
@@ -69,6 +70,7 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
             description: ticket.task_description,
             assignees: assigneeMap[ticket.task_uuid] ?? [],
             reminder: false,
+            last_updated: ticket.task_updated,
           };
           if (ticket.task_state === "completed") {
             doneList.push(ticket.task_uuid);
