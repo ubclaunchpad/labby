@@ -1,7 +1,7 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SAVE_CELL_DATA } from "../../redux/actions/costActions";
-import { Table, Form, Input, Checkbox } from "antd";
+import { Table, Form, Input } from "antd";
 import "antd/dist/antd.min.css";
 import "./index.css";
 import { SET_INVOICE_LIST } from "../../redux/actions/billingActions";
@@ -65,40 +65,12 @@ const InvoiceTable = () => {
         ) : null
       },
     },
-    {
-      title: "Select",
-      dataIndex: "quantifiable",
-      key: "quantifiable",
-      render: (_, record) =>
-        dataSource.length >= 1 ? (
-          <Checkbox
-            checked={invoiceList.some(
-              (item) => item.billable_id === record.billable_id
-            )}
-            onClick={(e) => {
-              if (e.target.checked) {
-                dispatch({
-                  type: SET_INVOICE_LIST,
-                  payload: [...invoiceList, record],
-                });
-              } else {
-                dispatch({
-                  type: SET_INVOICE_LIST,
-                  payload: invoiceList.filter(
-                    (item) => item.billable_id !== record.billable_id
-                  ),
-                });
-              }
-            }}
-          />
-        ) : null,
-      width: "5%",
-    },
+    Table.SELECTION_COLUMN
   ];
 
   useEffect(() => {
     dispatch({ type: SET_INVOICE_LIST, payload: [] });
-  }, [dispatch, dataSource]);
+  }, [dispatch]);
 
   const handleSave = (row) => {
     const newData = [...dataSource];
@@ -211,6 +183,16 @@ const InvoiceTable = () => {
       <Table
         className="invoiceTable"
         pagination={false}
+        rowSelection={{
+          onChange: (_, rowsSelected) => {
+            dispatch({
+              type: SET_INVOICE_LIST,
+              payload: rowsSelected,
+            });
+          },
+          selectedRowKeys: invoiceList.map((item) => item.billable_id),
+        }
+        }
         components={components}
         rowKey={(record) => record.billable_id}
         rowClassName={(_, index) => index % 2 === 0 ? "editable-row" : "editable-row-dark"}

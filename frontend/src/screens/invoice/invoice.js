@@ -15,6 +15,7 @@ import {
   GET_COSTCENTER,
   GET_PROJECT,
   LOAD_BILLABLE,
+  SET_ACTIVE_CONFIRMATION,
   SET_BILLABLE,
   UPDATE_CLICKS
 } from "../../redux/actions/billingActions";
@@ -30,6 +31,7 @@ import {
 } from "../../redux/actions/userActions";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
 import { Checkbox } from "antd";
+import SelectedInvoice from "../../components/SelectedInvoice";
 
 
 function Invoice() {
@@ -51,7 +53,9 @@ function Invoice() {
   const organizationData = useSelector((state) => state?.userReducer?.organizationList);
   const servicesAnalytics = useSelector((state) => state.billingReducer.servicesAnalytics);
   const projectsAnalytics = useSelector((state) => state.billingReducer.projectsAnalytics);
+  const invoiceConfirmation = useSelector((state) => state.billingReducer.invoiceConfirmation);
   const sowAnalytics = useSelector((state) => state.billingReducer.sowAnalytics);
+  const invoiceList = useSelector((state) => state.billingReducer.invoiceList);
   const usersData = useSelector((state) => state?.userReducer?.userList);
   const [archived, setArchived] = useState(false);
   const [billed, setBilled] = useState(false);
@@ -119,6 +123,7 @@ function Invoice() {
         {servicesAnalytics ? <ServicesAnalytics /> : null}
         {projectsAnalytics ? <ProjectsAnalytics /> : null}
         {sowAnalytics ? <SowAnalytics /> : null}
+        {invoiceConfirmation ? <SelectedInvoice /> : null}
       </div>
       <div className="invoicePage">
         <div className="headerComponent">
@@ -323,6 +328,12 @@ function Invoice() {
           <div className="InvoiceTable" ref={invoiceTableRef}>
             <InvoiceTable />
           </div>
+
+          {invoiceList.length > 0 ? <div className="selectedPopover" onClick={() => {
+            dispatch({ type: SET_ACTIVE_CONFIRMATION })
+          }}>
+            {invoiceList.length} Services Selected
+          </div> : null}
         </div>
       </div>
     </div>

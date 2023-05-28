@@ -145,3 +145,22 @@ label {
 }
 
 .rdrStartEdge, .rdrEndEdge { background-color: #5974E9; color: #5974E9 !important; }
+
+.selectedPopover {
+  width: 20%;
+  background-color: #627BF6;
+  position: sticky;
+  bottom: 50px;
+  left: 40%;
+  align-self: center;
+  border-radius: 20px;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 15px;
+}
+
+.selectedPopover:hover {
+  cursor: pointer;
+  background-color: #5974E9;
+}
