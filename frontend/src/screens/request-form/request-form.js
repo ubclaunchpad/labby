@@ -19,7 +19,7 @@ import {
   CostEstimateCollapsed,
   CostEstimateFull,
 } from "../../components/CostEstimate";
-import { DELETE_DRAFT, LOAD_DRAFT, REMOVE_ALL_RESPONSE, SET_DRAFTS, SUBMIT_SURVEY } from "../../redux/actions/formActions";
+import { DELETE_ALL_DRAFTS, LOAD_DRAFT, REMOVE_ALL_RESPONSE, SET_DRAFTS, SUBMIT_SURVEY } from "../../redux/actions/formActions";
 import { TOGGLE_COST_ESTIMATE } from "../../redux/actions/uiActions";
 import ProjectSelector from "../../components/ProjectSelector";
 import { ToastContainer } from "react-toastify";
@@ -28,6 +28,7 @@ import SideArrow from "../../assets/SideArrow.png";
 import html2canvas from "html2canvas";
 import AWS from "aws-sdk";
 import FormInfo from "../../components/FormInfo";
+import { GET_USER, SET_CURRENT_USER } from "../../redux/actions/userActions";
 
 function RequestForm({ origin }) {
   const dispatch = useDispatch();
@@ -37,8 +38,8 @@ function RequestForm({ origin }) {
   const formResponses = useSelector((state) => state.formReducer.formResponses);
   const logicList = useSelector((state) => state.logicReducer.logicList);
   const hideCost = useSelector((state) => state.costEstimateReducer.hideCost);
+  const currentOGUser = useSelector((state) => state.userReducer.ogCurrentUser);
   const currentUser = useSelector((state) => state.userReducer.currentUser);
-  const draftList = useSelector((state) => state.formReducer.draftList);
   const clinicalList = useSelector(
     (state) => state.formReducer.clinicalResponses
   );
@@ -56,6 +57,13 @@ function RequestForm({ origin }) {
         form_id: formId,
       }
     })
+    const pathSplit = window.location.pathname.split("/");
+    if (pathSplit.length > 3) {
+      const vaUser = window.location.pathname.split("/")[3];
+      if (vaUser && currentUser.user_id !== vaUser) {
+        dispatch({ type: GET_USER, payload: { user_id: vaUser } });
+      }
+    }
   }, [dispatch, formId, currentUser]);
 
   // Load Cost Estimate
@@ -200,11 +208,10 @@ function RequestForm({ origin }) {
             },
           });
           // Clear data
-          draftList.forEach((draft) => {
-            dispatch({ type: DELETE_DRAFT, payload: draft.question_id + currentUser.user_id });
-          });
+          dispatch({ type: DELETE_ALL_DRAFTS, payload: { user_id: currentUser.user_id, form_id: formId } });
           dispatch({ type: SET_DRAFTS, payload: [] });
           dispatch({ type: REMOVE_ALL_RESPONSE });
+          dispatch({ type: SET_CURRENT_USER, payload: currentOGUser })
           setSubmissionSuccessful(true);
         }
       }
@@ -224,6 +231,9 @@ function RequestForm({ origin }) {
         }%`;
     });
   }
+  window.addEventListener("popstate", () => {
+    dispatch({ type: SET_CURRENT_USER, payload: currentOGUser });
+  });
 
   if (questions.length !== 0 && logicList.length !== 0) {
     noShowList = [];
@@ -247,6 +257,9 @@ function RequestForm({ origin }) {
             <NavLink
               className="requestBackArrowContainer"
               to={origin ?? "/request-progress"}
+              onClick={() => {
+                dispatch({ type: SET_CURRENT_USER, payload: currentOGUser });
+              }}
             >
               <img className="requestBackArrow" src={SideArrow} alt="Back" />
             </NavLink>

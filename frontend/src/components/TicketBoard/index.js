@@ -16,11 +16,12 @@ import { clsx } from "clsx";
 // import { NotificationIcon } from "../Icons/NotifcationIcon";
 import { CheckBoxIcon } from "../Icons/CheckBoxIcon";
 import { AssigneeIcon } from "../Icons/AssigneeIcon";
-import { ticketsColors } from "../../constants";
+import { appColor, ticketsColors } from "../../constants";
 import { useEffect, useState } from "react";
 import { LOAD_EMPLOYEE } from "../../redux/actions/userActions";
 import { TicketInfo } from "./TicketInfo";
 import { ToastContainer } from "react-toastify";
+import { NavLink } from "react-router-dom";
 
 export const getColorNum = (id, colorArray) => {
   if (colorArray) {
@@ -334,6 +335,25 @@ export const TicketBoard = () => {
             </option>
           ))}
         </select>
+        <NavLink to="/pending">
+          <button
+            className="PendingViewButton"
+            style={{
+              backgroundColor: appColor.lightGray,
+              color: appColor.gray,
+            }}
+            onMouseOver={(e) => {
+              e.target.style.backgroundColor = "#627BF6";
+              e.target.style.color = "#FFFFFF";
+            }}
+            onMouseOut={(e) => {
+              e.target.style.backgroundColor = appColor.lightGray;
+              e.target.style.color = appColor.gray;
+            }}
+          >
+            View Pending Forms
+          </button>
+        </NavLink>
       </div>
       <div className="ticketBoard">
         <DragDropContext onDragEnd={ticketDragEndHandler}>

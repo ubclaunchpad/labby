@@ -34,7 +34,7 @@ function Dropdown({ question }) {
       },
     });
     const draftObj = {
-      draft_id: selected.question_id + currentUser.user_id,
+      draft_id: selected.question_id + "_" + currentUser.user_id,
       fk_user_id: currentUser.user_id,
       fk_form_id: selected.fk_form_id,
       fk_question_id: selected.question_id,

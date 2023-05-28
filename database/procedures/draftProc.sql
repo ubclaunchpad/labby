@@ -3,6 +3,7 @@ USE `labby`;
 DROP PROCEDURE IF EXISTS `addDraft`;
 DROP PROCEDURE IF EXISTS `getDraft`;
 DROP PROCEDURE IF EXISTS `deleteDraft`;
+DROP PROCEDURE IF EXISTS `loadAllDrafts`;
 
 DELIMITER $$
 
@@ -44,6 +45,15 @@ CREATE PROCEDURE `deleteDraft`  (
 )
 BEGIN
     DELETE FROM drafts WHERE draft_id = id;
+END $$
+
+CREATE PROCEDURE `loadAllDrafts` ()
+BEGIN
+	SELECT drafts.*, users.*, forms.*, organizations.* FROM drafts
+	LEFT JOIN users ON drafts.fk_user_id = users.user_id
+	LEFT JOIN forms ON drafts.fk_form_id = forms.form_id
+	LEFT JOIN organizations ON users.fk_organization_id = organizations.organization_id
+	GROUP BY drafts.fk_user_id, drafts.fk_form_id;
 END $$
 
 DELIMITER ;

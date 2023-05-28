@@ -1,0 +1,80 @@
+.costTable .ant-table-thead .ant-table-cell {
+  background-color: #ECEDF3;
+  border: none;
+}
+
+.costTable .ant-table-tbody > tr > td {
+  border: none
+}
+
+.costTable {
+  margin-top: 30px;
+}
+
+.costTable .editable-row-dark {
+  background-color: #F6F6F6;
+}
+
+.costTable .ant-table-container {
+  border: none;
+}
+
+.addService {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ServiceQuestionSelectCostTable {
+  border: 0;
+  background-color: #eeeeee;
+  border-radius: 10px;
+  height: 45px;
+  padding-left: 16px;
+  padding-right: 16px;
+  display: flex;
+  flex-direction: row;
+  flex-basis: 50%;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("../../assets/DropdownArrow.svg");
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 16px) center;
+}
+.ServiceQuestionSelectCostTable:focus {
+  outline: none;
+}
+
+/* Antd global styling messing with our desired styling
+So try and beat it with CSS specificity */
+.ant-table-container,
+.ant-table-container table > thead > tr:first-child > th {
+  background-color: #d9d9d9;
+  border: 1px solid #d9d9d9;
+}
+.ant-table-container,
+.ant-table-container table > thead > tr:first-child th:first-child {
+  border-top-left-radius: 10px;
+  border-color: #d9d9d9;
+}
+.ant-table-container,
+.ant-table-container table > thead > tr:first-child th:last-child {
+  border-top-right-radius: 10px;
+  border-color: #d9d9d9;
+}
+.ant-table-container,
+.ant-table-container table > tbody > tr {
+  background-color: #fff;
+}
+.ant-table-container,
+.ant-table-container table > tbody > tr td {
+  border: 1px solid #d9d9d9;
+}
+.ant-table-container,
+.ant-table-container table > tbody > tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+.ant-table-container,
+.ant-table-container table > tbody > tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}

@@ -45,4 +45,16 @@ router.delete("/:draftId", authorize(), (req, res) => {
     });
 });
 
+router.get("/", authorize(), (req, res) => {
+  draftController
+    .getAllDraft()
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+})
+
+
 export default router;

@@ -1,7 +1,7 @@
 import "./setting.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  SET_CURRENT_USER,
+  SET_CURRENT_USER, SET_OG_CURRENT_USER,
 } from "../../redux/actions/userActions";
 import Header from "../../components/Header";
 import { useState } from "react";
@@ -25,6 +25,10 @@ function Setting() {
     localStorage.removeItem("currentUser");
     dispatch({
       type: SET_CURRENT_USER,
+      payload: null,
+    });
+    dispatch({
+      type: SET_OG_CURRENT_USER,
       payload: null,
     });
   };

@@ -6,12 +6,24 @@ import {
   SET_USERLIST,
   SET_PENDING_USER,
   SET_USER_SURVEY,
+  SET_OG_CURRENT_USER,
 } from "../actions/userActions";
 
 const defaultUserList = [];
 const defaultOrganizationList = [];
 const defaultPendingUserList = [];
 const defaultUserRequestList = [];
+
+const ogCurrentUser = (state = null, action) => {
+  switch (action.type) {
+    case SET_OG_CURRENT_USER: {
+      return action.payload;
+    }
+    default: {
+      return state;
+    }
+  }
+};
 
 const currentUser = (state = null, action) => {
   switch (action.type) {
@@ -97,6 +109,7 @@ export default combineReducers({
   userList,
   employeeList,
   organizationList,
+  ogCurrentUser,
   currentUser,
   userRequestList,
 });

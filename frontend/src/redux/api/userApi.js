@@ -93,6 +93,23 @@ export const saveUserApi = async (payload) => {
   }
 };
 
+
+export const getUserApi = async (payload) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const user = await axios.get(`user/${payload.user_id}`, {
+      headers: headers,
+    });
+
+    return user;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const deleteUserApi = async (payload) => {
   try {
     const token = JSON.parse(localStorage.getItem("currentUser")).token;

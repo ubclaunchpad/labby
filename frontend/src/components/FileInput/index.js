@@ -74,7 +74,7 @@ function FileInput({ question }) {
                     },
                   });
                   // const draftObj = {
-                  //   draft_id: question.question_id + currentUser.user_id,
+                  //   draft_id: question.question_id + "_" + currentUser.user_id,
                   //   fk_user_id: currentUser.user_id,
                   //   fk_form_id: question.fk_form_id,
                   //   fk_question_id: question.question_id,

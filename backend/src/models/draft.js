@@ -49,4 +49,18 @@ export class Draft {
       }
     );
   }
+
+  getAllDraft(result) {
+    con.query(
+      `CALL loadAllDrafts()`,
+      (err, res) => {
+        if (err) {
+          console.log("error: ", err);
+          result(err, null);
+        } else {
+          result(null, res);
+        }
+      }
+    );
+  }
 }

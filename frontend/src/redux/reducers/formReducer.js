@@ -31,6 +31,7 @@ import {
   REMOVE_ACCOUNT_RESPONSE,
   REMOVE_ALL_RESPONSE,
   SET_DRAFTS,
+  SET_ALL_DRAFTS,
 } from "../actions/formActions";
 
 const defaultQuestionlist = {
@@ -358,6 +359,17 @@ const draftList = (state = [], action) => {
   }
 };
 
+const allDraftList = (state = [], action) => {
+  switch (action.type) {
+    case SET_ALL_DRAFTS: {
+      return action.payload;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 export default combineReducers({
   formQuestions,
   formResponses,
@@ -366,4 +378,5 @@ export default combineReducers({
   clinicalResponses,
   publishedFormList,
   draftList,
+  allDraftList
 });

@@ -40,6 +40,19 @@ export default class DraftController {
     });
   }
 
+  getAllDraft() {
+    return new Promise((resolve, reject) => {
+      const DraftModel = new Draft();
+
+      DraftModel.getAllDraft((err, res) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(res);
+      });
+    });
+  }
+
   deleteDraft(id) {
     return new Promise((resolve, reject) => {
       const DraftModel = new Draft();

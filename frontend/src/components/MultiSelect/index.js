@@ -80,7 +80,7 @@ function MultiSelect({ question }) {
                             });
                             const draftObj = {
                               draft_id:
-                                option.question_id + currentUser.user_id,
+                                option.answer_id + "_" + currentUser.user_id,
                               fk_user_id: currentUser.user_id,
                               fk_form_id: option.fk_form_id,
                               fk_question_id: option.question_id,
@@ -104,7 +104,7 @@ function MultiSelect({ question }) {
                             });
                             dispatch({
                               type: DELETE_DRAFT,
-                              payload: option.question_id + currentUser.user_id,
+                              payload: option.answer_id + "_" + currentUser.user_id,
                             });
                             setSelectedAnswers(
                               selectedAnswers.filter(

@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 import FormImg from "../../../assets/Form.png";
 import { LOAD_PUBLISHED_FORMS } from "../../../redux/actions/formActions";
-import { LOAD_USER_SURVEY, SET_CURRENT_USER } from "../../../redux/actions/userActions";
+import { LOAD_USER_SURVEY, SET_CURRENT_USER, SET_OG_CURRENT_USER } from "../../../redux/actions/userActions";
 
 import "./form-progress.css";
 import { SET_ACTIVE_TICKET } from "../../../redux/actions/ticketActions";
@@ -42,6 +42,10 @@ function FormProgress() {
     localStorage.removeItem("currentUser");
     dispatch({
       type: SET_CURRENT_USER,
+      payload: null,
+    });
+    dispatch({
+      type: SET_OG_CURRENT_USER,
       payload: null,
     });
   };

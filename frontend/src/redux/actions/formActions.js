@@ -46,5 +46,8 @@ export const SAVE_SURVEY_ID = "SAVE_SURVEY_ID";
 
 export const ADD_DRAFT = "ADD_DRAFT";
 export const DELETE_DRAFT = "DELETE_DRAFT";
+export const DELETE_ALL_DRAFTS = "DELETE_ALL_DRAFTS";
 export const LOAD_DRAFT = "LOAD_DRAFT";
+export const LOAD_ALL_DRAFTS = "LOAD_ALL_DRAFTS";
 export const SET_DRAFTS = "SET_DRAFTS";
+export const SET_ALL_DRAFTS = "SET_ALL_DRAFTS";

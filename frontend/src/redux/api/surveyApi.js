@@ -126,3 +126,18 @@ export const loadDraft = async (payload) => {
     return console.error(err);
   }
 };
+
+export const loadAllDraft = async () => {
+  try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const draftList = await axios.get(`draft/`, { headers: headers });
+
+    return draftList;
+  } catch (err) {
+    return console.error(err);
+  }
+};
