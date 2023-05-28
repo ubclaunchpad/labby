@@ -11,35 +11,40 @@ import {
   REMOVE_RESPONSE,
   ADD_OTHER_RESPONSE,
   REMOVE_OTHER_RESPONSE,
+  ADD_DRAFT,
+  DELETE_DRAFT,
 } from "../../redux/actions/formActions";
 import uuid from "react-uuid";
 import ClinicalBox from "../ClinicalBox";
 import QuantityBox from "../QuantityBox";
+import { getQuestionOptions } from "../../utils/componentUtils";
 
 function MultiSelect({ question }) {
   const dispatch = useDispatch();
   const [options, setOptions] = useState([]);
   const answerList = useSelector((state) => state.questionReducer.answerList);
+  const currentUser = useSelector((state) => state.userReducer.currentUser);
+  const draftList = useSelector((state) => state.formReducer.draftList);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
-  
+  const [idPrefix, setIdPrefix] = useState("");
 
   useEffect(() => {
-    var optionList = answerList[question.question_id ?? ""] ?? [];
-    optionList = optionList.sort((a, b) => {
-      let fa = a.added_on;
-      let fb = b.added_on;
-
-      if (fa < fb) {
-        return -1;
-      }
-      if (fa > fb) {
-        return 1;
-      }
-      return 0;
+    setOptions(getQuestionOptions(answerList, question));
+    const draftAnswer = draftList.filter(
+      (draft) => draft.question_id === question.question_id
+    );
+    draftAnswer.forEach((draft) => {
+      dispatch({
+        type: ADD_RESPONSE,
+        payload: {
+          id: uuid(),
+          response: draft.answer,
+          question: question,
+        },
+      });
     });
-    optionList = optionList.filter((option) => option !== "");
-    setOptions(optionList);
-  }, [answerList, question]);
+    setIdPrefix(uuid());
+  }, [answerList, question, dispatch, draftList]);
 
   return (
     <div className="GlobalCustomerQuestionContainer">
@@ -47,17 +52,22 @@ function MultiSelect({ question }) {
         {question.question}{" "}
         <p style={{ color: "red" }}>{question.mandatory ? "*" : ""}</p>
       </div>
-      <div className="customer__component__subtitle">{question.question_note}</div>
+      <div className="customer__component__subtitle">
+        {question.question_note}
+      </div>
       <div className="customer__component__subtitle">Select all that apply</div>
       <div className="single-select-options-container">
         <FormControl style={{ width: "100%" }}>
           {options.map((option, index) => {
+            const isChecked = draftList.some((draft) => draft.answer === option.answer_id)
             return (
               <div className="selectionBox" key={index}>
                 <div className="single-select-option">
                   <FormControlLabel
                     control={
                       <Checkbox
+                        key={idPrefix + option.answer_id}
+                        defaultChecked={isChecked}
                         onClick={(e) => {
                           if (e.target.checked) {
                             dispatch({
@@ -67,6 +77,18 @@ function MultiSelect({ question }) {
                                 response: option.answer_id,
                                 question: option,
                               },
+                            });
+                            const draftObj = {
+                              draft_id:
+                                option.answer_id + "_" + currentUser.user_id,
+                              fk_user_id: currentUser.user_id,
+                              fk_form_id: option.fk_form_id,
+                              fk_question_id: option.question_id,
+                              answer: option.answer_id,
+                            };
+                            dispatch({
+                              type: ADD_DRAFT,
+                              payload: draftObj,
                             });
                             setSelectedAnswers([
                               ...selectedAnswers,
@@ -79,6 +101,10 @@ function MultiSelect({ question }) {
                                 response: option.answer_id,
                                 question: option,
                               },
+                            });
+                            dispatch({
+                              type: DELETE_DRAFT,
+                              payload: option.answer_id + "_" + currentUser.user_id,
                             });
                             setSelectedAnswers(
                               selectedAnswers.filter(
@@ -130,11 +156,11 @@ function MultiSelect({ question }) {
                   </div>
                 ) : null}
                 {selectedAnswers.includes(option.answer_id) &&
-                option.quantifiable ? (
+                  option.quantifiable ? (
                   <QuantityBox option={option} />
                 ) : null}
                 {selectedAnswers.includes(option.answer_id) &&
-                question.clinical ? (
+                  question.clinical ? (
                   <ClinicalBox question={question} option={option} />
                 ) : null}
               </div>

@@ -1,11 +1,13 @@
 USE `labby`;
 
 DROP PROCEDURE IF EXISTS `addUser`;
+DROP PROCEDURE IF EXISTS `approveUser`;
 DROP PROCEDURE IF EXISTS `updateUser`;
 DROP PROCEDURE IF EXISTS `deleteUser`;
 DROP PROCEDURE IF EXISTS `loadUser`;
 DROP PROCEDURE IF EXISTS `loadEmployee`;
 DROP PROCEDURE IF EXISTS `loadSingleUser`;
+DROP PROCEDURE IF EXISTS `loadSingleUserByID`;
 DROP PROCEDURE IF EXISTS `loadPendingUsers`;
 
 DELIMITER $$
@@ -105,6 +107,13 @@ CREATE PROCEDURE `loadSingleUser`  (
 )
 BEGIN
 	SELECT * FROM users WHERE email = _email;
+END $$
+
+CREATE PROCEDURE `loadSingleUserByID`  (
+	IN `_user_id` VARCHAR(50)
+)
+BEGIN
+	SELECT * FROM users WHERE user_id = _user_id;
 END $$
 
 DELIMITER ;

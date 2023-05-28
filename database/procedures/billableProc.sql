@@ -1,13 +1,9 @@
 USE `labby`;
 
 DROP procedure IF EXISTS `save_billable`;
+DROP procedure IF EXISTS `bill_billable`;
 DROP procedure IF EXISTS `load_billable`;
-DROP procedure IF EXISTS `load_billable_by_service`;
-DROP procedure IF EXISTS `load_billable_by_costcenter_id`;
-DROP procedure IF EXISTS `load_billable_by_project_id`;
-DROP procedure IF EXISTS `load_billable_by_organization_id`;
-DROP procedure IF EXISTS `load_billable_by_user_id`;
-DROP procedure IF EXISTS `load_billable_by_date`;
+DROP procedure IF EXISTS `load_billable_with_filter`;
 DROP procedure IF EXISTS `load_billable_by_sow`;
 DROP procedure IF EXISTS `delete_billable`;
 
@@ -71,81 +67,52 @@ VALUES
   
 END $$
 
+CREATE PROCEDURE `bill_billable` (
+    IN `_billable_id` VARCHAR(50)
+) BEGIN
+UPDATE billable SET billed = 1, billedTime = NOW() WHERE billable_id = _billable_id;
+END $$
+
 CREATE PROCEDURE `load_billable` ()
 
 BEGIN
-    SELECT billable.*, t.task_id, st.fk_task_id FROM billable
-    LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
-    LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid;
-END $$
-
-CREATE PROCEDURE `load_billable_by_service` (
-    IN `_service_name` VARCHAR(50)
-)
-
-BEGIN
-    SELECT billable.*, t.task_id, st.fk_task_id FROM billable
+    SELECT billable.*, t.task_id, st.fk_task_id, st.subtask_id, t.task_state, st.subtask_state FROM billable
     LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
     LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
-    WHERE name = _service_name;
+    WHERE billable.billed = 0
+    AND (t.task_state != "archived" OR t.task_state IS NULL)
+    AND (st.subtask_state != "archived" OR st.subtask_state IS NULL);
 END $$
 
-CREATE PROCEDURE `load_billable_by_costcenter_id` (
-    IN `_costcenter_id` VARCHAR(50)
+CREATE PROCEDURE `load_billable_with_filter` (
+    IN `_service_name` VARCHAR(50),
+    IN `_costcenter_id` VARCHAR(50),
+    IN `_project_id` VARCHAR(50),
+    IN `_organization_id` VARCHAR(50),
+    IN `_user_id` VARCHAR(50),
+    IN `_start_date` DATETIME,
+    IN `_end_date` DATETIME,
+    IN `_archive` BOOLEAN,
+    IN `_billed` BOOLEAN,
+    IN `_ready_to_bill` BOOLEAN
 )
 
 BEGIN
-    SELECT billable.*, t.task_id, st.fk_task_id FROM billable
+    SELECT billable.*, t.task_id, st.fk_task_id, st.subtask_id, t.task_state, st.subtask_state FROM billable
     LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
     LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
     LEFT JOIN costcenter_assignments ca on ca.fk_project_id = billable.fk_project_id
-    WHERE ca.fk_cost_center_id = _costcenter_id;
-END $$
-
-CREATE PROCEDURE `load_billable_by_project_id` (
-    IN `_project_id` VARCHAR(50)
-)
-
-BEGIN
-    SELECT billable.*, t.task_id, st.fk_task_id FROM billable
-    LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
-    LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
-    where billable.fk_project_id = _project_id;
-END $$
-
-CREATE PROCEDURE `load_billable_by_organization_id` (
-    IN `_organization_id` VARCHAR(50)
-)
-
-BEGIN
-    SELECT billable.*, t.task_id, st.fk_task_id FROM billable
-    LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
-    LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
     LEFT JOIN project_assignments pa on pa.fk_project_id = billable.fk_project_id
-    WHERE pa.fk_organization_id = _organization_id;
-END $$
+    WHERE (name = _service_name OR _service_name IS NULL OR _service_name = '')
+    AND (ca.fk_cost_center_id = _costcenter_id OR _costcenter_id IS NULL OR _costcenter_id = '')
+    AND (billable.fk_project_id = _project_id OR _project_id IS NULL OR _project_id = '')
+    AND (pa.fk_organization_id = _organization_id OR _organization_id IS NULL OR _organization_id = '')
+    AND (created_by = _user_id OR _user_id IS NULL OR _user_id = '')
+    AND ((createdDate BETWEEN _start_date AND _end_date) OR (_start_date IS NULL OR _end_date IS NULL))
+    AND (((t.task_state != "archived" OR t.task_state IS NULL) and (st.subtask_state != "archived" OR st.subtask_state IS NULL) and (_archive IS NULL OR _archive = 0)) OR _archive = 1)
+    AND (_billed OR ((_billed IS NULL OR _billed = 0) AND billable.billed = 0))
+    AND (((t.task_state = "completed" OR st.subtask_state = "completed") AND _ready_to_bill = 1) OR _ready_to_bill = 0 OR _ready_to_bill IS NULL);
 
-CREATE PROCEDURE `load_billable_by_user_id` (
-    IN `_user_id` VARCHAR(50)
-)
-
-BEGIN
-    SELECT billable.*, t.task_id, st.fk_task_id FROM billable
-    LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
-    LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid 
-    where created_by = _user_id;
-END $$
-
-CREATE PROCEDURE `load_billable_by_date` (
-    IN `_start_date` DATETIME,
-    IN `_end_date` DATETIME
-)
-
-BEGIN
-    SELECT billable.*, t.task_id, st.fk_task_id FROM billable
-    LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
-    LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
-    where createdDate BETWEEN _start_date AND _end_date;
 END $$
 
 CREATE PROCEDURE `load_billable_by_sow` (
@@ -153,7 +120,7 @@ CREATE PROCEDURE `load_billable_by_sow` (
 )
 
 BEGIN
-    SELECT billable.*, t.task_id, st.fk_task_id FROM billable
+    SELECT billable.*, t.task_id, st.fk_task_id, st.subtask_id FROM billable
     LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
     LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
     WHERE billable.task_uuid = _task_uuid;

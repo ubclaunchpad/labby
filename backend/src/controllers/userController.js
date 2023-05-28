@@ -45,6 +45,18 @@ export default class UserController {
     });
   }
 
+  getOneUserByID(userID) {
+    return new Promise((resolve, reject) => {
+      const UserModel = new User();
+      UserModel.getOneUserByID(userID, (err, res) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(res);
+      });
+    });
+  }
+
   approveUser(users) {
     return new Promise((resolve, reject) => {
       const UserModel = new User();

@@ -23,85 +23,32 @@ export class Billable {
     });
   }
 
-  loadBillableByService(billableFilter, result) {
-    con.query(
-      "CALL load_billable_by_service(?)",
-      [billableFilter.service],
-      (err, res) => {
-        if (err) {
-          console.log("error: ", err);
-          result(err, null);
-        } else {
-          result(null, res[0]);
-        }
+  billBillable(billableId, result) {
+    con.query("CALL bill_billable(?)", billableId, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      } else {
+        result(null, res[0]);
       }
-    );
+    });
   }
 
-  loadBillableByCostCenterID(billableFilter, result) {
+  loadBillableByFilter(billableFilter, result) {
     con.query(
-      "CALL load_billable_by_costcenter_id(?)",
-      [billableFilter.costcenter_id],
-      (err, res) => {
-        if (err) {
-          console.log("error: ", err);
-          result(err, null);
-        } else {
-          result(null, res[0]);
-        }
-      }
-    );
-  }
-
-  loadBillableByProjectId(billableFilter, result) {
-    con.query(
-      "CALL load_billable_by_project_id(?)",
-      [billableFilter.project_id],
-      (err, res) => {
-        if (err) {
-          console.log("error: ", err);
-          result(err, null);
-        } else {
-          result(null, res[0]);
-        }
-      }
-    );
-  }
-
-  loadBillableByOrganizationId(billableFilter, result) {
-    con.query(
-      "CALL load_billable_by_organization_id(?)",
-      [billableFilter.organization_id],
-      (err, res) => {
-        if (err) {
-          console.log("error: ", err);
-          result(err, null);
-        } else {
-          result(null, res[0]);
-        }
-      }
-    );
-  }
-
-  loadBillableByUserId(billableFilter, result) {
-    con.query(
-      "CALL load_billable_by_user_id(?)",
-      [billableFilter.user_id],
-      (err, res) => {
-        if (err) {
-          console.log("error: ", err);
-          result(err, null);
-        } else {
-          result(null, res[0]);
-        }
-      }
-    );
-  }
-
-  loadBillableByDate(billableFilter, result) {
-    con.query(
-      "CALL load_billable_by_date(?, ?)",
-      [billableFilter.start_date, billableFilter.end_date],
+      "CALL load_billable_with_filter(?,?,?,?,?,?,?,?,?,?)",
+      [
+        billableFilter.service,
+        billableFilter.costcenter_id,
+        billableFilter.project_id,
+        billableFilter.organization_id,
+        billableFilter.user_id,
+        billableFilter.start_date,
+        billableFilter.end_date,
+        billableFilter.archived,
+        billableFilter.billed,
+        billableFilter.ready_to_bill,
+      ],
       (err, res) => {
         if (err) {
           console.log("error: ", err);

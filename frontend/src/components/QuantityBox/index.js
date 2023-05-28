@@ -7,6 +7,7 @@ import { ADD_RESPONSE } from "../../redux/actions/formActions";
 
 function QuantityBox({ option }) {
   const dispatch = useDispatch();
+  // const currentUser = useSelector((state) => state.userReducer.currentUser);
   const [quantityMap, setQuantityMap] = useState({});
 
   function parseQuantity(quantity, unit) {
@@ -50,6 +51,17 @@ function QuantityBox({ option }) {
                 quantity: quantity[0],
               },
             });
+            // const draftObj = {
+            //   draft_id: option.question_id + "_" + currentUser.user_id,
+            //   fk_user_id: currentUser.user_id,
+            //   fk_form_id: option.fk_form_id,
+            //   fk_question_id: option.question_id,
+            //   answer: option.answer_id,
+            // }
+            // dispatch({
+            //   type: ADD_DRAFT,
+            //   payload: draftObj,
+            // })
           }}
         />
         <div>

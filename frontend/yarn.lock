@@ -2019,10 +2019,10 @@
     redux-thunk "^2.4.2"
     reselect "^4.1.7"
 
-"@remix-run/router@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.npmjs.org/@remix-run/router/-/router-1.0.3.tgz"
-  integrity sha512-ceuyTSs7PZ/tQqi19YZNBc5X7kj1f8p+4DIyrcIYFY9h+hd1OKm4RqtiWldR9eGEvIiJfsqwM4BsuCtRIuEw6Q==
+"@remix-run/router@1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.6.2.tgz#bbe75f8c59e0b7077584920ce2cc76f8f354934d"
+  integrity sha512-LzqpSrMK/3JBAVBI9u3NWtOhWNw5AMQfrUFYB0+bDHTSw17z++WJLsPsxAuK+oSddsxk4d7F/JcdDPM1M5YAhA==
 
 "@rollup/plugin-babel@^5.2.0":
   version "5.3.1"
@@ -3243,6 +3243,11 @@ atob@^2.1.2:
   version "2.1.2"
   resolved "https://registry.npmjs.org/atob/-/atob-2.1.2.tgz"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
+
+attr-accept@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.npmjs.org/attr-accept/-/attr-accept-2.2.2.tgz"
+  integrity sha512-7prDjvt9HmqiZ0cl5CRjtS84sEyhsHP2coDkaZKRKVfCDo9s7iw7ChVmar78Gu9pC4SoR/28wFu/G5JJhTnqEg==
 
 autoprefixer@^10.4.11:
   version "10.4.13"
@@ -5273,6 +5278,13 @@ file-loader@^6.2.0:
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
 
+file-selector@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.npmjs.org/file-selector/-/file-selector-0.6.0.tgz"
+  integrity sha512-QlZ5yJC0VxHxQQsQhXvBaC7VRJ2uaxTf+Tfpu4Z/OcVQJVpZO+DGU0rkoVW5ce2SccxugvpBJoMvUs59iILYdw==
+  dependencies:
+    tslib "^2.4.0"
+
 filelist@^1.0.1:
   version "1.0.4"
   resolved "https://registry.npmjs.org/filelist/-/filelist-1.0.4.tgz"
@@ -5450,7 +5462,7 @@ fs.realpath@^1.0.0:
 
 fsevents@^2.3.2, fsevents@~2.3.2:
   version "2.3.2"
-  resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
+  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.2.tgz#8a526f78b8fdf4623b709e0b975c52c24c02fd1a"
   integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
 
 fsm-iterator@^1.1.0:
@@ -5755,9 +5767,9 @@ html-webpack-plugin@^5.5.0:
     pretty-error "^4.0.0"
     tapable "^2.0.0"
 
-html2canvas@^1.0.0, html2canvas@^1.0.0-rc.5:
+html2canvas@^1.0.0, html2canvas@^1.0.0-rc.5, html2canvas@^1.4.1:
   version "1.4.1"
-  resolved "https://registry.npmjs.org/html2canvas/-/html2canvas-1.4.1.tgz"
+  resolved "https://registry.yarnpkg.com/html2canvas/-/html2canvas-1.4.1.tgz#7cef1888311b5011d507794a066041b14669a543"
   integrity sha512-fPU6BHNpsyIhr8yyMpTLLxAbkaK8ArIBcmZIRiBLiDhjeqvXolaEmDGmELFuX9I4xDcaKKcJl+TKZLqruBbmWA==
   dependencies:
     css-line-break "^2.1.0"
@@ -8898,6 +8910,15 @@ react-dom@^18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+react-dropzone@^14.2.3:
+  version "14.2.3"
+  resolved "https://registry.npmjs.org/react-dropzone/-/react-dropzone-14.2.3.tgz"
+  integrity sha512-O3om8I+PkFKbxCukfIR3QAGftYXDZfOE2N1mr/7qebQJHs7U+/RSL/9xomJNpRg9kM5h9soQSdf0Gc7OHF5Fug==
+  dependencies:
+    attr-accept "^2.2.2"
+    file-selector "^0.6.0"
+    prop-types "^15.8.1"
+
 react-error-overlay@^6.0.11:
   version "6.0.11"
   resolved "https://registry.npmjs.org/react-error-overlay/-/react-error-overlay-6.0.11.tgz"
@@ -8971,20 +8992,20 @@ react-resize-detector@^7.1.2:
   dependencies:
     lodash "^4.17.21"
 
-react-router-dom@^6.4.2:
-  version "6.4.3"
-  resolved "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.4.3.tgz"
-  integrity sha512-MiaYQU8CwVCaOfJdYvt84KQNjT78VF0TJrA17SIQgNHRvLnXDJO6qsFqq8F/zzB1BWZjCFIrQpu4QxcshitziQ==
+react-router-dom@^6.6.0:
+  version "6.11.2"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.11.2.tgz#324d55750ffe2ecd54ca4ec6b7bc7ab01741f170"
+  integrity sha512-JNbKtAeh1VSJQnH6RvBDNhxNwemRj7KxCzc5jb7zvDSKRnPWIFj9pO+eXqjM69gQJ0r46hSz1x4l9y0651DKWw==
   dependencies:
-    "@remix-run/router" "1.0.3"
-    react-router "6.4.3"
+    "@remix-run/router" "1.6.2"
+    react-router "6.11.2"
 
-react-router@6.4.3:
-  version "6.4.3"
-  resolved "https://registry.npmjs.org/react-router/-/react-router-6.4.3.tgz"
-  integrity sha512-BT6DoGn6aV1FVP5yfODMOiieakp3z46P1Fk0RNzJMACzE7C339sFuHebfvWtnB4pzBvXXkHP2vscJzWRuUjTtA==
+react-router@6.11.2:
+  version "6.11.2"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.11.2.tgz#006301c4da1a173d7ad76b7ecd2da01b9dd3837a"
+  integrity sha512-74z9xUSaSX07t3LM+pS6Un0T55ibUE/79CzfZpy5wsPDZaea1F8QkrsiyRnA2YQ7LwE/umaydzXZV80iDCPkMg==
   dependencies:
-    "@remix-run/router" "1.0.3"
+    "@remix-run/router" "1.6.2"
 
 react-scripts@5.0.1:
   version "5.0.1"
@@ -9102,6 +9123,11 @@ react@^18.2.0:
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
   dependencies:
     loose-envify "^1.1.0"
+
+reactjs-popup@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.npmjs.org/reactjs-popup/-/reactjs-popup-2.0.5.tgz"
+  integrity sha512-b5hv9a6aGsHEHXFAgPO5s1Jw1eSkopueyUVxQewGdLgqk2eW0IVXZrPRpHR629YcgIpC2oxtX8OOZ8a7bQJbxA==
 
 read-cache@^1.0.0:
   version "1.0.0"
@@ -10287,7 +10313,7 @@ tslib@^1.8.1:
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.0.3:
+tslib@^2.0.3, tslib@^2.4.0:
   version "2.5.0"
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.5.0.tgz"
   integrity sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==

@@ -20,20 +20,20 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
       let openList = [];
       let inProgressList = [];
       let doneList = [];
-      let blockedList = [];
+      let todoList = [];
       let assigneeMap = {};
 
       // Map Assignees
       action.payload.assigneeList.forEach((assignee) => {
-        let assigneeList = assigneeMap[assignee.task_id] ?? [];
+        let assigneeList = assigneeMap[assignee.task_uuid] ?? [];
         assigneeList.push(assignee);
-        assigneeMap[assignee.task_id] = assigneeList;
+        assigneeMap[assignee.task_uuid] = assigneeList;
       });
 
       action.payload.ticketList.forEach((ticket) => {
         if (ticket.subtask_id) {
           ticketMap[ticket.subtask_uuid] = {
-            id: ticket.subtask_id,
+            id: ticket.fk_task_id + "-" + ticket.subtask_id,
             task_uuid: ticket.subtask_uuid,
             form_id: ticket.fk_form_id,
             project_id: ticket.fk_project_id,
@@ -43,6 +43,7 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
             description: ticket.subtask_description,
             assignees: assigneeMap[ticket.subtask_uuid] ?? [],
             reminder: false,
+            last_updated: ticket.subtask_updated,
           };
           if (ticket.subtask_state === "completed") {
             doneList.push(ticket.subtask_uuid);
@@ -53,12 +54,12 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
           if (ticket.subtask_state === "progress") {
             inProgressList.push(ticket.subtask_uuid);
           }
-          if (ticket.subtask_state === "blocked") {
-            blockedList.push(ticket.subtask_uuid);
+          if (ticket.subtask_state === "todo") {
+            todoList.push(ticket.subtask_uuid);
           }
         } else if (ticket.subtask_id !== null) {
           // NULL means duplicate from subtask join, undefined means main task ticket
-          ticketMap[ticket.task_id] = {
+          ticketMap[ticket.task_uuid] = {
             id: ticket.task_id,
             code: ticket.task_id,
             task_uuid: ticket.task_uuid,
@@ -67,20 +68,21 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
             project_id: ticket.fk_project_id,
             title: ticket.task_title,
             description: ticket.task_description,
-            assignees: assigneeMap[ticket.task_id] ?? [],
+            assignees: assigneeMap[ticket.task_uuid] ?? [],
             reminder: false,
+            last_updated: ticket.task_updated,
           };
           if (ticket.task_state === "completed") {
-            doneList.push(ticket.task_id);
+            doneList.push(ticket.task_uuid);
           }
           if (ticket.task_state === "open") {
-            openList.push(ticket.task_id);
+            openList.push(ticket.task_uuid);
           }
           if (ticket.task_state === "progress") {
-            inProgressList.push(ticket.task_id);
+            inProgressList.push(ticket.task_uuid);
           }
-          if (ticket.task_state === "blocked") {
-            blockedList.push(ticket.task_id);
+          if (ticket.task_state === "todo") {
+            todoList.push(ticket.task_uuid);
           }
         }
       });
@@ -88,14 +90,14 @@ const ticketBoardDndData = (state = ticketBoardData, action) => {
       return {
         ...state,
         columns: {
-          blocked: {
-            id: "blocked",
-            title: "Blocked",
-            taskIds: blockedList,
+          todo: {
+            id: "todo",
+            title: "Todo",
+            taskIds: todoList,
           },
           open: {
             id: "open",
-            title: "Open",
+            title: "Adopt Me",
             taskIds: openList,
           },
           progress: {

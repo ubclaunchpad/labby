@@ -73,6 +73,17 @@ router.get("/employee", authorize(), (_, res) => {
     });
 });
 
+router.get("/:userId", authorize(), (req, res) => {
+  userController
+    .getOneUserByID(req.params.userId)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
+
 router.delete("/:userId", authorize(), (req, res) => {
   userController
     .deleteUser(req.params.userId)

@@ -19,12 +19,16 @@ import {
   CostEstimateCollapsed,
   CostEstimateFull,
 } from "../../components/CostEstimate";
-import { SUBMIT_SURVEY } from "../../redux/actions/formActions";
+import { DELETE_ALL_DRAFTS, LOAD_DRAFT, REMOVE_ALL_RESPONSE, SET_DRAFTS, SUBMIT_SURVEY } from "../../redux/actions/formActions";
 import { TOGGLE_COST_ESTIMATE } from "../../redux/actions/uiActions";
 import ProjectSelector from "../../components/ProjectSelector";
 import { ToastContainer } from "react-toastify";
 import { WarningToast } from "../../components/Toasts";
 import SideArrow from "../../assets/SideArrow.png";
+import html2canvas from "html2canvas";
+import AWS from "aws-sdk";
+import FormInfo from "../../components/FormInfo";
+import { GET_USER, SET_CURRENT_USER } from "../../redux/actions/userActions";
 
 function RequestForm({ origin }) {
   const dispatch = useDispatch();
@@ -34,11 +38,12 @@ function RequestForm({ origin }) {
   const formResponses = useSelector((state) => state.formReducer.formResponses);
   const logicList = useSelector((state) => state.logicReducer.logicList);
   const hideCost = useSelector((state) => state.costEstimateReducer.hideCost);
+  const currentOGUser = useSelector((state) => state.userReducer.ogCurrentUser);
+  const currentUser = useSelector((state) => state.userReducer.currentUser);
   const clinicalList = useSelector(
     (state) => state.formReducer.clinicalResponses
   );
   let noShowList = [];
-
   const costEstimateMap = useSelector(
     (state) => state.costEstimateReducer.costEstimateList
   );
@@ -46,7 +51,20 @@ function RequestForm({ origin }) {
   // Load Form Questions
   useEffect(() => {
     dispatch({ type: LOAD_QUESTION, payload: formId });
-  }, [dispatch, formId]);
+    dispatch({
+      type: LOAD_DRAFT, payload: {
+        user_id: currentUser.user_id,
+        form_id: formId,
+      }
+    })
+    const pathSplit = window.location.pathname.split("/");
+    if (pathSplit.length > 3) {
+      const vaUser = window.location.pathname.split("/")[3];
+      if (vaUser && currentUser.user_id !== vaUser) {
+        dispatch({ type: GET_USER, payload: { user_id: vaUser } });
+      }
+    }
+  }, [dispatch, formId, currentUser]);
 
   // Load Cost Estimate
   useEffect(() => {
@@ -74,6 +92,8 @@ function RequestForm({ origin }) {
         return <FileDownload question={question} />;
       case "contact":
         return <ContactInfo question={question} />;
+      case "form":
+        return <FormInfo question={question} />;
       case "project":
         return <ProjectSelector question={question} />;
       default:
@@ -81,9 +101,47 @@ function RequestForm({ origin }) {
     }
   }
 
+  const config = new AWS.Config({
+    accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
+    region: "ca-central-1",
+  });
+
+  function saveFormToS3(survey_id) {
+    document.getElementById("requestFormContainer").scrollTo(0, 0);
+    html2canvas(document.getElementById("requestFormContainer"), {
+      height: document.getElementById("requestFormContainer").scrollHeight,
+      windowHeight: document.getElementById("requestFormContainer").scrollHeight,
+    }).then(function (canvas) {
+      canvas.toBlob((blob) => {
+        if (blob === null) return;
+        AWS.config.update(config);
+        const S3 = new AWS.S3({});
+        const objParams = {
+          Bucket: process.env.REACT_APP_S3_BUCKET,
+          Key: `requestSummary/${survey_id}`,
+          Body: blob,
+          ContentType: "image/png",
+        };
+
+        S3.putObject(objParams)
+          .send(function (err, data) {
+            if (err) {
+              console.log("Issue in S3.putObject.send()");
+              console.log(`Error Code: ${err.code}`);
+              console.log(`Error Message: ${err.message}`);
+            } else {
+              console.log("Send completed in S3.putObject.send()");
+            }
+          });
+      }, "image/png");
+    });
+  }
+
   // Basic Form Validation and Submit
   function submitForm() {
     var filled = true;
+    var unfilledQuestion = "";
     questions.forEach((question) => {
       if (
         question.mandatory &&
@@ -93,6 +151,7 @@ function RequestForm({ origin }) {
         !noShowList.includes(question.question_id)
       ) {
         filled = false;
+        unfilledQuestion = question.question;
         return;
       }
     });
@@ -112,6 +171,9 @@ function RequestForm({ origin }) {
           dispatch({ type: TOGGLE_COST_ESTIMATE });
           WarningToast("Please Review Your Cost Estimate and Submit!");
         } else {
+          const survey_id = uuid();
+          saveFormToS3(survey_id);
+
           const projectItem = formResponses.filter(
             (response) => response.question.project_id !== undefined
           );
@@ -133,7 +195,6 @@ function RequestForm({ origin }) {
             }
             return null;
           });
-          const survey_id = uuid();
           localStorage.setItem("currentSurveyId", survey_id);
           dispatch({
             type: SUBMIT_SURVEY,
@@ -146,11 +207,16 @@ function RequestForm({ origin }) {
               sowId: survey_id,
             },
           });
+          // Clear data
+          dispatch({ type: DELETE_ALL_DRAFTS, payload: { user_id: currentUser.user_id, form_id: formId } });
+          dispatch({ type: SET_DRAFTS, payload: [] });
+          dispatch({ type: REMOVE_ALL_RESPONSE });
+          dispatch({ type: SET_CURRENT_USER, payload: currentOGUser })
           setSubmissionSuccessful(true);
         }
       }
     } else {
-      WarningToast("Please fill out all mandatory fields");
+      WarningToast(`Please fill out all mandatory fields: (${unfilledQuestion})`);
     }
   }
 
@@ -165,6 +231,9 @@ function RequestForm({ origin }) {
         }%`;
     });
   }
+  window.addEventListener("popstate", () => {
+    dispatch({ type: SET_CURRENT_USER, payload: currentOGUser });
+  });
 
   if (questions.length !== 0 && logicList.length !== 0) {
     noShowList = [];
@@ -182,12 +251,15 @@ function RequestForm({ origin }) {
           pauseOnHover
           theme="light"
         />
-        <div className="requestFormContainer">
+        <div className="requestFormContainer" id="requestFormContainer">
           <div id="progressBar" style={{ zIndex: 2 }} />
           <div className="requestTitleContainer">
             <NavLink
               className="requestBackArrowContainer"
               to={origin ?? "/request-progress"}
+              onClick={() => {
+                dispatch({ type: SET_CURRENT_USER, payload: currentOGUser });
+              }}
             >
               <img className="requestBackArrow" src={SideArrow} alt="Back" />
             </NavLink>

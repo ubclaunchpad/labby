@@ -15,6 +15,8 @@ CREATE TABLE `subtasks` (
 	subtask_description VARCHAR (250),
 	subtask_state VARCHAR(50),
     fk_task_id INT(10) NOT NULL,
+	subtask_created DATETIME,
+	subtask_updated DATETIME,
 	PRIMARY KEY (`subtask_id`),
     FOREIGN KEY (fk_task_id) REFERENCES tasks(task_id) ON DELETE CASCADE  
 );

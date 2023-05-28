@@ -11,7 +11,7 @@ BEGIN
 CREATE TABLE `assignment` (
   `assignment_id` VARCHAR(50) NOT NULL,
   `fk_user_id` VARCHAR(50) NOT NULL,
-  `task_id` INT(10),
+  `task_uuid` VARCHAR(50),
   PRIMARY KEY (`assignment_id`),
   FOREIGN KEY (fk_user_id) REFERENCES users(user_id)
 );

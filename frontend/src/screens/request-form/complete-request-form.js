@@ -17,6 +17,7 @@ import {
   CostEstimateCollapsed,
   CostEstimateFull,
 } from "../../components/CostEstimate";
+import FormInfo from "../../components/FormInfo";
 
 function RequestForm() {
   const dispatch = useDispatch();
@@ -57,6 +58,8 @@ function RequestForm() {
         return <FileDownload question={question} />;
       case "contact":
         return <ContactInfo question={question} />;
+      case "form":
+        return <FormInfo question={question} />;
       default:
         return null;
     }

@@ -1,9 +1,9 @@
 import uuid from "react-uuid";
 import { all, call, takeLatest, put, select } from "redux-saga/effects";
-import { SUBMIT_SURVEY } from "../actions/formActions";
+import { ADD_DRAFT, DELETE_ALL_DRAFTS, DELETE_DRAFT, LOAD_ALL_DRAFTS, LOAD_DRAFT, SET_ALL_DRAFTS, SET_DRAFTS, SUBMIT_SURVEY } from "../actions/formActions";
 import { createTicketApi } from "../api/formApi";
-import { loadSurvey, saveClinical, saveResponse, saveSurvey } from "../api/surveyApi";
-import {POST_SERVICE_COST } from "../../redux/actions/ticketActions";
+import { addDraft, deleteDraft, loadAllDraft, loadDraft, loadSurvey, saveClinical, saveResponse, saveSurvey } from "../api/surveyApi";
+import { POST_SERVICE_COST } from "../../redux/actions/ticketActions";
 import { LOAD_USER_SURVEY, SET_USER_SURVEY } from "../actions/userActions";
 
 export function* submitResponseSaga({ payload }) {
@@ -22,25 +22,27 @@ export function* submitResponseSaga({ payload }) {
   });
   yield all(
     payload.billables.map((billable) => {
-      return put({ type: POST_SERVICE_COST, payload: {
-        billable_id: uuid(),
-        sow_id: payload.sowId,
-        project_id: payload.projectId,
-        name: billable.service,
-        quantity: billable.quantity,
-        cost: billable.cost,
-        comment: "",
-        createdDate: new Date(),
-        completedTime: null,
-        billed: false,
-        billedTime: null,
-        created_by: user.user_id
-      } });
+      return put({
+        type: POST_SERVICE_COST, payload: {
+          billable_id: uuid(),
+          sow_id: payload.sowId,
+          project_id: payload.projectId,
+          name: billable.service,
+          quantity: billable.quantity,
+          cost: billable.cost,
+          comment: "",
+          createdDate: new Date(),
+          completedTime: null,
+          billed: false,
+          billedTime: null,
+          created_by: user.user_id
+        }
+      });
     })
   );
-  
+
   yield all(
-    payload.formResponses.map((response) => { 
+    payload.formResponses.map((response) => {
       const isChoice =
         response.question.type === "multi" ||
         response.question.type === "single";
@@ -81,7 +83,40 @@ export function* loadSurveySaga() {
   yield put({ type: SET_USER_SURVEY, payload: surveys.data[0] });
 }
 
+export function* addDraftSaga({ payload }) {
+  yield call(addDraft, payload);
+}
+
+export function* deleteDraftSaga({ payload }) {
+  yield call(deleteDraft, payload);
+}
+
+export function* deleteAllDraftSaga({ payload }) {
+  const draftList = yield call(loadDraft, payload);
+  if (draftList.data[0].length === 0) return;
+  yield all(
+    draftList.data[0].map((draft) => {
+      return call(deleteDraft, draft.draft_id);
+    })
+  )
+}
+
+export function* loadDraftSaga({ payload }) {
+  const draftList = yield call(loadDraft, payload);
+  yield put({ type: SET_DRAFTS, payload: draftList.data[0] });
+}
+
+export function* loadAllDraftSaga() {
+  const draftList = yield call(loadAllDraft);
+  yield put({ type: SET_ALL_DRAFTS, payload: draftList.data[0] });
+}
+
 export default function* surveySaga() {
   yield takeLatest(SUBMIT_SURVEY, submitResponseSaga);
   yield takeLatest(LOAD_USER_SURVEY, loadSurveySaga);
+  yield takeLatest(ADD_DRAFT, addDraftSaga);
+  yield takeLatest(DELETE_DRAFT, deleteDraftSaga);
+  yield takeLatest(DELETE_ALL_DRAFTS, deleteAllDraftSaga);
+  yield takeLatest(LOAD_DRAFT, loadDraftSaga);
+  yield takeLatest(LOAD_ALL_DRAFTS, loadAllDraftSaga);
 }

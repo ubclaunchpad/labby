@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  width: 70%;
+  width: 80%;
   margin-bottom: 24px;
 }
 .ticketBoardSearch {
@@ -239,6 +239,14 @@
   margin-top: 10px;
 }
 
+.TicketArchiveButton {
+  text-align: left; 
+  font-weight: 500;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  width: 220px;
+}
+
 .ticketTitleId {
   font-weight: bold;
   font-size: 20px;
@@ -377,4 +385,19 @@
 ::-webkit-scrollbar-thumb {
   background: #b4b4b4;
   border-radius: 8px;
+}
+
+.PendingViewButton {
+  height: 45px;
+  width: 250px;
+  border: 0;
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.PendingViewButton:hover {
+  background-color: #4caf50;
+  color: white;
 }

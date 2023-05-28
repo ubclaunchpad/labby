@@ -141,3 +141,7 @@
     text-align: left;
     display: flex;
 }
+
+.GlobalQuestionSubtitle {
+    text-align: left;
+}

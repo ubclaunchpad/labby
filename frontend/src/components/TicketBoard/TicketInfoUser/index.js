@@ -7,10 +7,10 @@ import {
     SET_ACTIVE_TICKET,
 } from "../../../redux/actions/ticketActions";
 import { useEffect } from "react";
-import { NavLink } from "react-router-dom";
 import { LOAD_EMPLOYEE } from "../../../redux/actions/userActions";
 import Subtasks from "../Subtasks";
 import ServiceList from "../ServiceList";
+import AWS from "aws-sdk";
 
 export const TicketInfoUser = () => {
     const dispatch = useDispatch();
@@ -21,7 +21,6 @@ export const TicketInfoUser = () => {
     const currentTicketAttachments = useSelector(
         (state) => state.ticketReducer.currentTicketAttachments
     );
-
     useEffect(() => {
         console.log(currentTicket)
         dispatch({ type: LOAD_EMPLOYEE });
@@ -58,16 +57,41 @@ export const TicketInfoUser = () => {
                 <div className="ticketTitle">
                     <div className="ticketTitleId">{`SOW-${currentTicket.task_id}`}</div>
                 </div>
-                <div className="TicketPreviewButton">
-                    <NavLink to={`/preview/${currentTicket.fk_survey_id}`}>
-                        <p
-                            style={{
-                                color: "grey",
-                            }}
-                        >
-                            View Summary
-                        </p>
-                    </NavLink>
+                <div className="TicketPreviewButton" onClick={async () => {
+                    const config = new AWS.Config({
+                        // Deprecated method of passing accessKeyId and secretAccessKey -- could not get new method to work
+                        accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
+                        secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
+                        region: "ca-central-1",
+                    });
+
+                    AWS.config.update(config);
+                    const S3 = new AWS.S3({});
+                    const objParams = {
+                        Bucket: process.env.REACT_APP_S3_BUCKET,
+                        Key: `requestSummary/${currentTicket?.task_uuid}`,
+                        ResponseContentType: "image/png",
+                    };
+
+                    const res = await S3.getObject(objParams).promise();
+                    const url = window.URL.createObjectURL(
+                        new Blob([res.Body], { type: "image/png" })
+                    );
+
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `SOW-${currentTicket.task_id}.png`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }}>
+                    <p
+                        style={{
+                            color: "#5976E1",
+                        }}
+                    >
+                        Download Summary
+                    </p>
                 </div>
                 <div className="ticketDescription">
                     <div className="ticketSectionTitle">Description</div>

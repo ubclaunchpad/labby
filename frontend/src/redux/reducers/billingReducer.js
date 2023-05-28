@@ -1,12 +1,14 @@
 import { combineReducers } from "redux";
-import { SET_BILLABLE, 
-         SET_INVOICE_LIST, 
-         SET_OG_BILLABLE, 
-         SET_ACTIVE_ANALYTICS, 
-         SET_ACTIVE_PROJECT_ANALYTICS,
-         SET_ACTIVE_SOW_ANALYTICS,
-         SET_BILLABLE_BY_SOWID
-        } from "../actions/billingActions";
+import {
+  SET_BILLABLE,
+  SET_INVOICE_LIST,
+  SET_OG_BILLABLE,
+  SET_ACTIVE_ANALYTICS,
+  SET_ACTIVE_PROJECT_ANALYTICS,
+  SET_ACTIVE_SOW_ANALYTICS,
+  SET_BILLABLE_BY_SOWID,
+  SET_ACTIVE_CONFIRMATION
+} from "../actions/billingActions";
 
 const defaultBillingList = [];
 const defaultInvoiceList = [];
@@ -29,12 +31,12 @@ const billingList = (state = defaultBillingList, action) => {
 // reducer with map of  sowid to billables
 const billablesBySOWIDMap = (state = defaultBillablesBySOWID, action) => {
   switch (action.type) {
-    case SET_BILLABLE_BY_SOWID: { 
+    case SET_BILLABLE_BY_SOWID: {
       state[action.payload.sowId] = action.payload.data;
-      return {...state};
+      return { ...state };
     }
     default: {
-      return state; 
+      return state;
     }
   }
 }
@@ -94,6 +96,17 @@ const sowAnalytics = (state = defaultSowAnalytics, action) => {
   }
 };
 
+const invoiceConfirmation = (state = false, action) => {
+  switch (action.type) {
+    case SET_ACTIVE_CONFIRMATION: {
+      return !state;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 export default combineReducers({
   billingList,
   billablesBySOWIDMap,
@@ -101,5 +114,6 @@ export default combineReducers({
   servicesAnalytics,
   projectsAnalytics,
   sowAnalytics,
-  invoiceList
+  invoiceList,
+  invoiceConfirmation,
 });

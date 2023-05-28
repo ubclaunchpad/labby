@@ -20,6 +20,27 @@ export const getBillable = async () => {
   }
 };
 
+export const billBillable = async (payload) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    var data = JSON.stringify({
+      billableId: payload.billableId,
+    });
+
+    const billedList = await axios.post(`billing/bill/${payload.billableId}`, data, {
+      headers: headers,
+    });
+
+    return billedList;
+  } catch (err) {
+    return console.error(err);
+  }
+}
+
 export const getBillableByFilter = async (payload) => {
   try {
     const token = JSON.parse(localStorage.getItem("currentUser")).token;
@@ -35,6 +56,9 @@ export const getBillableByFilter = async (payload) => {
       user_id: payload.user_id,
       start_date: payload.start_date,
       end_date: payload.end_date,
+      archived: payload.archived,
+      billed: payload.billed,
+      ready_to_bill: payload.ready_to_bill,
     });
 
     const billingList = await axios.post("billing/filter/", data, {

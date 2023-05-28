@@ -18,6 +18,8 @@ import {
   APPROVE_ALL_USER,
   PING,
   GET_PENDING_USER,
+  GET_USER,
+  SET_OG_CURRENT_USER,
 } from "../actions/userActions";
 import { getProjectAssignmentApi } from "../api/projectApi";
 import {
@@ -32,6 +34,7 @@ import {
   pingCheckApi,
   getPendingUserlist,
   approveUserList,
+  getUserApi,
 } from "../api/userApi";
 
 export function* loadPendingUserListSaga() {
@@ -66,6 +69,13 @@ export function* loadEmployeeSaga() {
   yield put({ type: SET_EMPLOYEE, payload: employeeList.data });
 }
 
+export function* getUserSaga({ payload }) {
+  const user = yield call(getUserApi, payload);
+  if (user.data.length > 0) {
+    yield put({ type: SET_CURRENT_USER, payload: user.data[0] });
+  }
+}
+
 export function* deleteUserSaga({ payload }) {
   yield call(deleteUserApi, payload);
   yield loadUserlistSaga();
@@ -82,6 +92,7 @@ export function* postUserSaga({ payload }) {
 export function* authenticateUserSaga({ payload }) {
   const currentUser = yield call(authenticateUserApi, payload);
   yield put({ type: SET_CURRENT_USER, payload: currentUser.data });
+  yield put({ type: SET_OG_CURRENT_USER, payload: currentUser.data })
   localStorage.setItem("currentUser", JSON.stringify(currentUser.data));
 }
 
@@ -111,8 +122,10 @@ export function* pingCheckSaga({ payload }) {
   const res = yield call(pingCheckApi, payload);
   if (res.status === 200) {
     yield put({ type: SET_CURRENT_USER, payload: payload });
+    yield put({ type: SET_OG_CURRENT_USER, payload: payload })
   } else {
     yield put({ type: SET_CURRENT_USER, payload: null });
+    yield put({ type: SET_OG_CURRENT_USER, payload: null })
   }
   yield put({ type: STOP_LOADING });
 }
@@ -130,4 +143,5 @@ export default function* userSaga() {
   yield takeLatest(DELETE_ORGANIZATION, deleteOrganizationSaga);
   yield takeLatest(AUTHENTICATE_USER, authenticateUserSaga);
   yield takeLatest(PING, pingCheckSaga);
+  yield takeLatest(GET_USER, getUserSaga);
 }

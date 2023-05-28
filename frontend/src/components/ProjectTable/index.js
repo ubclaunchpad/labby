@@ -222,7 +222,7 @@ const ProjectTable = () => {
             color: appColor.gray,
           }}
           onMouseOver={(e) => {
-            e.target.style.backgroundColor = "#4CAF50";
+            e.target.style.backgroundColor = "#627BF6";
             e.target.style.color = "#FFFFFF";
           }}
           onMouseOut={(e) => {

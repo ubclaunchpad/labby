@@ -16,10 +16,12 @@ import { clsx } from "clsx";
 // import { NotificationIcon } from "../Icons/NotifcationIcon";
 import { CheckBoxIcon } from "../Icons/CheckBoxIcon";
 import { AssigneeIcon } from "../Icons/AssigneeIcon";
-import { ticketsColors } from "../../constants";
+import { appColor, ticketsColors } from "../../constants";
 import { useEffect, useState } from "react";
 import { LOAD_EMPLOYEE } from "../../redux/actions/userActions";
 import { TicketInfo } from "./TicketInfo";
+import { ToastContainer } from "react-toastify";
+import { NavLink } from "react-router-dom";
 
 export const getColorNum = (id, colorArray) => {
   if (colorArray) {
@@ -45,11 +47,11 @@ const Task = (props) => {
   const subtasks = props?.task?.subtasks;
   const { totalSubtasks, completedSubtasks } = getCompletedSubtasks(subtasks);
   const assignees = props?.task?.assignees;
-  const isReminder = props?.task.reminder;
+  const isReminder = props?.task?.reminder;
   const tabColorNum = getColorNum(props?.task?.id, ticketsColors);
   const dispatch = useDispatch();
   return (
-    <Draggable draggableId={props.task.id.toString()} index={props.index}>
+    <Draggable draggableId={props.task.task_uuid.toString()} index={props.index}>
       {(provided, snapshot) => (
         <div
           className="task-card-container"
@@ -142,7 +144,7 @@ const TicketBoardColumn = (props) => {
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {props.tasks.map((task, index) => {
+            {props.tasks.sort((task1, task2) => new Date(task1.last_updated).getTime() - new Date(task2.last_updated).getTime()).map((task, index) => {
               return <Task key={task?.code} task={task} index={index} />;
             })}
             {provided.placeholder}
@@ -333,6 +335,25 @@ export const TicketBoard = () => {
             </option>
           ))}
         </select>
+        <NavLink to="/pending">
+          <button
+            className="PendingViewButton"
+            style={{
+              backgroundColor: appColor.lightGray,
+              color: appColor.gray,
+            }}
+            onMouseOver={(e) => {
+              e.target.style.backgroundColor = "#627BF6";
+              e.target.style.color = "#FFFFFF";
+            }}
+            onMouseOut={(e) => {
+              e.target.style.backgroundColor = appColor.lightGray;
+              e.target.style.color = appColor.gray;
+            }}
+          >
+            View Pending Forms
+          </button>
+        </NavLink>
       </div>
       <div className="ticketBoard">
         <DragDropContext onDragEnd={ticketDragEndHandler}>
@@ -355,6 +376,18 @@ export const TicketBoard = () => {
         </DragDropContext>
       </div>
       {currentTicket ? (<TicketInfo />) : null}
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={true}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

@@ -46,9 +46,9 @@ function FormConfirmation() {
             })
           ) : (
             <tr>
-              <td> N/A </td>
-              <td> N/A </td>
-              <td> N/A </td>
+              <td> Loading... </td>
+              <td> Loading... </td>
+              <td> Loading... </td>
             </tr>
           )}
           <tr>

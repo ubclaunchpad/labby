@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 import FormImg from "../../../assets/Form.png";
 import { LOAD_PUBLISHED_FORMS } from "../../../redux/actions/formActions";
-import { LOAD_USER_SURVEY, SET_CURRENT_USER } from "../../../redux/actions/userActions";
+import { LOAD_USER_SURVEY, SET_CURRENT_USER, SET_OG_CURRENT_USER } from "../../../redux/actions/userActions";
 
 import "./form-progress.css";
 import { SET_ACTIVE_TICKET } from "../../../redux/actions/ticketActions";
@@ -30,7 +30,7 @@ function FormProgress() {
   function progressToNum(progress) {
     if (progress === "open") {
       return 0;
-    } else if (progress === "blocked") {
+    } else if (progress === "todo") {
       return 25;
     } else if (progress === "progress") {
       return 50;
@@ -42,6 +42,10 @@ function FormProgress() {
     localStorage.removeItem("currentUser");
     dispatch({
       type: SET_CURRENT_USER,
+      payload: null,
+    });
+    dispatch({
+      type: SET_OG_CURRENT_USER,
       payload: null,
     });
   };
@@ -68,7 +72,7 @@ function FormProgress() {
         <div className="requestedServices">
           <h3>Your requested services</h3>
           {userRequestList
-            .filter((item) => item.task_state !== "completed")
+            .filter((item) => item.task_state !== "completed" && item.task_state !== "archived")
             .map((request, idx) => {
               const progress = progressToNum(request.task_state);
               return (
@@ -86,7 +90,7 @@ function FormProgress() {
           <hr />
           <h4>Completed Requests</h4>
           {userRequestList
-            .filter((item) => item.task_state === "completed")
+            .filter((item) => item.task_state === "completed" && item.task_state !== "archived")
             .map((request, idx) => {
               return (
                 <ProgressItem
@@ -113,11 +117,13 @@ const ProgressItem = ({ value, code, status, progress, comments = "" }) => {
     <div className="progressItem" onClick={(e) => {
       dispatch({ type: SET_ACTIVE_TICKET, payload: value });
     }}>
-      <h3>{code}</h3>
+      <h3>{code + " - " + value.task_title}</h3>
       <ProgressBar completed={progress} />
       <div className="statusText">{status.toUpperCase()}</div>
       <p className="commentTitle">Comments: </p>
       <p className="comments">{comments}</p>
+      <p className="commentTitle">Ticket Created On: </p>
+      <p className="comments">{value.date_created}</p>
     </div>
   );
 };

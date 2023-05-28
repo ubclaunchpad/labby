@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import EditRequest from "./screens/edit-request/edit-request";
 import RequestForm from "./screens/request-form/request-form";
-import PreviewForm from "./screens/preview-form/preview-form";
 import FormConfirmation from "./screens/request-form/after-submission/form-confirmation";
 import FormProgress from "./screens/request-form/after-submission/form-progress";
 import BillingManagement from "./screens/billing-management/billing-management";
@@ -21,6 +20,7 @@ import Setting from "./screens/setting/setting";
 import { useDispatch, useSelector } from "react-redux";
 import { PING } from "./redux/actions/userActions";
 import { START_LOADING } from "./redux/actions/uiActions";
+import Pending from "./screens/pending/pending";
 
 function App() {
   const dispatch = useDispatch();
@@ -56,14 +56,15 @@ function App() {
           <Route path="/users" element={(currentUser && currentUser.employee) ? <UserManagement /> : (currentUser ? <FormProgress /> : <LoginForm from={window.location.pathname} />)} />
           <Route path="/edit-request" element={(currentUser && currentUser.employee) ? <FormLibrary /> : (currentUser ? <FormProgress /> : <LoginForm from={window.location.pathname} />)} />
           <Route path="/request/:formId" element={currentUser ? <RequestForm /> : <LoginForm from={window.location.pathname} />} />
+          <Route path="/request/:formId/:userId" element={currentUser ? <RequestForm origin={-1} /> : <LoginForm from={window.location.pathname} />} />
           <Route path="/preview-request/:formId" element={currentUser ? <RequestForm origin={-1} /> : <LoginForm from={window.location.pathname} />} />
           <Route path="/request-confirmation/:formId" element={currentUser ? <FormConfirmation /> : <LoginForm from={window.location.pathname} />} />
           <Route path="/request-progress" element={currentUser ? <FormProgress /> : <LoginForm from={window.location.pathname} />} />
-          <Route path="/preview/:surveyId" element={(currentUser && currentUser.employee) ? <PreviewForm /> : (currentUser ? <FormProgress /> : <LoginForm from={window.location.pathname} />)} />
           <Route path="/invoice" element={(currentUser && currentUser.employee) ? <Invoice /> : (currentUser ? <FormProgress /> : <LoginForm from={window.location.pathname} />)} />
           <Route path="/settings" element={currentUser ? <Setting /> : <LoginForm from={window.location.pathname} />} />
           <Route path="/tickets" element={(currentUser && currentUser.employee) ? <TicketManagement /> : (currentUser ? <FormProgress /> : <LoginForm from={window.location.pathname} />)} />
           <Route path="/pdf" element={(currentUser && currentUser.employee) ? <InvoicePreview /> : (currentUser ? <FormProgress /> : <LoginForm from={window.location.pathname} />)} />
+          <Route path="/pending" element={(currentUser && currentUser.employee) ? <Pending /> : (currentUser ? <FormProgress /> : <LoginForm from={window.location.pathname} />)} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SignUpForm />} />
         </Routes>

@@ -5,7 +5,7 @@ import { useRef, useEffect, useState } from "react";
 import GeneratePdf from "../../components/GeneratePdf";
 import InvoiceTemplate from "../../components/GenerateInvoice/InvoiceTemplate";
 import { useDispatch, useSelector } from "react-redux";
-import { GET_PROJECT, LOAD_BILLABLE } from "../../redux/actions/billingActions";
+import { BILL_BILLABLE, GET_PROJECT, LOAD_BILLABLE } from "../../redux/actions/billingActions";
 
 function InvoicePreview() {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ function InvoicePreview() {
   const [costcenterMapping, setCostCenterMapping] = useState({});
   const pdfRefs = useRef([]);
   pdfRefs.current = [];
-  
+
   const addtoRefs = (el) => {
     if (el && !pdfRefs.current.includes(el)) {
       pdfRefs.current.push(el);
@@ -41,10 +41,11 @@ function InvoicePreview() {
         customers.push(costcenter);
       }
       projectMap[billableProject] = costcenter.cost_center_id;
+      dispatch({ type: BILL_BILLABLE, payload: { billableId: invoice.billable_id } });
     });
     setCustomerList(customers);
     setCostCenterMapping(projectMap);
-  }, [invoiceList, projectList]);
+  }, [invoiceList, projectList, dispatch]);
 
   return (
     <div className="invoicePage">
