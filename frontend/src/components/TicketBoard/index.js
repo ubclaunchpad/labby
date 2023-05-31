@@ -300,60 +300,64 @@ export const TicketBoard = () => {
   return (
     <div className="ticketBoardContainer">
       <div className="searchTicketSection">
-        <Input
-          placeholder="Search..."
-          className="ticketBoardSearch"
-          onChange={(e) => {
-            if (e.target.value !== "") {
-              setFiltering(true);
-            } else {
-              setFiltering(false);
-            }
-            onSearchHandler(e.target.value);
-          }}
-        />
-        <select
-          className="ticketBoard__filter-dropdown"
-          value={filterTerm}
-          onChange={(e) => {
-            if (e.target.value !== "Filter...") {
-              setFiltering(true);
-            } else {
-              setFiltering(false);
-            }
-            setFilterTerm(e.target.value);
-            onFilterHandler(e.target.value);
-          }}
-        >
-          <option key="filter" value="Filter...">
-            Filter
-          </option>
-
-          {employeeList.map((employee) => (
-            <option key={employee?.user_id} value={employee?.user_id}>
-              {employee.username}
-            </option>
-          ))}
-        </select>
-        <NavLink to="/pending">
-          <button
-            className="PendingViewButton"
-            style={{
-              backgroundColor: appColor.lightGray,
-              color: appColor.gray,
+        <div className="searchArea">
+          <Input
+            placeholder="Search..."
+            className="ticketBoardSearch"
+            onChange={(e) => {
+              if (e.target.value !== "") {
+                setFiltering(true);
+              } else {
+                setFiltering(false);
+              }
+              onSearchHandler(e.target.value);
             }}
-            onMouseOver={(e) => {
-              e.target.style.backgroundColor = "#627BF6";
-              e.target.style.color = "#FFFFFF";
-            }}
-            onMouseOut={(e) => {
-              e.target.style.backgroundColor = appColor.lightGray;
-              e.target.style.color = appColor.gray;
+          />
+          <select
+            className="ticketBoard__filter-dropdown"
+            value={filterTerm}
+            onChange={(e) => {
+              if (e.target.value !== "Filter...") {
+                setFiltering(true);
+              } else {
+                setFiltering(false);
+              }
+              setFilterTerm(e.target.value);
+              onFilterHandler(e.target.value);
             }}
           >
-            View Pending Forms
-          </button>
-        </NavLink>
+            <option key="filter" value="Filter...">
+              Filter
+            </option>
+
+            {employeeList.map((employee) => (
+              <option key={employee?.user_id} value={employee?.user_id}>
+                {employee.username}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="pendingArea">
+          <NavLink to="/pending">
+            <button
+              className="PendingViewButton"
+              style={{
+                backgroundColor: appColor.lightGray,
+                color: appColor.gray,
+              }}
+              onMouseOver={(e) => {
+                e.target.style.backgroundColor = "#627BF6";
+                e.target.style.color = "#FFFFFF";
+              }}
+              onMouseOut={(e) => {
+                e.target.style.backgroundColor = appColor.lightGray;
+                e.target.style.color = appColor.gray;
+              }}
+            >
+              View Unsubmitted
+            </button>
+          </NavLink>
+        </div>
       </div>
       <div className="ticketBoard">
         <DragDropContext onDragEnd={ticketDragEndHandler}>

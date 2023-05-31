@@ -191,8 +191,7 @@ const InvoiceTable = () => {
             });
           },
           selectedRowKeys: invoiceList.map((item) => item.billable_id),
-        }
-        }
+        }}
         components={components}
         rowKey={(record) => record.billable_id}
         rowClassName={(_, index) => index % 2 === 0 ? "editable-row" : "editable-row-dark"}

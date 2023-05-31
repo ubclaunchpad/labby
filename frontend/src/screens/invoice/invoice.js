@@ -19,7 +19,6 @@ import {
   SET_BILLABLE,
   UPDATE_CLICKS
 } from "../../redux/actions/billingActions";
-import GenerateInvoice from "../../components/GenerateInvoice";
 import { Chart } from "../../components/Chart/Chart";
 import { DateRange } from "react-date-range";
 
@@ -133,9 +132,6 @@ function Invoice() {
           <div className="invoice-page-header">
             <div className="InvoiceTitle" style={{ color: appColor.gray }}>
               Billing & Invoicing
-            </div>
-            <div className="generate-invoice-button">
-              <GenerateInvoice />
             </div>
           </div>
 

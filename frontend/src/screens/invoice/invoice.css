@@ -25,6 +25,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 10px;
 }
 .generate-invoice-button {
   width: 200px;
@@ -147,17 +148,18 @@ label {
 .rdrStartEdge, .rdrEndEdge { background-color: #5974E9; color: #5974E9 !important; }
 
 .selectedPopover {
-  width: 20%;
+  width: 15%;
   background-color: #627BF6;
   position: sticky;
   bottom: 50px;
-  left: 40%;
+  left: 42%;
   align-self: center;
-  border-radius: 20px;
+  border-radius: 30px;
   color: white;
   font-weight: 600;
   font-size: 18px;
-  padding: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .selectedPopover:hover {
