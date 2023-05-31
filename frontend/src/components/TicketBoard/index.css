@@ -3,13 +3,15 @@
   flex-direction: column;
   width: 100%;
 }
+
 .searchTicketSection {
   display: flex;
+  flex: 1;
   align-items: center;
   gap: 12px;
-  width: 80%;
   margin-bottom: 24px;
 }
+
 .ticketBoardSearch {
   border: 0;
   background-color: #ecedf3;
@@ -27,9 +29,11 @@
   background-repeat: no-repeat;
   background-position: calc(0% + 16px) center;
 }
+
 .ticketBoard__filter-dropdown:focus {
   outline: none;
 }
+
 .ticketBoard__filter-dropdown {
   border: 0;
   background-color: #ecedf3;
@@ -47,11 +51,13 @@
   background-repeat: no-repeat;
   background-position: calc(100% - 12px) center;
 }
+
 .ticketBoard {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
 }
+
 .column {
   background-color: #ecedf3;
   margin: 8px;
@@ -59,15 +65,18 @@
   min-height: 100px;
   flex: 1;
 }
+
 .columnTitle {
   color: #353535;
   font-weight: bold;
   text-align: left;
   padding: 8px;
 }
+
 .taskList {
   padding: 8px;
 }
+
 .task-card-container {
   font-family: inherit;
   font-size: 12px;
@@ -79,11 +88,13 @@
   background-color: #fff;
   min-height: 110px;
 }
+
 .task-card-color-tab {
   font-family: inherit;
   padding: 4px;
   border-radius: 5px 0px 0px 5px;
 }
+
 .task-card-content {
   display: flex;
   flex-direction: column;
@@ -91,15 +102,18 @@
   width: 100%;
   padding: 10px;
 }
+
 .task-card__header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
+
 .task-card__code {
   font-size: 16px;
   text-align: left;
 }
+
 .task-card__reminder--notify-true {
   display: flex;
   border-radius: 5px;
@@ -107,6 +121,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .task-card__reminder--notify-false {
   display: flex;
   border-radius: 5px;
@@ -114,16 +129,19 @@
   align-items: center;
   justify-content: center;
 }
+
 .task-card__notificaton-container {
   display: inline-block;
   width: 30px;
   height: 30px;
 }
+
 .notification-icon {
   color: black;
   margin: 3px;
   padding-top: 1px;
 }
+
 .task-card__body {
   display: flex;
   flex-grow: 1;
@@ -135,6 +153,7 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
 .task-card__subtasks-container {
   display: flex;
   flex-direction: row;
@@ -145,6 +164,7 @@
   width: 100px;
   height: 30px;
 }
+
 .task-card__subtask-checkbox {
   display: inline-block;
   height: 14px;
@@ -231,7 +251,7 @@
 }
 
 .TicketPreviewButton {
-  text-align: left; 
+  text-align: left;
   font-weight: 500;
   transition-duration: 0.4s;
   cursor: pointer;
@@ -240,7 +260,7 @@
 }
 
 .TicketArchiveButton {
-  text-align: left; 
+  text-align: left;
   font-weight: 500;
   transition-duration: 0.4s;
   cursor: pointer;
@@ -266,9 +286,9 @@
   padding-right: 10px;
 }
 
-.assignees-title{
-  font-size: 11px; 
-  font-weight: 600; 
+.assignees-title {
+  font-size: 11px;
+  font-weight: 600;
   color: #AEAEAE;
   text-align: left;
   margin-bottom: none;
@@ -324,6 +344,7 @@
   flex: 3;
   min-width: 25%;
 }
+
 .servicesColumn {
   flex: 7;
   min-width: 65%;
@@ -336,14 +357,16 @@
   background-color: #F9FAFF;
   border-radius: 10px;
 }
-.attachmentsWrapper{
+
+.attachmentsWrapper {
   padding: 3px;
   display: flex;
   gap: 10px;
   height: 95px;
   overflow: scroll;
 }
-.addAttachment{
+
+.addAttachment {
   padding: 12px 14px;
   padding-right: 0;
   border: 2px dashed grey;
@@ -382,6 +405,7 @@
   background: transparent;
   width: 6px;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #b4b4b4;
   border-radius: 8px;
@@ -389,15 +413,33 @@
 
 .PendingViewButton {
   height: 45px;
-  width: 250px;
+  width: 220px;
   border: 0;
-  border-radius: 20px;
-  font-size: 18px;
+  border-radius: 15px;
+  font-size: 16px;
   font-weight: 600;
   transition-duration: 0.4s;
   cursor: pointer;
 }
+
 .PendingViewButton:hover {
   background-color: #4caf50;
   color: white;
+}
+
+.searchArea {
+  flex: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pendingArea {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
 }

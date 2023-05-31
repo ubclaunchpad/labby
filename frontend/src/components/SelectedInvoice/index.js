@@ -105,7 +105,7 @@ function SelectedInvoice() {
         <div className="selectedInvoiceTitle">
           <h2 style={{ color: appColor.gray }}>Services Selected For Billing</h2>
           <img
-            className="modalClose"
+            className="selectedModalClose"
             src={X}
             alt="Delete"
             onClick={() => {
@@ -115,16 +115,17 @@ function SelectedInvoice() {
         </div>
         <div className="service-confirm-table">
           <Table
-            className="table"
+            className="selectedTable"
             pagination={false}
-            bordered
             dataSource={invoiceList}
             rowKey={(record) => record.billable_id}
             rowClassName={(_, index) => index % 2 === 0 ? "editable-row" : "editable-row-dark"}
             columns={renderedColumns}
           />
-          <div className="generate-invoice-button">
-            <GenerateInvoice />
+          <div className="generateButtonView">
+            <div className="generate-invoice-button">
+              <GenerateInvoice />
+            </div>
           </div>
         </div>
       </div>

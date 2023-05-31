@@ -25,11 +25,12 @@
   padding-right: 20px;
 }
 
-.modalClose {
+.selectedModalClose {
   margin-top: 5px;
   cursor: pointer;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
 }
 
 .charts {
@@ -44,14 +45,36 @@
   padding-bottom: 30px;
 }
 
-/* Antd global styling messing with our desired styling
-So try and beat it with CSS specificity */
-.ant-table-container,
-.ant-table-content>table>thead>tr>th {
-  background-color: #fff;
+.generateButtonView {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.selectedTable .ant-table-thead .ant-table-cell {
+  background-color: #ECEDF3;
+  border: none;
+}
 
+.selectedTable .ant-table-tbody > tr > td {
+  border: none
+}
+
+.selectedTable {
+  margin-top: 30px;
+}
+
+.selectedTable .editable-row-dark {
+  background-color: #F6F6F6;
+}
+
+.selectedTable .ant-table-container {
+  border: none;
+}
+
+/* Antd global styling messing with our desired styling
+So try and beat it with CSS specificity */
 .selectedInvoiceTitle {
   display: flex;
   justify-content: space-between;
