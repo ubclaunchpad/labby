@@ -52,7 +52,7 @@ export const CostEstimateFull = () => {
           if (!costEstimateMap) {
             return null;
           }
-          const cost = costEstimateMap.get(response.question.answer_id) ?? 0;
+          const cost = costEstimateMap.get(response.response) ?? 0;
           let quantity = response.quantity ?? 1;
           costSum += cost * quantity;
           if (cost !== null && cost !== 0) {

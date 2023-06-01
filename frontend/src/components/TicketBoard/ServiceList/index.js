@@ -8,11 +8,11 @@ import {
   REMOVE_SERVICE_COST,
 } from "../../../redux/actions/ticketActions";
 import { SuccessToast } from "../../Toasts";
-import { ToastContainer } from "react-toastify";
 import { Button, Divider, Input, Select, Space } from "antd";
 import { useEffect, useState } from "react";
 import { LOAD_ALL_COST } from "../../../redux/actions/costActions";
 import { GET_PROJECT } from "../../../redux/actions/billingActions";
+import ToastContainer from "../../Toasts/ToastContainer";
 
 function ServiceList({ readOnly }) {
   const dispatch = useDispatch();
@@ -233,18 +233,7 @@ function ServiceList({ readOnly }) {
         <img className="Add" src={Add} alt="Add" />
         <div className="ticketSectionTitle">Add Service</div>
       </div> : null}
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={true}
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={false}
-        pauseOnHover
-        theme="light"
-      />
+      <ToastContainer />
     </div>
   );
 }
