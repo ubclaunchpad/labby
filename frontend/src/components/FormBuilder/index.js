@@ -13,8 +13,8 @@ import FileDownloadEditor from "../FileDownload/FileDownloadEditor";
 import TextLineEditor from "../TextLine/TextLineEditor";
 import { clsx } from "clsx";
 import { NavLink } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useCopyToClipboard } from "@uidotdev/usehooks";
 
 import styled from "styled-components";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
@@ -24,6 +24,7 @@ import ProjectSelectorEditor from "../ProjectSelector/ProjectSelectorEditor";
 import { SuccessToast } from "../../components/Toasts";
 import { SAVE_FORM_BUILD } from "../../redux/actions/formActions";
 import FormInfoEditor from "../FormInfo/FormInfoEditor";
+import ToastContainer from "../Toasts/ToastContainer";
 
 const QuestionContainer = styled.div`
   border: ${(props) =>
@@ -78,6 +79,7 @@ function FormBuilder() {
     (state) => state.logicReducer.currentLogicQuestion
   );
   const formId = window.location.pathname.split("/")[2];
+  const [, copyToClipboard] = useCopyToClipboard();
 
   return (
     <div>
@@ -148,10 +150,7 @@ function FormBuilder() {
               }}
               onClick={() => {
                 SuccessToast("Form Link Copied to Clipboard!");
-                // copy text to clipboard
-                navigator.clipboard.writeText(
-                  `https://labby.harinwu.com/request/${formId}`
-                );
+                copyToClipboard(`https://labby.harinwu.com/request/${formId}`);
               }}
             >
               Share
@@ -219,18 +218,7 @@ function FormBuilder() {
           )}
         </StrictModeDroppable>
       </div>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={true}
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={false}
-        pauseOnHover
-        theme="light"
-      />
+      <ToastContainer />
     </div>
   );
 }

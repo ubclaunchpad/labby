@@ -30,21 +30,31 @@ function MultiSelect({ question }) {
 
   useEffect(() => {
     setOptions(getQuestionOptions(answerList, question));
+  }, [answerList, question]);
+
+  useEffect(() => {
     const draftAnswer = draftList.filter(
       (draft) => draft.question_id === question.question_id
     );
     draftAnswer.forEach((draft) => {
-      dispatch({
-        type: ADD_RESPONSE,
-        payload: {
-          id: uuid(),
-          response: draft.answer,
-          question: question,
-        },
-      });
+      const option = options.find((item) => item.answer_id === draft.answer);
+      if (option) {
+        dispatch({
+          type: ADD_RESPONSE,
+          payload: {
+            id: uuid(),
+            response: draft.answer,
+            question: option,
+          },
+        });
+        setSelectedAnswers(s => [
+          ...s,
+          draft.answer,
+        ]);
+      }
     });
     setIdPrefix(uuid());
-  }, [answerList, question, dispatch, draftList]);
+  }, [question, dispatch, draftList, options]);
 
   return (
     <div className="GlobalCustomerQuestionContainer">

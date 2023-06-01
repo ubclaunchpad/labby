@@ -1,3 +1,5 @@
+import AWS from "aws-sdk";
+
 export const appColor = {
   primary: "#627BF6",
   primaryLight: "#8A9DF8",
@@ -13,6 +15,12 @@ export const appColor = {
 
 export const backend = process.env.REACT_APP_BACKEND;
 // export const backend = "http://localhost:8080/";
+
+export const awsConfig = new AWS.Config({
+  accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
+  secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
+  region: "ca-central-1",
+});
 
 export const ticketsColors = {
   0: "#5976E1",

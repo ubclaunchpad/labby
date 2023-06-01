@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Navigate } from "react-router-dom";
 import uuid from "react-uuid";
 import "./request-form.css";
-import { appColor } from "../../constants";
+import { appColor, awsConfig } from "../../constants";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
 import { LOAD_COST } from "../../redux/actions/costActions";
 import MultiSelect from "../../components/MultiSelect";
@@ -22,13 +22,14 @@ import {
 import { DELETE_ALL_DRAFTS, LOAD_DRAFT, REMOVE_ALL_RESPONSE, SET_DRAFTS, SUBMIT_SURVEY } from "../../redux/actions/formActions";
 import { TOGGLE_COST_ESTIMATE } from "../../redux/actions/uiActions";
 import ProjectSelector from "../../components/ProjectSelector";
-import { ToastContainer } from "react-toastify";
 import { WarningToast } from "../../components/Toasts";
 import SideArrow from "../../assets/SideArrow.png";
 import html2canvas from "html2canvas";
 import AWS from "aws-sdk";
 import FormInfo from "../../components/FormInfo";
 import { GET_USER, SET_CURRENT_USER } from "../../redux/actions/userActions";
+import { useDocumentTitle } from "@uidotdev/usehooks";
+import ToastContainer from "../../components/Toasts/ToastContainer";
 
 function RequestForm({ origin }) {
   const dispatch = useDispatch();
@@ -47,6 +48,8 @@ function RequestForm({ origin }) {
   const costEstimateMap = useSelector(
     (state) => state.costEstimateReducer.costEstimateList
   );
+
+  useDocumentTitle(questions[0]?.question ?? "Labby");
 
   // Load Form Questions
   useEffect(() => {
@@ -71,41 +74,19 @@ function RequestForm({ origin }) {
     dispatch({ type: LOAD_COST, payload: { formResponses: formResponses } });
   }, [dispatch, formResponses]);
 
-  // Helper Function to Render Each Question
-  function renderQuestion(question) {
-    switch (question.question_type) {
-      case "multi":
-        return <MultiSelect question={question} />;
-      case "single":
-        return <SingleSelect question={question} />;
-      case "text":
-        return <TextAnswer question={question} />;
-      case "dropdown":
-        return <Dropdown question={question} />;
-      case "heading":
-        return <Heading question={question} />;
-      case "textline":
-        return <TextLine question={question} />;
-      case "upload":
-        return <FileInput question={question} />;
-      case "download":
-        return <FileDownload question={question} />;
-      case "contact":
-        return <ContactInfo question={question} />;
-      case "form":
-        return <FormInfo question={question} />;
-      case "project":
-        return <ProjectSelector question={question} />;
-      default:
-        return null;
-    }
+  const componentMap = {
+    "multi": MultiSelect,
+    "single": SingleSelect,
+    "text": TextAnswer,
+    "dropdown": Dropdown,
+    "heading": Heading,
+    "textline": TextLine,
+    "upload": FileInput,
+    "download": FileDownload,
+    "contact": ContactInfo,
+    "form": FormInfo,
+    "project": ProjectSelector,
   }
-
-  const config = new AWS.Config({
-    accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
-    region: "ca-central-1",
-  });
 
   function saveFormToS3(survey_id) {
     document.getElementById("requestFormContainer").scrollTo(0, 0);
@@ -115,7 +96,7 @@ function RequestForm({ origin }) {
     }).then(function (canvas) {
       canvas.toBlob((blob) => {
         if (blob === null) return;
-        AWS.config.update(config);
+        AWS.config.update(awsConfig);
         const S3 = new AWS.S3({});
         const objParams = {
           Bucket: process.env.REACT_APP_S3_BUCKET,
@@ -126,13 +107,7 @@ function RequestForm({ origin }) {
 
         S3.putObject(objParams)
           .send(function (err, data) {
-            if (err) {
-              console.log("Issue in S3.putObject.send()");
-              console.log(`Error Code: ${err.code}`);
-              console.log(`Error Message: ${err.message}`);
-            } else {
-              console.log("Send completed in S3.putObject.send()");
-            }
+            console.log(err ? `Issue in S3.putObject.send() => ${err}` : "Send completed in S3.putObject.send()");
           });
       }, "image/png");
     });
@@ -239,18 +214,7 @@ function RequestForm({ origin }) {
     noShowList = [];
     return (
       <div className="requestFormPage">
-        <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={true}
-          newestOnTop={true}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable={false}
-          pauseOnHover
-          theme="light"
-        />
+        <ToastContainer />
         <div className="requestFormContainer" id="requestFormContainer">
           <div id="progressBar" style={{ zIndex: 2 }} />
           <div className="requestTitleContainer">
@@ -304,13 +268,15 @@ function RequestForm({ origin }) {
               return null;
             }
 
+            const Component = componentMap[question.question_type];
+
             return (
               <div key={question.question_id}>
                 <div
                   className="FormRequestQuestion"
                   style={{ color: appColor.gray }}
                 >
-                  {renderQuestion(question)}
+                  <Component question={question} />
                 </div>
               </div>
             );

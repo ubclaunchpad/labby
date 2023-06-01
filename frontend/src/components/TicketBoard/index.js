@@ -20,8 +20,8 @@ import { appColor, ticketsColors } from "../../constants";
 import { useEffect, useState } from "react";
 import { LOAD_EMPLOYEE } from "../../redux/actions/userActions";
 import { TicketInfo } from "./TicketInfo";
-import { ToastContainer } from "react-toastify";
 import { NavLink } from "react-router-dom";
+import ToastContainer from "../Toasts/ToastContainer";
 
 export const getColorNum = (id, colorArray) => {
   if (colorArray) {
@@ -380,18 +380,7 @@ export const TicketBoard = () => {
         </DragDropContext>
       </div>
       {currentTicket ? (<TicketInfo />) : null}
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={true}
-        newestOnTop={true}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable={false}
-        pauseOnHover
-        theme="light"
-      />
+      <ToastContainer />
     </div>
   );
 };
