@@ -69,7 +69,7 @@ function LoginForm({ from }) {
           </div>
           <div className="CreateAccount">
             <div>Not a user? Create an account&nbsp;</div>
-            <NavLink to={`/signup`}>here.</NavLink>
+            <NavLink to={`/signup`} data-testid="signup">here.</NavLink>
           </div>
         </div>
       </div>

@@ -31,10 +31,9 @@ export function* fetchQuestion({ payload }) {
 
   const questions = yield call(getQuestions, payload);
 
-  yield put({ type: SET_QUESTION, payload: questions.data });
-  yield put({ type: SET_ANSWER, payload: questions.data });
+  yield put({ type: SET_QUESTION, payload: questions?.data ?? [] });
+  yield put({ type: SET_ANSWER, payload: questions?.data ?? [] });
   yield put({ type: SET_LOADING, payload: false });
-  yield put({ type: SET_LOADING, payload: questions.data });
 }
 
 export function* loadAnswerBySurvey({ payload }) {
