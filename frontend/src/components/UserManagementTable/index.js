@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Table, Form, Popconfirm, Input, Select } from "antd";
 import "antd/dist/antd.min.css";
 import "./index.css";
-import { DELETE_USER, GET_ORGANIZATION, LOAD_USERLIST, POST_USER } from "../../redux/actions/userActions";
+import { DELETE_USER, GET_ORGANIZATION, LOAD_USERLIST, UPDATE_USER } from "../../redux/actions/userActions";
 import X from "../../assets/X.png";
 
 const UserManagementTable = () => {
@@ -38,7 +38,7 @@ const UserManagementTable = () => {
               };
             })}
             onChange={(newList) => {
-              dispatch({ type: POST_USER, payload: { ...record, fk_organization_id: newList } });
+              dispatch({ type: UPDATE_USER, payload: { ...record, fk_organization_id: newList } });
             }}
             options={orgList.map((org) => {
               return {
@@ -86,7 +86,7 @@ const UserManagementTable = () => {
     dispatch({ type: DELETE_USER, payload: { user_id: key } });
   };
   const handleSave = (row) => {
-    dispatch({ type: POST_USER, payload: row });
+    dispatch({ type: UPDATE_USER, payload: row });
   };
 
   const EditableContext = React.createContext(null);

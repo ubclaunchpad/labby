@@ -20,6 +20,7 @@ import {
   GET_PENDING_USER,
   GET_USER,
   SET_OG_CURRENT_USER,
+  UPDATE_USER,
 } from "../actions/userActions";
 import { getProjectAssignmentApi } from "../api/projectApi";
 import {
@@ -35,6 +36,7 @@ import {
   getPendingUserlist,
   approveUserList,
   getUserApi,
+  updateUserApi,
 } from "../api/userApi";
 import { ErrorToast, SuccessToast } from "../../components/Toasts";
 
@@ -83,16 +85,16 @@ export function* deleteUserSaga({ payload }) {
   yield loadPendingUserListSaga();
 }
 
+export function* updateUserSaga({ payload }) {
+  yield call(updateUserApi, payload);
+  yield loadUserlistSaga();
+}
+
 export function* postUserSaga({ payload }) {
   const newUser = yield call(saveUserApi, payload);
   if (newUser) {
-    if (!payload.noReload) {
-      yield loadUserlistSaga();
-    }
-    if (payload.navTo) {
-      SuccessToast("Account created successfully! Please login to continue.");
-      payload.navTo();
-    }
+    SuccessToast("Account created successfully! Please login to continue.");
+    payload.navTo();
   } else {
     ErrorToast("Account creation failed. Please try again.");
   }
@@ -150,6 +152,7 @@ export default function* userSaga() {
   yield takeLatest(LOAD_USERLIST, loadUserlistSaga);
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(POST_USER, postUserSaga);
+  yield takeLatest(UPDATE_USER, updateUserSaga);
   yield takeLatest(LOAD_EMPLOYEE, loadEmployeeSaga);
   yield takeLatest(GET_ORGANIZATION, loadOrganizationSaga);
   yield takeLatest(POST_ORGANIZATION, postOrganizationSaga);

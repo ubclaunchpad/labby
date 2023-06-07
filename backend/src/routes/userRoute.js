@@ -114,7 +114,7 @@ router.post("/approve", authorize(), (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  if (!req.body) {
+  if (!req.body && !req.body.user_id && !req.body.email && !req.body.password) {
     res.status(400).send({
       message: "Content can not be empty!",
     });
@@ -122,6 +122,24 @@ router.post("/", (req, res) => {
   }
   userController
     .saveUser(req)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(404).json(err);
+    });
+});
+
+router.put("/", authorize(), (req, res) => {
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!",
+    });
+    return;
+  }
+  userController
+    .updateUser(req)
     .then((response) => {
       res.status(200).json(response);
     })

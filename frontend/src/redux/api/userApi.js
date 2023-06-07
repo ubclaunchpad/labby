@@ -93,6 +93,25 @@ export const saveUserApi = async (payload) => {
   }
 };
 
+export const updateUserApi = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      user_id: payload.user_id,
+      organization_id: payload.fk_organization_id,
+      username: payload.username,
+      email: payload.email,
+      employee: (payload.employee || payload.employee === "1"),
+      password: payload.password,
+    });
+
+    const user = await axios.put("user/", data);
+
+    return user;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 
 export const getUserApi = async (payload) => {
   try {

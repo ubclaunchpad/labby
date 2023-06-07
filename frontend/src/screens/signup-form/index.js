@@ -56,7 +56,6 @@ function SignUpForm() {
                 email: email,
                 employee: false,
                 password: password,
-                noReload: true,
                 navTo: () => navigate("/"),
             },
         });
