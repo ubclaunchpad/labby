@@ -1,0 +1,13 @@
+.SignUpBackgroundImg {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    background-image: url("../../assets/LoginBackground.png");
+    justify-content: flex-end;
+    background-size: cover;
+}
+
+.AlreadyUser {
+    display: flex;
+    flex-direction: row;
+}

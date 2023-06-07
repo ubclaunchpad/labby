@@ -1,5 +1,4 @@
 import "./index.css";
-// import Hide from "../../assets/hide.png";
 import Logo from "../../assets/LogoIcon.png";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
@@ -8,7 +7,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 function LoginForm({ from }) {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -20,7 +19,6 @@ function LoginForm({ from }) {
     setPassword(e.target.value);
   };
 
-  let navigate = useNavigate();
   const handleUserSubmit = (e) => {
     e.preventDefault();
     dispatch({
@@ -40,7 +38,6 @@ function LoginForm({ from }) {
     <div className="PageContainer">
       <div className="LoginPage">
         <img src={Logo} className="LogoImg" alt="Labby Logo"></img>
-
         <div className="LoginContainer">
           <div className="LoginForm">
             <div className="LoginTitle">
@@ -52,16 +49,16 @@ function LoginForm({ from }) {
                 placeholder="Email"
                 type={"email"}
                 onChange={handleEmailChange}
-              ></input>
+              />
               <input
                 className="LoginInput"
                 placeholder="Password"
                 type={"password"}
                 onChange={handlePasswordChange}
-              ></input>
-              {/* <div className="ForgotPassword">
-                            Forgot Password
-                        </div> */}
+              />
+              <div className="ForgotPassword">
+                Forgot My Password
+              </div>
               <button className="SignInBtn" onClick={handleUserSubmit}>
                 Log in
               </button>

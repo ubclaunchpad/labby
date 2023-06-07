@@ -36,6 +36,7 @@ import {
   approveUserList,
   getUserApi,
 } from "../api/userApi";
+import { ErrorToast, SuccessToast } from "../../components/Toasts";
 
 export function* loadPendingUserListSaga() {
   const userPendingList = yield call(getPendingUserlist);
@@ -83,17 +84,29 @@ export function* deleteUserSaga({ payload }) {
 }
 
 export function* postUserSaga({ payload }) {
-  yield call(saveUserApi, payload);
-  if (!payload.noReload) {
-    yield loadUserlistSaga();
+  const newUser = yield call(saveUserApi, payload);
+  if (newUser) {
+    if (!payload.noReload) {
+      yield loadUserlistSaga();
+    }
+    if (payload.navTo) {
+      SuccessToast("Account created successfully! Please login to continue.");
+      payload.navTo();
+    }
+  } else {
+    ErrorToast("Account creation failed. Please try again.");
   }
 }
 
 export function* authenticateUserSaga({ payload }) {
   const currentUser = yield call(authenticateUserApi, payload);
-  yield put({ type: SET_CURRENT_USER, payload: currentUser.data });
-  yield put({ type: SET_OG_CURRENT_USER, payload: currentUser.data })
-  localStorage.setItem("currentUser", JSON.stringify(currentUser.data));
+  if (currentUser) {
+    yield put({ type: SET_CURRENT_USER, payload: currentUser.data });
+    yield put({ type: SET_OG_CURRENT_USER, payload: currentUser.data })
+    localStorage.setItem("currentUser", JSON.stringify(currentUser.data));
+  } else {
+    ErrorToast("Invalid username or password");
+  }
 }
 
 export function* loadOrganizationSaga() {
