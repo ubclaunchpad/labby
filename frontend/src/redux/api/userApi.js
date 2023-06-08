@@ -47,8 +47,6 @@ export const approveUserList = async (payload) => {
       users: payload.users,
     });
 
-    console.log(data);
-
     const approve = await axios.post("user/approve/", data, {
       headers: headers,
     });
@@ -86,6 +84,35 @@ export const saveUserApi = async (payload) => {
     });
 
     const user = await axios.post("user/", data);
+
+    return user;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const requestResetApi = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      email: payload.email,
+    });
+
+    const user = await axios.post("user/forgot", data);
+
+    return user;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const resetPasswordApi = async (payload) => {
+  try {
+    var data = JSON.stringify({
+      otp: payload.otp,
+      password: payload.password,
+    });
+
+    const user = await axios.post("user/resetpassword", data);
 
     return user;
   } catch (err) {

@@ -2,8 +2,9 @@ import "./index.css";
 import Logo from "../../assets/LogoIcon.png";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { AUTHENTICATE_USER } from "../../redux/actions/userActions";
+import { AUTHENTICATE_USER, REQUEST_RESET } from "../../redux/actions/userActions";
 import { NavLink, useNavigate } from "react-router-dom";
+import { ErrorToast } from "../../components/Toasts";
 
 function LoginForm({ from }) {
   const dispatch = useDispatch();
@@ -34,6 +35,20 @@ function LoginForm({ from }) {
     navigate(from);
   };
 
+  function handleUserResetRequest() {
+    if (email === "") {
+      ErrorToast("Please fill out your email above, leave the password blank and retry!");
+      return;
+    }
+
+    dispatch({
+      type: REQUEST_RESET,
+      payload: {
+        email: email,
+      },
+    });
+  };
+
   return (
     <div className="PageContainer">
       <div className="LoginPage">
@@ -56,7 +71,7 @@ function LoginForm({ from }) {
                 type={"password"}
                 onChange={handlePasswordChange}
               />
-              <div className="ForgotPassword">
+              <div className="ForgotPassword" onClick={() => { handleUserResetRequest() }}>
                 Forgot My Password
               </div>
               <button className="SignInBtn" onClick={handleUserSubmit}>

@@ -22,6 +22,7 @@ import { PING } from "./redux/actions/userActions";
 import { START_LOADING } from "./redux/actions/uiActions";
 import Pending from "./screens/pending/pending";
 import ToastContainer from "./components/Toasts/ToastContainer";
+import ResetPassword from "./screens/reset-password";
 
 function App() {
   const dispatch = useDispatch();
@@ -68,6 +69,7 @@ function App() {
           <Route path="/pending" element={(currentUser && currentUser.employee) ? <Pending /> : (currentUser ? <FormProgress /> : <LoginForm from={window.location.pathname} />)} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SignUpForm />} />
+          <Route path="/reset-password/:otp" element={<ResetPassword />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />

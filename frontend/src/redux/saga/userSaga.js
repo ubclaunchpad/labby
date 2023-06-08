@@ -21,6 +21,8 @@ import {
   GET_USER,
   SET_OG_CURRENT_USER,
   UPDATE_USER,
+  REQUEST_RESET,
+  RESET_PASSWORD,
 } from "../actions/userActions";
 import { getProjectAssignmentApi } from "../api/projectApi";
 import {
@@ -37,6 +39,8 @@ import {
   approveUserList,
   getUserApi,
   updateUserApi,
+  requestResetApi,
+  resetPasswordApi,
 } from "../api/userApi";
 import { ErrorToast, SuccessToast } from "../../components/Toasts";
 
@@ -88,6 +92,22 @@ export function* deleteUserSaga({ payload }) {
 export function* updateUserSaga({ payload }) {
   yield call(updateUserApi, payload);
   yield loadUserlistSaga();
+}
+
+export function* requestResetSaga({ payload }) {
+  yield call(requestResetApi, payload);
+  SuccessToast("Password reset email sent!");
+}
+
+export function* resetPasswordSaga({ payload }) {
+  const resetRes = yield call(resetPasswordApi, payload);
+  console.log(resetRes);
+  if (resetRes) {
+    SuccessToast("Password reset successfully! Please login to continue.");
+    payload.navTo();
+  } else {
+    ErrorToast("Password reset failed. Please try again.");
+  }
 }
 
 export function* postUserSaga({ payload }) {
@@ -160,4 +180,6 @@ export default function* userSaga() {
   yield takeLatest(AUTHENTICATE_USER, authenticateUserSaga);
   yield takeLatest(PING, pingCheckSaga);
   yield takeLatest(GET_USER, getUserSaga);
+  yield takeLatest(REQUEST_RESET, requestResetSaga);
+  yield takeLatest(RESET_PASSWORD, resetPasswordSaga);
 }
