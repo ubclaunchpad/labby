@@ -55,6 +55,27 @@ export class User {
     );
   }
 
+  updateUserPassword(newUser, result) {
+    con.query(
+      "CALL updateUserPassword(?, ?, ?)",
+      [
+        newUser.email,
+        newUser.salt,
+        newUser.hash,
+      ],
+      function (error, _) {
+        if (error) {
+          console.log("error: ", error);
+          result(error, null);
+        } else {
+          result(null, {
+            result: `Response ${newUser.email} Saved Successfully`,
+          });
+        }
+      }
+    );
+  }
+
   updateUser(newUser, result) {
     con.query(
       "CALL updateUser(?, ?, ?, ?, ?)",

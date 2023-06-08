@@ -3,6 +3,7 @@ USE `labby`;
 DROP PROCEDURE IF EXISTS `addUser`;
 DROP PROCEDURE IF EXISTS `approveUser`;
 DROP PROCEDURE IF EXISTS `updateUser`;
+DROP PROCEDURE IF EXISTS `updateUserPassword`;
 DROP PROCEDURE IF EXISTS `deleteUser`;
 DROP PROCEDURE IF EXISTS `loadUser`;
 DROP PROCEDURE IF EXISTS `loadEmployee`;
@@ -64,6 +65,18 @@ BEGIN
 		email = _email,
 		employee = _employee
 	WHERE user_id = _user_id;
+END $$
+
+CREATE PROCEDURE `updateUserPassword` (
+	IN `_email` VARCHAR(50),
+	IN `_salt` VARCHAR(255),
+	IN `_hashed_password` VARCHAR(255)
+)
+BEGIN
+	UPDATE users SET
+		salt = _salt,
+		hashed_password = _hashed_password
+	WHERE email = _email;
 END $$
 
 CREATE PROCEDURE `deleteUser`  (

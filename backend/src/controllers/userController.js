@@ -120,6 +120,28 @@ export default class UserController {
     });
   }
 
+  updateUserPassword(req, email) {
+    return new Promise((resolve, reject) => {
+      const UserModel = new User();
+
+      let salt = genRandomString(16); /** Gives us salt of length 16 */
+      let hashedPassword = encrypt(req.body.password, salt);
+
+      const user = {
+        email: email,
+        salt: salt,
+        hash: hashedPassword,
+      };
+
+      UserModel.updateUserPassword(user, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+
   saveUser(req) {
     return new Promise((resolve, reject) => {
       const UserModel = new User();
