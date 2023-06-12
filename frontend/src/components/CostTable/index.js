@@ -11,7 +11,7 @@ import "antd/dist/antd.min.css";
 import "./index.css";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
 import uuid from "react-uuid";
-import X from "../../assets/X.png";
+import RejectUser from "../../assets/RejectUser.png";
 import AddButton from "../Button/AddButton";
 import { LOAD_FORMS } from "../../redux/actions/formActions";
 
@@ -65,18 +65,20 @@ const CostTable = () => {
       key: "quantifiable",
       render: (_, record) =>
         dataSource.length >= 1 ? (
-          <Checkbox
-            checked={record.quantifiable}
-            onClick={(e) => {
-              dispatch({
-                type: UPDATE_QUANTIFIABLE,
-                payload: {
-                  answer_id: record.key,
-                  quantifiable: e.currentTarget.checked,
-                },
-              });
-            }}
-          />
+          <div className="quantifiableCheck">
+            <Checkbox
+              checked={record.quantifiable}
+              onClick={(e) => {
+                dispatch({
+                  type: UPDATE_QUANTIFIABLE,
+                  payload: {
+                    answer_id: record.key,
+                    quantifiable: e.currentTarget.checked,
+                  },
+                });
+              }}
+            />
+          </div>
         ) : null,
       width: "5%",
     },
@@ -91,7 +93,11 @@ const CostTable = () => {
             okText="Delete"
             onConfirm={() => handleDelete(record.key)}
           >
-            <img className="GlobalEditorDelete" src={X} alt="Delete" />
+            <img
+              className="userListIcons"
+              src={RejectUser}
+              alt="Delete"
+            />
           </Popconfirm>
         ) : null,
       width: "1%",

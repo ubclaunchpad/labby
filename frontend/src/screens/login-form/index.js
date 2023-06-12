@@ -52,8 +52,8 @@ function LoginForm({ from }) {
   return (
     <div className="PageContainer">
       <div className="LoginPage">
-        <img src={Logo} className="LogoImg" alt="Labby Logo"></img>
         <div className="LoginContainer">
+          <img src={Logo} className="LogoImg" alt="Labby Logo" />
           <div className="LoginForm">
             <div className="LoginTitle">
               <h2>Log in</h2>
@@ -80,8 +80,7 @@ function LoginForm({ from }) {
             </form>
           </div>
           <div className="CreateAccount">
-            <div>Not a user? Create an account&nbsp;</div>
-            <NavLink to={`/signup`} data-testid="signup">here.</NavLink>
+            <div>Not a user? Create an account&nbsp;<NavLink to={`/signup`} data-testid="signup">here.</NavLink></div>
           </div>
         </div>
       </div>

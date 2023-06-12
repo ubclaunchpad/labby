@@ -65,8 +65,8 @@ function SignUpForm() {
         <div className="PageContainer">
             <div className="SignUpBackgroundImg" />
             <div className="LoginPage">
-                <img src={Logo} className="LogoImg" alt="Background"></img>
                 <div className="LoginContainer">
+                    <img src={Logo} className="LogoImg" alt="Background" />
                     <div className="LoginForm">
                         <div className="LoginTitle">
                             <h2>Create an Account</h2>
@@ -82,8 +82,7 @@ function SignUpForm() {
                         </form>
                     </div>
                     <div className="AlreadyUser">
-                        <div>Already have an account?&nbsp;</div>
-                        <NavLink to={`/`} data-testid="login">Log in</NavLink>
+                        <div>Already have an account?&nbsp;<NavLink to={`/`} data-testid="login">Log in</NavLink></div>
                     </div>
                 </div>
             </div>

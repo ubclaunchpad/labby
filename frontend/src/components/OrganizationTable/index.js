@@ -1,10 +1,10 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Table, Form, Popconfirm, Input, Select } from "antd";
-import { appColor } from "../../constants";
+import Add from "../../assets/AddBlack.png";
 import "antd/dist/antd.min.css";
 import "./index.css";
-import X from "../../assets/X.png";
+import RejectUser from "../../assets/RejectUser.png";
 import {
   DELETE_ORGANIZATION,
   GET_ORGANIZATION,
@@ -77,7 +77,11 @@ const OrganizationTable = () => {
             okText="Delete"
             onConfirm={() => handleDelete(record.organization_id)}
           >
-            <img className="GlobalEditorDelete" src={X} alt="Delete" />
+            <img
+              className="userListIcons"
+              src={RejectUser}
+              alt="Delete"
+            />
           </Popconfirm>
         ) : null,
       width: "1%",
@@ -209,26 +213,6 @@ const OrganizationTable = () => {
 
   return (
     <div>
-      <div className="addService">
-        <button
-          className="BillingAddButton"
-          style={{
-            backgroundColor: appColor.lightGray,
-            color: appColor.gray,
-          }}
-          onMouseOver={(e) => {
-            e.target.style.backgroundColor = "#627BF6";
-            e.target.style.color = "#FFFFFF";
-          }}
-          onMouseOut={(e) => {
-            e.target.style.backgroundColor = appColor.lightGray;
-            e.target.style.color = appColor.gray;
-          }}
-          onClick={handleAdd}
-        >
-          Add
-        </button>
-      </div>
       <Table
         className="orgTable"
         pagination={false}
@@ -237,6 +221,14 @@ const OrganizationTable = () => {
         rowClassName={(_, index) => index % 2 === 0 ? "editable-row" : "editable-row-dark"}
         dataSource={dataSource}
         columns={renderedColumns}
+        footer={() => {
+          return (
+            <div className="footerAddButton" onClick={handleAdd}>
+              <img className="Add" src={Add} alt="Add" />
+              <div className="ticketSectionTitle">Add</div>
+            </div>
+          )
+        }}
       />
     </div>
   );

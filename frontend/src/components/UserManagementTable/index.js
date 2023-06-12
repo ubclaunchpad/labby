@@ -4,7 +4,7 @@ import { Table, Form, Popconfirm, Input, Select } from "antd";
 import "antd/dist/antd.min.css";
 import "./index.css";
 import { DELETE_USER, GET_ORGANIZATION, LOAD_USERLIST, UPDATE_USER } from "../../redux/actions/userActions";
-import X from "../../assets/X.png";
+import RejectUser from "../../assets/RejectUser.png";
 
 const UserManagementTable = () => {
   const columns = [
@@ -53,7 +53,34 @@ const UserManagementTable = () => {
       title: "MAPcore Employee",
       dataIndex: "employee",
       key: "employee",
-      editable: true,
+      render: (_, record) =>
+        dataSource.length >= 1 ? (
+          <Select
+            style={{ width: "100%" }}
+            placeholder="Assign as employee"
+            defaultValue={{
+              label: "No",
+              value: false,
+            }}
+            value={{
+              label: record.employee ? "Yes" : "No",
+              value: record.employee,
+            }}
+            onChange={(newValue) => {
+              dispatch({ type: UPDATE_USER, payload: { ...record, employee: newValue } });
+            }}
+            options={[
+              {
+                label: "Yes",
+                value: true,
+              },
+              {
+                label: "No",
+                value: false,
+              }
+            ]}
+          />
+        ) : null,
     },
     {
       title: "",
@@ -66,7 +93,11 @@ const UserManagementTable = () => {
             okText="Delete"
             onConfirm={() => handleDelete(record.user_id)}
           >
-            <img className="GlobalEditorDelete" src={X} alt="Delete" />
+            <img
+              className="userListIcons"
+              src={RejectUser}
+              alt="Delete"
+            />
           </Popconfirm>
         ) : null,
       width: "1%",

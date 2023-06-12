@@ -34,16 +34,16 @@ function ApprovalBox() {
           <button
             className="approveAllButton"
             style={{
-              backgroundColor: appColor.lighterGray,
-              color: appColor.gray,
+              backgroundColor: appColor.primaryLight,
+              color: appColor.white,
             }}
             onMouseOver={(e) => {
-              e.target.style.backgroundColor = "#627BF6";
+              e.target.style.backgroundColor = appColor.primary;
               e.target.style.color = "#FFFFFF";
             }}
             onMouseOut={(e) => {
-              e.target.style.backgroundColor = appColor.lighterGray;
-              e.target.style.color = appColor.gray;
+              e.target.style.backgroundColor = appColor.primaryLight;
+              e.target.style.color = appColor.white;
             }}
             onClick={() => {
               dispatch({

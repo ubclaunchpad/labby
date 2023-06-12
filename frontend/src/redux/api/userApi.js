@@ -122,6 +122,10 @@ export const resetPasswordApi = async (payload) => {
 
 export const updateUserApi = async (payload) => {
   try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
     var data = JSON.stringify({
       user_id: payload.user_id,
       organization_id: payload.fk_organization_id,
@@ -131,7 +135,9 @@ export const updateUserApi = async (payload) => {
       password: payload.password,
     });
 
-    const user = await axios.put("user/", data);
+    const user = await axios.put("user/", data, {
+      headers: headers,
+    });
 
     return user;
   } catch (err) {
