@@ -15,15 +15,23 @@
 
 .AdministrationTabSelected {
   display: flex;
-  background-color: #eeeeee;
+  background-color: #627BF6;
   margin-right: 20px;
   padding: 10px;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  color: #666666;
+  color: #ffffff;
   font-weight: 500;
   cursor: pointer;
+}
+
+.AdministrationTabSelected:hover {
+  color: white;
+}
+
+.AdministrationTab:hover {
+  color: #627BF6;
 }
 
 .AdministrationTab {

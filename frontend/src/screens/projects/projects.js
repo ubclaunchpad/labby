@@ -15,7 +15,7 @@ function Projects() {
           className="costCenterTitle"
           style={{ color: appColor.gray }}
         >
-          Projects
+          Administration
         </div>
         <AdministrationHeader currentPage={"Projects"}/>
         <div className="costCenterTable">

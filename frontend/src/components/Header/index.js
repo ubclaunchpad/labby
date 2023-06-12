@@ -15,7 +15,7 @@ import { appColor } from "../../constants";
 
 function Header() {
   return (
-    <div className="Header" style={{ backgroundColor: appColor.primary }}>
+    <div className="Header" data-testid="header" style={{ backgroundColor: appColor.primary }}>
       <NavLink to="/" className="header-navbar--title">
         <img className="header-navbar--logo" src={LogoWhite} alt="Logo" />
       </NavLink>
@@ -24,6 +24,7 @@ function Header() {
 
       <div className="header-navbar-navigation--buttons">
         <NavLink
+          data-testid="tickets"
           to="/tickets"
           className={({ isActive }) =>
             isActive

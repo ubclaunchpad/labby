@@ -99,46 +99,83 @@ export default class UserController {
     });
   }
 
+  updateUser(req) {
+    return new Promise((resolve, reject) => {
+      const UserModel = new User();
+
+      const user = {
+        user_id: req.body.user_id,
+        organization_id: req.body.organization_id,
+        username: req.body.username,
+        email: req.body.email,
+        employee: req.body.employee,
+      };
+
+      UserModel.updateUser(user, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+
+  updateUserPassword(req, email) {
+    return new Promise((resolve, reject) => {
+      const UserModel = new User();
+
+      let salt = genRandomString(16); /** Gives us salt of length 16 */
+      let hashedPassword = encrypt(req.body.password, salt);
+
+      const user = {
+        email: email,
+        salt: salt,
+        hash: hashedPassword,
+      };
+
+      UserModel.updateUserPassword(user, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
+
   saveUser(req) {
     return new Promise((resolve, reject) => {
       const UserModel = new User();
 
-      if (req.body.password) {
-        let salt = genRandomString(16); /** Gives us salt of length 16 */
-        let hashedPassword = encrypt(req.body.password, salt);
-
-        const user = {
-          user_id: req.body.user_id,
-          organization_id: req.body.organization_id,
-          username: req.body.username,
-          email: req.body.email,
-          employee: req.body.employee,
-          salt: salt,
-          hash: hashedPassword,
-        };
-
-        UserModel.insertUser(user, (err, result) => {
-          if (err) {
-            reject({ error: err });
+      UserModel.getOneUser(req.body.email, (err, res) => {
+        UserModel.getOneUserByID(req.body.user_id, (err2, res2) => {
+          if (err || err2) {
+            reject({ error: err ?? err2 });
           }
-          resolve(result);
-        });
-      } else {
-        const user = {
-          user_id: req.body.user_id,
-          organization_id: req.body.organization_id,
-          username: req.body.username,
-          email: req.body.email,
-          employee: req.body.employee,
-        };
+          if (res && res.length === 0 && res2 && res2.length === 0) {
+            let salt = genRandomString(16); /** Gives us salt of length 16 */
+            let hashedPassword = encrypt(req.body.password, salt);
 
-        UserModel.updateUser(user, (err, result) => {
-          if (err) {
-            reject({ error: err });
+            const user = {
+              user_id: req.body.user_id,
+              organization_id: req.body.organization_id,
+              username: req.body.username,
+              email: req.body.email,
+              employee: req.body.employee,
+              salt: salt,
+              hash: hashedPassword,
+            };
+
+            UserModel.insertUser(user, (insertErr, result) => {
+              if (insertErr) {
+                reject({ error: insertErr });
+              }
+              resolve(result);
+            });
+          } else {
+            reject({ error: "User Already Exists!" });
           }
-          resolve(result);
         });
-      }
+      });
     });
   }
 

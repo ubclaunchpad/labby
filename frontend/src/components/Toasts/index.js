@@ -25,3 +25,15 @@ export function WarningToast(message) {
     progress: false,
   });
 }
+
+export function ErrorToast(message) {
+  return toast.error(message, {
+    className: "toast-notification",
+    autoClose: 2000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: false,
+    progress: false,
+  });
+}

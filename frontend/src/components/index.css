@@ -17,6 +17,7 @@
     flex-direction: row;
     align-items: center;
 }
+
 /* Question Number (div) */
 .GlobalEditorQuestionNumber {
     background-color: #ECEDF3;
@@ -44,6 +45,7 @@
     padding-left: 10px;
     padding-right: 10px;
 }
+
 .GlobalEditorQuestionTitleInput:focus {
     outline: none;
 }
@@ -60,6 +62,7 @@
     padding-left: 10px;
     padding-right: 10px;
 }
+
 .GlobalEditorQuestionNoteInput:focus {
     outline: none;
 }
@@ -92,6 +95,7 @@
     align-items: flex-end;
     justify-content: space-between;
 }
+
 /* View Logic (div) */
 .GlobalEditorLogicAdded {
     display: flex;
@@ -144,4 +148,28 @@
 
 .GlobalQuestionSubtitle {
     text-align: left;
+}
+
+/* Ant Design Styling */
+.ant-checkbox-checked .ant-checkbox-inner {
+    background-color: #5974E9;
+    border-color: #5974E9;
+    border-width: 2px;
+    border-radius: 5px;
+}
+
+.ant-checkbox .ant-checkbox-inner {
+    border-color: #5974E9;
+    border-width: 2px;
+    border-radius: 5px;
+}
+
+.ant-checkbox-inner {
+    width: 20px;
+    height: 20px;
+
+    &::after {
+        width: 6px;
+        height: 10px;
+    }
 }

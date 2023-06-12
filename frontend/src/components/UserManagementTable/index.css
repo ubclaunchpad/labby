@@ -1,6 +1,7 @@
 .userTable .ant-table-thead .ant-table-cell {
   background-color: #ECEDF3;
   border: none;
+  color: #666666;
 }
 
 .userTable .ant-table-tbody > tr > td {

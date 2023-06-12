@@ -15,7 +15,7 @@ function BillingManagement() {
           className="BillingManagementTitle"
           style={{ color: appColor.gray }}
         >
-          Pricing
+          Administration
         </div>
         <AdministrationHeader currentPage={"Pricing"} />
         <div className="BillingManagementTable">

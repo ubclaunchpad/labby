@@ -20,6 +20,9 @@ import {
   GET_PENDING_USER,
   GET_USER,
   SET_OG_CURRENT_USER,
+  UPDATE_USER,
+  REQUEST_RESET,
+  RESET_PASSWORD,
 } from "../actions/userActions";
 import { getProjectAssignmentApi } from "../api/projectApi";
 import {
@@ -35,7 +38,11 @@ import {
   getPendingUserlist,
   approveUserList,
   getUserApi,
+  updateUserApi,
+  requestResetApi,
+  resetPasswordApi,
 } from "../api/userApi";
+import { ErrorToast, SuccessToast } from "../../components/Toasts";
 
 export function* loadPendingUserListSaga() {
   const userPendingList = yield call(getPendingUserlist);
@@ -82,18 +89,46 @@ export function* deleteUserSaga({ payload }) {
   yield loadPendingUserListSaga();
 }
 
+export function* updateUserSaga({ payload }) {
+  yield call(updateUserApi, payload);
+  yield loadUserlistSaga();
+}
+
+export function* requestResetSaga({ payload }) {
+  yield call(requestResetApi, payload);
+  SuccessToast("Password reset email sent!");
+}
+
+export function* resetPasswordSaga({ payload }) {
+  const resetRes = yield call(resetPasswordApi, payload);
+  console.log(resetRes);
+  if (resetRes) {
+    SuccessToast("Password reset successfully! Please login to continue.");
+    payload.navTo();
+  } else {
+    ErrorToast("Password reset failed. Please try again.");
+  }
+}
+
 export function* postUserSaga({ payload }) {
-  yield call(saveUserApi, payload);
-  if (!payload.noReload) {
-    yield loadUserlistSaga();
+  const newUser = yield call(saveUserApi, payload);
+  if (newUser) {
+    SuccessToast("Account created successfully! Please login to continue.");
+    payload.navTo();
+  } else {
+    ErrorToast("Account creation failed. Please try again.");
   }
 }
 
 export function* authenticateUserSaga({ payload }) {
   const currentUser = yield call(authenticateUserApi, payload);
-  yield put({ type: SET_CURRENT_USER, payload: currentUser.data });
-  yield put({ type: SET_OG_CURRENT_USER, payload: currentUser.data })
-  localStorage.setItem("currentUser", JSON.stringify(currentUser.data));
+  if (currentUser) {
+    yield put({ type: SET_CURRENT_USER, payload: currentUser.data });
+    yield put({ type: SET_OG_CURRENT_USER, payload: currentUser.data })
+    localStorage.setItem("currentUser", JSON.stringify(currentUser.data));
+  } else {
+    ErrorToast("Invalid username or password");
+  }
 }
 
 export function* loadOrganizationSaga() {
@@ -137,6 +172,7 @@ export default function* userSaga() {
   yield takeLatest(LOAD_USERLIST, loadUserlistSaga);
   yield takeLatest(DELETE_USER, deleteUserSaga);
   yield takeLatest(POST_USER, postUserSaga);
+  yield takeLatest(UPDATE_USER, updateUserSaga);
   yield takeLatest(LOAD_EMPLOYEE, loadEmployeeSaga);
   yield takeLatest(GET_ORGANIZATION, loadOrganizationSaga);
   yield takeLatest(POST_ORGANIZATION, postOrganizationSaga);
@@ -144,4 +180,6 @@ export default function* userSaga() {
   yield takeLatest(AUTHENTICATE_USER, authenticateUserSaga);
   yield takeLatest(PING, pingCheckSaga);
   yield takeLatest(GET_USER, getUserSaga);
+  yield takeLatest(REQUEST_RESET, requestResetSaga);
+  yield takeLatest(RESET_PASSWORD, resetPasswordSaga);
 }

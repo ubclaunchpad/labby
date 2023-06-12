@@ -16,6 +16,9 @@ export const appColor = {
 export const backend = process.env.REACT_APP_BACKEND;
 // export const backend = "http://localhost:8080/";
 
+export const frontend = process.env.REACT_APP_FRONTEND;
+// export const frontend = "http://localhost:3000/";
+
 export const awsConfig = new AWS.Config({
   accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
   secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY,

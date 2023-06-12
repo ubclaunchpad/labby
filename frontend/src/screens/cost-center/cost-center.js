@@ -15,7 +15,7 @@ function CostCenter() {
           className="costCenterTitle"
           style={{ color: appColor.gray }}
         >
-          Cost Center
+          Administration
         </div>
         <AdministrationHeader currentPage={"Cost Center"}/>
         <div className="costCenterTable">

@@ -26,11 +26,11 @@ describe("Header Component", () => {
           <Header />
         </BrowserRouter>
       );
-    const componentHeader = screen.getByTestId("all-components");
+    const componentHeader = screen.getByTestId("tickets");
     expect(componentHeader).toBeInTheDocument();
     act(() => {
         componentHeader.click();
     });
-    expect(global.window.location.pathname).toContain('/all-components');
+    expect(global.window.location.pathname).toContain('/tickets');
   })
 });

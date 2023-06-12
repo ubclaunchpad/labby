@@ -18,6 +18,7 @@
     "apexcharts": "^3.37.1",
     "aws-sdk": "^2.1243.0",
     "axios": "^1.1.3",
+    "canvas": "^2.11.2",
     "clsx": "^1.2.1",
     "date-fns": "^2.29.3",
     "html2canvas": "^1.4.1",
@@ -57,7 +58,7 @@
   },
   "jest": {
     "transformIgnorePatterns": [
-      "/node_modules/(?!axios|antd|@ant-design|rc-.+?|@babel/runtime).+(js|jsx)$"
+      "/node_modules/(?!axios|antd|@ant-design|@uidotdev/usehooks|rc-.+?|@babel/runtime).+(js|jsx)$"
     ]
   },
   "browserslist": {

@@ -4,18 +4,18 @@ export class User {
 
   approveUser(newUser, result) {
     con.query(
-        "CALL approveUser(?)",
-        [newUser],
-        function (error, _) {
-          if (error) {
-            console.log("error: ", error);
-            result(error, null);
-          } else {
-            result(null, {
-              result: `Response Saved Successfully`,
-            });
-          }
+      "CALL approveUser(?)",
+      [newUser],
+      function (error, _) {
+        if (error) {
+          console.log("error: ", error);
+          result(error, null);
+        } else {
+          result(null, {
+            result: `Response Saved Successfully`,
+          });
         }
+      }
     );
 
   }
@@ -55,6 +55,27 @@ export class User {
     );
   }
 
+  updateUserPassword(newUser, result) {
+    con.query(
+      "CALL updateUserPassword(?, ?, ?)",
+      [
+        newUser.email,
+        newUser.salt,
+        newUser.hash,
+      ],
+      function (error, _) {
+        if (error) {
+          console.log("error: ", error);
+          result(error, null);
+        } else {
+          result(null, {
+            result: `Response ${newUser.email} Saved Successfully`,
+          });
+        }
+      }
+    );
+  }
+
   updateUser(newUser, result) {
     con.query(
       "CALL updateUser(?, ?, ?, ?, ?)",
@@ -65,10 +86,10 @@ export class User {
         newUser.email,
         newUser.employee
       ],
-      function (error, _) {
-        if (error) {
-          console.log("error: ", error);
-          result(error, null);
+      function (error, res) {
+        if (error || res.affectedRows !== 1) {
+          console.log("error: ", error ?? "User Does Not Exist!");
+          result(error ?? "User Does Not Exist!", null);
         } else {
           result(null, {
             result: `Response ${newUser.user_id} Saved Successfully`,

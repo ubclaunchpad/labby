@@ -3,7 +3,7 @@
     flex-direction: row;
     width: 75%;
     height: 100%;
-    background-color: #EEEEEE;
+    background-color: #ECEDF3;
     border-radius: 12px;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -114,6 +114,7 @@
 .userListIcons {
     width: 30px;
     margin-right: 10px;
+    cursor: pointer;
 }
 
 .userListItemTitle {

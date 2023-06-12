@@ -52,5 +52,6 @@ jobs:
             git fetch --all &&
             git reset --hard origin/release &&
             git pull origin release &&
+            yarn &&
             pm2 start index.js
           '

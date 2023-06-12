@@ -1,6 +1,7 @@
 .orgTable .ant-table-thead .ant-table-cell {
   background-color: #ECEDF3;
   border: none;
+  color: #666666;
 }
 
 .orgTable .ant-table-tbody > tr > td {
@@ -85,10 +86,10 @@ So try and beat it with CSS specificity */
   border: 1px solid #d9d9d9;
 }
 .ant-table-container,
-.ant-table-container table > tbody > tr:last-child td:first-child {
-  border-bottom-left-radius: 10px;
+.orgTable .ant-table-container table > tbody > tr:last-child td:first-child {
+  border-bottom-left-radius: 0px;
 }
 .ant-table-container,
-.ant-table-container table > tbody > tr:last-child td:last-child {
-  border-bottom-right-radius: 10px;
+.orgTable .ant-table-container table > tbody > tr:last-child td:last-child {
+  border-bottom-right-radius: 0px;
 }

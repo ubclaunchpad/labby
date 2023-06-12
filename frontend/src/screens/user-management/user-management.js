@@ -16,11 +16,11 @@ function UserManagement() {
           className="userManagementTitle"
           style={{ color: appColor.gray }}
         >
-          User Management
+          Administration
         </div>
-        <AdministrationHeader currentPage={"Users"}/>
+        <AdministrationHeader currentPage={"Users"} />
         <div className="userManagementTable">
-          <ApprovalBox /> 
+          <ApprovalBox />
           <UserManagementTable />
         </div>
       </div>

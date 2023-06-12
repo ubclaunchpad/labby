@@ -1,0 +1,13 @@
+.ResetBtn {
+    cursor: pointer;
+    width: 45%;
+    height: 40px;
+    margin-top: 20%;
+    align-self: center;
+    border: 0;
+    border-radius: 10px;
+    background-color: #5B73E8;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+}

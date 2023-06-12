@@ -1,10 +1,11 @@
 .costTable .ant-table-thead .ant-table-cell {
   background-color: #ECEDF3;
   border: none;
+  color: #666666;
 }
 
 .costTable .ant-table-tbody > tr > td {
-  border: none
+  border: none;
 }
 
 .costTable {
@@ -43,6 +44,12 @@
 }
 .ServiceQuestionSelectCostTable:focus {
   outline: none;
+}
+
+.quantifiableCheck {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Antd global styling messing with our desired styling

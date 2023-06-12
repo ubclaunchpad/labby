@@ -14,13 +14,15 @@ import UserManagement from "./screens/user-management/user-management";
 import InvoicePreview from "./screens/invoice/invoice-preview";
 import Organizations from "./screens/organizations/organizations";
 import Projects from "./screens/projects/projects";
-import LoginForm from "./components/LoginForm";
-import SignUpForm from "./components/SignUpForm";
+import LoginForm from "./screens/login-form";
+import SignUpForm from "./screens/signup-form";
 import Setting from "./screens/setting/setting";
 import { useDispatch, useSelector } from "react-redux";
 import { PING } from "./redux/actions/userActions";
 import { START_LOADING } from "./redux/actions/uiActions";
 import Pending from "./screens/pending/pending";
+import ToastContainer from "./components/Toasts/ToastContainer";
+import ResetPassword from "./screens/reset-password";
 
 function App() {
   const dispatch = useDispatch();
@@ -67,8 +69,10 @@ function App() {
           <Route path="/pending" element={(currentUser && currentUser.employee) ? <Pending /> : (currentUser ? <FormProgress /> : <LoginForm from={window.location.pathname} />)} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SignUpForm />} />
+          <Route path="/reset-password/:otp" element={<ResetPassword />} />
         </Routes>
       </BrowserRouter>
+      <ToastContainer />
     </div>
   );
 }

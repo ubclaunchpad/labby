@@ -11,5 +11,7 @@ test('renders labby', () => {
     </Provider>
   );
 
-  expect(screen.getByText(/Edit Request Form/i)).toBeInTheDocument();
+  // expect(screen.getByText("Not a user? Create an account ")).toBeInTheDocument();
+  const signup = screen.getByTestId("signup");
+  expect(signup).toBeInTheDocument();
 });

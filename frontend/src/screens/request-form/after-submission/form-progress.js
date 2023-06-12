@@ -86,6 +86,7 @@ function FormProgress() {
                 />
               );
             })}
+          {userRequestList.filter((item) => item.task_state !== "completed" && item.task_state !== "archived").length === 0 && <p>No requests to display.</p>}
 
           <hr />
           <h4>Completed Requests</h4>
@@ -103,6 +104,7 @@ function FormProgress() {
                 />
               );
             })}
+          {userRequestList.filter((item) => item.task_state === "completed" && item.task_state !== "archived").length === 0 && <p>No requests to display.</p>}
         </div>
       </div>
       {currentTicket ? (<TicketInfoUser />) : null}
