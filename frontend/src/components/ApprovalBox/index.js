@@ -32,6 +32,7 @@ function ApprovalBox() {
           </div>
           <div className="approveAllBoxTitle"> Pending Accounts</div>
           <button
+            data-testid="approveAllButton"
             className="approveAllButton"
             style={{
               backgroundColor: appColor.primaryLight,

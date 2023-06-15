@@ -67,6 +67,7 @@ function Header() {
         </NavLink>
 
         <NavLink
+          data-testid="admin"
           to="/billing"
           className={({ isActive }) =>
             isActive

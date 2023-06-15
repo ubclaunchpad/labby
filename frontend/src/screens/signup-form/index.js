@@ -76,7 +76,7 @@ function SignUpForm() {
                             <input className="LoginInput" placeholder="First Name" type={"text"} onChange={handleFirstNameChange} />
                             <input className="LoginInput" placeholder="Last Name" type={"text"} onChange={handleLastNameChange} />
                             <input className="LoginInput" placeholder="Password" type={"password"} onChange={handlePasswordChange} />
-                            <button className="SignInBtn" onClick={handleUserSubmit}>
+                            <button className="SignInBtn" data-testid="SignupButton" onClick={handleUserSubmit}>
                                 Sign up
                             </button>
                         </form>
