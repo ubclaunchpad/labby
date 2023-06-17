@@ -11,7 +11,7 @@ export const CostEstimateCollapsed = () => {
   return (
     <button
       className="CostEstimateCollapsedContainer"
-      style={{ backgroundColor: appColor.lightGray }}
+      style={{ backgroundColor: appColor.primaryLight }}
       onClick={() => {
         dispatch({ type: TOGGLE_COST_ESTIMATE });
       }}
@@ -31,21 +31,18 @@ export const CostEstimateFull = () => {
   let costSum = 0;
 
   return (
-    <div className="CostEstimateContainer" style={{ background: "#F5F5F5" }}>
-      <img
-        className="CostEstimateDelete"
-        src={X}
-        alt="Delete"
-        onClick={() => {
-          dispatch({ type: TOGGLE_COST_ESTIMATE });
-        }}
-      />
-      <div className="CostEstimateTitle">Cost Estimate</div>
-      <span className="CostEstimateHeadings">
-        <p>Service</p>
-        <p>Quantity</p>
-        <p>Cost</p>
-      </span>
+    <div className="CostEstimateContainer" style={{ background: appColor.primaryWhite }}>
+      <div className="CostEstimateHeader">
+        <div className="CostEstimateTitle">Cost Estimate</div>
+        <img
+          className="CostEstimateDelete"
+          src={X}
+          alt="Delete"
+          onClick={() => {
+            dispatch({ type: TOGGLE_COST_ESTIMATE });
+          }}
+        />
+      </div>
 
       <div className="CostEstimates">
         {formResponses.map((response) => {
@@ -59,7 +56,7 @@ export const CostEstimateFull = () => {
             return (
               <div className="CostBox" key={response.question.answer}>
                 <div className="CostLeft"> {response.question.answer} </div>
-                <div className="CostCenter"> {`${quantity}`} </div>
+                <div className="CostCenter"> {`x${quantity}`} </div>
                 <div className="CostRight">
                   {`$${cost * quantity}`}
                 </div>
@@ -77,8 +74,7 @@ export const CostEstimateFull = () => {
         {costSum ? `$${costSum}` : "N/A"}
       </div>
       <div className="Warning">
-        {" "}
-        This total is an automatically generated cost estimate
+        This total is an automatically generated cost estimate.
       </div>
     </div>
   );

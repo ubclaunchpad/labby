@@ -42,11 +42,13 @@ function LogicLibrary() {
       <div className="subtitleText">Question</div>
       <div className="selectionBoxView">
         <select
+          id="questionSelect"
           className="selectBox"
           onChange={(e) => {
             setSelectedQuestion(JSON.parse(e.target.value));
           }}
         >
+          {selectedQuestion === null && <option key={"Default"} value={""} />}
           {questionList.slice(1).map((question) => (
             <option key={question.question_id} value={JSON.stringify(question)}>
               {`Q${question.position_index}: ${question.question}`}
@@ -74,6 +76,7 @@ function LogicLibrary() {
       <div className="subtitleText">Answer</div>
       <div className="selectionBoxView">
         <select
+          id="ifAnswerSelect"
           className="selectBox"
           onChange={(e) => {
             setIfThisAnswer(JSON.parse(e.target.value));
@@ -175,6 +178,15 @@ function LogicLibrary() {
                   WarningToast("Duplicate Logic Found! Skipping...");
                 }
               });
+              setSelectedQuestion(null);
+              setIfDisplay(rules[0]);
+              setIfThisAnswer(null);
+              setIfCondition(condition[0]);
+              setSelectedRule([]);
+              let question_select_box = document.getElementById("questionSelect");
+              question_select_box.selectedIndex = -1;
+              let select_box = document.getElementById("ifAnswerSelect");
+              select_box.selectedIndex = -1;
             } else {
               WarningToast("Please select at least one answer");
             }

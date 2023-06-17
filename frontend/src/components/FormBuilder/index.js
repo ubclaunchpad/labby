@@ -92,7 +92,8 @@ function FormBuilder() {
         </div>
         <div className="FormTitle">
           {FormTitle()}
-          <div className="FormSubmitT">
+          <div className="AllAction">
+          <div className="FormActionButton">
             <button
               className="FormPreviewButton"
               style={{
@@ -113,10 +114,10 @@ function FormBuilder() {
                 });
               }}
             >
-              Publish Form
+              Publish
             </button>
           </div>
-          <div className="FormPreview">
+          <div className="FormActionButton">
             <NavLink to={`/preview-request/${formId}`}>
               <button
                 className="FormPreviewButton"
@@ -135,7 +136,7 @@ function FormBuilder() {
               </button>
             </NavLink>
           </div>
-          <div className="FormSubmitT">
+          <div className="FormActionButton">
             <button
               className="FormPreviewButton"
               style={{
@@ -155,6 +156,7 @@ function FormBuilder() {
             >
               Share
             </button>
+          </div>
           </div>
         </div>
       </div>

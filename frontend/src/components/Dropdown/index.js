@@ -58,21 +58,23 @@ function Dropdown({ question }) {
       const value = optionList.find(
         (option) => option.answer_id === draft.answer
       );
-      setSelectedValue(value);
-      dispatch({
-        type: REMOVE_SINGLE_RESPONSE,
-        payload: {
-          question: question,
-        },
-      });
-      dispatch({
-        type: ADD_RESPONSE,
-        payload: {
-          id: uuid(),
-          response: value.answer,
-          question: value,
-        },
-      });
+      if (value) {
+        setSelectedValue(value);
+        dispatch({
+          type: REMOVE_SINGLE_RESPONSE,
+          payload: {
+            question: question,
+          },
+        });
+        dispatch({
+          type: ADD_RESPONSE,
+          payload: {
+            id: uuid(),
+            response: value.answer,
+            question: value,
+          },
+        });
+      }
     }
   }, [answerList, question, draftList, dispatch]);
 
@@ -90,7 +92,7 @@ function Dropdown({ question }) {
         onChange={handleChange}
       >
         {selectedValue === null && <option key={"Default"} value={""} />}
-        {options.map((option) => (
+        {options.sort((a, b) => a.added_on !== b.added_on ? a.added_on - b.added_on : a.answer - b.answer).map((option) => (
           <option key={option.answer_id} value={JSON.stringify(option)} selected={selectedValue && option.answer_id === selectedValue.answer_id}>
             {option.answer}
           </option>

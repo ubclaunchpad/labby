@@ -44,7 +44,7 @@ function ContactInfoEditor({ question }) {
         <input
           className="GlobalEditorQuestionTitleInput"
           defaultValue={title}
-          placeholder="Type your form name here..."
+          placeholder="Click to write your question here..."
           onBlur={(text) => {
             dispatch({
               type: SAVE_QUESTION,

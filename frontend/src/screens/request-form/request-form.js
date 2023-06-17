@@ -34,6 +34,7 @@ import ToastContainer from "../../components/Toasts/ToastContainer";
 function RequestForm({ origin }) {
   const dispatch = useDispatch();
   const [submissionSuccessful, setSubmissionSuccessful] = useState(false);
+  const preview = window.location.pathname.split("/")[1] === "preview-request";
   const formId = window.location.pathname.split("/")[2];
   const questions = useSelector((state) => state.questionReducer.questionList);
   const formResponses = useSelector((state) => state.formReducer.formResponses);
@@ -133,6 +134,7 @@ function RequestForm({ origin }) {
 
     const projectSelected = formResponses.some(
       (answer) =>
+        answer &&
         answer.question_info &&
         answer.question_info.question_type === "project" &&
         answer.response !== undefined
@@ -146,48 +148,56 @@ function RequestForm({ origin }) {
           dispatch({ type: TOGGLE_COST_ESTIMATE });
           WarningToast("Please Review Your Cost Estimate and Submit!");
         } else {
-          const survey_id = uuid();
-          saveFormToS3(survey_id);
+          if (!preview) {
+            const survey_id = uuid();
+            saveFormToS3(survey_id);
 
-          const projectItem = formResponses.filter(
-            (response) => response.question.project_id !== undefined
-          );
-          const projectId = projectItem[0]
-            ? projectItem[0].response
-            : "PROJECTID-A";
-          const billableList = [];
-          formResponses.map((response) => {
-            const cost = costEstimateMap.get(response.question.answer_id);
-            let quantity = response.quantity ?? 1;
-            let service = response.question.answer;
-            if (cost) {
-              // This question's is in current stored cost estimate
-              billableList.push({
-                service: service,
-                quantity: quantity,
-                cost: cost * quantity,
-              });
-            }
-            return null;
-          });
-          localStorage.setItem("currentSurveyId", survey_id);
-          dispatch({
-            type: SUBMIT_SURVEY,
-            payload: {
-              formId,
-              formResponses,
-              projectId: projectId,
-              billables: billableList,
-              clinicalResponses: clinicalList,
-              sowId: survey_id,
-            },
-          });
-          // Clear data
-          dispatch({ type: DELETE_ALL_DRAFTS, payload: { user_id: currentUser.user_id, form_id: formId } });
-          dispatch({ type: SET_DRAFTS, payload: [] });
-          dispatch({ type: REMOVE_ALL_RESPONSE });
-          dispatch({ type: SET_CURRENT_USER, payload: currentOGUser })
-          setSubmissionSuccessful(true);
+            const projectItem = formResponses.filter(
+              (response) => response.question.project_id !== undefined
+            );
+            const projectId = projectItem[0]
+              ? projectItem[0].response
+              : "PROJECTID-A";
+            const billableList = [];
+            formResponses.map((response) => {
+              const cost = costEstimateMap.get(response.question.answer_id);
+              let quantity = response.quantity ?? 1;
+              let service = response.question.answer;
+              if (cost) {
+                // This question's is in current stored cost estimate
+                billableList.push({
+                  service: service,
+                  quantity: quantity,
+                  cost: cost * quantity,
+                });
+              }
+              return null;
+            });
+            localStorage.setItem("currentSurveyId", survey_id);
+            dispatch({
+              type: SUBMIT_SURVEY,
+              payload: {
+                formId,
+                formResponses,
+                projectId: projectId,
+                billables: billableList,
+                clinicalResponses: clinicalList,
+                sowId: survey_id,
+              },
+            });
+            // Clear data
+            dispatch({ type: DELETE_ALL_DRAFTS, payload: { user_id: currentUser.user_id, form_id: formId } });
+            dispatch({ type: SET_DRAFTS, payload: [] });
+            dispatch({ type: REMOVE_ALL_RESPONSE });
+            dispatch({ type: SET_CURRENT_USER, payload: currentOGUser })
+            setSubmissionSuccessful(true);
+          } else {
+            WarningToast("Preview Form Submitted! (No Ticket Will Be Created)");
+            dispatch({ type: DELETE_ALL_DRAFTS, payload: { user_id: currentUser.user_id, form_id: formId } });
+            dispatch({ type: SET_DRAFTS, payload: [] });
+            dispatch({ type: REMOVE_ALL_RESPONSE });
+            dispatch({ type: SET_CURRENT_USER, payload: currentOGUser })
+          }
         }
       }
     } else {
@@ -228,7 +238,7 @@ function RequestForm({ origin }) {
               <img className="requestBackArrow" src={SideArrow} alt="Back" />
             </NavLink>
             <div className="formTitle" style={{ color: appColor.primaryBlack }}>
-              {questions[0].question}
+              {questions[0].question} {preview ? "(Preview)" : null}
             </div>
           </div>
           {questions.slice(1).map((question) => {

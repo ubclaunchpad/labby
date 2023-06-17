@@ -80,7 +80,7 @@ function EditRequest() {
     const newQuestion = {
       question_id: uuidv4(),
       form_id: formId,
-      question_title: "Enter Question Title",
+      question_title: "",
       question_type: draggableId,
       question_index: destination.index + 1,
       mandatory: false,
