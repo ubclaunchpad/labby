@@ -11,6 +11,7 @@ export const appColor = {
   lighterGray: "#D9D9D9",
   lightGray: "#EEEEEE",
   darkGray: "#909090",
+  textGray: "6F6F6F",
 };
 
 export const backend = process.env.REACT_APP_BACKEND;

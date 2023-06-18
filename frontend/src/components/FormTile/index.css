@@ -1,18 +1,23 @@
 .formPageItem {
     display: flex;
+    position: relative;
     flex-direction: column;
     margin-bottom: 20px;
-    height: 250px;
+    height: 200px;
     border-radius: 15px;
     width: 21vw;
     cursor: pointer;
+    padding: 20px;
+    padding-top: 30px;
+    padding-bottom: 0px;
+    box-shadow: 0px 4px 23px rgba(232, 232, 232, 0.23);
 }
 
 .formPageFill {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
-    height: 250px;
+    height: 200px;
     border-radius: 15px;
     width: 21vw;
 }
@@ -21,7 +26,7 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
-    height: 250px;
+    height: 200px;
     border-radius: 15px;
     width: 21vw;
     border: 2px dashed #C3C3C3;
@@ -36,11 +41,11 @@
 }
 
 .NewFormTitle {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 500;
     text-align: center;
     padding: 15px;
-    color: #C3C3C3;
+    color: #818181;
 }
 
 .formPageNewItemTitle {
@@ -53,17 +58,91 @@
 
 .formPageItemTitle {
     flex: 1;
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 18px;
+    font-weight: 500;
     text-align: left;
-    padding: 15px;
-    background-color: #C3C3C3;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
+    color: #444444;
+    padding-right: 20px;
 }
 
-.formPageImageTile {
-    flex: 4;
+.formCellDivider {
+    flex: 0.03;
+    background-color: #627BF6;
+    border-radius: 20px;
+}
+
+.formPublishedText {
+    display: flex;
+    flex: 1;
+    font-size: 16px;
+    font-weight: 400;
     text-align: left;
-    border-radius: 15px;
+    color: #6F6F6F;
+    align-items: center;
+}
+
+.formCellStatus {
+    flex: 0.7;
+    display: flex;
+    flex-direction: row;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.formPreviewSpace {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.formShareCircle {
+    background-color: #FEFEFE;
+    border-radius: 40px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formShareSpace {
+    display: flex;
+    align-items: center;
+}
+
+.formShareCircle:hover {
+    background-color: #B2BFFF;
+}
+
+.formPreview {
+    background-color: #FEFEFE;
+    border-radius: 25px;
+    height: 40px;
+    width: 120px;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: #6F6F6F;
+}
+
+.formPreview:hover {
+    background-color: #B2BFFF;
+}
+
+.FormPublishedCheck {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+    margin-right: 5px;
+}
+
+.shareButton {
+    height: 22px;
+    width: 22px;
+    object-fit: contain;
+    margin-bottom: 3px;
 }

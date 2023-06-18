@@ -1,6 +1,7 @@
 .formPage {
   height: 100vh;
   display: flex;
+  background-color: white;
 }
 .formPageContent {
   padding-left: 50px;
@@ -13,6 +14,7 @@
   flex: 1;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin-top: 30px;
 }
 .formPageTitle {
   font-size: 32px;
@@ -20,4 +22,5 @@
   text-align: left;
   padding-top: 22px;
   padding-bottom: 5px;
+  margin-bottom: 10px;
 }
