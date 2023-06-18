@@ -21,9 +21,11 @@ function FormTile({ item }) {
 
   if (item === "NewForm") {
     return (
-      <div className="formPageNewItem" onClick={() => {
-        window.location.href = `/edit-form/${uuid()}`;
-      }}>
+      <div className="formPageNewItem"
+        data-testid="createNew"
+        onClick={() => {
+          window.location.href = `/edit-form/${uuid()}`;
+        }}>
         <div className="formPageNewItemTitle">
           <img className="AddImage" src={AddForm} alt="Add a New Form" />
           <div className="NewFormTitle">Create New Form</div>
@@ -41,6 +43,7 @@ function FormTile({ item }) {
       }}
     >
       <img
+        data-testid={"formDelete_" + item.form_name}
         className="GlobalEditorDelete"
         src={X}
         style={{ position: "absolute", right: 20, top: 20, width: 18, height: 18 }}

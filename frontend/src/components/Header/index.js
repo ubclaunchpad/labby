@@ -46,6 +46,7 @@ function Header() {
         </NavLink>
 
         <NavLink
+          data-testid="myForms"
           to="/edit-request"
           className={({ isActive }) =>
             isActive
