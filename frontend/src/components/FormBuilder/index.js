@@ -14,7 +14,6 @@ import TextLineEditor from "../TextLine/TextLineEditor";
 import { clsx } from "clsx";
 import { NavLink } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
-import { useCopyToClipboard } from "@uidotdev/usehooks";
 
 import styled from "styled-components";
 import StrictModeDroppable from "../DragAndDrop/StrictModeDroppable";
@@ -79,7 +78,6 @@ function FormBuilder() {
     (state) => state.logicReducer.currentLogicQuestion
   );
   const formId = window.location.pathname.split("/")[2];
-  const [, copyToClipboard] = useCopyToClipboard();
 
   return (
     <div>
@@ -92,32 +90,8 @@ function FormBuilder() {
         </div>
         <div className="FormTitle">
           {FormTitle()}
-          <div className="FormSubmitT">
-            <button
-              className="FormPreviewButton"
-              style={{
-                backgroundColor: appColor.primaryLight,
-                color: appColor.white,
-              }}
-              onMouseOver={(e) => {
-                e.target.style.backgroundColor = appColor.primary;
-              }}
-              onMouseOut={(e) => {
-                e.target.style.backgroundColor = appColor.primaryLight;
-              }}
-              onClick={() => {
-                SuccessToast("Form Submitted!");
-                dispatch({
-                  type: SAVE_FORM_BUILD,
-                  payload: { form_id: formId },
-                });
-              }}
-            >
-              Publish Form
-            </button>
-          </div>
-          <div className="FormPreview">
-            <NavLink to={`/preview-request/${formId}`}>
+          <div className="AllAction">
+            <div className="FormActionButton">
               <button
                 className="FormPreviewButton"
                 style={{
@@ -130,31 +104,36 @@ function FormBuilder() {
                 onMouseOut={(e) => {
                   e.target.style.backgroundColor = appColor.primaryLight;
                 }}
+                onClick={() => {
+                  SuccessToast("Form Submitted!");
+                  dispatch({
+                    type: SAVE_FORM_BUILD,
+                    payload: { form_id: formId },
+                  });
+                }}
               >
-                Preview
+                Publish
               </button>
-            </NavLink>
-          </div>
-          <div className="FormSubmitT">
-            <button
-              className="FormPreviewButton"
-              style={{
-                backgroundColor: appColor.primaryLight,
-                color: appColor.white,
-              }}
-              onMouseOver={(e) => {
-                e.target.style.backgroundColor = appColor.primary;
-              }}
-              onMouseOut={(e) => {
-                e.target.style.backgroundColor = appColor.primaryLight;
-              }}
-              onClick={() => {
-                SuccessToast("Form Link Copied to Clipboard!");
-                copyToClipboard(`https://labby.harinwu.com/request/${formId}`);
-              }}
-            >
-              Share
-            </button>
+            </div>
+            <div className="FormActionButton">
+              <NavLink to={`/preview-request/${formId}`}>
+                <button
+                  className="FormPreviewButton"
+                  style={{
+                    backgroundColor: appColor.primaryLight,
+                    color: appColor.white,
+                  }}
+                  onMouseOver={(e) => {
+                    e.target.style.backgroundColor = appColor.primary;
+                  }}
+                  onMouseOut={(e) => {
+                    e.target.style.backgroundColor = appColor.primaryLight;
+                  }}
+                >
+                  Preview
+                </button>
+              </NavLink>
+            </div>
           </div>
         </div>
       </div>

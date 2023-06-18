@@ -46,6 +46,7 @@ function AdministrationHeader({ currentPage }) {
           Organization
         </NavLink>
         <NavLink
+          data-testid="users"
           to={`/users`}
           className={
             currentPage === "Users"

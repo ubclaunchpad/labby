@@ -29,7 +29,7 @@ function LoginForm({ from }) {
         password: password,
       },
     });
-    if (from === "/settings") {
+    if (from === "/settings" || from.includes("/reset-password")) {
       from = "/";
     }
     navigate(from);
@@ -74,7 +74,7 @@ function LoginForm({ from }) {
               <div className="ForgotPassword" onClick={() => { handleUserResetRequest() }}>
                 Forgot My Password
               </div>
-              <button className="SignInBtn" onClick={handleUserSubmit}>
+              <button className="SignInBtn" data-testid="LoginButton" onClick={handleUserSubmit}>
                 Log in
               </button>
             </form>

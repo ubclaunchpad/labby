@@ -2,6 +2,7 @@
     flex: 1;
     border-radius: 15px;
     height: 45px;
+    max-width: 50%;
 }
 
 .FormTitleTextInput {

@@ -56,12 +56,17 @@ const UserManagementTable = () => {
       render: (_, record) =>
         dataSource.length >= 1 ? (
           <Select
+            data-testid={"employeeSelect_" + record.email}
+            showSearch
             style={{ width: "100%" }}
             placeholder="Assign as employee"
             defaultValue={{
               label: "No",
               value: false,
             }}
+            filterOption={(input, option) =>
+              (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+            }
             value={{
               label: record.employee ? "Yes" : "No",
               value: record.employee,
@@ -94,6 +99,7 @@ const UserManagementTable = () => {
             onConfirm={() => handleDelete(record.user_id)}
           >
             <img
+              data-testid={"employeeDelete_" + record.email}
               className="userListIcons"
               src={RejectUser}
               alt="Delete"

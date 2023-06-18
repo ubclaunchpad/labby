@@ -1,4 +1,3 @@
-
 .CostEstimateContainer {
   position: absolute;
   right: 12vh;
@@ -6,166 +5,170 @@
   width: 25vw;
   height: 80vh;
   margin-bottom: 15px;
-  padding: 15px;
+  padding: 30px;
   border-radius: 10px;
 }
+
 .CostEstimateTitle {
-    font-size: 20px;
-    font-weight: 600;
-    color: #666666;
-    margin-bottom: 10px;
-    text-align: left;
+  font-size: 20px;
+  font-weight: 600;
+  color: #666666;
+  text-align: left;
+  height: 30px;
 }
 
 .CostEstimateDivider {
-    height: 1px;
-    width: 90%;
-    margin-bottom: 20px;
-    position: absolute;
-    top: 90px;
-    border: 2px solid #D9D9D9;
+  height: 1px;
+  width: 90%;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 90px;
+  border: 2px solid #D9D9D9;
+}
+
+.CostEstimateHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .CostEstimateTotal {
-    font-size: 20px;
-    font-weight: 600;
-    color: #666666;
-    margin-bottom: 10px;
-    position: absolute;
-    bottom: 50px;
-    text-align: left;
+  font-size: 20px;
+  font-weight: 600;
+  color: #666666;
+  margin-bottom: 10px;
+  position: absolute;
+  bottom: 50px;
+  text-align: left;
 }
 
-.CostEstimateHeadings {
-    width: 100%;
-}
-
-.CostEstimateHeadings p{
-    float: left;
-    padding: 10px;
-    width: 33.333%;
-    font-size: 10px;
-    color: #666666;
-    margin-bottom: 25px;
+.CostEstimateHeadings p {
+  float: left;
+  padding: 10px;
+  width: 33.333%;
+  font-size: 10px;
+  color: #666666;
+  margin-bottom: 25px;
 }
 
 .CostDivider {
-    border: 2px solid #D9D9D9;
-    height: 1px;
-    width: 90%;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    position: absolute;
-    bottom: 90px;
+  border: 2px solid #D9D9D9;
+  height: 1px;
+  width: 90%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  position: absolute;
+  bottom: 90px;
 }
 
 .CostEstimateCollapsedContainer {
-    position: fixed;
-    right: 12vh;
-    bottom: 8vh;
-    border-radius: 15px;
-    width: 80px;
-    height: 80px;
-    border: none;
-    cursor: pointer;
-    color: #F5F5F5;
-  }
+  position: fixed;
+  right: 12vh;
+  bottom: 8vh;
+  border-radius: 15px;
+  width: 80px;
+  height: 80px;
+  border: none;
+  cursor: pointer;
+  color: #F5F5F5;
+  box-shadow: 0px 4px 16px rgba(138, 157, 248, 0.25);
+}
 
-  .MoneyGray {
-    position: absolute;
-    right: 39.5%;
-    bottom: 32.5%;
-    height: 28px;
-    width: 16px;
-  } 
-  .Ellipse {
+.MoneyGray {
+  position: absolute;
+  right: 39.5%;
+  bottom: 32.5%;
+  height: 28px;
+  width: 16px;
+}
 
-    height: 50px;
-    width: 50px;
-  }
+.Ellipse {
 
-  .CostEstimateDelete {
-    height: 20px;
-    width: 20px;
-    cursor: pointer;
-    position: absolute;
-    right: 6%;
-    top: 4%;
-    size: 50%;
-  }
+  height: 50px;
+  width: 50px;
+}
 
-  .costEstimateTable td{
-    color: #666666;
-    float: left;
-    padding: 10px;
-    width: 33.333%;
-    font-size: 10px;
+.CostEstimateDelete {
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
 
-  }
+.costEstimateTable td {
+  color: #666666;
+  float: left;
+  padding: 10px;
+  width: 33.333%;
+  font-size: 10px;
 
-  .costEstimateTable tr{
-    width: 100%;
-  }
+}
 
-  .costEstimateFinalCost {
-    font-size: 20px;
-    font-weight: 600;
-    color: #666666;
-    margin-bottom: 10px;
-    position: absolute;
-    bottom: 50px;
-    right: 24px;
-  }
+.costEstimateTable tr {
+  width: 100%;
+}
 
-  .CostEstimates{
-    color: black;
-    margin-top: 70px;
-  }
+.costEstimateFinalCost {
+  font-size: 20px;
+  font-weight: 600;
+  color: #666666;
+  margin-bottom: 10px;
+  position: absolute;
+  bottom: 50px;
+  right: 24px;
+}
 
-  .CostBox {
-    background-color: #F5F5F5;
-    border-radius: 15px;
-    padding: 25px;
-    margin-top: 10px;
-    display:flex; 
-    justify-content: space-between;
-    font-size: 15px;
-  }
+.CostEstimates {
+  color: black;
+  margin-top: 70px;
+}
 
-  .CostBox {
-    background-color: #F5F5F5;
-    border-radius: 15px;
-    padding: 20px;
-    margin-top: 10px;
-    font-size: 15px;
-    display:flex; 
-   
-  }
+.CostBox {
+  background-color: #F5F5F5;
+  border-radius: 15px;
+  padding: 25px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+}
 
-  .CostLeft {
-    flex: 1.4;
-    text-align: left;
-  }
-  .CostCenter {
-    flex: 1;
-    text-align: left;
-    display: flex;
-    align-items: center;
-    color: #666666;
-  }
-  .CostRight{
-    flex:  0.3;
-    margin-right: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: right;
-  }
+.CostBox {
+  background-color: #F5F5F5;
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 10px;
+  font-size: 15px;
+  display: flex;
 
-  .Warning {
-    font-size:  13px;
-    color: #666666;
-    margin-bottom: 10px;
-    position: absolute;
-    bottom: 10px;
-    text-align: left;
-  }
+}
+
+.CostLeft {
+  flex: 1.4;
+  text-align: left;
+}
+
+.CostCenter {
+  flex: 1;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  color: #666666;
+}
+
+.CostRight {
+  flex: 0.3;
+  margin-right: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
+.Warning {
+  font-size: 13px;
+  color: #666666;
+  margin-bottom: 10px;
+  position: absolute;
+  bottom: 10px;
+  text-align: left;
+}

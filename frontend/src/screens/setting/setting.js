@@ -40,9 +40,8 @@ function Setting() {
     const signedUrlExpireSeconds = 60 * 1;
     const url = await S3.getSignedUrl("getObject", {
       Bucket: process.env.REACT_APP_S3_BUCKET,
-      Key: `profilePictures/ProfilePicture-${
-        JSON.parse(localStorage.getItem("currentUser")).user_id
-      }`,
+      Key: `profilePictures/ProfilePicture-${JSON.parse(localStorage.getItem("currentUser")).user_id
+        }`,
       Expires: signedUrlExpireSeconds,
     });
     setProfileUrl(url);
@@ -278,9 +277,9 @@ function Setting() {
 
             <div className="settings-information__greeting">{`Hello, ${currentUser?.username}`}</div>
           </div>
-          <hr className="settings-info-rule"></hr>
+          {/* <hr className="settings-info-rule"></hr> */}
 
-          <UserSettingsInfo settings={fakeUserSettings} />
+          {false && <UserSettingsInfo settings={fakeUserSettings} />}
         </div>
       </div>
     </div>
