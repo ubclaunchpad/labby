@@ -30,7 +30,7 @@ function FileInput({ question }) {
       <div className="customer__component__subtitle">{question.question_note}</div>
       <div className="upload-file-container-inner">
         <Dragger
-          accept=".pdf"
+          accept="file"
           multiple
           style={{ borderRadius: 10 }}
           customRequest={({ file, onError, onProgress, onSuccess }) => {

@@ -72,6 +72,7 @@ function FormProgress() {
         <div className="requestedServices">
           <h3>Your requested services</h3>
           {userRequestList
+            .sort((a, b) => new Date(b.date_created) - new Date(a.date_created))
             .filter((item) => item.task_state !== "completed" && item.task_state !== "archived")
             .map((request, idx) => {
               const progress = progressToNum(request.task_state);
@@ -91,6 +92,7 @@ function FormProgress() {
           <hr />
           <h4>Completed Requests</h4>
           {userRequestList
+            .sort((a, b) => new Date(b.date_created) - new Date(a.date_created))
             .filter((item) => item.task_state === "completed" && item.task_state !== "archived")
             .map((request, idx) => {
               return (

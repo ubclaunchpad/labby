@@ -51,6 +51,13 @@ function FormConfirmation() {
               <td> Loading... </td>
             </tr>
           )}
+          {localStorage.getItem("currentSurveyId") && 
+          billables[localStorage.getItem("currentSurveyId")] != null &&
+          billables[localStorage.getItem("currentSurveyId")].length <= 0 ? (
+            <tr>
+              <td> Only services with costs associated will be displayed here </td>
+            </tr>
+          ) : null}
           <tr>
             <td> </td>
             <td> </td>
