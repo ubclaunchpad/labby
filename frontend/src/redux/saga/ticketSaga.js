@@ -151,12 +151,12 @@ export function* getAttachments(action) {
         const objParams = {
           Bucket: process.env.REACT_APP_S3_BUCKET,
           Key: answer.answerid,
-          ResponseContentType: "application/pdf",
+          ResponseContentType: "application/octet-stream",
         };
 
         const res = await S3.getObject(objParams).promise();
         const url = window.URL.createObjectURL(
-          new Blob([res.Body], { type: "application/pdf" })
+          new Blob([res.Body], { type: "application/octet-stream" })
         );
 
         return { key: answer.answerid, url };
