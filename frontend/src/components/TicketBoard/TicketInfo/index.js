@@ -13,6 +13,7 @@ import {
     UPDATE_TICKET_STATUS,
     UPDATE_TICKET_TITLE,
 } from "../../../redux/actions/ticketActions";
+import X from "../../../assets/X.png";
 import { AssigneeIcon } from "../../Icons/AssigneeIcon";
 import { ticketsColors } from "../../../constants";
 import { useEffect, useState } from "react";
@@ -107,6 +108,18 @@ export const TicketInfo = () => {
                             });
                         }}
                     />
+                    <img
+                        className="GlobalEditorDelete"
+                        src={X}
+                        alt="Close"
+                        onClick={() => {
+                            const inputs = document.querySelectorAll("input");
+                            for (let i = 0; i < inputs.length; i++) {
+                                inputs[i].blur();
+                            }
+                            dispatch({ type: SET_ACTIVE_TICKET, payload: null });
+                        }}
+                    />
                 </div>
                 <div className="TicketPreviewButton" onClick={async () => {
                     const config = new AWS.Config({
@@ -138,10 +151,11 @@ export const TicketInfo = () => {
                 }}>
                     <p
                         style={{
-                            color: "#5976E1",
+                            color: "#AEAEAE",
+                            fontWeight: 400
                         }}
                     >
-                        Download Summary
+                        View Summary
                     </p>
                 </div>
                 <div className="TicketArchiveButton">
@@ -223,7 +237,8 @@ export const TicketInfo = () => {
                                             <div
                                                 key={assignee.user_id}
                                                 className="task-card__assignees-container"
-                                                onClick={() => {
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
                                                     dispatch({
                                                         type: ASSIGN_USER,
                                                         payload: {
@@ -233,6 +248,7 @@ export const TicketInfo = () => {
                                                             task_id: currentTicket.task_uuid,
                                                         },
                                                     });
+                                                    setAssigneeAddModal(false);
                                                 }}
                                             >
                                                 <AssigneeIcon
@@ -252,7 +268,7 @@ export const TicketInfo = () => {
                 <div className="ticketDescription">
                     <div className="ticketSectionTitle">Description</div>
                     <Input.TextArea
-                        placeholder="Type here..."
+                        placeholder="Type description here..."
                         rows={5}
                         className="ticketDescriptionInput"
                         defaultValue={currentTicket.description}

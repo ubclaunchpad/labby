@@ -354,7 +354,7 @@ export const TicketBoard = () => {
                 e.target.style.color = appColor.gray;
               }}
             >
-              View Unsubmitted
+              Unsubmitted
             </button>
           </NavLink>
         </div>

@@ -199,7 +199,7 @@
 }
 
 .task-card__assignee-container {
-  margin-left: 5px;
+  margin-right: 10px;
   position: relative;
   width: 25px;
   height: 25px;
@@ -276,13 +276,13 @@
 
 .ticketTitleId {
   font-weight: bold;
-  font-size: 20px;
+  font-size: 22px;
   margin-right: 8px;
   text-transform: uppercase;
   max-width: 500px;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
+  color: #666666;
 }
 
 .ticketTitleText {
@@ -291,6 +291,8 @@
   border: 0px solid #AEAEAE;
   padding-left: 10px;
   padding-right: 10px;
+  color: #666666;
+  font-size: 20px;
 }
 
 .assignees-title {
@@ -420,7 +422,7 @@
 
 .PendingViewButton {
   height: 45px;
-  width: 220px;
+  width: 180px;
   border: 0;
   border-radius: 15px;
   font-size: 16px;

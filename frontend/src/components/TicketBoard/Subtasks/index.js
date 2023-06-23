@@ -28,7 +28,7 @@ function Subtasks({ readOnly }) {
   return (
     <div
       className="ticketSubtasks"
-      style={{ borderRadius: readOnly ? 10 : null }}
+      style={{ borderRadius: (isSubtask || readOnly) ? 10 : null }}
     >
       <div className="ticketSubtasksContainer">
         <div className="contentList">
