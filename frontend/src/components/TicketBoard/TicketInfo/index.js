@@ -15,7 +15,7 @@ import {
 } from "../../../redux/actions/ticketActions";
 import X from "../../../assets/X.png";
 import { AssigneeIcon } from "../../Icons/AssigneeIcon";
-import { ticketsColors } from "../../../constants";
+import { appColor, ticketsColors } from "../../../constants";
 import { useEffect, useState } from "react";
 import { LOAD_EMPLOYEE } from "../../../redux/actions/userActions";
 import Subtasks from "../Subtasks";
@@ -108,6 +108,43 @@ export const TicketInfo = () => {
                             });
                         }}
                     />
+                    <button
+                        className="TicketArchiveButton"
+                        onClick={() => {
+                            currentTicketSubtasks.forEach((subtask) => {
+                                if (subtask.subtask_uuid) {
+                                    dispatch({
+                                        type: UPDATE_TICKET_STATUS,
+                                        payload: { ticketId: subtask.subtask_uuid, status: "archived" },
+                                    });
+                                }
+                            });
+                            dispatch({
+                                type: UPDATE_TICKET_STATUS,
+                                payload: { ticketId: currentTicket.task_uuid, status: "archived" },
+                            });
+                            dispatch({
+                                type: DELETE_VIEW_SUMMARY,
+                                payload: { ticket_id: currentTicket?.task_uuid },
+                            })
+                            dispatch({ type: SET_ACTIVE_TICKET, payload: null });
+                            SuccessToast("Ticket Archived!");
+                        }}
+                        style={{
+                            backgroundColor: appColor.lightGray,
+                            color: appColor.gray,
+                        }}
+                        onMouseOver={(e) => {
+                            e.target.style.backgroundColor = "#627BF6";
+                            e.target.style.color = "#FFFFFF";
+                        }}
+                        onMouseOut={(e) => {
+                            e.target.style.backgroundColor = appColor.lightGray;
+                            e.target.style.color = appColor.gray;
+                        }}
+                    >
+                        Archive
+                    </button>
                     <img
                         className="GlobalEditorDelete"
                         src={X}
@@ -156,32 +193,6 @@ export const TicketInfo = () => {
                         }}
                     >
                         View Summary
-                    </p>
-                </div>
-                <div className="TicketArchiveButton">
-                    <p style={{ color: "red" }}
-                        onClick={() => {
-                            currentTicketSubtasks.forEach((subtask) => {
-                                if (subtask.subtask_uuid) {
-                                    dispatch({
-                                        type: UPDATE_TICKET_STATUS,
-                                        payload: { ticketId: subtask.subtask_uuid, status: "archived" },
-                                    });
-                                }
-                            });
-                            dispatch({
-                                type: UPDATE_TICKET_STATUS,
-                                payload: { ticketId: currentTicket.task_uuid, status: "archived" },
-                            });
-                            dispatch({
-                                type: DELETE_VIEW_SUMMARY,
-                                payload: { ticket_id: currentTicket?.task_uuid },
-                            })
-                            dispatch({ type: SET_ACTIVE_TICKET, payload: null });
-                            SuccessToast("Ticket Archived!");
-                        }}
-                    >
-                        Archive Ticket
                     </p>
                 </div>
                 <div className="assignees-title">Assignees</div>

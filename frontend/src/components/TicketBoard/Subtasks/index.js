@@ -21,6 +21,13 @@ function Subtasks({ readOnly }) {
   const allTasks = ticketBoardData.tasks;
   const [isSubtask, setIsSubtask] = useState(false);
 
+  const statusMap = {
+    "open": "Adopt Me",
+    "todo": "Todo",
+    "progress": "In Progress",
+    "completed": "Completed",
+  }
+
   useEffect(() => {
     setIsSubtask(currentTicketSubtasks.some((subtask) => subtask.subtask_uuid === currentTicket.task_uuid));
   }, [currentTicketSubtasks, currentTicket]);
@@ -52,7 +59,7 @@ function Subtasks({ readOnly }) {
                 >
                   <div className="subtaskInputContainer">
                     <span className="subtasksStateLabel">
-                      {subtasks.subtask_state.toUpperCase()}
+                      {statusMap[subtasks.subtask_state]}
                     </span>
                     <span className="subtasksLabel">
                       {subtasks.subtask_title}

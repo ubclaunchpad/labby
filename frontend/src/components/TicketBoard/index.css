@@ -267,11 +267,21 @@
 }
 
 .TicketArchiveButton {
-  text-align: left;
-  font-weight: 500;
+  height: 45px;
+  width: 140px;
+  border: 0;
+  border-radius: 15px;
+  font-size: 16px;
+  font-weight: 600;
   transition-duration: 0.4s;
   cursor: pointer;
-  width: 220px;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.TicketArchiveButton:hover {
+  background-color: #4caf50;
+  color: white;
 }
 
 .ticketTitleId {
@@ -390,7 +400,7 @@
 }
 
 .additionBar {
-  background-color: #d9d9d9;
+  background-color: #ECEDF3;
   color: #666;
   height: 40px;
   width: 100%;
