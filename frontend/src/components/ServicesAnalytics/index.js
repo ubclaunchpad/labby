@@ -3,7 +3,7 @@ import X from "../../assets/X.png";
 import { SET_ACTIVE_ANALYTICS } from "../../redux/actions/billingActions";
 import { useDispatch, useSelector } from "react-redux";
 import Chart from "react-apexcharts";
-import { Table } from "antd";
+// import { Table } from "antd";
 import { appColor } from "../../constants";
 
 function ServicesAnalytics() {
@@ -11,36 +11,36 @@ function ServicesAnalytics() {
   const dataSource = useSelector(
     (state) => state.billingReducer.billingList
   ).filter((item) => item.cost > 0);
-  const columns = [
-    {
-      title: "Service",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Project",
-      dataIndex: "fk_project_id",
-      key: "fk_project_id",
-    },
-    {
-      title: "Created Date",
-      dataIndex: "createdDate",
-      key: "createdDate",
-    },
-    {
-      title: "Quantity",
-      dataIndex: "quantity",
-      key: "quantity",
-    },
-    {
-      title: "Cost",
-      dataIndex: "cost",
-      key: "cost",
-    },
-  ];
-  const renderedColumns = columns.map((col) => {
-      return col;
-  });
+  // const columns = [
+  //   {
+  //     title: "Service",
+  //     dataIndex: "name",
+  //     key: "name",
+  //   },
+  //   {
+  //     title: "Project",
+  //     dataIndex: "fk_project_id",
+  //     key: "fk_project_id",
+  //   },
+  //   {
+  //     title: "Created Date",
+  //     dataIndex: "createdDate",
+  //     key: "createdDate",
+  //   },
+  //   {
+  //     title: "Quantity",
+  //     dataIndex: "quantity",
+  //     key: "quantity",
+  //   },
+  //   {
+  //     title: "Cost",
+  //     dataIndex: "cost",
+  //     key: "cost",
+  //   },
+  // ];
+  // const renderedColumns = columns.map((col) => {
+  //     return col;
+  // });
   const serviceCostsSum = dataSource.reduce((acc, { name, cost }) => {
     if (acc[name]) {
       acc[name] += cost;
@@ -124,7 +124,7 @@ function ServicesAnalytics() {
 
   return (
     <div className="modal">
-      <div className="modal-content">
+      <div className="services-modal-content">
         <div className="serviceAnalyticsTitle">
           <h2 style={{ color: appColor.gray }}>Top Services Cost Breakdown</h2>
           <img
@@ -136,7 +136,7 @@ function ServicesAnalytics() {
             }}
             />
         </div>
-        <div className = "chart">
+        <div className="service-chart">
           <Chart 
               options={servicesChart.options}
               series={servicesChart.series}
@@ -144,7 +144,7 @@ function ServicesAnalytics() {
               width="90%"
           />
         </div>
-        <div className="service-details-table">
+        {/* <div className="service-details-table">
           <Table
             className="table"
             pagination={false}
@@ -152,7 +152,7 @@ function ServicesAnalytics() {
             dataSource={dataSource}
             columns={renderedColumns}
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -19,8 +19,10 @@ const GeneratePdf = ({ htmlElementRef }) => {
     });
   };
   return (
-    <div className="GeneratePdfButton" onClick={generatePdfHandler}>
-      Generate PDF
+    <div className="GeneratePDFView">
+      <div className="GeneratePdfButton" onClick={generatePdfHandler}>
+        Generate PDF
+      </div>
     </div>
   );
 };

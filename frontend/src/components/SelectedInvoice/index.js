@@ -107,7 +107,7 @@ function SelectedInvoice() {
           <img
             className="selectedModalClose"
             src={X}
-            alt="Delete"
+            alt="Close"
             onClick={() => {
               dispatch({ type: SET_ACTIVE_CONFIRMATION });
             }}
@@ -123,7 +123,9 @@ function SelectedInvoice() {
             columns={renderedColumns}
           />
           <div className="generateButtonView">
-            <div className="generate-invoice-button">
+            <div className="generate-invoice-button" onClick={() => {
+              dispatch({ type: SET_ACTIVE_CONFIRMATION });
+            }}>
               <GenerateInvoice />
             </div>
           </div>

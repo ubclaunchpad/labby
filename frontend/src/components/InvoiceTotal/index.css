@@ -4,14 +4,15 @@
   align-items: center;
   background-color: #f5f5f5;
   border-radius: 10px;
-  height: 73px;
+  height: 70px;
   width: 100%;
   padding: 0 1rem;
 }
 
 .invoice-total-container {
   display: flex;
-  margin: 0 1rem;
+  align-items: center;
+  margin: 0 2rem;
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -25,4 +26,11 @@
   font-size: 1.8em;
   font-weight: 700;
   font-style: bold;
+  margin-right: 5px;
+}
+
+.TotalStat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

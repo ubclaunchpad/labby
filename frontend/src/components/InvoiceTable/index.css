@@ -9,14 +9,29 @@
 
 .invoiceTable {
   margin-top: 30px;
+  margin-bottom: 80px;
 }
 
 .invoiceTable .editable-row-dark {
   background-color: #F6F6F6;
 }
 
+.invoiceTable .ant-table-tbody > tr.ant-table-row-selected td {
+  background-color: #CAD3FF !important;
+}
+
+.invoiceTable .ant-table-selection-column {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .invoiceTable .ant-table-container {
   border: none;
+}
+
+.subtaskInvoiceLabel {
+  font-size: 12px;
+  color: #627BF6;
 }
 
 .addService {
@@ -97,5 +112,5 @@ So try and beat it with CSS specificity */
 }
 
 .ant-table.ant-table-bordered>.ant-table-container>.ant-table-content>table>thead>tr>th{
-border-right: none;
+  border-right: none;
 }

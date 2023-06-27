@@ -158,7 +158,7 @@ function InvoiceDetails({ billingData }) {
                     {index + 1}. {invoiceItem.name}
                   </td>
                   <td>{invoiceItem.quantity}</td>
-                  <td>${invoiceItem.cost / invoiceItem.quantity}</td>
+                  <td>${(invoiceItem.cost / invoiceItem.quantity).toFixed(2)}</td>
                   <td>${invoiceItem.cost}</td>
                 </tr>
               );
@@ -176,11 +176,11 @@ function InvoiceDetails({ billingData }) {
             </tr>
             <tr className="item">
               <td>Total Tax:</td>
-              <td>${0.12 * subtotal}</td>
+              <td>${(0.12 * subtotal).toFixed(2)}</td>
             </tr>
             <tr className="item">
               <td>Total Due:</td>
-              <td className="last">${subtotal + 0.12 * subtotal}</td>
+              <td className="last">${(subtotal + 0.12 * subtotal).toFixed(2)}</td>
             </tr>
             <tr className="item total">
               <td>Amount Paid:</td>

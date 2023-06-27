@@ -19,7 +19,10 @@ const InvoiceTable = () => {
       editable: false,
       render: (_, record) =>
         dataSource.length >= 1 ? (
-          <div>SOW-{record.task_id ?? record.fk_task_id ?? record.task_uuid}</div>
+          <div>
+            <div>SOW-{record.task_id ?? record.fk_task_id ?? record.task_uuid}</div>
+            {record.subtask_id ? <span className="subtaskInvoiceLabel">Subtask-{record.subtask_id}</span> : null}
+          </div>
         ) : null,
       sorter: (a, b) => (a.task_id ?? a.fk_task_id ?? 0) - (b.task_id ?? b.fk_task_id ?? 0)
     },
@@ -31,8 +34,8 @@ const InvoiceTable = () => {
     },
     {
       title: "Project",
-      dataIndex: "billable_id",
-      key: "billable_id",
+      dataIndex: "fk_project_id",
+      key: "fk_project_id",
       editable: false,
     },
     {

@@ -37,7 +37,7 @@ const ProjectTable = () => {
       render: (_, record) =>
         dataSource.length >= 1 ? (
           <Select
-            mode="multiple"
+            mode={null}
             allowClear
             style={{ width: "100%" }}
             placeholder="Please select"
@@ -48,7 +48,8 @@ const ProjectTable = () => {
                 value: costcenter.cost_center_id,
               };
             })}
-            onChange={(newList) => {
+            onChange={(selection) => {
+              const newList = [selection];
               dispatch({
                 type: UPDATE_PROJECT_ASSIGNMENT,
                 payload: {
