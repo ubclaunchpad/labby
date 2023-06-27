@@ -194,7 +194,7 @@ function Invoice() {
                                 key={service?.answer_id}
                                 value={service?.answer}
                               >
-                                {service.answer}
+                                {service.answer} ({service?.question})
                               </option>
                             );
                           } else {

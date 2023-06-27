@@ -12,9 +12,9 @@ export const AssigneeIcon = ({
     return (
       <div className={className}>
         <svg
-          width="25"
-          height="25"
-          viewBox="-2 -2 29 29"
+          width="38"
+          height="38"
+          viewBox="-5 -1 35 35"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -30,10 +30,10 @@ export const AssigneeIcon = ({
         <div
           style={{
             position: "absolute",
-            width: 25,
+            width: 30,
             textAlign: "center",
-            top: "15%",
-            left: 0,
+            top: "25%",
+            left: 3,
             fontSize: 10,
             color: textColor,
           }}
@@ -51,8 +51,8 @@ export const AssigneeIcon = ({
   return (
     <div className={className}>
       <svg
-        width="25"
-        height="25"
+        width="30"
+        height="30"
         viewBox="0 0 25 25"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -67,9 +67,9 @@ export const AssigneeIcon = ({
       <div
         style={{
           position: "absolute",
-          width: 25,
+          width: 30,
           textAlign: "center",
-          top: "20%",
+          top: "30%",
           left: 0,
           fontSize: 10,
           color: textColor,

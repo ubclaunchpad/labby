@@ -13,6 +13,7 @@ import Dropzone from "react-dropzone";
 
 function Setting() {
   const [profileUrl, setProfileUrl] = useState("");
+  const currentUser = useSelector((state) => state.userReducer.currentUser);
   const dispatch = useDispatch();
   const config = new AWS.Config({
     accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
@@ -100,16 +101,10 @@ function Setting() {
   //   console.log(e.target.value);
   // };
 
-  const currentUser = useSelector((state) => state.userReducer.currentUser);
-
   // Move this to constants:
   const userFieldLabels = {
-    firstName: "First Name",
-    lastName: "Last Name",
     username: "User Name",
     email: "Email",
-    bio: "Bio Statement ",
-    role: "Role",
   };
 
   const userRoles = {
@@ -118,35 +113,11 @@ function Setting() {
 
   // Move this to constants:
   const userFieldEditable = {
-    firstName: false,
-    lastName: false,
-    username: true,
+    username: false,
     email: false,
-    bio: true,
-    role: false,
   };
-
-  const fakeUserSettings = {
-    username: "Demo",
-    firstName: "Demo",
-    lastName: "User",
-    email: "demo@gmail.com",
-    bio: "This is a demo account",
-    role: "lab_assistant",
-  };
-
-  // const fakeCustomerSettings = {
-  //   firstName: "Sakura",
-  //   lastName: "Yamamotonova",
-  //   email: "Synova@gmail.com",
-  //   phoneNumber: "7782345801",
-  //   costCenter: "metroville",
-  //   role: "customer",
-  // };
 
   const SettingsPopup = ({ field }) => {
-    // const currentUser = useSelector((state) => state.userReducer.currentUser);
-    const currentUser = fakeUserSettings;
     const [mutateUser, setMutateUser] = useState({});
     const [settingsInput, setSettingsInput] = useState(currentUser[field]);
     return (
@@ -244,7 +215,7 @@ function Setting() {
         <div className="settings-header">
           {/* Add specific title for if user or lab or not */}
           <div className="settings-title" style={{ color: appColor.gray }}>
-            User Settings
+            User Info
           </div>
           <button className="sign-out-button" onClick={handleSignout}>
             Sign Out
@@ -277,9 +248,9 @@ function Setting() {
 
             <div className="settings-information__greeting">{`Hello, ${currentUser?.username}`}</div>
           </div>
-          {/* <hr className="settings-info-rule"></hr> */}
+          <hr className="settings-info-rule"></hr>
 
-          {false && <UserSettingsInfo settings={fakeUserSettings} />}
+          <UserSettingsInfo settings={{ email: currentUser.email, username: currentUser.username }} />
         </div>
       </div>
     </div>

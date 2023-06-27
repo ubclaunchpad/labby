@@ -13,8 +13,9 @@ import {
     UPDATE_TICKET_STATUS,
     UPDATE_TICKET_TITLE,
 } from "../../../redux/actions/ticketActions";
+import X from "../../../assets/X.png";
 import { AssigneeIcon } from "../../Icons/AssigneeIcon";
-import { ticketsColors } from "../../../constants";
+import { appColor, ticketsColors } from "../../../constants";
 import { useEffect, useState } from "react";
 import { LOAD_EMPLOYEE } from "../../../redux/actions/userActions";
 import Subtasks from "../Subtasks";
@@ -107,6 +108,55 @@ export const TicketInfo = () => {
                             });
                         }}
                     />
+                    <button
+                        className="TicketArchiveButton"
+                        onClick={() => {
+                            currentTicketSubtasks.forEach((subtask) => {
+                                if (subtask.subtask_uuid) {
+                                    dispatch({
+                                        type: UPDATE_TICKET_STATUS,
+                                        payload: { ticketId: subtask.subtask_uuid, status: "archived" },
+                                    });
+                                }
+                            });
+                            dispatch({
+                                type: UPDATE_TICKET_STATUS,
+                                payload: { ticketId: currentTicket.task_uuid, status: "archived" },
+                            });
+                            dispatch({
+                                type: DELETE_VIEW_SUMMARY,
+                                payload: { ticket_id: currentTicket?.task_uuid },
+                            })
+                            dispatch({ type: SET_ACTIVE_TICKET, payload: null });
+                            SuccessToast("Ticket Archived!");
+                        }}
+                        style={{
+                            backgroundColor: appColor.lightGray,
+                            color: appColor.gray,
+                        }}
+                        onMouseOver={(e) => {
+                            e.target.style.backgroundColor = "#627BF6";
+                            e.target.style.color = "#FFFFFF";
+                        }}
+                        onMouseOut={(e) => {
+                            e.target.style.backgroundColor = appColor.lightGray;
+                            e.target.style.color = appColor.gray;
+                        }}
+                    >
+                        Archive
+                    </button>
+                    <img
+                        className="GlobalEditorDelete"
+                        src={X}
+                        alt="Close"
+                        onClick={() => {
+                            const inputs = document.querySelectorAll("input");
+                            for (let i = 0; i < inputs.length; i++) {
+                                inputs[i].blur();
+                            }
+                            dispatch({ type: SET_ACTIVE_TICKET, payload: null });
+                        }}
+                    />
                 </div>
                 <div className="TicketPreviewButton" onClick={async () => {
                     const config = new AWS.Config({
@@ -138,36 +188,11 @@ export const TicketInfo = () => {
                 }}>
                     <p
                         style={{
-                            color: "#5976E1",
+                            color: "#AEAEAE",
+                            fontWeight: 400
                         }}
                     >
-                        Download Summary
-                    </p>
-                </div>
-                <div className="TicketArchiveButton">
-                    <p style={{ color: "red" }}
-                        onClick={() => {
-                            currentTicketSubtasks.forEach((subtask) => {
-                                if (subtask.subtask_uuid) {
-                                    dispatch({
-                                        type: UPDATE_TICKET_STATUS,
-                                        payload: { ticketId: subtask.subtask_uuid, status: "archived" },
-                                    });
-                                }
-                            });
-                            dispatch({
-                                type: UPDATE_TICKET_STATUS,
-                                payload: { ticketId: currentTicket.task_uuid, status: "archived" },
-                            });
-                            dispatch({
-                                type: DELETE_VIEW_SUMMARY,
-                                payload: { ticket_id: currentTicket?.task_uuid },
-                            })
-                            dispatch({ type: SET_ACTIVE_TICKET, payload: null });
-                            SuccessToast("Ticket Archived!");
-                        }}
-                    >
-                        Archive Ticket
+                        View Summary
                     </p>
                 </div>
                 <div className="assignees-title">Assignees</div>
@@ -223,7 +248,8 @@ export const TicketInfo = () => {
                                             <div
                                                 key={assignee.user_id}
                                                 className="task-card__assignees-container"
-                                                onClick={() => {
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
                                                     dispatch({
                                                         type: ASSIGN_USER,
                                                         payload: {
@@ -233,6 +259,7 @@ export const TicketInfo = () => {
                                                             task_id: currentTicket.task_uuid,
                                                         },
                                                     });
+                                                    setAssigneeAddModal(false);
                                                 }}
                                             >
                                                 <AssigneeIcon
@@ -252,7 +279,7 @@ export const TicketInfo = () => {
                 <div className="ticketDescription">
                     <div className="ticketSectionTitle">Description</div>
                     <Input.TextArea
-                        placeholder="Type here..."
+                        placeholder="Type description here..."
                         rows={5}
                         className="ticketDescriptionInput"
                         defaultValue={currentTicket.description}

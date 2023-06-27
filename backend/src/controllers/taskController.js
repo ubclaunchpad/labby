@@ -75,13 +75,10 @@ export default class TaskController {
 
   updateTaskDescription(req) {
     return new Promise((resolve, reject) => {
-      if (!req.body.description) {
-        return reject({ error: "Error with request body." });
-      }
       const TaskModel = new Task();
       TaskModel.updateDescription(
         req.params.taskId,
-        req.body.description,
+        req.body.description ?? "",
         (err, result) => {
           if (err) {
             reject({ error: err });

@@ -17,7 +17,7 @@ export function* submitResponseSaga({ payload }) {
       payload.formResponses[1].question.fk_form_id,
     fk_project_id: payload.projectId,
     task_title: "New Customer Request",
-    task_description: "Service Request (Replace this with description)",
+    task_description: "",
     task_state: "open",
   });
   yield all(

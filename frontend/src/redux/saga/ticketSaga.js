@@ -1,5 +1,5 @@
 import AWS from "aws-sdk";
-import { all, call, put, takeLatest } from "redux-saga/effects";
+import { all, call, put, select, takeLatest } from "redux-saga/effects";
 import {
   ADD_SUBTASKS,
   ASSIGN_USER,
@@ -10,7 +10,7 @@ import {
   POST_SERVICE_COST,
   REMOVE_SERVICE_COST,
   SET_ATTACHMENTS,
-  // SET_ACTIVE_TICKET,
+  SET_ACTIVE_TICKET,
   SET_SERVICE_COST,
   SET_SUBTASKS,
   SET_TICKETS,
@@ -53,17 +53,17 @@ export function* fetchTickets() {
     },
   });
 
-  // let currentTicket = yield select(
-  //   (state) => state.ticketReducer.currentTicket
-  // );
+  let currentTicket = yield select(
+    (state) => state.ticketReducer.currentTicket
+  );
 
-  // if (currentTicket) {
-  //   let allTickets = yield select(
-  //     (state) => state.ticketReducer.ticketBoardDndData
-  //   );
-  //   let newTicket = allTickets.tasks[currentTicket.id];
-  //   yield put({ type: SET_ACTIVE_TICKET, payload: newTicket });
-  // }
+  if (currentTicket) {
+    let allTickets = yield select(
+      (state) => state.ticketReducer.ticketBoardDndData
+    );
+    let newTicket = allTickets.tasks[currentTicket.task_uuid];
+    yield put({ type: SET_ACTIVE_TICKET, payload: newTicket });
+  }
 }
 
 export function* updateTicketStatus(action) {
