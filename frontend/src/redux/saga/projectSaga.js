@@ -11,10 +11,10 @@ export function* loadProjectSaga() {
   const costcenterAssignmentList = yield call(getCostcenterAssignmentApi);
   const organizationAssignmentList = yield call(getProjectAssignmentApi);
   const currentUser = yield select((state) => state.userReducer.currentUser);
-  const myOrgProject = organizationAssignmentList
+  const filteredOrg = yield organizationAssignmentList
     .data
-    .filter((project) => project.fk_organization_id === currentUser.organization_id)
-    .map((project) => project.fk_project_id);
+    .filter((project) => project.fk_organization_id === (currentUser.organization_id ?? currentUser.fk_organization_id));
+  const myOrgProject = yield filteredOrg.map((project) => project.fk_project_id);
 
   yield put({
     type: SET_PROJECT,

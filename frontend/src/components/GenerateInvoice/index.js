@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 function GenerateInvoice() {
   return (
     <NavLink to="/pdf">
-      <div className="GeneratePdfButton">Generate Invoice</div>
+      <div className="GenerateInvoice">Generate Invoice</div>
     </NavLink>
   );
 }

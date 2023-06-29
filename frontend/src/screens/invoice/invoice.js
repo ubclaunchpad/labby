@@ -152,7 +152,7 @@ function Invoice() {
                   type="text"
                   placeholder="Search..."
                   className="invoiceTableSearch"
-                  onBlur={(text) => {
+                  onChange={(text) => {
                     const searchTerm = text.target.value;
 
                     if (searchTerm === "") {
@@ -162,7 +162,13 @@ function Invoice() {
                       });
                     } else {
                       const filteredData = invoiceDataSourceOG.filter((item) => {
-                        const objectString = Object.values(item).join(" ") + " SOW-" + item.task_id + " SOW-" + item.fk_task_id + " SOW-" + item.fk_task_id + "-" + item.subtask_id;
+                        const objectString = Object.values(item)
+                          .join(" ")
+                          + " SOW-" + item.task_id
+                          + " SOW-" + item.fk_task_id
+                          + " SOW-" + item.fk_task_id + "-" + item.subtask_id
+                          + " SOW " + item.task_id
+                          + " " + item.fk_task_id;
 
                         return objectString
                           .toLowerCase()

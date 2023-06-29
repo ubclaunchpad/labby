@@ -10,6 +10,14 @@ function SowAnalytics() {
   const dataSource = useSelector(
     (state) => state.billingReducer.billingList
   ).filter((item) => item.cost > 0);
+  const projectList = useSelector(
+    (state) => state.projectReducer.projectList
+  );
+  const projectMapping = projectList.reduce((acc, { project_id, project_name }) => {
+    acc[project_id] = project_name;
+    return acc;
+  }, {}); 
+
   const projectsCount = dataSource.reduce((acc, { fk_project_id }) => {
     if (acc[fk_project_id]) {
       acc[fk_project_id] += 1;
@@ -18,7 +26,7 @@ function SowAnalytics() {
       }
     return acc;
   }, {});
-  const categories = Object.keys(projectsCount);
+  const categories = Object.keys(projectsCount).map(project => projectMapping[project]);
   const data = Object.values(projectsCount);
   var sowChart = 
     { series: data,
@@ -71,16 +79,14 @@ function SowAnalytics() {
             }}
             />
         </div>
-        <div className="align">
-        <div>
+        <div className="sow-chart">
           <Chart 
               options={sowChart.options} 
               series={sowChart.series} 
               type="polarArea" 
               width="90%" 
-              margin="auto" 
+              height="100%"
           />
-        </div>
         </div>
       </div>
     </div>

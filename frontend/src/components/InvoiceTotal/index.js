@@ -22,40 +22,43 @@ const InvoiceTotal = () => {
   return (
     <div className="InvoiceTotal">
       <div className="invoice-total-container">
-        <div className="TotalServices"
-                onClick={() => {
-                  dispatch({ type: SET_ACTIVE_ANALYTICS });
-                  dispatch({
-                    type: UPDATE_CLICKS,
-                    payload: {
-                      component_name: "services_chart"
-                    },
-                  });
-               }}>
-          <span className="total-number" >{totalServices}</span> Total Services
+        <div className="TotalStat"
+          onClick={() => {
+            dispatch({ type: SET_ACTIVE_ANALYTICS });
+            dispatch({
+              type: UPDATE_CLICKS,
+              payload: {
+                component_name: "services_chart"
+              },
+            });
+          }}>
+          <span className="total-number">
+            {totalServices}
+          </span>
+          Total Services
         </div>
-        <div className="TotalSows"
-                onClick={() => {
-                  dispatch({ type: SET_ACTIVE_SOW_ANALYTICS });
-                  dispatch({
-                    type: UPDATE_CLICKS,
-                    payload: {
-                      component_name: "sow_chart"
-                    },
-                  });
-                }}>
+        <div className="TotalStat"
+          onClick={() => {
+            dispatch({ type: SET_ACTIVE_SOW_ANALYTICS });
+            dispatch({
+              type: UPDATE_CLICKS,
+              payload: {
+                component_name: "sow_chart"
+              },
+            });
+          }}>
           <span className="total-number">{Object.keys(sowMap).length}</span> Total SOWs
         </div>
-        <div className="TotalProjects"
-                onClick={() => {
-                  dispatch({ type: SET_ACTIVE_PROJECT_ANALYTICS });
-                  dispatch({
-                    type: UPDATE_CLICKS,
-                    payload: {
-                      component_name: "projects_chart"
-                    },
-                  });
-               }}>
+        <div className="TotalStat"
+          onClick={() => {
+            dispatch({ type: SET_ACTIVE_PROJECT_ANALYTICS });
+            dispatch({
+              type: UPDATE_CLICKS,
+              payload: {
+                component_name: "projects_chart"
+              },
+            });
+          }}>
           <span className="total-number">{Object.keys(projectMap).length}</span> Total Projects
         </div>
       </div>
