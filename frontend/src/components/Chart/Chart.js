@@ -38,7 +38,7 @@ export const Chart = ({ data }) => {
 
   return (
     <div className="chart">
-      <ResponsiveContainer width="98%" aspect={2.3}>
+      <ResponsiveContainer width="98%" aspect={2}>
         <AreaChart
           width={500}
           height={180}
