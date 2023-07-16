@@ -4,14 +4,13 @@ import "./index.css";
 import UBC from "../../../assets/UBC.png";
 // import InvoiceTable from "../../InvoiceTable";
 
-const InvoiceTemplate = ({ customer, costcenterMap }) => {
+const InvoiceTemplate = ({ customer, costcenterMap, invoicNum }) => {
   const invoiceList = useSelector((state) => state.billingReducer.invoiceList);
 
 
   const todaysDate = new Date();
-  const invoiceDate = `${todaysDate.getDate()}-${
-    todaysDate.getMonth() + 1
-  }-${todaysDate.getFullYear()}`;
+  const invoiceDate = `${todaysDate.getDate()}-${todaysDate.getMonth() + 1
+    }-${todaysDate.getFullYear()}`;
 
   const [inputValue, setInputValue] = useState({
     note: "",
@@ -47,7 +46,7 @@ const InvoiceTemplate = ({ customer, costcenterMap }) => {
         <div className="page">
           <div>
             <p className="monospace">
-              Invoice #: {Math.floor(1e8 + Math.random() * 9e8)}
+              Invoice #: {invoicNum ?? Math.floor(1e8 + Math.random() * 9e8)}
             </p>
           </div>
 
@@ -87,6 +86,8 @@ const InvoiceTemplate = ({ customer, costcenterMap }) => {
           <InvoiceDetails billingData={invoiceList.filter((billable) => {
             return costcenterMap[billable.fk_project_id] === customer.cost_center_id
           })} />
+
+          <label htmlFor="notes">All MAPcore invoices should be deposited to EABJ / PM009455</label>
 
           <div>
             <div className="signer-form">
@@ -171,16 +172,8 @@ function InvoiceDetails({ billingData }) {
         <table>
           <tbody>
             <tr className="item">
-              <td>Subtotal: </td>
+              <td>Total Due: </td>
               <td>${subtotal}</td>
-            </tr>
-            <tr className="item">
-              <td>Total Tax:</td>
-              <td>${(0.12 * subtotal).toFixed(2)}</td>
-            </tr>
-            <tr className="item">
-              <td>Total Due:</td>
-              <td className="last">${(subtotal + 0.12 * subtotal).toFixed(2)}</td>
             </tr>
             <tr className="item total">
               <td>Amount Paid:</td>

@@ -13,7 +13,7 @@ export const getBillable = async () => {
       Authorization: `Bearer ${token}`,
     };
     const billingList = await axios.get("billing/", { headers: headers });
-    
+
     return billingList;
   } catch (err) {
     return console.error(err);
@@ -86,6 +86,22 @@ export const saveClick = async (payload) => {
     return console.error(err);
   }
 };
+
+export const getClick = async (payload) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const clicks = await axios.get(`clicks/${payload.component_name}`, { headers: headers });
+
+    return clicks;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const getBillableBySOWID = async (payload) => {
   try {
     const token = JSON.parse(localStorage.getItem("currentUser")).token;

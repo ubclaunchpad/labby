@@ -19,4 +19,21 @@ export class Clicks {
       }
     );
   }
+
+  getClicks(component_name, result) {
+    con.query(
+      "CALL get_count(?)",
+      [
+        component_name
+      ],
+      function (error, results) {
+        if (error) {
+          console.log("error: ", error);
+          result(error, null);
+        } else {
+          result(null, results[0]);
+        }
+      }
+    );
+  }
 }

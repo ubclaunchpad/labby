@@ -17,4 +17,17 @@ export default class ClicksController {
       });
     });
   }
+
+  getClicks(req) {
+    return new Promise((resolve, reject) => {
+      const ClicksModel = new Clicks();
+
+      ClicksModel.getClicks(req, (err, result) => {
+        if (err) {
+          reject({ error: err });
+        }
+        resolve(result);
+      });
+    });
+  }
 }
