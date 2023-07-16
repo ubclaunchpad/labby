@@ -6,12 +6,20 @@ import GeneratePdf from "../../components/GeneratePdf";
 import InvoiceTemplate from "../../components/GenerateInvoice/InvoiceTemplate";
 import { useDispatch, useSelector } from "react-redux";
 import { BILL_BILLABLE, GET_PROJECT, LOAD_BILLABLE } from "../../redux/actions/billingActions";
+import { getClick } from "../../redux/api/billingApi";
 
 function InvoicePreview() {
   const dispatch = useDispatch();
+  const [invoiceNum, setInvoiceNum] = useState(0);
   useEffect(() => {
     dispatch({ type: GET_PROJECT });
     dispatch({ type: LOAD_BILLABLE });
+  }, [dispatch]);
+
+  useEffect(() => {
+    getClick({ component_name: "invoice" }).then((res) => {
+      setInvoiceNum(res.data[0].click_count);
+    });
   }, [dispatch]);
 
   const [customerList, setCustomerList] = useState([]);
@@ -61,12 +69,12 @@ function InvoicePreview() {
           <div>
             {customerList.map((customer, index) => (
               <div ref={addtoRefs} key={customer.cost_center_id ?? index}>
-                <InvoiceTemplate customer={customer} costcenterMap={costcenterMapping} />
+                <InvoiceTemplate customer={customer} costcenterMap={costcenterMapping} invoicNum={invoiceNum + index} />
               </div>
             ))}
           </div>
         </div>
-        <GeneratePdf htmlElementRef={pdfRefs} />
+        <GeneratePdf htmlElementRef={pdfRefs} nextInvoice={customerList.length} />
       </div>
     </div>
   );
