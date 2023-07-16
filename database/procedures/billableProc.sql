@@ -110,7 +110,7 @@ BEGIN
     AND (created_by = _user_id OR _user_id IS NULL OR _user_id = '')
     AND ((createdDate BETWEEN _start_date AND _end_date) OR (_start_date IS NULL OR _end_date IS NULL))
     AND (((t.task_state != "archived" OR t.task_state IS NULL) and (st.subtask_state != "archived" OR st.subtask_state IS NULL) and (_archive IS NULL OR _archive = 0)) OR _archive = 1)
-    AND (_billed OR ((_billed IS NULL OR _billed = 0) AND billable.billed = 0))
+    AND ((_billed AND billable.billed = 1) OR ((_billed IS NULL OR _billed = 0) AND billable.billed = 0))
     AND (((t.task_state = "completed" OR st.subtask_state = "completed") AND _ready_to_bill = 1) OR _ready_to_bill = 0 OR _ready_to_bill IS NULL);
 
 END $$
