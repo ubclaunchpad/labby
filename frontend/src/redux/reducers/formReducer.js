@@ -32,6 +32,7 @@ import {
   REMOVE_ALL_RESPONSE,
   SET_DRAFTS,
   SET_ALL_DRAFTS,
+  REMOVE_CLINICAL_RESPONSE,
 } from "../actions/formActions";
 
 const defaultQuestionlist = {
@@ -340,6 +341,10 @@ const clinicalResponses = (state = defaultClinicalResponses, action) => {
   switch (action.type) {
     case ADD_CLINICAL_RESPONSE: {
       state[action.payload.clinical_id] = action.payload;
+      return { ...state };
+    }
+    case REMOVE_CLINICAL_RESPONSE: {
+      delete state[action.payload];
       return { ...state };
     }
     default: {

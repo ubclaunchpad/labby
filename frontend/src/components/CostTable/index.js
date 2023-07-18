@@ -22,14 +22,21 @@ const CostTable = () => {
       dataIndex: "service",
       key: "service",
       editable: false,
-      width: "35%",
+      width: "25%",
+    },
+    {
+      title: "Form",
+      dataIndex: "form_name",
+      key: "form_name",
+      editable: false,
+      width: "19%",
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
       editable: false,
-      width: "29%",
+      width: "20%",
     },
     {
       title: "Internal Cost",
@@ -162,7 +169,7 @@ const CostTable = () => {
       const newData = {
         answer_id: row.key,
         org_type: row.dataIndex.charAt(0).toUpperCase() + row.dataIndex.slice(1),
-        cost: row[row.dataIndex].slice(1),
+        cost: row[row.dataIndex].charAt(0) === "$" ? row[row.dataIndex].slice(1) : row[row.dataIndex],
         cost_id: row.idMap[row.dataIndex],
         quantifiable: row.quantifiable,
         unit: row.unit

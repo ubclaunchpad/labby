@@ -1,6 +1,6 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Table, Form, Popconfirm, Input } from "antd";
+import { Table, Form, Popconfirm, Input, Select } from "antd";
 import "antd/dist/antd.min.css";
 import "./index.css";
 import RejectUser from "../../assets/RejectUser.png";
@@ -12,6 +12,8 @@ import {
   POST_COSTCENTER,
 } from "../../redux/actions/billingActions";
 
+const costCenterTypes = ["Industry", "Internal", "External"];
+
 const CostCenterTable = () => {
   const columns = [
     {
@@ -22,7 +24,14 @@ const CostCenterTable = () => {
       width: "20%",
     },
     {
-      title: "Principal Contact",
+      title: "Principal Investigator",
+      dataIndex: "cost_center_investigator",
+      key: "cost_center_investigator",
+      editable: true,
+      width: "10%",
+    },
+    {
+      title: "Billing Contact",
       dataIndex: "cost_center_contact",
       key: "cost_center_contact",
       editable: true,
@@ -40,14 +49,34 @@ const CostCenterTable = () => {
       dataIndex: "cost_center_email",
       key: "cost_center_email",
       editable: true,
-      width: "20%",
+      width: "10%",
     },
     {
       title: "Type",
       dataIndex: "cost_center_type",
       key: "cost_center_type",
-      editable: true,
       width: "9%",
+      render: (_, record) =>
+        dataSource.length >= 1 ? (
+          <Select
+            style={{ width: "100%" }}
+            placeholder="Please select"
+            defaultValue={[]}
+            value={{
+              label: record.cost_center_type,
+              value: record.cost_center_type,
+            }}
+            onChange={(newList) => {
+              dispatch({ type: POST_COSTCENTER, payload: { ...record, cost_center_type: newList } });
+            }}
+            options={costCenterTypes.map((type) => {
+              return {
+                label: type,
+                value: type,
+              };
+            })}
+          />
+        ) : null,
     },
     {
       title: "",
@@ -85,6 +114,7 @@ const CostCenterTable = () => {
     const newData = {
       cost_center_id: uuid(),
       cost_center_name: "New Cost Center",
+      cost_center_investigator: "New Investigator",
       cost_center_contact: "New Contact",
       cost_center_email: "New Email",
       cost_center_address: "New Address",

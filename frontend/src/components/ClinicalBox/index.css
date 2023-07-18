@@ -58,3 +58,16 @@
     color: #DEDEDE;
     cursor: pointer;
 }
+
+.clinicalXView {
+    flex: 0.01;
+    width: 50%;
+    text-align: left;
+    margin-top: 8px;
+}
+
+.clinicalX {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}

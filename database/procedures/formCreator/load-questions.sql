@@ -92,7 +92,7 @@ END $$
 CREATE PROCEDURE `load_costs` ()
 
 BEGIN
-    SELECT question, answer, questions_cost.fk_answer_id, organization_name, cost, questions_cost.*
+    SELECT question, answer, questions_cost.fk_answer_id, organization_name, cost, questions_cost.*, forms.form_name
     FROM
         questions
     
@@ -104,6 +104,9 @@ BEGIN
 
     LEFT JOIN organizations
         ON organizations.organization_type = questions_cost.price_category
+
+    LEFT JOIN forms
+        ON forms.form_id = questions.fk_form_id
 
     WHERE cost IS NOT NULL
     ORDER BY 
