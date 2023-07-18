@@ -69,6 +69,7 @@ const costTableServices = (state = defaultCostDataSourceData, action) => {
         } else {
           pricingMap.set(item.fk_answer_id, {
             key: item.fk_answer_id,
+            form_name: item.form_name,
             service: item.answer,
             description: item.question,
             idMap: {

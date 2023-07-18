@@ -11,6 +11,7 @@ BEGIN
 CREATE TABLE `cost_centers` (
 	cost_center_id VARCHAR(50) NOT NULL,
 	cost_center_name VARCHAR(50),
+	cost_center_investigator VARCHAR(255),
 	cost_center_contact VARCHAR(255),
 	cost_center_email VARCHAR(255),
 	cost_center_address VARCHAR(255),

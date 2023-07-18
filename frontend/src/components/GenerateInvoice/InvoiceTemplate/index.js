@@ -74,7 +74,7 @@ const InvoiceTemplate = ({ customer, costcenterMap, invoicNum }) => {
                 <p className="header-table-title">Project Details: </p>
                 <p className="header-table-content">
                   Project ID: {customer.fk_project_id}<br />
-                  Principal Investigator: {customer.cost_center_contact}<br />
+                  Principal Investigator: {customer.cost_center_investigator}<br />
                 </p>
               </div>
             </div>

@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import uuid from "react-uuid";
 import "./index.css";
-import { ADD_CLINICAL_RESPONSE } from "../../redux/actions/formActions";
+import X from "../../assets/X.png";
+import { ADD_CLINICAL_RESPONSE, REMOVE_CLINICAL_RESPONSE } from "../../redux/actions/formActions";
 
 function ClinicalBox({ question, option }) {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ function ClinicalBox({ question, option }) {
       </div>
       <div className="clinicalHeader">
         <div className="headerLeft">Sample ID</div>
-        <div className="headerRight">Authorized By</div>
+        <div className="headerRight">Ordering Pathologist</div>
       </div>
       {Object.values(clinicalList)
         .filter((value) => value.answer === option.answer_id)
@@ -51,6 +52,11 @@ function ClinicalBox({ question, option }) {
                   });
                 }}
               />
+            </div>
+            <div className="clinicalXView" onClick={() => {
+              dispatch({ type: REMOVE_CLINICAL_RESPONSE, payload: clinical.clinical_id })
+            }}>
+              <img src={X} className="clinicalX" alt="Delete Service" />
             </div>
           </div>
         ))}
