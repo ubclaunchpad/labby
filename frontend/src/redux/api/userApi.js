@@ -120,6 +120,27 @@ export const resetPasswordApi = async (payload) => {
   }
 };
 
+export const adminResetPasswordApi = async (payload) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    var data = JSON.stringify({
+      email: payload.email,
+      password: payload.password,
+    });
+
+    const user = await axios.post("user/adminReset", data, {
+      headers: headers,
+    });
+
+    return user;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const updateUserApi = async (payload) => {
   try {
     const token = JSON.parse(localStorage.getItem("currentUser")).token;

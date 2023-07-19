@@ -102,7 +102,7 @@ const InvoiceTemplate = ({ customer, costcenterMap, invoicNum }) => {
               />
             </div>
 
-            <div className="signer">
+            {/* <div className="signer">
               <div className="signer-form signer-item">
                 <label htmlFor="date">Date:</label>
                 <input
@@ -127,7 +127,7 @@ const InvoiceTemplate = ({ customer, costcenterMap, invoicNum }) => {
                   onChange={handleChange}
                 />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -174,10 +174,6 @@ function InvoiceDetails({ billingData }) {
             <tr className="item">
               <td>Total Due: </td>
               <td>${subtotal}</td>
-            </tr>
-            <tr className="item total">
-              <td>Amount Paid:</td>
-              <td>$0</td>
             </tr>
           </tbody>
         </table>
