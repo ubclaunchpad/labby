@@ -46,7 +46,7 @@ export const CostEstimateFull = () => {
 
       <div className="CostEstimates">
         {formResponses.map((response) => {
-          if (!costEstimateMap) {
+          if (!costEstimateMap || costEstimateMap.length === 0) {
             return null;
           }
           const cost = costEstimateMap.get(response.response) ?? 0;

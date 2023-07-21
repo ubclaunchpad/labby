@@ -39,6 +39,18 @@ const InvoiceTable = () => {
       editable: false,
     },
     {
+      title: "Organization",
+      dataIndex: "organization_name",
+      key: "organization_name",
+      editable: false,
+    },
+    {
+      title: "User",
+      dataIndex: "username",
+      key: "username",
+      editable: false,
+    },
+    {
       title: "Created Date",
       dataIndex: "createdDate",
       key: "createdDate",

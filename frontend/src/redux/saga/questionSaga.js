@@ -1,4 +1,4 @@
-import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { call, put, select, takeEvery, takeLatest } from "redux-saga/effects";
 import { SAVE_LOGIC, SET_LOGIC } from "../actions/logicActions";
 import {
   DELETE_ANSWER,
@@ -30,9 +30,16 @@ export function* fetchQuestion({ payload }) {
   yield put({ type: SET_LOGIC, payload: logic.data });
 
   const questions = yield call(getQuestions, payload);
+  const form_response = yield select((state) => state.formReducer.formResponses);
+  const projects = yield select((state) => state.projectReducer.projectList);
+
+  const project = form_response.find((response) => response.question_info?.question_type === "project");
+  const project_id = project?.response
+  const selectedProject = projects.find((project) => project.project_id === project_id);
+  const price_category = selectedProject?.costcenter[0].cost_center_type ?? "Industry";
 
   yield put({ type: SET_QUESTION, payload: questions?.data ?? [] });
-  yield put({ type: SET_ANSWER, payload: questions?.data ?? [] });
+  yield put({ type: SET_ANSWER, payload: { answers: questions?.data ?? [], price_category }});
   yield put({ type: SET_LOADING, payload: false });
 }
 

@@ -121,8 +121,10 @@ function RequestForm({ origin }) {
     questions.forEach((question) => {
       if (
         question.mandatory &&
-        formResponses.filter(
-          (response) => response.question.question_id === question.question_id
+        formResponses.filter((response) => 
+          response.question?.question_id === question.question_id 
+          || response.question[0]?.question_id === question.question_id 
+          || response.question_info?.question_id === question.question_id
         ).length === 0 &&
         !noShowList.includes(question.question_id)
       ) {

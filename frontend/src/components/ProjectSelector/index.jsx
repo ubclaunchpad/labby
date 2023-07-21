@@ -9,13 +9,16 @@ import {
   REMOVE_PROJECT_RESPONSE,
 } from "../../redux/actions/formActions";
 import { GET_PROJECT } from "../../redux/actions/billingActions";
+import { LOAD_QUESTION } from "../../redux/actions/questionActions";
 
 function ProjectSelector({ question }) {
   const dispatch = useDispatch();
   const projectList = useSelector((state) => state.projectReducer.projectList);
   const currentUser = useSelector((state) => state.userReducer.currentUser);
   const draftList = useSelector((state) => state.formReducer.draftList);
+  const formResponses = useSelector((state) => state.formReducer.formResponses);
   const [selectedValue, setSelectedValue] = useState(null);
+  const [draftDone, setDraftDone] = useState(false);
 
   const handleChange = (event) => {
     const selected = JSON.parse(event.target.value);
@@ -34,7 +37,6 @@ function ProjectSelector({ question }) {
         question_info: question,
       },
     });
-    setSelectedValue(selected);
 
     const draftObj = {
       draft_id: question.question_id + "_" + currentUser.user_id,
@@ -47,6 +49,9 @@ function ProjectSelector({ question }) {
       type: ADD_DRAFT,
       payload: draftObj,
     });
+    setDraftDone(true);
+    dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
+    setSelectedValue(selected);
   };
 
   useEffect(() => {
@@ -63,7 +68,6 @@ function ProjectSelector({ question }) {
         (option) => option.project_id === draft.answer
       );
       if (value) {
-        setSelectedValue(value);
         dispatch({
           type: ADD_RESPONSE,
           payload: {
@@ -73,10 +77,20 @@ function ProjectSelector({ question }) {
             question_info: question,
           },
         });
+        setSelectedValue(value);
+        setDraftDone(true);
       }
     }
   }, [dispatch, draftList, projectList, question]);
 
+  useEffect(() => {
+    dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
+  }, [dispatch, question.fk_form_id, draftDone]);
+
+  useEffect(() => {
+    const project = formResponses.find((response) => response?.question_info?.question_type === "project");
+    setSelectedValue(project?.question);
+  }, [formResponses, question]);
 
   return (
     <div className="GlobalCustomerQuestionContainer">

@@ -4,18 +4,18 @@ import { deleteCosts, getCosts, postCosts, updateQuantifiableApi } from "../api/
 
 export function* fetchCost({ payload }) {
   const costs = [];
-  let organization = "Hungrii Inc.";
+  let category = "Industry";
 
   if (payload.formResponses.length !== 0) {
     for (var i = 0; i < payload.formResponses.length; i++) {
-      const org = payload.formResponses[i].question.price_category;
-      if (org != null) {
-        organization = org;
+      const price_category = payload.formResponses[i].question.price_category;
+      if (price_category != null) {
+        category = price_category;
         break;
       }
     }
   }
-  costs.push(organization);
+  costs.push(category);
 
   const costEstimates = yield call(getCosts);
   costs.push(costEstimates.data);
