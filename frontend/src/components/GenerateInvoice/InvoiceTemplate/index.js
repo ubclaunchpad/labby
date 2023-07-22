@@ -102,7 +102,7 @@ const InvoiceTemplate = ({ customer, costcenterMap, invoicNum }) => {
               />
             </div>
 
-            <div className="signer">
+            {/* <div className="signer">
               <div className="signer-form signer-item">
                 <label htmlFor="date">Date:</label>
                 <input
@@ -127,7 +127,7 @@ const InvoiceTemplate = ({ customer, costcenterMap, invoicNum }) => {
                   onChange={handleChange}
                 />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -147,17 +147,22 @@ function InvoiceDetails({ billingData }) {
           <tbody>
             <tr className="heading">
               <td>Description</td>
+              <td>SOW</td>
+              <td>User</td>
               <td>Quantity</td>
               <td>Unit Price</td>
               <td>Total(CAD)</td>
             </tr>
 
             {billingData.map((invoiceItem, index) => {
+              console.log(invoiceItem);
               return (
                 <tr className="item" key={invoiceItem.billable_id}>
                   <td>
                     {index + 1}. {invoiceItem.name}
                   </td>
+                  <td>{`SOW-${invoiceItem.task_id ?? (invoiceItem.subtask_id ?? "?")}`}</td>
+                  <td>{invoiceItem.username}</td>
                   <td>{invoiceItem.quantity}</td>
                   <td>${(invoiceItem.cost / invoiceItem.quantity).toFixed(2)}</td>
                   <td>${invoiceItem.cost}</td>
@@ -174,10 +179,6 @@ function InvoiceDetails({ billingData }) {
             <tr className="item">
               <td>Total Due: </td>
               <td>${subtotal}</td>
-            </tr>
-            <tr className="item total">
-              <td>Amount Paid:</td>
-              <td>$0</td>
             </tr>
           </tbody>
         </table>

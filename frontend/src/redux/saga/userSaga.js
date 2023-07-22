@@ -23,6 +23,7 @@ import {
   UPDATE_USER,
   REQUEST_RESET,
   RESET_PASSWORD,
+  ADMIN_RESET_PASSWORD,
 } from "../actions/userActions";
 import { getProjectAssignmentApi } from "../api/projectApi";
 import {
@@ -41,6 +42,7 @@ import {
   updateUserApi,
   requestResetApi,
   resetPasswordApi,
+  adminResetPasswordApi,
 } from "../api/userApi";
 import { ErrorToast, SuccessToast } from "../../components/Toasts";
 
@@ -110,9 +112,24 @@ export function* resetPasswordSaga({ payload }) {
   }
 }
 
+export function* adminResetPasswordSaga({ payload }) {
+  const resetRes = yield call(adminResetPasswordApi, payload);
+  if (resetRes) {
+    SuccessToast("Password reset successfully!");
+  } else {
+    ErrorToast("Password reset failed. Please try again.");
+  }
+}
+
 export function* postUserSaga({ payload }) {
   const newUser = yield call(saveUserApi, payload);
-  if (newUser) {
+  if (payload.adminCreated) {
+    SuccessToast("Account created successfully!");
+    yield call(approveUserList, { users: [payload.user_id]});
+    yield delay(1000);
+    yield loadUserlistSaga();
+    yield loadPendingUserListSaga();
+  } else if (newUser) {
     SuccessToast("Account created successfully! Please login to continue.");
     payload.navTo();
   } else {
@@ -182,4 +199,5 @@ export default function* userSaga() {
   yield takeLatest(GET_USER, getUserSaga);
   yield takeLatest(REQUEST_RESET, requestResetSaga);
   yield takeLatest(RESET_PASSWORD, resetPasswordSaga);
+  yield takeLatest(ADMIN_RESET_PASSWORD, adminResetPasswordSaga);
 }

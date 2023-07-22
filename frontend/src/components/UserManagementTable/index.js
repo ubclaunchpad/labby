@@ -1,10 +1,12 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Table, Form, Popconfirm, Input, Select } from "antd";
+import { Table, Form, Popconfirm, Input, Select, Popover } from "antd";
 import "antd/dist/antd.min.css";
 import "./index.css";
-import { DELETE_USER, GET_ORGANIZATION, LOAD_USERLIST, UPDATE_USER } from "../../redux/actions/userActions";
+import Add from "../../assets/AddBlack.png";
+import { ADMIN_RESET_PASSWORD, DELETE_USER, GET_ORGANIZATION, LOAD_USERLIST, POST_USER, UPDATE_USER } from "../../redux/actions/userActions";
 import RejectUser from "../../assets/RejectUser.png";
+import uuid from "react-uuid";
 
 const UserManagementTable = () => {
   const columns = [
@@ -92,6 +94,43 @@ const UserManagementTable = () => {
       dataIndex: "operation",
       render: (_, record) =>
         dataSource.length >= 1 ? (
+          <Popover
+            content={
+              <div>
+                <input className="LoginInput" placeholder="New Password" type={"password"} />
+                <div className="SaveNewPassword" onClick={() => {
+                  const password = document.getElementsByClassName("LoginInput")[0].value;
+                  if (password && password !== "") {
+                    dispatch({
+                      type: ADMIN_RESET_PASSWORD,
+                      payload: {
+                          email: record.email,
+                          password: password,
+                      },
+                    });
+                    document.getElementsByClassName("LoginInput")[0].value = "";
+                    setResetPasswordRecord(null);
+                  }
+                }}>Save</div>
+              </div>
+              }
+            title="Change User's Password"
+            trigger="click"
+            open={resetPasswordRecord === record.user_id}
+            onOpenChange={(open) => {
+              setResetPasswordRecord(open ? record.user_id : null);
+            }}
+          >
+            <div className="resetPasswordButton">Reset Password</div>
+          </Popover>
+        ) : null,
+      width: "5%",
+    },
+    {
+      title: "",
+      dataIndex: "operation",
+      render: (_, record) =>
+        dataSource.length >= 1 ? (
           <Popconfirm
             title="Confirm Deletion?"
             okType="danger"
@@ -111,6 +150,7 @@ const UserManagementTable = () => {
   ];
 
   const dispatch = useDispatch();
+  const [resetPasswordRecord, setResetPasswordRecord] = useState();
   const dataSource = useSelector((state) => state.userReducer.userList);
   const orgList = useSelector((state) => state.userReducer.organizationList);
 
@@ -124,6 +164,22 @@ const UserManagementTable = () => {
   };
   const handleSave = (row) => {
     dispatch({ type: UPDATE_USER, payload: row });
+  };
+  const handleAdd = () => {
+    const newID = uuid();
+    const newData = {
+      user_id: newID,
+      fk_organization_id: null,
+      username: "New User",
+      email: "New User Email",
+      employee: false,
+      password: "password",
+      adminCreated: true,
+    };
+    dispatch({
+      type: POST_USER,
+      payload: newData
+    });
   };
 
   const EditableContext = React.createContext(null);
@@ -234,6 +290,14 @@ const UserManagementTable = () => {
       rowClassName={(_, index) => index % 2 === 0 ? "editable-row" : "editable-row-dark"}
       dataSource={dataSource}
       columns={renderedColumns}
+      footer={() => {
+        return (
+          <div className="footerAddButton" onClick={handleAdd}>
+            <img className="Add" src={Add} alt="Add" />
+            <div className="ticketSectionTitle">Add</div>
+          </div>
+        )
+      }}
     />
   );
 };

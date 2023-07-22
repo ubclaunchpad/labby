@@ -26,7 +26,7 @@ function ProjectSelectorEditor({ question }) {
   useEffect(() => {
     console.log(question);
     setQuestionNum(`Q${question.position_index}`);
-    setTitle("User will select a project here...");
+    setTitle(question.question ?? "");
     setNote(question.question_note);
   }, [question]);
 

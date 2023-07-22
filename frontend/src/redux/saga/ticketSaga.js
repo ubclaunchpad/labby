@@ -21,6 +21,7 @@ import {
   UPDATE_TICKET_TITLE,
   CLEAR_ATTACHMENTS,
   DELETE_VIEW_SUMMARY,
+  UPDATE_TICKET_PROJECT,
 } from "../actions/ticketActions";
 import {
   assignUserApi,
@@ -36,6 +37,7 @@ import {
   getSubTicketsById,
   createSubtask,
   updateTicketTitleApi,
+  updateTicketProjectApi,
 } from "../api/ticketApi";
 
 import { getAnswersBySurvey } from "../api/questionApi";
@@ -62,7 +64,9 @@ export function* fetchTickets() {
       (state) => state.ticketReducer.ticketBoardDndData
     );
     let newTicket = allTickets.tasks[currentTicket.task_uuid];
-    yield put({ type: SET_ACTIVE_TICKET, payload: newTicket });
+    if (currentTicket.ticket_id !== newTicket.ticket_id) {
+      yield put({ type: SET_ACTIVE_TICKET, payload: newTicket });
+    }
   }
 }
 
@@ -83,6 +87,13 @@ export function* updateTicketDescription(action) {
   yield call(updateTicketDescriptionApi, { ticketId, description });
   yield call(fetchTickets);
 }
+
+export function* updateTicketProject(action) {
+  const { ticketId, project_id } = action.payload;
+  yield call(updateTicketProjectApi, { ticketId, project_id });
+  yield call(fetchTickets);
+}
+
 
 export function* assignUser(action) {
   yield call(assignUserApi, action.payload);
@@ -212,6 +223,7 @@ export default function* ticketSaga() {
   yield takeLatest(UPDATE_TICKET_STATUS, updateTicketStatus);
   yield takeLatest(UPDATE_TICKET_TITLE, updateTicketTitle);
   yield takeLatest(UPDATE_TICKET_DESCRIPTION, updateTicketDescription);
+  yield takeLatest(UPDATE_TICKET_PROJECT, updateTicketProject);
   yield takeLatest(ASSIGN_USER, assignUser);
   yield takeLatest(UNASSIGN_USER, unassignUser);
   yield takeLatest(POST_SERVICE_COST, postServiceCost);

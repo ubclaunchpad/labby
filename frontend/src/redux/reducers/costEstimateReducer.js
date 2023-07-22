@@ -16,15 +16,15 @@ const hideCost = (state = defaultCostEstimate, action) => {
 };
 
 const defaultCostEstimateList = [];
-const costEstimateMap = new Map();
 
 const costEstimateList = (state = defaultCostEstimateList, action) => {
   switch (action.type) {
     case SET_COST: {
-      const org = action.payload[0];
+      const costEstimateMap = new Map();
+      const category = action.payload[0];
 
       action.payload[1].map((cost) => {
-        if (cost.organization_name === org) {
+        if (cost.price_category === category) {
           costEstimateMap.set(cost.fk_answer_id, cost.cost);
         }
         return costEstimateMap;

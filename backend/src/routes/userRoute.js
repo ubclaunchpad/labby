@@ -159,6 +159,18 @@ router.post("/resetpassword", (req, res) => {
   }
 });
 
+router.post("/adminReset", authorize(true), (req, res) => {
+  // Reset Password
+  userController
+    .updateUserPassword(req, req.body.email)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(404).json(err);
+    });
+});
+
 router.delete("/:userId", authorize(), (req, res) => {
   userController
     .deleteUser(req.params.userId)

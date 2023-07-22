@@ -5,6 +5,7 @@ DROP procedure IF EXISTS `save_subtask`;
 DROP procedure IF EXISTS `update_task_status`;
 DROP procedure IF EXISTS `update_task_title`;
 DROP procedure IF EXISTS `update_task_description`;
+DROP procedure IF EXISTS `update_task_project`;
 DROP procedure IF EXISTS `update_subtask_status`;
 
 DELIMITER $$
@@ -71,6 +72,16 @@ CREATE PROCEDURE `update_task_description` (
 ) BEGIN 
 UPDATE `tasks` SET `task_description`=`_task_description`, `task_updated` = NOW() WHERE `task_uuid`=`_task_uuid`;
 UPDATE `subtasks` SET `subtask_description`=`_task_description`, `subtask_updated` = NOW() WHERE `subtask_uuid`=`_task_uuid`;
+  
+END $$
+
+CREATE PROCEDURE `update_task_project` (
+   IN `_task_uuid` VARCHAR(50),
+   IN `_task_project` VARCHAR(250)
+ 
+) BEGIN 
+UPDATE `tasks` SET `fk_project_id`=`_task_project`, `task_updated` = NOW() WHERE `task_uuid`=`_task_uuid`;
+UPDATE `billable` SET `fk_project_id`=`_task_project` WHERE `task_uuid`=`_task_uuid`;
   
 END $$
 

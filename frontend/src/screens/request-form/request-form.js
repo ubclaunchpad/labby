@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Navigate } from "react-router-dom";
 import uuid from "react-uuid";
 import "./request-form.css";
-import { appColor, awsConfig } from "../../constants";
+import { appColor, awsConfig, summaryFormat } from "../../constants";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
 import { LOAD_COST } from "../../redux/actions/costActions";
 import MultiSelect from "../../components/MultiSelect";
@@ -30,6 +30,7 @@ import FormInfo from "../../components/FormInfo";
 import { GET_USER, SET_CURRENT_USER } from "../../redux/actions/userActions";
 import { useDocumentTitle } from "@uidotdev/usehooks";
 import ToastContainer from "../../components/Toasts/ToastContainer";
+import jsPDF from 'jspdf';
 
 function RequestForm({ origin }) {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ function RequestForm({ origin }) {
   const clinicalList = useSelector(
     (state) => state.formReducer.clinicalResponses
   );
-  let noShowList = [];
+  const [noShowList, setNoShowList] = useState([]);
   const costEstimateMap = useSelector(
     (state) => state.costEstimateReducer.costEstimateList
   );
@@ -68,6 +69,7 @@ function RequestForm({ origin }) {
         dispatch({ type: GET_USER, payload: { user_id: vaUser } });
       }
     }
+    setNoShowList([]);
   }, [dispatch, formId, currentUser]);
 
   // Load Cost Estimate
@@ -95,22 +97,60 @@ function RequestForm({ origin }) {
       height: document.getElementById("requestFormContainer").scrollHeight,
       windowHeight: document.getElementById("requestFormContainer").scrollHeight,
     }).then(function (canvas) {
-      canvas.toBlob((blob) => {
-        if (blob === null) return;
+      if (summaryFormat === "pdf") {
+        /* SAVE AS PDF TO S3 */
+        const imgData = canvas.toDataURL('image/png');
+        const imgWidth = 210;
+        const pageHeight = 295;
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        var heightLeft = imgHeight;
+
+        const doc = new jsPDF('p', 'mm');
+        var position = 0;
+
+        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight;
+          doc.addPage();
+          doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+
         AWS.config.update(awsConfig);
         const S3 = new AWS.S3({});
         const objParams = {
           Bucket: process.env.REACT_APP_S3_BUCKET,
           Key: `requestSummary/${survey_id}`,
-          Body: blob,
-          ContentType: "image/png",
+          Body: doc.output('blob'),
+          ContentType: "application/pdf",
         };
 
         S3.putObject(objParams)
           .send(function (err, data) {
             console.log(err ? `Issue in S3.putObject.send() => ${err}` : "Send completed in S3.putObject.send()");
           });
-      }, "image/png");
+        // doc.save('download.pdf');
+      } else if (summaryFormat === "png") {
+        /* SAVE AS IMAGE TO S3 */
+        canvas.toBlob((blob) => {
+          if (blob === null) return;
+          AWS.config.update(awsConfig);
+          const S3 = new AWS.S3({});
+          const objParams = {
+            Bucket: process.env.REACT_APP_S3_BUCKET,
+            Key: `requestSummary/${survey_id}`,
+            Body: blob,
+            ContentType: "image/png",
+          };
+
+          S3.putObject(objParams)
+            .send(function (err, data) {
+              console.log(err ? `Issue in S3.putObject.send() => ${err}` : "Send completed in S3.putObject.send()");
+            });
+        }, "image/png");
+      }
     });
   }
 
@@ -121,8 +161,10 @@ function RequestForm({ origin }) {
     questions.forEach((question) => {
       if (
         question.mandatory &&
-        formResponses.filter(
-          (response) => response.question.question_id === question.question_id
+        formResponses.filter((response) =>
+          response.question?.question_id === question.question_id
+          || response.question[0]?.question_id === question.question_id
+          || response.question_info?.question_id === question.question_id
         ).length === 0 &&
         !noShowList.includes(question.question_id)
       ) {
@@ -221,7 +263,6 @@ function RequestForm({ origin }) {
   });
 
   if (questions.length !== 0 && logicList.length !== 0) {
-    noShowList = [];
     return (
       <div className="requestFormPage">
         <ToastContainer />
@@ -274,7 +315,9 @@ function RequestForm({ origin }) {
             }
 
             if (!show || !orShow) {
-              noShowList.push(question.question_id);
+              if (!noShowList.includes(question.question_id)) {
+                setNoShowList((prev) => [...prev, question.question_id]);
+              }
               return null;
             }
 

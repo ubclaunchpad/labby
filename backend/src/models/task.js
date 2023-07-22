@@ -90,7 +90,24 @@ export class Task {
           result(error, null);
         } else {
           result(null, {
-            result: `Task of ${taskId} Saved Successfully for Task ID: ${taskDescription}`,
+            result: `Task of ${taskId} Saved Successfully for Task ID: ${taskId}`,
+          });
+        }
+      }
+    );
+  }
+
+  updateTaskProject(taskId, taskProject, result) {
+    con.query(
+      "CALL update_task_project(?, ?)",
+      [taskId, taskProject],
+      function (error, _) {
+        if (error) {
+          console.log("error: ", error);
+          result(error, null);
+        } else {
+          result(null, {
+            result: `Task of ${taskId} Saved Successfully for Task ID: ${taskId}`,
           });
         }
       }

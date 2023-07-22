@@ -20,10 +20,26 @@
   border: none;
 }
 
+.userTable .ant-table-footer {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: #ECEDF3;
+}
+
 .addService {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.resetPasswordButton{
+  text-align: center;
+  cursor: pointer;
+}
+
+.SaveNewPassword{
+  cursor: pointer;
+  margin-top: 10px;;
 }
 .ServiceQuestionSelect {
   border: 0;
@@ -86,10 +102,10 @@ So try and beat it with CSS specificity */
   border: 1px solid #d9d9d9;
 }
 .ant-table-container,
-.ant-table-container table > tbody > tr:last-child td:first-child {
-  border-bottom-left-radius: 10px;
+.userTable .ant-table-container table > tbody > tr:last-child td:first-child {
+  border-bottom-left-radius: 0px;
 }
 .ant-table-container,
-.ant-table-container table > tbody > tr:last-child td:last-child {
-  border-bottom-right-radius: 10px;
+.userTable .ant-table-container table > tbody > tr:last-child td:last-child {
+  border-bottom-right-radius: 0px;
 }

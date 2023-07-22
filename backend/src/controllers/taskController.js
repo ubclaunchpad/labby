@@ -8,8 +8,7 @@ export default class TaskController {
     return new Promise((resolve, reject) => {
       if (
         !req.body.task_title ||
-        !req.body.task_state ||
-        !req.body.task_description
+        !req.body.task_state
       ) {
         return reject({ error: "Error with request body." });
       }
@@ -79,6 +78,23 @@ export default class TaskController {
       TaskModel.updateDescription(
         req.params.taskId,
         req.body.description ?? "",
+        (err, result) => {
+          if (err) {
+            reject({ error: err });
+          }
+          this.isTaskLoaded = false;
+          resolve(result);
+        }
+      );
+    });
+  }
+
+  updateTaskProject(req) {
+    return new Promise((resolve, reject) => {
+      const TaskModel = new Task();
+      TaskModel.updateTaskProject(
+        req.params.taskId,
+        req.body.project_id,
         (err, result) => {
           if (err) {
             reject({ error: err });

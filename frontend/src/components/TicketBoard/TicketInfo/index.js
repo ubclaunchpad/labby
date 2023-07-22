@@ -10,18 +10,20 @@ import {
     SET_ACTIVE_TICKET,
     UNASSIGN_USER,
     UPDATE_TICKET_DESCRIPTION,
+    UPDATE_TICKET_PROJECT,
     UPDATE_TICKET_STATUS,
     UPDATE_TICKET_TITLE,
 } from "../../../redux/actions/ticketActions";
 import X from "../../../assets/X.png";
 import { AssigneeIcon } from "../../Icons/AssigneeIcon";
-import { appColor, ticketsColors } from "../../../constants";
+import { appColor, summaryFormat, ticketsColors } from "../../../constants";
 import { useEffect, useState } from "react";
 import { LOAD_EMPLOYEE } from "../../../redux/actions/userActions";
 import Subtasks from "../Subtasks";
 import ServiceList from "../ServiceList";
 import { SuccessToast } from "../../Toasts";
 import AWS from "aws-sdk";
+import { GET_PROJECT } from "../../../redux/actions/billingActions";
 
 export const getColorNum = (id, colorArray) => {
     if (colorArray) {
@@ -48,11 +50,15 @@ export const TicketInfo = () => {
     const currentTicketAttachments = useSelector(
         (state) => state.ticketReducer.currentTicketAttachments
     );
+    const projectList = useSelector((state) => state.projectReducer.projectList);
+    const [currentProject, setCurrentProject] = useState();
 
     const [assigneeAddModal, setAssigneeAddModal] = useState(false);
+    const [projectSwitchModal, setProjectSwitchModal] = useState(false);
 
     useEffect(() => {
         dispatch({ type: LOAD_EMPLOYEE });
+        dispatch({ type: GET_PROJECT });
         dispatch({ type: GET_TICKET_BOARD });
         if (currentTicket?.id) {
             dispatch({
@@ -70,6 +76,13 @@ export const TicketInfo = () => {
         }
     }, [dispatch, currentTicket]);
 
+    useEffect(() => {
+        if (currentTicket?.id) {
+            const currentProj = projectList.find((proj) => proj.project_id === currentTicket.project_id);
+            setCurrentProject(currentProj);
+        }
+    }, [projectList, currentTicket])
+
     return (
         <div
             className="ticketDetailBackground"
@@ -77,6 +90,7 @@ export const TicketInfo = () => {
             onClick={() => {
                 if (assigneeAddModal) {
                     setAssigneeAddModal(false);
+                    setProjectSwitchModal(false);
                 } else {
                     const inputs = document.querySelectorAll("input");
                     for (let i = 0; i < inputs.length; i++) {
@@ -90,6 +104,7 @@ export const TicketInfo = () => {
                 className="ticketDetail"
                 onClick={(event) => {
                     setAssigneeAddModal(false);
+                    setProjectSwitchModal(false);
                     event.stopPropagation();
                 }}
             >
@@ -108,6 +123,49 @@ export const TicketInfo = () => {
                             });
                         }}
                     />
+                    <button
+                        className="ChangeProjectButton"
+                        onClick={(e) => {
+                            setProjectSwitchModal(true);
+                            e.stopPropagation();
+                        }}
+                        style={{
+                            backgroundColor: appColor.lightGray,
+                            color: appColor.gray,
+                        }}
+                        onMouseOver={(e) => {
+                            e.target.style.backgroundColor = "#627BF6";
+                            e.target.style.color = "#FFFFFF";
+                        }}
+                        onMouseOut={(e) => {
+                            e.target.style.backgroundColor = appColor.lightGray;
+                            e.target.style.color = appColor.gray;
+                        }}
+                    >
+                        Change Project
+                    </button>
+                    {projectSwitchModal ? (
+                        <div className="projectSelectModal">
+                            <div className="ticketSectionTitle">Change project from {currentProject?.project_name} to:</div>
+                            {/* <div className="ticketSectionText">NOTE: Changing projects will reset custom service costs to the default values set for the organization</div> */}
+                            <div>
+                                {projectList.map((project) => {
+                                    return (
+                                        <div key={project.project_id} className="projectChoiceCell" onClick={() => {
+                                            dispatch({
+                                                type: UPDATE_TICKET_PROJECT,
+                                                payload: {
+                                                    ticketId: currentTicket.task_uuid,
+                                                    project_id: project.project_id,
+                                                },
+                                            });
+                                            setCurrentProject(project);
+                                        }}>{project.project_name}</div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    ) : null}
                     <button
                         className="TicketArchiveButton"
                         onClick={() => {
@@ -168,20 +226,21 @@ export const TicketInfo = () => {
 
                     AWS.config.update(config);
                     const S3 = new AWS.S3({});
+                    const fileType = summaryFormat === "pdf" ? "application/pdf" : "image/png";
                     const objParams = {
                         Bucket: process.env.REACT_APP_S3_BUCKET,
                         Key: `requestSummary/${currentTicket?.task_uuid}`,
-                        ResponseContentType: "image/png",
+                        ResponseContentType: fileType,
                     };
 
                     const res = await S3.getObject(objParams).promise();
                     const url = window.URL.createObjectURL(
-                        new Blob([res.Body], { type: "image/png" })
+                        new Blob([res.Body], { type: fileType })
                     );
 
                     const link = document.createElement('a');
                     link.href = url;
-                    link.download = `SOW-${currentTicket.code}.png`;
+                    link.download = `SOW-${currentTicket.code}.${summaryFormat}`;
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
@@ -307,7 +366,10 @@ export const TicketInfo = () => {
                                             <button
                                                 key={attachment[0]}
                                                 onClick={() => {
-                                                    window.open(attachment[1]);
+                                                    var link = document.createElement("a");
+                                                    link.download = attachment[0].split("/")[2];
+                                                    link.href = attachment[1];
+                                                    link.click();
                                                 }}
                                             >
                                                 {attachment[0].split("/")[2]}
