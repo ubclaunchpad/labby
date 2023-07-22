@@ -221,6 +221,35 @@
   flex-direction: column;
 }
 
+.projectSelectModal {
+  background-color: #eeeeee;
+  border-radius: 10px;
+  width: 98%;
+  height: 30%;
+  position: absolute;
+  left: 1%;
+  top: 6%;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+  flex-direction: column;
+  overflow: scroll;
+}
+
+.projectChoiceCell {
+  background-color: #627BF6;
+  margin-top: 10px;
+  width: 25%;
+  height: 30px;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
 .newMemberView {
   display: flex;
   flex-direction: row;
@@ -279,6 +308,18 @@
   margin-left: 20px;
 }
 
+.ChangeProjectButton {
+  height: 45px;
+  width: 140px;
+  border: 0;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
 .TicketArchiveButton:hover {
   background-color: #4caf50;
   color: white;
@@ -316,6 +357,13 @@
 .ticketSectionTitle {
   font-weight: 600;
   font-size: 16px;
+  text-align: left;
+  color: #666666;
+}
+
+.ticketSectionText {
+  font-weight: 300;
+  font-size: 12px;
   text-align: left;
   color: #666666;
 }

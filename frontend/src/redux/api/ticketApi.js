@@ -185,6 +185,27 @@ export const updateTicketDescriptionApi = async (payload) => {
   }
 };
 
+export const updateTicketProjectApi = async (payload) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    var headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    var data = JSON.stringify({
+      project_id: payload.project_id,
+    });
+
+    const tickets = await axios.post(
+      `task/project/${payload.ticketId}`,
+      data,
+      { headers: headers }
+    );
+    return tickets;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const getServiceCostApi = async (payload) => {
   try {
     const token = JSON.parse(localStorage.getItem("currentUser")).token;

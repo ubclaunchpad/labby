@@ -89,6 +89,23 @@ export default class TaskController {
     });
   }
 
+  updateTaskProject(req) {
+    return new Promise((resolve, reject) => {
+      const TaskModel = new Task();
+      TaskModel.updateTaskProject(
+        req.params.taskId,
+        req.body.project_id,
+        (err, result) => {
+          if (err) {
+            reject({ error: err });
+          }
+          this.isTaskLoaded = false;
+          resolve(result);
+        }
+      );
+    });
+  }
+
   //add subtask given taskID
   saveSubtaskByTask(req) {
     return new Promise((resolve, reject) => {
