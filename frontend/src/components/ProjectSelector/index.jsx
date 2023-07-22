@@ -100,7 +100,7 @@ function ProjectSelector({ question }) {
       </div>
       <div className="GlobalQuestionSubtitle">{question.question_note}</div>
       <select className="select" onChange={handleChange}>
-        {selectedValue === null && <option key={"Default"} value={""} />}
+        {!selectedValue && <option key={"Default"} value={""} />}
         {projectList.map((option) => (
           <option key={option.project_id} value={JSON.stringify(option)} selected={selectedValue && option.project_id === selectedValue.project_id}>
             {option.project_name}

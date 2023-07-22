@@ -62,7 +62,9 @@ export function* fetchTickets() {
       (state) => state.ticketReducer.ticketBoardDndData
     );
     let newTicket = allTickets.tasks[currentTicket.task_uuid];
-    yield put({ type: SET_ACTIVE_TICKET, payload: newTicket });
+    if (currentTicket.ticket_id !== newTicket.ticket_id) {
+      yield put({ type: SET_ACTIVE_TICKET, payload: newTicket });
+    }
   }
 }
 

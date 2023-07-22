@@ -8,8 +8,7 @@ export default class TaskController {
     return new Promise((resolve, reject) => {
       if (
         !req.body.task_title ||
-        !req.body.task_state ||
-        !req.body.task_description
+        !req.body.task_state
       ) {
         return reject({ error: "Error with request body." });
       }

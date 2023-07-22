@@ -20,6 +20,10 @@ export const backend = process.env.REACT_APP_BACKEND;
 export const frontend = process.env.REACT_APP_FRONTEND;
 // export const frontend = "http://localhost:3000/";
 
+export const summaryFormat = process.env.REACT_APP_SUMMARY_FORMAT;
+// export const summaryFormat = "pdf";
+// export const summaryFormat = "png";
+
 export const awsConfig = new AWS.Config({
   accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
   secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY,
