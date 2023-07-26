@@ -44,7 +44,11 @@ function InvoicePreview() {
       const billableProject = invoice.fk_project_id;
       const billableProjectFilter = projectList.find((project) => project.project_id === billableProject);
       const billableCostCenterList = billableProjectFilter.costcenter;
-      const costcenter = billableCostCenterList[0] ?? "No Cost Center";
+      const cc = billableCostCenterList[0] ?? "No Cost Center";
+      const costcenter = {
+        ...cc,
+        project_name: invoice.project_name,
+      }
       if (customers.filter((customer) => customer.cost_center_id === costcenter.cost_center_id).length === 0) {
         customers.push(costcenter);
       }

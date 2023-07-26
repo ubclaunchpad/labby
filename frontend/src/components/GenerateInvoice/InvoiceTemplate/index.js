@@ -54,12 +54,11 @@ const InvoiceTemplate = ({ customer, costcenterMap, invoicNum }) => {
             <div className="header-table-section header-item">
               <p className="header-table-title">Billed to: </p>
               <p className="header-table-content">
-                Client Name: {customer.cost_center_name}
-                <br />
-                Client Address: {customer.cost_center_address}<br />
-                Contact: {customer.cost_center_contact}<br />
-                Department: {customer.cost_center_type}<br />
-                Worktag/Email: {customer.cost_center_email}<br />
+                Client Name: {customer.cost_center_client_name}<br />
+                Address/Department: {customer.cost_center_address}<br />
+                Billing Contact: {customer.cost_center_contact}<br />
+                Email: {customer.cost_center_email}<br />
+                Cost Center/Worktag: {customer.cost_center_name}<br />
               </p>
             </div>
             <div className="header-table-section">
@@ -74,6 +73,7 @@ const InvoiceTemplate = ({ customer, costcenterMap, invoicNum }) => {
                 <p className="header-table-title">Project Details: </p>
                 <p className="header-table-content">
                   Project ID: {customer.fk_project_id}<br />
+                  Project Name: {customer.project_name}<br />
                   Principal Investigator: {customer.cost_center_investigator}<br />
                 </p>
               </div>
@@ -87,7 +87,7 @@ const InvoiceTemplate = ({ customer, costcenterMap, invoicNum }) => {
             return costcenterMap[billable.fk_project_id] === customer.cost_center_id
           })} />
 
-          <label htmlFor="notes">All MAPcore invoices should be deposited to EABJ / PM009455</label>
+          <label htmlFor="notes"><br/><br/>All MAPcore invoices should be deposited to EABJ / PM009455</label>
 
           <div>
             <div className="signer-form">
@@ -155,7 +155,6 @@ function InvoiceDetails({ billingData }) {
             </tr>
 
             {billingData.map((invoiceItem, index) => {
-              console.log(invoiceItem);
               return (
                 <tr className="item" key={invoiceItem.billable_id}>
                   <td>

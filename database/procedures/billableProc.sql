@@ -76,11 +76,12 @@ END $$
 CREATE PROCEDURE `load_billable` ()
 
 BEGIN
-    SELECT billable.*, u.username, o.organization_name, t.task_id, st.fk_task_id, st.subtask_id, t.task_state, st.subtask_state FROM billable
+    SELECT billable.*, u.username, o.organization_name, p.project_name, t.task_id, st.fk_task_id, st.subtask_id, t.task_state, st.subtask_state FROM billable
     LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
     LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
     LEFT JOIN users u on u.user_id = billable.created_by
     LEFT JOIN organizations o on o.organization_id = u.fk_organization_id
+    LEFT JOIN projects p on p.project_id = billable.fk_project_id
     WHERE billable.billed = 0
     AND (t.task_state != "archived" OR t.task_state IS NULL)
     AND (st.subtask_state != "archived" OR st.subtask_state IS NULL);
@@ -100,13 +101,14 @@ CREATE PROCEDURE `load_billable_with_filter` (
 )
 
 BEGIN
-    SELECT billable.*, u.username, o.organization_name, t.task_id, st.fk_task_id, st.subtask_id, t.task_state, st.subtask_state FROM billable
+    SELECT billable.*, u.username, o.organization_name, p.project_name, t.task_id, st.fk_task_id, st.subtask_id, t.task_state, st.subtask_state FROM billable
     LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
     LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
     LEFT JOIN costcenter_assignments ca on ca.fk_project_id = billable.fk_project_id
     LEFT JOIN project_assignments pa on pa.fk_project_id = billable.fk_project_id
     LEFT JOIN users u on u.user_id = billable.created_by
     LEFT JOIN organizations o on o.organization_id = u.fk_organization_id
+    LEFT JOIN projects p on p.project_id = billable.fk_project_id
     WHERE (name = _service_name OR _service_name IS NULL OR _service_name = '')
     AND (ca.fk_cost_center_id = _costcenter_id OR _costcenter_id IS NULL OR _costcenter_id = '')
     AND (billable.fk_project_id = _project_id OR _project_id IS NULL OR _project_id = '')

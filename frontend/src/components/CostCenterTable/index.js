@@ -21,7 +21,14 @@ const CostCenterTable = () => {
       dataIndex: "cost_center_name",
       key: "cost_center_name",
       editable: true,
-      width: "20%",
+      width: "15%",
+    },
+    {
+      title: "Client Name",
+      dataIndex: "cost_center_client_name",
+      key: "cost_center_client_name",
+      editable: true,
+      width: "10%",
     },
     {
       title: "Principal Investigator",
@@ -114,6 +121,7 @@ const CostCenterTable = () => {
     const newData = {
       cost_center_id: uuid(),
       cost_center_name: "New Cost Center",
+      cost_center_client_name: "New Client",
       cost_center_investigator: "New Investigator",
       cost_center_contact: "New Contact",
       cost_center_email: "New Email",

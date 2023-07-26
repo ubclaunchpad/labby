@@ -17,7 +17,15 @@ import { loadProjectSaga } from "./projectSaga";
 
 export function* loadCostCenterSaga() {
   const costCenterList = yield call(getCostcenterApi);
-  yield put({ type: SET_COSTCENTER, payload: costCenterList.data });
+  const ccd = costCenterList.data;
+  const costCenterData = ccd.map((costCenter) => {
+    return {
+      ...costCenter,
+      cost_center_investigator: costCenter.cost_center_investigator ?? "New Investigator",
+      cost_center_client_name: costCenter.cost_center_client_name ?? "New Client",
+    }
+  })
+  yield put({ type: SET_COSTCENTER, payload: costCenterData });
 }
 
 export function* updateProjectAssignment({ payload }) {

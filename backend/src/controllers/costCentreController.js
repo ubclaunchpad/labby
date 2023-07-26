@@ -33,6 +33,7 @@ export default class CostCentreController {
       const costCenterData = {
         cost_center_id: req.body.cost_center_id,
         cost_center_name: req.body.cost_center_name,
+        cost_center_client_name: req.body.cost_center_client_name,
         cost_center_investigator: req.body.cost_center_investigator,
         cost_center_contact: req.body.cost_center_contact,
         cost_center_email: req.body.cost_center_email,
