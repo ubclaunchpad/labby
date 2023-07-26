@@ -9,6 +9,7 @@ DELIMITER $$
 CREATE PROCEDURE `save_cost_center` (
     IN `_cost_center_id` VARCHAR(50),
     IN `_cost_center_name` VARCHAR(50),
+    IN `_cost_center_client_name` VARCHAR(255),
     IN `_cost_center_investigator` VARCHAR(255),
     IN `_cost_center_contact` VARCHAR(255),
     IN `_cost_center_email` VARCHAR(255),
@@ -18,6 +19,7 @@ CREATE PROCEDURE `save_cost_center` (
 INSERT INTO `cost_centers` (
     `cost_center_id`,
     `cost_center_name`,
+    `cost_center_client_name`,
     `cost_center_investigator`,
     `cost_center_contact`,
     `cost_center_email`,
@@ -28,6 +30,7 @@ VALUES
    (
     `_cost_center_id`,
     `_cost_center_name`,
+    `_cost_center_client_name`,
     `_cost_center_investigator`,
     `_cost_center_contact`,
     `_cost_center_email`,
@@ -36,6 +39,7 @@ VALUES
    ) ON DUPLICATE KEY UPDATE
     cost_centers.cost_center_id=_cost_center_id,
     cost_centers.cost_center_name=_cost_center_name,
+    cost_centers.cost_center_client_name=_cost_center_client_name,
     cost_centers.cost_center_investigator=_cost_center_investigator,
     cost_centers.cost_center_contact=_cost_center_contact,
     cost_centers.cost_center_email=_cost_center_email,

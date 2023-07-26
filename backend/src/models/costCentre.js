@@ -55,10 +55,11 @@ export class CostCentre {
 
   insertCostCentre(newCostCentre, result) {
     con.query(
-      "CALL save_cost_center(?, ?, ?, ?, ?, ?, ?)",
+      "CALL save_cost_center(?, ?, ?, ?, ?, ?, ?, ?)",
       [
         newCostCentre.cost_center_id,
         newCostCentre.cost_center_name,
+        newCostCentre.cost_center_client_name,
         newCostCentre.cost_center_investigator,
         newCostCentre.cost_center_contact,
         newCostCentre.cost_center_email,

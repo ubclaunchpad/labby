@@ -83,6 +83,7 @@ export const postCostCenterApi = async (payload) => {
     var data = JSON.stringify({
       cost_center_id: payload.cost_center_id,
       cost_center_name: payload.cost_center_name,
+      cost_center_client_name: payload.cost_center_client_name,
       cost_center_investigator: payload.cost_center_investigator,
       cost_center_contact: payload.cost_center_contact,
       cost_center_email: payload.cost_center_email,

@@ -53,7 +53,7 @@ function SignUpForm() {
                 user_id: uuid(),
                 fk_organization_id: null,
                 username: firstName + " " + lastName,
-                email: email,
+                email: email.toLowerCase(),
                 employee: false,
                 password: password,
                 navTo: () => navigate("/"),

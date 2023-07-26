@@ -25,7 +25,7 @@ function LoginForm({ from }) {
     dispatch({
       type: AUTHENTICATE_USER,
       payload: {
-        email: email,
+        email: email.toLowerCase(),
         password: password,
       },
     });
@@ -44,7 +44,7 @@ function LoginForm({ from }) {
     dispatch({
       type: REQUEST_RESET,
       payload: {
-        email: email,
+        email: email.toLowerCase(),
       },
     });
   };

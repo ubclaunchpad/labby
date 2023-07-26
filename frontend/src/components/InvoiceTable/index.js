@@ -34,8 +34,8 @@ const InvoiceTable = () => {
     },
     {
       title: "Project",
-      dataIndex: "fk_project_id",
-      key: "fk_project_id",
+      dataIndex: "project_name",
+      key: "project_name",
       editable: false,
     },
     {
