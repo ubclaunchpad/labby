@@ -74,6 +74,7 @@ function RequestForm({ origin }) {
 
   // Load Cost Estimate
   useEffect(() => {
+    console.log(formResponses)
     dispatch({ type: LOAD_COST, payload: { formResponses: formResponses } });
   }, [dispatch, formResponses]);
 

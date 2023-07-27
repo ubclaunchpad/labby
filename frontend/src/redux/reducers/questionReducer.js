@@ -39,7 +39,7 @@ const answerList = (state = defaultAnswerList, action) => {
     case SET_ANSWER: {
       var finalAnswers = {};
       action.payload.answers.forEach((answer) => {
-        if (answer.answer_id !== null && (answer.price_category === action.payload.price_category || answer.price_cateogry === undefined)) {
+        if (answer.answer_id !== null && (answer.price_category === action.payload.price_category || !answer.price_category)) {
           var answerForQuestion = finalAnswers[answer.question_id] ?? [];
           if (
             !answerForQuestion.find(
