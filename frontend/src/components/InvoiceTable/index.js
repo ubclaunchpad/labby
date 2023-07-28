@@ -10,6 +10,17 @@ const InvoiceTable = () => {
   const dispatch = useDispatch();
   const dataSource = useSelector((state) => state.billingReducer.billingList);
   const invoiceList = useSelector((state) => state.billingReducer.invoiceList);
+  // const [dataSource, setDataSource] = useState([]);
+
+  // useEffect(() => {
+  //   const seenMap = {};
+  //   const ds = rawDataSource.filter((item) => {
+  //     if (seenMap[item.billable_id]) return false;
+  //     seenMap[item.billable_id] = true;
+  //     return true;
+  //   });
+  //   setDataSource(ds);
+  // }, [rawDataSource]);
 
   const columns = [
     {
@@ -20,17 +31,35 @@ const InvoiceTable = () => {
       render: (_, record) =>
         dataSource.length >= 1 ? (
           <div>
-            <div>SOW-{record.task_id ?? record.fk_task_id ?? record.task_uuid}</div>
-            {record.subtask_id ? <span className="subtaskInvoiceLabel">Subtask-{record.subtask_id}</span> : null}
+            <div>
+              SOW-{record.task_id ?? record.fk_task_id ?? record.task_uuid}
+            </div>
+            {record.subtask_id ? (
+              <span className="subtaskInvoiceLabel">
+                Subtask-{record.subtask_id}
+              </span>
+            ) : null}
           </div>
         ) : null,
-      sorter: (a, b) => (a.task_id ?? a.fk_task_id ?? 0) - (b.task_id ?? b.fk_task_id ?? 0)
+      sorter: (a, b) =>
+        (a.task_id ?? a.fk_task_id ?? 0) - (b.task_id ?? b.fk_task_id ?? 0),
     },
     {
       title: "Service",
       dataIndex: "name",
       key: "name",
       editable: false,
+      render: (_, record) =>
+        dataSource.length >= 1 ? (
+          <div>
+            <div>{record.name}</div>
+            {record.sample_id ? (
+              <span className="subtaskInvoiceLabel">
+                {record.sample_id} - {record.authorized_by}
+              </span>
+            ) : null}
+          </div>
+        ) : null,
     },
     {
       title: "Project",
@@ -56,19 +85,33 @@ const InvoiceTable = () => {
       key: "createdDate",
       editable: false,
       render: (_, record) => {
-        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        var options = { year: "numeric", month: "long", day: "numeric" };
         const date = new Date(record.createdDate);
         return dataSource.length >= 1 ? (
           <div>{date.toLocaleDateString("en-US", options)}</div>
-        ) : null
+        ) : null;
       },
-      sorter: (a, b) => (new Date(a.createdDate).getTime() ?? 0) - (new Date(b.createdDate).getTime() ?? 0),
+      sorter: (a, b) =>
+        (new Date(a.createdDate).getTime() ?? 0) -
+        (new Date(b.createdDate).getTime() ?? 0),
     },
     {
-      title: "Cost",
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "quantity",
+      editable: false,
+      render: (_, record) =>
+        dataSource.length >= 1 ? (
+          <div>{record.sample_id ? 1 : record.quantity}</div>
+        ) : null,
+    },
+    {
+      title: "Unit Cost",
       dataIndex: "cost",
       key: "cost",
       editable: false,
+      render: (_, record) =>
+        dataSource.length >= 1 ? <div>{record.cost}</div> : null,
     },
     {
       title: "Billed",
@@ -77,10 +120,10 @@ const InvoiceTable = () => {
       render: (_, record) => {
         return dataSource.length >= 1 ? (
           <div>{record.billed ? "Yes" : "No"}</div>
-        ) : null
+        ) : null;
       },
     },
-    Table.SELECTION_COLUMN
+    Table.SELECTION_COLUMN,
   ];
 
   useEffect(() => {
@@ -205,11 +248,15 @@ const InvoiceTable = () => {
               payload: rowsSelected,
             });
           },
-          selectedRowKeys: invoiceList.map((item) => item.billable_id),
+          selectedRowKeys: invoiceList.map(
+            (item) => item.billable_id + (item.sample_id ?? "")
+          ),
         }}
         components={components}
-        rowKey={(record) => record.billable_id}
-        rowClassName={(_, index) => index % 2 === 0 ? "editable-row" : "editable-row-dark"}
+        rowKey={(record) => record.billable_id + (record.sample_id ?? "")}
+        rowClassName={(_, index) =>
+          index % 2 === 0 ? "editable-row" : "editable-row-dark"
+        }
         dataSource={dataSource}
         columns={renderedColumns}
       />

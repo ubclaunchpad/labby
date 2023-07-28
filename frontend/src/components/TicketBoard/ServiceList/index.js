@@ -19,18 +19,30 @@ function ServiceList({ readOnly }) {
   const currentTicket = useSelector(
     (state) => state.ticketReducer.currentTicket
   );
-  const currentTicketServiceCosts = useSelector(
+  const rawDataSource = useSelector(
     (state) => state.ticketReducer.currentTicketServiceCosts
   );
   const currentUser = useSelector((state) => state.userReducer.currentUser);
-  const billables = useSelector(
-    (state) => state.costReducer.costTableServices
-  );
+  const billables = useSelector((state) => state.costReducer.costTableServices);
   const projectList = useSelector((state) => state.projectReducer.projectList);
+
+  const [currentTicketServiceCosts, setDataSource] = useState([]);
+
+  useEffect(() => {
+    const seenMap = {};
+    const ds = rawDataSource.filter((item) => {
+      if (seenMap[item.billable_id]) return false;
+      seenMap[item.billable_id] = true;
+      return true;
+    });
+    setDataSource(ds);
+  }, [rawDataSource]);
 
   // Use the projectList to determine the customer type (Not most efficient, but it works)
   let customerType = "external";
-  const projects = projectList.filter((item) => (item.project_id === currentTicket.project_id));
+  const projects = projectList.filter(
+    (item) => item.project_id === currentTicket.project_id
+  );
   if (projects.length > 0) {
     const costCenters = projects[0].costcenter;
     if (costCenters.length > 0) {
@@ -41,7 +53,7 @@ function ServiceList({ readOnly }) {
     }
   }
 
-  const [newService, setNewService] = useState('');
+  const [newService, setNewService] = useState("");
   const [tempEntry, setTempEntry] = useState([]);
 
   useEffect(() => {
@@ -73,11 +85,18 @@ function ServiceList({ readOnly }) {
                         showArrow={false}
                         bordered={false}
                         disabled={readOnly}
-                        style={{ width: "90%", marginRight: "10%", textAlign: "left", color: '#666666' }}
+                        style={{
+                          width: "90%",
+                          marginRight: "10%",
+                          textAlign: "left",
+                          color: "#666666",
+                        }}
                         placeholder="Select a Service"
                         onSelect={(text) => {
                           if (!readOnly) {
-                            const billMatch = billables.filter((item) => item.service === text);
+                            const billMatch = billables.filter(
+                              (item) => item.service === text
+                            );
                             if (billMatch.length > 0) {
                               dispatch({
                                 type: POST_SERVICE_COST,
@@ -85,6 +104,7 @@ function ServiceList({ readOnly }) {
                                   ...serviceCost,
                                   sow_id: serviceCost.task_uuid,
                                   cost: billMatch[0][customerType].substring(1),
+                                  answer_id: billMatch[0].answer_id,
                                   name: text,
                                 },
                               });
@@ -104,25 +124,35 @@ function ServiceList({ readOnly }) {
                         dropdownRender={(menu) => (
                           <>
                             {menu}
-                            <Divider style={{ margin: '8px 0' }} />
-                            <Space style={{ padding: '0 8px 4px' }}>
+                            <Divider style={{ margin: "8px 0" }} />
+                            <Space style={{ padding: "0 8px 4px" }}>
                               <Input
                                 placeholder="Custom..."
                                 value={newService}
                                 onChange={(e) => {
-                                  setNewService(e.target.value)
+                                  setNewService(e.target.value);
                                 }}
                               />
-                              <Button type="text" onClick={() => {
-                                setTempEntry([{ key: newService, service: newService }])
-                                setNewService('')
-                              }}>
+                              <Button
+                                type="text"
+                                onClick={() => {
+                                  setTempEntry([
+                                    { key: newService, service: newService },
+                                  ]);
+                                  setNewService("");
+                                }}
+                              >
                                 Add item
                               </Button>
                             </Space>
                           </>
                         )}
-                        options={billables.concat(tempEntry).map((item) => ({ label: item.service, value: item.service }))}
+                        options={billables
+                          .concat(tempEntry)
+                          .map((item) => ({
+                            label: item.service,
+                            value: item.service,
+                          }))}
                       />
                     </div>
                     <input
@@ -165,7 +195,7 @@ function ServiceList({ readOnly }) {
                   </div>
 
                   <div className="deleteServiceSpace">
-                    {!readOnly ?
+                    {!readOnly ? (
                       <img
                         className="delete-service"
                         src={X}
@@ -180,11 +210,22 @@ function ServiceList({ readOnly }) {
                           });
                           SuccessToast("Service Removed!");
                         }}
-                      /> : null}
+                      />
+                    ) : null}
                   </div>
                 </div>
+                <div style={{ flexDirection: "row", textAlign: 'left', paddingLeft: 10 }}>
+                  <div className="serviceInputBoxBlue">For:</div>
+                  {Object.values(
+                    rawDataSource.filter(
+                      (item) => item.billable_id === serviceCost.billable_id
+                    )
+                  ).map((item) => {
+                    return <div className="serviceInputBoxBlue" key={item.sample_id}>{item.sample_id} - {item.authorized_by}</div>;
+                  })}
+                </div>
                 <div>
-                  {!readOnly ?
+                  {!readOnly ? (
                     <input
                       className="serviceCommentInput"
                       defaultValue={serviceCost.comment ?? ""}
@@ -200,39 +241,42 @@ function ServiceList({ readOnly }) {
                         });
                         SuccessToast("Service Modification Saved!");
                       }}
-                    /> : null}
+                    />
+                  ) : null}
                 </div>
               </div>
             );
           })}
         </div>
       </div>
-      {!readOnly ? <div
-        className="additionBar"
-        onClick={() => {
-          dispatch({
-            type: POST_SERVICE_COST,
-            payload: {
-              billable_id: uuid(),
-              sow_id: currentTicket.task_uuid,
-              fk_project_id: currentTicket.project_id,
-              name: "New Service",
-              quantity: 1,
-              cost: 0,
-              comment: "",
-              createdDate: new Date(),
-              completedTime: null,
-              billed: false,
-              billedTime: null,
-              created_by: currentUser.user_id,
-            },
-          });
-          SuccessToast("Service Created!");
-        }}
-      >
-        <img className="Add" src={Add} alt="Add" />
-        <div className="ticketSectionTitle">Add Service</div>
-      </div> : null}
+      {!readOnly ? (
+        <div
+          className="additionBar"
+          onClick={() => {
+            dispatch({
+              type: POST_SERVICE_COST,
+              payload: {
+                billable_id: uuid(),
+                sow_id: currentTicket.task_uuid,
+                fk_project_id: currentTicket.project_id,
+                name: "New Service",
+                quantity: 1,
+                cost: 0,
+                comment: "",
+                createdDate: new Date(),
+                completedTime: null,
+                billed: false,
+                billedTime: null,
+                created_by: currentUser.user_id,
+              },
+            });
+            SuccessToast("Service Created!");
+          }}
+        >
+          <img className="Add" src={Add} alt="Add" />
+          <div className="ticketSectionTitle">Add Service</div>
+        </div>
+      ) : null}
       <ToastContainer />
     </div>
   );

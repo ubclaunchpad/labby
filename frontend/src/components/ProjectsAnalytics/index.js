@@ -4,12 +4,26 @@ import { SET_ACTIVE_PROJECT_ANALYTICS } from "../../redux/actions/billingActions
 import { useDispatch, useSelector } from "react-redux";
 import Chart from "react-apexcharts";
 import { appColor, ticketsColors } from "../../constants";
+// import { useEffect, useState } from "react";
 
 function ProjectsAnalytics() {
   const dispatch = useDispatch();
   const dataSource = useSelector(
     (state) => state.billingReducer.billingList
   ).filter((item) => item.cost > 0);
+
+  // const [dataSource, setDataSource] = useState([]);
+
+  // useEffect(() => {
+  //   const seenMap = {};
+  //   const ds = rawDataSource.filter((item) => {
+  //     if (seenMap[item.billable_id]) return false;
+  //     seenMap[item.billable_id] = true;
+  //     return true;
+  //   });
+  //   setDataSource(ds);
+  // }, [rawDataSource]);
+
   const projectList = useSelector(
     (state) => state.projectReducer.projectList
   );

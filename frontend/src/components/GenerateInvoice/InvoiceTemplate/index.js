@@ -138,7 +138,7 @@ const InvoiceTemplate = ({ customer, costcenterMap, invoicNum }) => {
 function InvoiceDetails({ billingData }) {
   let subtotal = 0;
   for (let item of billingData) {
-    subtotal += item.cost;
+    subtotal += (item.cost * (item.sample_id ? 1 : item.quantity));
   }
   return (
     <>
@@ -156,15 +156,15 @@ function InvoiceDetails({ billingData }) {
 
             {billingData.map((invoiceItem, index) => {
               return (
-                <tr className="item" key={invoiceItem.billable_id}>
+                <tr className="item" key={invoiceItem.billable_id + (invoiceItem.sample_id ?? "")}>
                   <td>
-                    {index + 1}. {invoiceItem.name}
+                    {invoiceItem.name} {invoiceItem.sample_id ? `- ${invoiceItem.sample_id}; ${invoiceItem.authorized_by}` : ""}
                   </td>
-                  <td>{`SOW-${invoiceItem.task_id ?? (invoiceItem.subtask_id ?? "?")}`}</td>
+                  <td>{`${invoiceItem.task_id ?? (invoiceItem.subtask_id ?? "?")}`}</td>
                   <td>{invoiceItem.username}</td>
-                  <td>{invoiceItem.quantity}</td>
-                  <td>${(invoiceItem.cost / invoiceItem.quantity).toFixed(2)}</td>
+                  <td>{invoiceItem.sample_id ? 1 : invoiceItem.quantity}</td>
                   <td>${invoiceItem.cost}</td>
+                  <td>${(invoiceItem.cost * (invoiceItem.sample_id ? 1 : invoiceItem.quantity)).toFixed(2)}</td>
                 </tr>
               );
             })}

@@ -231,6 +231,7 @@ export const postServiceCostApi = async (payload) => {
       billable_id: payload.billable_id,
       sow_id: payload.sow_id,
       project_id: payload.project_id ?? payload.fk_project_id,
+      answer_id: payload.answer_id ?? "",
       name: payload.name,
       quantity: payload.quantity,
       cost: payload.cost,

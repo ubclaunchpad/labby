@@ -11,6 +11,18 @@ import {
 const InvoiceTotal = () => {
   const dispatch = useDispatch();
   const dataSource = useSelector((state) => state.billingReducer.billingList);
+  // const [dataSource, setDataSource] = useState([]);
+
+  // useEffect(() => {
+  //   const seenMap = {};
+  //   const ds = rawDataSource.filter((item) => {
+  //     if (seenMap[item.billable_id]) return false;
+  //     seenMap[item.billable_id] = true;
+  //     return true;
+  //   });
+  //   setDataSource(ds);
+  // }, [rawDataSource]);
+
   const totalServices = dataSource.length.toString().padStart(1, "0");
   let sowMap = {};
   let projectMap = {};

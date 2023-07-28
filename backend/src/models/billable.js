@@ -73,11 +73,12 @@ export class Billable {
 
   saveBillable(billable, result) {
     con.query(
-      "CALL save_billable(?,?,?,?,?,?,?,?,?,?,?,?)",
+      "CALL save_billable(?,?,?,?,?,?,?,?,?,?,?,?,?)",
       [
         billable.billable_id,
         billable.sow_id,
         billable.project_id,
+        billable.answer_id,
         billable.name,
         billable.quantity,
         billable.cost,

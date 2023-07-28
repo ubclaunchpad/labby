@@ -79,6 +79,13 @@
   color: #666666;
 }
 
+.serviceInputBoxBlue {
+  flex: 1;
+  border: none;
+  background-color: transparent;
+  color: #627BF6;
+}
+
 .serviceInputBox:focus {
   outline: none;
 }

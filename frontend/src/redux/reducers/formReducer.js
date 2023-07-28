@@ -13,7 +13,7 @@ import {
   REMOVE_PHONE_RESPONSE,
   REMOVE_SINGLE_RESPONSE,
   SET_FORMS,
-  REMOVE_PROJECT_RESPONSE,
+  REPLACE_PROJECT_RESPONSE,
   SUBMIT_FORM,
   ADD_OTHER_RESPONSE,
   REMOVE_OTHER_RESPONSE,
@@ -95,10 +95,11 @@ const formResponses = (state = defaultAnswerList, action) => {
       );
       return [...state];
     }
-    case REMOVE_PROJECT_RESPONSE: {
+    case REPLACE_PROJECT_RESPONSE: {
       state = state.filter(
         (response) => response.question.project_id === undefined
       );
+      state.push(action.payload);
       return [...state];
     }
     case ADD_FULLNAME_RESPONSE: {
