@@ -5,15 +5,13 @@ import { deleteCosts, getCosts, postCosts, updateQuantifiableApi } from "../api/
 export function* fetchCost({ payload }) {
   const costs = [];
   let category = "Industry";
+  const project = payload.formResponses.find((item) => item.question_info);
 
-  if (payload.formResponses.length !== 0) {
-    for (var i = 0; i < payload.formResponses.length; i++) {
-      const price_category = payload.formResponses[i].question.price_category;
+  if (project) {
+    const price_category = project.question.costcenter[0].cost_center_type;
       if (price_category != null) {
         category = price_category;
-        break;
       }
-    }
   }
   costs.push(category);
 

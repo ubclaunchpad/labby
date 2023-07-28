@@ -154,19 +154,30 @@ function RequestForm({ origin }) {
     });
   }
 
+  function unfilledClinicalSection(responseAnswers) {
+    const hasUnfilled = responseAnswers.some((response) => {
+      const isClinical = response.question.clinical === 1;
+      const hasClinicalResponse = Object.values(clinicalList).some((res) => res.answer === response.question.answer_id);
+
+      return isClinical && !hasClinicalResponse;
+    })
+
+    return hasUnfilled;
+  }
+
   // Basic Form Validation and Submit
   function submitForm() {
     var filled = true;
     var unfilledQuestion = "";
     questions.forEach((question) => {
+      const responseAnswers = formResponses.filter((response) =>
+      response.question?.question_id === question.question_id
+      || response.question[0]?.question_id === question.question_id
+      || response.question_info?.question_id === question.question_id
+    );
       if (
-        question.mandatory &&
-        formResponses.filter((response) =>
-          response.question?.question_id === question.question_id
-          || response.question[0]?.question_id === question.question_id
-          || response.question_info?.question_id === question.question_id
-        ).length === 0 &&
-        !noShowList.includes(question.question_id)
+        (question.mandatory && responseAnswers.length === 0 && !noShowList.includes(question.question_id)) ||
+        unfilledClinicalSection(responseAnswers)
       ) {
         filled = false;
         unfilledQuestion = question.question;
@@ -208,6 +219,7 @@ function RequestForm({ origin }) {
               if (cost) {
                 // This question's is in current stored cost estimate
                 billableList.push({
+                  answer_id: response.question.answer_id,
                   service: service,
                   quantity: quantity,
                   cost: cost * quantity,

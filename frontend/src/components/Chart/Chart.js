@@ -9,11 +9,24 @@ import {
 } from "recharts";
 import "./Chart.css";
 import { useSelector } from "react-redux";
+// import { useEffect, useState } from "react";
 
 export const Chart = ({ data }) => {
   const invoiceDataSource = useSelector(
     (state) => state.billingReducer.billingList
   );
+
+  // const [invoiceDataSource, setDataSource] = useState([]);
+
+  // useEffect(() => {
+  //   const seenMap = {};
+  //   const ds = rawDataSource.filter((item) => {
+  //     if (seenMap[item.billable_id]) return false;
+  //     seenMap[item.billable_id] = true;
+  //     return true;
+  //   });
+  //   setDataSource(ds);
+  // }, [rawDataSource]);
 
   let billingMapping = {};
 

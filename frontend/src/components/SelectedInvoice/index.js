@@ -1,6 +1,9 @@
 import "./index.css";
 import X from "../../assets/X.png";
-import { SET_ACTIVE_CONFIRMATION, SET_INVOICE_LIST } from "../../redux/actions/billingActions";
+import {
+  SET_ACTIVE_CONFIRMATION,
+  SET_INVOICE_LIST,
+} from "../../redux/actions/billingActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Checkbox, Table } from "antd";
 import { appColor } from "../../constants";
@@ -8,9 +11,7 @@ import GenerateInvoice from "../GenerateInvoice";
 
 function SelectedInvoice() {
   const dispatch = useDispatch();
-  const invoiceList = useSelector(
-    (state) => state.billingReducer.invoiceList
-  );
+  const invoiceList = useSelector((state) => state.billingReducer.invoiceList);
   const columns = [
     {
       title: "SOW #",
@@ -19,20 +20,34 @@ function SelectedInvoice() {
       editable: false,
       render: (_, record) =>
         invoiceList.length >= 1 ? (
-          <div>SOW-{record.task_id ?? record.fk_task_id ?? record.task_uuid}</div>
+          <div>
+            SOW-{record.task_id ?? record.fk_task_id ?? record.task_uuid}
+          </div>
         ) : null,
-      sorter: (a, b) => (a.task_id ?? a.fk_task_id ?? 0) - (b.task_id ?? b.fk_task_id ?? 0)
+      sorter: (a, b) =>
+        (a.task_id ?? a.fk_task_id ?? 0) - (b.task_id ?? b.fk_task_id ?? 0),
     },
     {
       title: "Service",
       dataIndex: "name",
       key: "name",
       editable: false,
+      render: (_, record) =>
+        invoiceList.length >= 1 ? (
+          <div>
+            <div>{record.name}</div>
+            {record.sample_id ? (
+              <span className="subtaskInvoiceLabel">
+                {record.sample_id} - {record.authorized_by}
+              </span>
+            ) : null}
+          </div>
+        ) : null,
     },
     {
       title: "Project",
-      dataIndex: "billable_id",
-      key: "billable_id",
+      dataIndex: "project_name",
+      key: "project_name",
       editable: false,
     },
     {
@@ -41,19 +56,35 @@ function SelectedInvoice() {
       key: "createdDate",
       editable: false,
       render: (_, record) => {
-        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        var options = { year: "numeric", month: "long", day: "numeric" };
         const date = new Date(record.createdDate);
         return invoiceList.length >= 1 ? (
           <div>{date.toLocaleDateString("en-US", options)}</div>
-        ) : null
+        ) : null;
       },
-      sorter: (a, b) => (new Date(a.createdDate).getTime() ?? 0) - (new Date(b.createdDate).getTime() ?? 0),
+      sorter: (a, b) =>
+        (new Date(a.createdDate).getTime() ?? 0) -
+        (new Date(b.createdDate).getTime() ?? 0),
     },
     {
-      title: "Cost",
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "quantity",
+      editable: false,
+      render: (_, record) =>
+        invoiceList.length >= 1 ? (
+          <div>{record.sample_id ? 1 : record.quantity}</div>
+        ) : null,
+    },
+    {
+      title: "Unit Cost",
       dataIndex: "cost",
       key: "cost",
       editable: false,
+      render: (_, record) =>
+        invoiceList.length >= 1 ? (
+          <div>{record.cost}</div>
+        ) : null,
     },
     {
       title: "Billed",
@@ -62,7 +93,7 @@ function SelectedInvoice() {
       render: (_, record) => {
         return invoiceList.length >= 1 ? (
           <div>{record.billed ? "Yes" : "No"}</div>
-        ) : null
+        ) : null;
       },
     },
     {
@@ -73,7 +104,9 @@ function SelectedInvoice() {
         invoiceList.length >= 1 ? (
           <Checkbox
             checked={invoiceList.some(
-              (item) => item.billable_id === record.billable_id
+              (item) =>
+                item.billable_id + (item.sample_id ?? "") ===
+                record.billable_id + (record.sample_id ?? "")
             )}
             onClick={(e) => {
               if (e.target.checked) {
@@ -85,7 +118,9 @@ function SelectedInvoice() {
                 dispatch({
                   type: SET_INVOICE_LIST,
                   payload: invoiceList.filter(
-                    (item) => item.billable_id !== record.billable_id
+                    (item) =>
+                      item.billable_id + (item.sample_id ?? "") !==
+                      record.billable_id + (record.sample_id ?? "")
                   ),
                 });
               }
@@ -103,7 +138,9 @@ function SelectedInvoice() {
     <div className="selectedInvoiceModal">
       <div className="modal-content">
         <div className="selectedInvoiceTitle">
-          <h2 style={{ color: appColor.gray }}>Services Selected For Billing</h2>
+          <h2 style={{ color: appColor.gray }}>
+            Services Selected For Billing
+          </h2>
           <img
             className="selectedModalClose"
             src={X}
@@ -118,14 +155,19 @@ function SelectedInvoice() {
             className="selectedTable"
             pagination={false}
             dataSource={invoiceList}
-            rowKey={(record) => record.billable_id}
-            rowClassName={(_, index) => index % 2 === 0 ? "editable-row" : "editable-row-dark"}
+            rowKey={(record) => record.billable_id + (record.sample_id ?? "")}
+            rowClassName={(_, index) =>
+              index % 2 === 0 ? "editable-row" : "editable-row-dark"
+            }
             columns={renderedColumns}
           />
           <div className="generateButtonView">
-            <div className="generate-invoice-button" onClick={() => {
-              dispatch({ type: SET_ACTIVE_CONFIRMATION });
-            }}>
+            <div
+              className="generate-invoice-button"
+              onClick={() => {
+                dispatch({ type: SET_ACTIVE_CONFIRMATION });
+              }}
+            >
               <GenerateInvoice />
             </div>
           </div>

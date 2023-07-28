@@ -13,6 +13,7 @@ CREATE PROCEDURE `save_billable` (
     IN `_billable_id` VARCHAR(50),
     IN `_task_uuid` VARCHAR(50),
     IN `_fk_project_id` VARCHAR(50),
+    IN `_answer_id` VARCHAR(50),
     IN `_name` VARCHAR(50),
     IN `_quantity` DOUBLE,
     IN `_cost` DOUBLE,
@@ -27,6 +28,7 @@ INSERT INTO `billable` (
     `billable_id`,
     `task_uuid`,
     `fk_project_id`,
+    `answer_id`,
     `name`,
     `quantity`,
     `cost`,
@@ -42,6 +44,7 @@ VALUES
     `_billable_id`,
     `_task_uuid`,
     `_fk_project_id`,
+    `_answer_id`,
     `_name`,
     `_quantity`,
     `_cost`,
@@ -55,6 +58,7 @@ VALUES
     billable.billable_id=_billable_id,
     billable.task_uuid=_task_uuid,
     billable.fk_project_id=_fk_project_id,
+    billable.answer_id=_answer_id,
     billable.name=_name,
     billable.quantity=_quantity,
     billable.cost=_cost,
@@ -76,15 +80,18 @@ END $$
 CREATE PROCEDURE `load_billable` ()
 
 BEGIN
-    SELECT billable.*, u.username, o.organization_name, p.project_name, t.task_id, st.fk_task_id, st.subtask_id, t.task_state, st.subtask_state FROM billable
+    SELECT billable.*, u.username, o.organization_name, p.project_name, c.sample_id, c.authorized_by, t.task_id, st.fk_task_id, st.subtask_id, t.task_state, st.subtask_state FROM billable
     LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
     LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
     LEFT JOIN users u on u.user_id = billable.created_by
     LEFT JOIN organizations o on o.organization_id = u.fk_organization_id
     LEFT JOIN projects p on p.project_id = billable.fk_project_id
+    LEFT JOIN questions_answer qa on qa.answer_id = billable.answer_id 
+    LEFT JOIN clinical c on c.fk_questions_answer_id = qa.answer_id and c.fk_survey_id = t.fk_survey_id
     WHERE billable.billed = 0
     AND (t.task_state != "archived" OR t.task_state IS NULL)
-    AND (st.subtask_state != "archived" OR st.subtask_state IS NULL);
+    AND (st.subtask_state != "archived" OR st.subtask_state IS NULL)
+    ORDER BY billable.createdDate DESC;
 END $$
 
 CREATE PROCEDURE `load_billable_with_filter` (
@@ -101,7 +108,7 @@ CREATE PROCEDURE `load_billable_with_filter` (
 )
 
 BEGIN
-    SELECT billable.*, u.username, o.organization_name, p.project_name, t.task_id, st.fk_task_id, st.subtask_id, t.task_state, st.subtask_state FROM billable
+    SELECT billable.*, u.username, o.organization_name, p.project_name, c.sample_id, c.authorized_by, t.task_id, st.fk_task_id, st.subtask_id, t.task_state, st.subtask_state FROM billable
     LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
     LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
     LEFT JOIN costcenter_assignments ca on ca.fk_project_id = billable.fk_project_id
@@ -109,6 +116,8 @@ BEGIN
     LEFT JOIN users u on u.user_id = billable.created_by
     LEFT JOIN organizations o on o.organization_id = u.fk_organization_id
     LEFT JOIN projects p on p.project_id = billable.fk_project_id
+    LEFT JOIN questions_answer qa on qa.answer_id = billable.answer_id 
+    LEFT JOIN clinical c on c.fk_questions_answer_id = qa.answer_id and c.fk_survey_id = t.fk_survey_id
     WHERE (name = _service_name OR _service_name IS NULL OR _service_name = '')
     AND (ca.fk_cost_center_id = _costcenter_id OR _costcenter_id IS NULL OR _costcenter_id = '')
     AND (billable.fk_project_id = _project_id OR _project_id IS NULL OR _project_id = '')
@@ -126,9 +135,11 @@ CREATE PROCEDURE `load_billable_by_sow` (
 )
 
 BEGIN
-    SELECT billable.*, t.task_id, st.fk_task_id, st.subtask_id FROM billable
+    SELECT billable.*, c.sample_id, c.authorized_by, t.task_id, st.fk_task_id, st.subtask_id FROM billable
     LEFT JOIN tasks t on t.task_uuid = billable.task_uuid
     LEFT JOIN subtasks st on st.subtask_uuid = billable.task_uuid
+    LEFT JOIN questions_answer qa on qa.answer_id = billable.answer_id 
+    LEFT JOIN clinical c on c.fk_questions_answer_id = qa.answer_id and c.fk_survey_id = t.fk_survey_id
     WHERE billable.task_uuid = _task_uuid;
 END $$
 

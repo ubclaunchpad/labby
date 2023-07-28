@@ -27,6 +27,7 @@ export function* submitResponseSaga({ payload }) {
           billable_id: uuid(),
           sow_id: payload.sowId,
           project_id: payload.projectId,
+          answer_id: billable.answer_id,
           name: billable.service,
           quantity: billable.quantity,
           cost: billable.cost,

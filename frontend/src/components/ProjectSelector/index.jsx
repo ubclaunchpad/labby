@@ -6,7 +6,7 @@ import uuid from "react-uuid";
 import {
   ADD_DRAFT,
   ADD_RESPONSE,
-  REMOVE_PROJECT_RESPONSE,
+  REPLACE_PROJECT_RESPONSE,
 } from "../../redux/actions/formActions";
 import { GET_PROJECT } from "../../redux/actions/billingActions";
 import { LOAD_QUESTION } from "../../redux/actions/questionActions";
@@ -23,13 +23,7 @@ function ProjectSelector({ question }) {
   const handleChange = (event) => {
     const selected = JSON.parse(event.target.value);
     dispatch({
-      type: REMOVE_PROJECT_RESPONSE,
-      payload: {
-        question: question,
-      },
-    });
-    dispatch({
-      type: ADD_RESPONSE,
+      type: REPLACE_PROJECT_RESPONSE,
       payload: {
         id: uuid(),
         response: selected.project_id,
@@ -67,7 +61,7 @@ function ProjectSelector({ question }) {
       const value = projectList.find(
         (option) => option.project_id === draft.answer
       );
-      if (value) {
+      if (value && !formResponses.some((response) => response.question.project_id)) {
         dispatch({
           type: ADD_RESPONSE,
           payload: {
@@ -81,7 +75,7 @@ function ProjectSelector({ question }) {
         setDraftDone(true);
       }
     }
-  }, [dispatch, draftList, projectList, question]);
+  }, [dispatch, draftList, projectList, question, formResponses]);
 
   useEffect(() => {
     dispatch({ type: LOAD_QUESTION, payload: question.fk_form_id });
