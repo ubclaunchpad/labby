@@ -214,7 +214,9 @@ function ServiceList({ readOnly }) {
                     ) : null}
                   </div>
                 </div>
-                <div style={{ flexDirection: "row", textAlign: 'left', paddingLeft: 10 }}>
+                {rawDataSource.filter(
+                      (item) => item.billable_id === serviceCost.billable_id
+                    ).length > 0 ? <div style={{ flexDirection: "row", textAlign: 'left', paddingLeft: 10 }}>
                   <div className="serviceInputBoxBlue">For:</div>
                   {Object.values(
                     rawDataSource.filter(
@@ -223,7 +225,7 @@ function ServiceList({ readOnly }) {
                   ).map((item) => {
                     return <div className="serviceInputBoxBlue" key={item.sample_id}>{item.sample_id} - {item.authorized_by}</div>;
                   })}
-                </div>
+                </div> : null}
                 <div>
                   {!readOnly ? (
                     <input
