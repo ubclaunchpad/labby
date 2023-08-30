@@ -14,8 +14,8 @@ export const appColor = {
   textGray: "6F6F6F",
 };
 
-export const backend = process.env.REACT_APP_BACKEND;
-// export const backend = "http://localhost:8080/";
+// export const backend = process.env.REACT_APP_BACKEND;
+export const backend = "http://localhost:8080/";
 
 export const frontend = process.env.REACT_APP_FRONTEND;
 // export const frontend = "http://localhost:3000/";

@@ -1,5 +1,5 @@
 USE `labby`;
- 
+
 DROP procedure IF EXISTS `delete_task`;
 DROP procedure IF EXISTS `delete_subtask`;
 

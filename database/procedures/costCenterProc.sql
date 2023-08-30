@@ -59,5 +59,5 @@ CREATE PROCEDURE `delete_cost_center`  (
 BEGIN
     DELETE FROM cost_centers WHERE cost_center_id = id;
 END $$
-  
+
 DELIMITER ;

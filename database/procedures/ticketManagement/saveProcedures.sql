@@ -124,5 +124,5 @@ UPDATE `subtasks` SET `subtask_state`=`_subtask_state`, `subtask_updated` = NOW(
   
 END $$
 
-  
+
 DELIMITER ;

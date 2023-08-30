@@ -40,5 +40,5 @@ CREATE PROCEDURE `delete_project`  (
 BEGIN
     DELETE FROM projects WHERE project_id = id;
 END $$
-  
+
 DELIMITER ;

@@ -1,0 +1,53 @@
+version: "3.9"
+services:
+  client:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - web
+  web:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      MYSQL_PWD: 'Launchpad'
+    depends_on: 
+      - db
+  db:
+    build: ./database
+    restart: always
+    command: 
+      --secure_file_priv=''
+      --local_infile=1
+      --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: 'labby'
+      MYSQL_USER: 'launchpad'
+      MYSQL_PASSWORD: 'Launchpad'
+      MYSQL_ROOT_PASSWORD: 'Launchpad'
+      TZ: 'America/Los_Angeles'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes: 
+      - ./database/data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/~init.sql
+  nginx:
+    build: ./nginx
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    # volumes:
+    #   - ./certbot/conf:/etc/letsencrypt
+    #   - ./certbot/www:/var/www/certbot
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+  # certbot:
+  #   image: certbot/certbot
+  #   restart: always
+  #   volumes:
+  #       - ./certbot/conf:/etc/letsencrypt
+  #       - ./certbot/www:/var/www/certbot
+  #   entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"

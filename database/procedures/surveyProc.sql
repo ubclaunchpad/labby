@@ -1,6 +1,5 @@
 USE `labby`;
 
-DROP PROCEDURE IF EXISTS `createSurveys`;
 DROP PROCEDURE IF EXISTS `addSurvey`;
 DROP PROCEDURE IF EXISTS `loadSurveyByUser`;
 DROP PROCEDURE IF EXIStS `deleteSurvey`;

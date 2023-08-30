@@ -67,6 +67,9 @@ Backend will be exposed on port 3000
 2. run `yarn` to install dependencies
 3. run `yarn start`
 
+#### Docker Setup
+1. run `docker-compose up --build -d`
+
 <!-- DEPLOYMENT -->
 ## Deployment
 
