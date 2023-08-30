@@ -149,5 +149,5 @@ CREATE PROCEDURE `delete_billable`  (
 BEGIN
     DELETE FROM billable WHERE billable_id = id;
 END $$
-  
+
 DELIMITER ;

@@ -1,5 +1,5 @@
 USE `labby`;
- 
+
 DROP procedure IF EXISTS `load_forms`;
 DROP procedure IF EXISTS `load_published_forms`;
 DROP procedure IF EXISTS `load_questions`;
@@ -8,8 +8,8 @@ DROP procedure IF EXISTS `load_questions_answers`;
 DROP procedure IF EXISTS `load_conditions`;
 DROP procedure IF EXISTS `load_costs`;
 DROP procedure IF EXISTS `load_organization_costs`;
- 
- 
+
+
 DELIMITER $$
 
 CREATE PROCEDURE `load_forms` ()
@@ -130,6 +130,6 @@ SELECT question, answer, fk_answer_id, cost
     ORDER BY 
         position_index;
 END $$
-  
+
 DELIMITER ;
 

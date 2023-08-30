@@ -40,5 +40,5 @@ SELECT * FROM subtasks
             WHERE subtasks.fk_task_id = `task_id`;
 
 END $$
-  
+
 DELIMITER ;	

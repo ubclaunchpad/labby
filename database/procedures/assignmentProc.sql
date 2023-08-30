@@ -123,5 +123,5 @@ CREATE PROCEDURE `delete_project_cost_centers` (
 ) BEGIN
 DELETE FROM costcenter_assignments WHERE fk_project_id=project_id;
 END $$
-  
+
 DELIMITER ;

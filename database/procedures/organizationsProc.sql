@@ -51,5 +51,5 @@ CREATE PROCEDURE `delete_organization` (
 ) BEGIN
 DELETE FROM organizations WHERE organization_id=_organization_id;
 END $$
-  
+
 DELIMITER ;

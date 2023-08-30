@@ -1,7 +1,7 @@
 USE `labby`;
 
 DROP procedure IF EXISTS `save_question`;
- 
+
 DELIMITER $$
 
 CREATE PROCEDURE `save_question` (
@@ -14,7 +14,7 @@ CREATE PROCEDURE `save_question` (
     IN `_clinical` BOOLEAN,
     IN `_question_note` TEXT,
     IN `_numerical_only` BOOLEAN
- 
+
 ) BEGIN INSERT INTO `questions` (
     `question_id`,
     `fk_form_id`,
@@ -48,7 +48,7 @@ ON DUPLICATE KEY UPDATE
     questions.clinical=`_clinical`,
     questions.question_note=`_question_note`,
     questions.numerical_only=`_numerical_only`;
-  
+
 END $$
 
 DELIMITER ;
